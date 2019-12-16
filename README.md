@@ -18,11 +18,11 @@ A hello-world is just like this
 import 'elvis';
 
 export default function() {
-	return Page(
-		Center(
-			child: Text('hello, world'),
-		),
-	);
+  return Page(
+	Center({
+		child: Text('hello, world'),
+	}),
+  );
 }
 ```
 

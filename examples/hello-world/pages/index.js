@@ -2,8 +2,8 @@ import 'elvis';
 
 export default function() {
   return Page(
-    Center(
+    Center({
       child: Text('hello, world!');
-    )
+    })
   );
 }
