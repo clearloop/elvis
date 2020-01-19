@@ -1,9 +1,9 @@
-const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+import path from "path";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
 
-module.exports = {
+const config: webpack.Configuration = {
   devServer: {
     compress: true,
     contentBase: "./dist",
@@ -14,26 +14,24 @@ module.exports = {
     writeToDisk: true,
   },
   devtool: "inline-source-map",
-  entry: {
-    app: path.join(__dirname, "./src/index.ts"),
-  },
+  entry: path.resolve(__dirname, "./src/index.ts"),
   mode: "development",
   module: {
     rules: [{
       exclude: /node_modules/,
       test: /\.tsx?$/,
       use: "ts-loader",
-    },{
+    }, {
+      enforce: "pre",
       test: /\.ts$/,
-      enforce: 'pre',
       use: [
         {
           loader: "tslint-loader",
           options: {
-	    tsConfigFile: "../tsconfig.json",
-	  },
-        }
-      ]
+            tsConfigFile: "../tsconfig.json",
+          },
+        },
+      ],
     }],
   },
   output: {
@@ -54,3 +52,5 @@ module.exports = {
     extensions: [ ".tsx", ".ts", ".js" ],
   },
 };
+
+export default config;
