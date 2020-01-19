@@ -1,12 +1,12 @@
-import { Text, Page, Headline } from "@/index";
+import { Headline, Page, Text } from "@/index";
 
 // page hello
-let hello = new Page(
+const hello = new Page(
   new Text("headline", {
     bold: true,
     italic: true,
-    size: 3
-  })
+    size: 2,
+  }),
 );
 
 hello.render();

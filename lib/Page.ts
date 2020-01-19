@@ -2,13 +2,13 @@ import { ElvisElement } from "./ElvisElement";
 
 // Page
 class Page {
-  child: ElvisElement;
-  
+  public child: ElvisElement;
+
   constructor(child: ElvisElement) {
     this.child = child;
   }
-  
-  render() {
+
+  public render() {
     document.body.appendChild(this.child.el);
   }
 }

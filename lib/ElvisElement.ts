@@ -1,21 +1,21 @@
-interface ElvisElementArgs {
-  tag: string,
+interface IElvisElementArgs {
+  tag: string;
 }
 
 // basic type of Elvis
 class ElvisElement {
   public el: HTMLElement;
-  
-  constructor(args: ElvisElementArgs) {
+
+  constructor(args: IElvisElementArgs) {
     this.el = document.createElement(args.tag);
   }
 
-  css(s: string) {
+  public css(s: string) {
     this.el.style.cssText = s;
     return this;
   }
 
-  text(s: string) {
+  public text(s: string) {
     this.el.innerHTML = s;
     return this;
   }

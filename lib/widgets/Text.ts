@@ -1,4 +1,7 @@
-import { TextElement as X, TextStyle as S } from "../TextElement";
+import {
+  ITextStyle as S,
+  TextElement as X,
+} from "../TextElement";
 
 // Basic text class using `div`
 class Text extends X {
