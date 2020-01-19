@@ -1,18 +1,10 @@
-const express = require('express');
+const webpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
 
-const app = express();
 const config = require('./webpack.config.js');
 const compiler = webpack(config);
+const server = new webpackDevServer(compiler);
 
-// Tell koa to use the webpack-dev-middleware and use the webpack.config.js
-// configuration file as a base.
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath,
-}));
-
-// Serve the files on port 3000.
-app.listen(config.devServer.port, function () {
-  console.log('Example app listening on port 3000!\n');
+server.listen(5000, 'localhost', () => {
+  console.log('dev server listening on port 5000');
 });

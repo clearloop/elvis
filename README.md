@@ -37,3 +37,8 @@ build project
 ```
 $ elvis build
 ```
+
+
+## Style Guide
+
+[Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
