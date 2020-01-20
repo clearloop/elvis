@@ -22,4 +22,4 @@ class ElvisElement {
 }
 
 // exports
-export { ElvisElement };
+export default ElvisElement;

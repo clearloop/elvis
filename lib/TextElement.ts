@@ -1,4 +1,4 @@
-import { ElvisElement as E } from "./ElvisElement";
+import E from "./ElvisElement";
 
 interface ITextStyle {
   bold: boolean;

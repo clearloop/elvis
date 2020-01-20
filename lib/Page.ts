@@ -1,4 +1,4 @@
-import { ElvisElement } from "./ElvisElement";
+import ElvisElement from "./ElvisElement";
 
 // Page
 class Page {
@@ -14,4 +14,4 @@ class Page {
 }
 
 // exports
-export { Page };
+export default Page;
