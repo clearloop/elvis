@@ -3,7 +3,7 @@ name = "elvis"
 version = "0.1.0"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
-description = "Calling Elvis..."
+description = "Calling Elvis, is anybody home?"
 repository = "https://github.com/clearloop/elvis"
 license = "MIT"
 documentation = "https://docs.rs/elvis"
@@ -27,8 +27,8 @@ features = [
   "Window"
 ]
 
-[lib]
-crate-type = ["cdylib"]
-
 [profile.release]
 lto = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]  

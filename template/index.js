@@ -1,5 +1,5 @@
-import { ElvisElement, Page, EvlisText } from "@";
+import { ElvisElement, Page, TextElement, TextStyle } from "@";
 
-let h1 = new ElvisText("h1", "hello, world");
-let p = new Page(h1);
+let t = new TextElement("p", "WTF", new TextStyle(true, "red", true, 9));
+let p = new Page(t);
 p.render();

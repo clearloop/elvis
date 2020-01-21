@@ -2,41 +2,47 @@ use crate::ElvisElement;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub struct ITextStyle {
-  pub bold: Option<bool>,
-  pub italic: Option<bool>,
-  pub size: Option<i32>,
+pub struct TextStyle {
+  bold: bool,
+  color: String,
+  italic: bool,
+  size: f64,
 }
 
 #[wasm_bindgen]
-#[derive(ElvisElement)]
-pub struct ElvisText {
-  el: ElvisElement,
-}
-
-#[wasm_bindgen]
-impl ElvisText {
+impl TextStyle {
   #[wasm_bindgen(constructor)]
-  pub fn new(tag: &str, text: &str, style: Option<ITextStyle>) -> Result<ElvisText, JsValue> {
-    let el = ElvisElement::new(tag)?.text(text);
-    if let Some(s) = style {
-      if let Some(b) = s.bold {
-        if b == true {
-          el.set_property("fontWeight", "700");
-        }
-      }
+  pub fn new(bold: bool, color: String, italic: bool, size: f64) -> TextStyle {
+    TextStyle {
+      bold,
+      color,
+      italic,
+      size,
+    }
+  }
+}
 
-      if let Some(i) = s.italic {
-        if i == true {
-          el.set_property("fontStyle", "italic");
-        }
-      }
+#[wasm_bindgen]
+pub struct TextElement {
+  proto: ElvisElement,
+}
 
-      if let Some(size) = s.size {
-        el.set_property("fontSize", &format!("{}rem", size));
-      }
+#[wasm_bindgen]
+impl TextElement {
+  #[wasm_bindgen(constructor)]
+  pub fn new(tag: &str, text: &str, style: TextStyle) -> Result<ElvisElement, JsValue> {
+    let proto = ElvisElement::new(tag)?.text(text);
+    if style.bold {
+      proto.set_property("font-weight", "700");
     }
 
-    Ok(ElvisText { el })
+    if style.italic {
+      proto.set_property("font-style", "italic");
+    }
+
+    proto.set_property("color", &style.color);
+    proto.set_property("font-size", &format!("{}rem", style.size));
+
+    Ok(proto)
   }
 }
