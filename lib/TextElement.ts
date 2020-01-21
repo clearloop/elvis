@@ -9,7 +9,7 @@ interface ITextStyle {
 // Inner prototype class
 class TextElement extends E {
   constructor(tag: string, text: string, style: ITextStyle) {
-    super({tag});
+    super({ tag });
     this.text(text);
 
     const es = this.el.style;

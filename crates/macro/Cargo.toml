@@ -1,0 +1,12 @@
+[dependencies]
+quote = "1.0.2"
+syn = "1.0.13"
+
+[lib]
+proc-macro = true
+
+[package]
+name = "elvis-macro"
+version = "0.1.0"
+authors = ["clearloop <udtrokia@gmail.com>"]
+edition = "2018"

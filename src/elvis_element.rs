@@ -37,4 +37,8 @@ impl ElvisElement {
     self.el.set_inner_text(s);
     self
   }
+
+  pub fn set_property(&self, k: &str, v: &str) {
+    &self.el.style().set_property(k, v);
+  }
 }

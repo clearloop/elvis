@@ -12,6 +12,7 @@ keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
 [dependencies]
+elvis-macro = { path = "crates/macro" }
 js-sys = "0.3.35"
 wasm-bindgen = "0.2.58"
 
