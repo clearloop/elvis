@@ -1,0 +1,23 @@
+{
+  "indent": [true, "spaces", 2],
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "outDir": "./pkg/",
+    "module": "esNext",
+    "noImplicitAny": true,
+    "paths": {
+      "@/*": ["pkg/*"]
+    },
+    "sourceMap": true,
+    "target": "es5"
+  },
+  "include": [
+    "lib/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

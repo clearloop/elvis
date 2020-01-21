@@ -30,7 +30,7 @@ pub struct TextElement {
 #[wasm_bindgen]
 impl TextElement {
   #[wasm_bindgen(constructor)]
-  pub fn new(tag: &str, text: &str, style: TextStyle) -> Result<ElvisElement, JsValue> {
+  pub fn new(tag: &str, text: &str, style: TextStyle) -> Result<TextElement, JsValue> {
     let proto = ElvisElement::new(tag)?.text(text);
     if style.bold {
       proto.set_property("font-weight", "700");
@@ -43,6 +43,10 @@ impl TextElement {
     proto.set_property("color", &style.color);
     proto.set_property("font-size", &format!("{}rem", style.size));
 
-    Ok(proto)
+    Ok(TextElement { proto })
+  }
+
+  pub fn el(self) -> ElvisElement {
+    self.proto
   }
 }

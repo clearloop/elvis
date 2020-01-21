@@ -13,7 +13,6 @@ class TextElement extends E {
     this.text(text);
 
     const es = this.el.style;
-    console.log(es);
     if (style) {
       if (style.bold) es.fontWeight = "700";
       if (style.italic) es.fontStyle = "italic";
