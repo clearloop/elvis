@@ -1,44 +1,7 @@
-# Elvis
+## Calling Elvis 🦀 🕸  🎸 📡 🚀 🪐 🛰
 
-Calling Elvis...
+Is anybody home?
 
+As we know, `Elvis` is a famous rock star, but both a famous rock song named `Calling Elvis` write by `Dire Straits` which inspired me to write down these words.
 
-## Install
-
-```
-$ yarn global add elvis
-```
-
-## Usage
-
-A hello-world is just like this
-
-```js
-// pages/index.js
-import 'elvis';
-
-export default function() {
-  return Page(
-	Center({
-		child: Text('hello, world'),
-	}),
-  );
-}
-```
-
-run project
-
-```
-$ elvis dev
-```
-
-build project
-
-```
-$ elvis build
-```
-
-
-## Style Guide
-
-[Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
+And for now, Elvis, the rock star, will rise, once again, **beyond** the internet —— your wasm web-framework, 🦀 + 🕸  => 💖
