@@ -1,15 +1,15 @@
-use crate::ElvisElement;
+use crate::Element;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Page {
-  child: ElvisElement,
+  child: Element,
 }
 
 #[wasm_bindgen]
 impl Page {
   #[wasm_bindgen(constructor)]
-  pub fn new(child: ElvisElement) -> Page {
+  pub fn new(child: Element) -> Page {
     Page { child }
   }
 

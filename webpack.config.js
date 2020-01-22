@@ -37,9 +37,6 @@ module.exports = {
     new HtmlWebpackPlugin(),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "."),
-      watchDirectories: [
-        path.resolve(__dirname, "crates/macro"),
-      ],
       outName: "elvis",
     }),
   ],

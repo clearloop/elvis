@@ -1,5 +1,13 @@
-import { Page, TextElement, TextStyle } from "../pkg";
+import { Page, TextStyle, Element } from "../pkg/elvis";
+const { Title } = Element;
 
-let t = new TextElement("p", "WTF", new TextStyle(true, "red", true, 2.0));
-let p = new Page(t.el());
-p.render();
+let page = new Page(
+  Title(
+    "WTF",
+    new TextStyle(
+      true, "red", true, 0.0
+    )
+  )
+);
+
+page.render();

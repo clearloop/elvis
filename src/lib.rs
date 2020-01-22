@@ -1,9 +1,9 @@
 // #[macro_use]
 // extern crate elvis_macro;
-
-mod elvis_element;
-mod elvis_text;
+mod element;
+mod layout;
 mod page;
-pub use elvis_element::{ElvisElement, IElvisElementArgs};
-pub use elvis_text::{TextElement, TextStyle};
+mod text;
+pub use element::Element;
 pub use page::Page;
+pub use text::{Text, TextStyle};
