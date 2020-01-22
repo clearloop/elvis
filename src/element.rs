@@ -1,9 +1,10 @@
-use crate::{Text, TextStyle};
+use crate::{Layout, Text, TextStyle};
 use wasm_bindgen::{prelude::*, JsCast};
+use web_sys::{HtmlElement, Node};
 
 #[wasm_bindgen]
 pub struct Element {
-  el: web_sys::HtmlElement,
+  el: HtmlElement,
 }
 
 #[wasm_bindgen]
@@ -39,6 +40,17 @@ impl Element {
     &self.el.style().set_property(k, v);
   }
 
+  pub fn append_child(self, child: Element) -> Result<Element, JsValue> {
+    Ok(Element {
+      el: self
+        .el()
+        .append_child(&child.el())?
+        .parent_node()
+        .unwrap()
+        .dyn_into::<HtmlElement>()?,
+    })
+  }
+
   // Text interface
   #[wasm_bindgen(js_name = Text)]
   pub fn tp(text: &str, style: Option<TextStyle>) -> Result<Element, JsValue> {
@@ -58,5 +70,11 @@ impl Element {
   #[wasm_bindgen(js_name = Headline)]
   pub fn thl(text: &str, style: Option<TextStyle>) -> Result<Element, JsValue> {
     Text::headline(text, style)
+  }
+
+  // Layout interface
+  #[wasm_bindgen(js_name = Center)]
+  pub fn lc(child: Element) -> Result<Element, JsValue> {
+    Layout::center(child)
   }
 }

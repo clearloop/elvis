@@ -23,6 +23,10 @@ impl TextStyle {
   }
 }
 
+/// Text
+///
+/// [MDN font CSS][1]
+/// [1]: https://developer.mozilla.org/en-US/docs/Web/CSS/font
 pub struct Text;
 
 impl Text {

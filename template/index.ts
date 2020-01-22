@@ -1,11 +1,15 @@
-import { Page, TextStyle, Element } from "../pkg/elvis";
-const { Title } = Element;
+import { Page, TextStyle, Element, Alignments } from "../pkg/elvis";
+const { Center, Title } = Element;
 
+
+console.log(Alignments.Center);
 let page = new Page(
-  Title(
-    "WTF",
-    new TextStyle(
-      true, "red", true, 0.0
+  Center(
+    Title(
+      "WTF",
+      new TextStyle(
+        true, "red", true, 20.0
+      )
     )
   )
 );
