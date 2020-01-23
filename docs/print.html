@@ -204,6 +204,7 @@ let myContainer = Container(
 
 Page(mySizedBox).render();
 </code></pre>
+<p>The <code>Alignments</code> enum is from <a href="/flex.html">Flex</a>, to be honest, <code>Container</code> component is a part of <code>Flex</code> family, but he is too brilliant to stay in <code>Flex</code> family, <code>Layout</code> calls him.</p>
 <h3><a class="header" href="#sizedbox" id="sizedbox">SizedBox</a></h3>
 <pre><code class="language-js">/* SizedBox */
 import { Page, Elvis } from &quot;calling-elvis&quot;;
@@ -218,8 +219,85 @@ let mySizedBox = SizedBox(
 
 Page(mySizedBox).render();
 </code></pre>
+<p><code>SizedBox</code> just has <code>width</code> and <code>height</code> two arguments, we use this component to take some white space usually.</p>
+<h1><a class="header" href="#flex" id="flex">Flex</a></h1>
+<p>Elvis Flex follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">CSS Flexible Box Layout</a></p>
+<h2><a class="header" href="#components--1" id="components--1">Components 📦</a></h2>
+<p>The very basic core of <code>Flex Layout</code> components is called <code>Flex</code>, unfortunatly, it contains almost all css flex properties, not easy to use, that's why elvis composes some &quot;newbie&quot; components as well.</p>
+<h3><a class="header" href="#align" id="align">Align</a></h3>
+<pre><code class="language-js">/* Align */
+import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
+const { Align, Text } = Elvis;
+
+// Generate an `Align`
+let myAlign = Align(
+  Text(&quot;Align Elvis&quot;), {
+    alignments: Alignments.Center,
+});
+
+Page(mySizedBox).render();
+</code></pre>
+<p><code>Align</code> inherits the core usage of <code>Alignment</code>, it's quite simple, just one property.</p>
+<h3><a class="header" href="#center" id="center">Center</a></h3>
+<pre><code class="language-js">/* Center */
+import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
+const { Center, Text } = Elvis;
+
+// Generate an `Center`
+let myCenter = Center(
+  Text(&quot;My website only have a line of chars 🦀 &quot;),
+);
+
+Page(mySizedBox).render();
+</code></pre>
+<p><code>Center</code> is a very nice component, if your website only have a line of chars, use it!</p>
+<h3><a class="header" href="#col" id="col">Col</a></h3>
+<pre><code class="language-js">/* Col */
+import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
+const { Col, Text } = Elvis;
+
+// Generate an `Col`
+let myAlign = Col([
+  Text(&quot;All is above you all is sky&quot;),
+  Text(&quot;All is behind you all is sea&quot;),
+]);
+
+Page(mySizedBox).render();
+</code></pre>
+<p><code>Col</code> towards column, the typical flow in html, with flexible enhance.</p>
+<h3><a class="header" href="#flex-1" id="flex-1">Flex</a></h3>
+<pre><code class="language-js">let flex = Flex(
+  List([
+    Text(&quot;hi, I'm the Lunatic Component's child No.1&quot;),
+	Text(&quot;hi, I'm the Lunatic Component's child No.2&quot;),
+	Text(&quot;hi, I'm the Lunatic Component's child No.3&quot;),
+  )], {
+    basis: FlexBasis.Auto,
+    direction: FlexDirection.ColumnReverse,
+	grow: 1,
+	order: 1,
+	shrink: 2,
+    wrap: FlexWrap.Wrap,
+});
+</code></pre>
+<p>This is <code>the Lunatic Component</code> to <code>Ground Control</code>, I'm stepping throw the <code>Window</code>.</p>
+<h3><a class="header" href="#row" id="row">Row</a></h3>
+<pre><code class="language-js">/* Row */
+import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
+const { Row, Text } = Elvis;
+
+// Generate a `Row`
+let myAlign = Row([
+  Text(&quot;I'm Wrong&quot;),
+  Text(&quot;I'm Right&quot;),
+]);
+
+Page(mySizedBox).render();
+</code></pre>
+<p>Both <code>Col</code> and <code>Row</code> are using <code>flex-start</code>, if you want to reverse the children of them, better to work on the list order.</p>
 <h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
-<p>Elvis Layout Aligns follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Alignment">CSS Box Alignment</a>, but simplify it into a enum <code>Aligment</code> here, <code>Alignment</code> is used by all <code>Flex</code> components and <code>Container</code> in Elvis.</p>
+<p>Elvis Layout Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum <code>Aligment</code> here, <code>Alignment</code> is used by all <code>Flex</code> components and <code>Container</code> in Elvis.</p>
+<h3><a class="header" href="#alignment" id="alignment">Alignment</a></h3>
 <p>Here is the <code>Alignment</code> defination in rust source code.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
@@ -238,25 +316,34 @@ pub enum Alignment {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>For using <code>Alignment</code> with <code>calling-elvis</code>, we write our code just like <code>Container</code> template above.</p>
-<pre><code class="language-js">/* Container */
-import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
-const { SizedBox, Text } = Elvis;
-
-// Generate a `Container`
-let myContainer = Container(
-  Text(&quot;My Container&quot;), {
-    // change the line below
-    alignments: Alignments.Center,
-    height: 42,
-    margin: 10,
-    padding: 10,
-    width: 42,
-});
-
-Page(mySizedBox).render();
-</code></pre>
-<h1><a class="header" href="#flex" id="flex">Flex</a></h1>
+<h3><a class="header" href="#flexbasis" id="flexbasis">FlexBasis</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum FlexBasis {
+  Fill,
+  MaxContent,
+  MinContent,
+  FitContent,
+  // em default
+  Number(f64),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Well, lunatic <code>FlexBasis</code> in Rust source code.</p>
+<h3><a class="header" href="#flexdirection" id="flexdirection">FlexDirection</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum FlexDirection {
+  Column,
+  ColumnReverse,
+  Row,
+  RowReverse,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Lunatic <code>FlexDirection</code>, you know it.</p>
 <h1><a class="header" href="#grid" id="grid">Grid</a></h1>
 <h1><a class="header" href="#multicolumn" id="multicolumn">MultiColumn</a></h1>
 <h1><a class="header" href="#text" id="text">Text</a></h1>
