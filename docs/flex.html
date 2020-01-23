@@ -160,7 +160,7 @@ const { Align, Text } = Elvis;
 // Generate an `Align`
 let myAlign = Align(
   Text(&quot;Align Elvis&quot;), {
-    alignments: Alignments.Center,
+    align: Alignments.Center,
 });
 
 Page(mySizedBox).render();
@@ -197,14 +197,14 @@ Page(mySizedBox).render();
 <pre><code class="language-js">let flex = Flex(
   List([
     Text(&quot;hi, I'm the Lunatic Component's child No.1&quot;),
-	Text(&quot;hi, I'm the Lunatic Component's child No.2&quot;),
-	Text(&quot;hi, I'm the Lunatic Component's child No.3&quot;),
+    Text(&quot;hi, I'm the Lunatic Component's child No.2&quot;),
+    Text(&quot;hi, I'm the Lunatic Component's child No.3&quot;),
   )], {
     basis: FlexBasis.Auto,
     direction: FlexDirection.ColumnReverse,
-	grow: 1,
-	order: 1,
-	shrink: 2,
+    grow: 1,
+    order: 1,
+    shrink: 2,
     wrap: FlexWrap.Wrap,
 });
 </code></pre>
@@ -224,7 +224,7 @@ Page(mySizedBox).render();
 </code></pre>
 <p>Both <code>Col</code> and <code>Row</code> are using <code>flex-start</code>, if you want to reverse the children of them, better to work on the list order.</p>
 <h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
-<p>Elvis Layout Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum <code>Aligment</code> here, <code>Alignment</code> is used by all <code>Flex</code> components and <code>Container</code> in Elvis.</p>
+<p>Elvis <code>Layout</code> Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum <code>Aligment</code> here, <code>Alignment</code> is used by all <code>Flex</code> components and <code>Container</code> in Elvis.</p>
 <h3><a class="header" href="#alignment" id="alignment">Alignment</a></h3>
 <p>Here is the <code>Alignment</code> defination in rust source code.</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -253,8 +253,7 @@ pub enum Alignment {
   MaxContent,
   MinContent,
   FitContent,
-  // em default
-  Number(f64),
+  Number(Unit),
 }
 <span class="boring">}
 </span></code></pre></pre>

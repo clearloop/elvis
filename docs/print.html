@@ -159,9 +159,8 @@
 <p>Writing web pages in <strong>pure javascript</strong> using wasm bindings, <strong>without</strong> <code>jsx</code> or <code>any other</code> complex syntax, <strong>just javascript</strong>, of course, <strong>not</strong> writing <code>html</code> nor <code>css</code> either.</p>
 <h2><a class="header" href="#roll-up-for-the-magical-mystery-tour-" id="roll-up-for-the-magical-mystery-tour-">Roll up for the Magical Mystery Tour! 🌈</a></h2>
 <p>🧙‍♂️ 🤹‍♂️ Here we go! Roll up, roll up for the mystery tour, the magical mystery tour is waiting to take you away! Hoping to take you away! Coming to take you away! Dying to take you away, take you today! 🛸</p>
-<h2><a class="header" href="#example-" id="example-">Example 🎻</a></h2>
-<p>Let me take you down, cause I'm going to,</p>
-<pre><code class="language-js">/* your elvis file */
+<p>🎻 Let me take you down, cause I'm going to,</p>
+<pre><code class="language-js">/* my elvis file */
 import { Elvis, Page, TextStyle } from &quot;calling-elvis&quot;;
 cnost { Center, Text } = Elvis;
 
@@ -169,12 +168,12 @@ Page(
   Center(
     Text(
       &quot;Calling Elvis&quot;,
-	  new TextStyle({
-	    bold: true,
-		color: &quot;red&quot;,
-		italic: true,
-		size: 42.0
-	  }),
+      new TextStyle({
+        bold: true,
+        color: &quot;red&quot;,
+        italic: true,
+        size: 42.0
+      }),
     ),
   ),
 ).render();
@@ -213,13 +212,70 @@ const { SizedBox, Text } = Elvis;
 // Generate a `SizedBox`
 let mySizedBox = SizedBox(
   Text(&quot;My SizedBox&quot;), {
-    height: 2,
-    width: 2,
+    height: 42,
+    width: 42,
 });
 
 Page(mySizedBox).render();
 </code></pre>
 <p><code>SizedBox</code> just has <code>width</code> and <code>height</code> two arguments, we use this component to take some white space usually.</p>
+<h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
+<p>Some Enums to help <code>Layout</code> stable.</p>
+<h3><a class="header" href="#unit" id="unit">Unit</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum Unit {
+  Ch(f64),
+  Cm(f64),
+  Dpi(f64),
+  Dpcm(f64),
+  Dppx(f64),
+  Em(f64),
+  Fr(f64),
+  In(f64)
+  Mm(f64),
+  Pc(f64),
+  Pt(f64),
+  Px(f64),
+  Q(f64),
+  Rem(f64),
+  Vh(f64),
+  Vmax(f64),
+  Vmin(f64),
+  Vw(f64),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>Units</code> Follows <a href="https://drafts.csswg.org/css-values-3">CSS Values 3</a> drafted in csswg.org, if we don't use <code>Unit.X()</code> in number field, Elvis will choose <code>Unit.Px</code> by default.</p>
+<h4><a class="header" href="#absolute-lengths" id="absolute-lengths">Absolute Lengths</a></h4>
+<table><thead><tr><th>unit</th><th>name</th><th>equivalence</th></tr></thead><tbody>
+<tr><td>cm</td><td>centermeters</td><td>1cm = 96px/2.54</td></tr>
+<tr><td>mm</td><td>millimeters</td><td>1mm == 1/10th of 1cm</td></tr>
+<tr><td>Q</td><td>quarter-millimeters</td><td>1Q = 1/40th of 1cm</td></tr>
+<tr><td>in</td><td>inches</td><td>1in = 2.54cm = 96px</td></tr>
+<tr><td>pc</td><td>picas</td><td>1pc = 1/6th of 1in</td></tr>
+<tr><td>pt</td><td>points</td><td>1pt = 1/72th of 1in</td></tr>
+<tr><td>px</td><td>pixels</td><td>1px = 1/96th of 1in</td></tr>
+</tbody></table>
+<h4><a class="header" href="#relative-lengths" id="relative-lengths">Relative Lengths</a></h4>
+<table><thead><tr><th>unit</th><th>relative to</th></tr></thead><tbody>
+<tr><td>em</td><td>font size of element</td></tr>
+<tr><td>ex</td><td>x-height of element's font</td></tr>
+<tr><td>ch</td><td>width of the &quot;0&quot; (ZERO, U+0030) glyph in the element’s font</td></tr>
+<tr><td>rem</td><td>font size of the root element</td></tr>
+<tr><td>vw</td><td>1% of viewport’s width</td></tr>
+<tr><td>vh</td><td>1% of viewport’s height</td></tr>
+<tr><td>vmin</td><td>1% of viewport’s smaller dimension</td></tr>
+<tr><td>vmax</td><td>1% of viewport’s larger dimension</td></tr>
+</tbody></table>
+<h4><a class="header" href="#others" id="others">Others</a></h4>
+<table><thead><tr><th>unit</th><th>represents</th></tr></thead><tbody>
+<tr><td>dpi</td><td>Dots per inch</td></tr>
+<tr><td>dpcm</td><td>Dots per centmeter</td></tr>
+<tr><td>dppx</td><td>Dots per px unit</td></tr>
+<tr><td>fr</td><td>This unit represents one fraction of the available space in the grid container.</td></tr>
+</tbody></table>
 <h1><a class="header" href="#flex" id="flex">Flex</a></h1>
 <p>Elvis Flex follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">CSS Flexible Box Layout</a></p>
 <h2><a class="header" href="#components--1" id="components--1">Components 📦</a></h2>
@@ -232,7 +288,7 @@ const { Align, Text } = Elvis;
 // Generate an `Align`
 let myAlign = Align(
   Text(&quot;Align Elvis&quot;), {
-    alignments: Alignments.Center,
+    align: Alignments.Center,
 });
 
 Page(mySizedBox).render();
@@ -269,14 +325,14 @@ Page(mySizedBox).render();
 <pre><code class="language-js">let flex = Flex(
   List([
     Text(&quot;hi, I'm the Lunatic Component's child No.1&quot;),
-	Text(&quot;hi, I'm the Lunatic Component's child No.2&quot;),
-	Text(&quot;hi, I'm the Lunatic Component's child No.3&quot;),
+    Text(&quot;hi, I'm the Lunatic Component's child No.2&quot;),
+    Text(&quot;hi, I'm the Lunatic Component's child No.3&quot;),
   )], {
     basis: FlexBasis.Auto,
     direction: FlexDirection.ColumnReverse,
-	grow: 1,
-	order: 1,
-	shrink: 2,
+    grow: 1,
+    order: 1,
+    shrink: 2,
     wrap: FlexWrap.Wrap,
 });
 </code></pre>
@@ -295,8 +351,8 @@ let myAlign = Row([
 Page(mySizedBox).render();
 </code></pre>
 <p>Both <code>Col</code> and <code>Row</code> are using <code>flex-start</code>, if you want to reverse the children of them, better to work on the list order.</p>
-<h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
-<p>Elvis Layout Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum <code>Aligment</code> here, <code>Alignment</code> is used by all <code>Flex</code> components and <code>Container</code> in Elvis.</p>
+<h2><a class="header" href="#enums--1" id="enums--1">Enums 🍩</a></h2>
+<p>Elvis <code>Layout</code> Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum <code>Aligment</code> here, <code>Alignment</code> is used by all <code>Flex</code> components and <code>Container</code> in Elvis.</p>
 <h3><a class="header" href="#alignment" id="alignment">Alignment</a></h3>
 <p>Here is the <code>Alignment</code> defination in rust source code.</p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -325,8 +381,7 @@ pub enum Alignment {
   MaxContent,
   MinContent,
   FitContent,
-  // em default
-  Number(f64),
+  Number(Unit),
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -345,7 +400,136 @@ pub enum Alignment {
 </span></code></pre></pre>
 <p>Lunatic <code>FlexDirection</code>, you know it.</p>
 <h1><a class="header" href="#grid" id="grid">Grid</a></h1>
+<p>Here is the <code>Grid</code> section, Just let Elvis show you how <code>Grid</code> Grid.</p>
+<h2><a class="header" href="#components--2" id="components--2">Components 📦</a></h2>
+<p><code>Grid</code> just have one component now, as you can see, <code>Grid</code>.</p>
+<h3><a class="header" href="#grid-1" id="grid-1">Grid</a></h3>
+<pre><code class="language-js">/* Grid */
+import { Page, Elvis } from &quot;calling-elvis&quot;;
+const { Grid, Text, List } = Elvis;
+
+// Generate an `Grid`
+let myGrid = Grid(
+  List(
+    Text(&quot;Mercury&quot;),
+    Text(&quot;Venus&quot;),
+    Text(&quot;Earth&quot;),
+    Text(&quot;Mars&quot;),
+    Text(&quot;Jupiter&quot;),
+    Text(&quot;Saturn&quot;),
+    Text(&quot;Uranus&quot;),
+    Text(&quot;Neptune&quot;),
+    Text(&quot;Pluto&quot;),
+  ), {
+    autoRows: GridAutoRows.Auto(100),
+    // col: 3,
+    // gap: 2,
+    // row: 3,
+    // template: GridTemplate.Repeat(3, 1),
+});
+
+Page(mySizedBox).render();
+</code></pre>
+<p>Aah, duplicate name occurs, take it ease, only one <code>Grid</code> Component in Elvis too.</p>
+<pre><code class="language-js">/* Grid */
+import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
+const { Grid, Text, List } = Elvis;
+
+// Generate an `Grid`
+let myGrid = Grid(
+  List(
+    Text(&quot;Mercury&quot;),
+    Text(&quot;Venus&quot;),
+    Text(&quot;Earth&quot;),
+    Text(&quot;Mars&quot;),
+    Text(&quot;Jupiter&quot;),
+    Text(&quot;Saturn&quot;),
+    Text(&quot;Uranus&quot;),
+    Text(&quot;Neptune&quot;),
+    Text(&quot;Pluto&quot;),
+  ),
+);
+
+Page(mySizedBox).render();
+</code></pre>
+<p><code>Grid</code> is quite complex in some way, usually, we just <code>Grid</code> our contains.</p>
+<h2><a class="header" href="#enums--2" id="enums--2">Enums 🍩</a></h2>
+<p>Elvis <code>Grid</code> follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids">Grids</a>, but trims some properties just like <code>Flex</code>.</p>
+<h3><a class="header" href="#gridautorows" id="gridautorows">GridAutoRows</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum GridAutoRows {
+  Auto(Unit, Option&lt;Unit&gt;),
+  Fixed(Unit),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>AutoRows</code> affect the width of Grid children, and the <code>Auto</code> choice use the <code>minmax</code> function in css, if doesn't pass the second argument, it will be <code>auto</code> in meaning.</p>
+<h3><a class="header" href="#gridtemplate" id="gridtemplate">GridTemplate</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum GridTemplate {
+  Plain(Vec&lt;Unit&gt;),
+  Repeat(i32, Unit),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>In the <code>Plain</code> section, <code>Vec</code>'s length will be the column count of grid, and every <code>Unit</code> is the width of each column, <code>Repeat</code> just make this easier, every child are in the same width.</p>
 <h1><a class="header" href="#multicolumn" id="multicolumn">MultiColumn</a></h1>
+<p>The very easy way to layout our pages, maybe fantastic in the old web, it means, the true web, I like it. </p>
+<p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Multiple-column_Layout">Multiple-column layout</a>.</p>
+<h2><a class="header" href="#components--3" id="components--3">Components 📦</a></h2>
+<p>Congratulations! one compoent got shot, again.</p>
+<h3><a class="header" href="#multicolumn-1" id="multicolumn-1">MultiColumn</a></h3>
+<pre><code class="language-js">/* MultiColumn */
+import { Colors, Page, Elvis } from &quot;calling-elvis&quot;;
+const { Grid, Text, List } = Elvis;
+
+// Generate an `Grid`
+let myMultiColumn = MultiColumn(
+  List(
+    Text(&quot;Mercury&quot;),
+    Text(&quot;Venus&quot;),
+    Text(&quot;Earth&quot;),
+    Text(&quot;Mars&quot;),
+    Text(&quot;Jupiter&quot;),
+    Text(&quot;Saturn&quot;),
+    Text(&quot;Uranus&quot;),
+    Text(&quot;Neptune&quot;),
+    Text(&quot;Pluto&quot;),
+  ), {
+    color: Colors.red,
+    count: 3,
+    gap: 20,
+    style: MultiColumnStyle.Dotted,
+});
+
+Page(mySizedBox).render();
+</code></pre>
+<p>Homework, code a New York Times.</p>
+<h2><a class="header" href="#enums" id="enums">Enums</a></h2>
+<p>Mainly the style of <code>MultiColumn</code>.</p>
+<h3><a class="header" href="#multicolumnstyle" id="multicolumnstyle">MultiColumnStyle</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum MultiColumnStyle {
+  None,
+  Hidden,
+  Dotted,
+  Dashed,
+  Solid,
+  Double,
+  Groove,
+  Ridge,
+  Inset,
+  OutSet
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>If I were you, I will choose <code>MultiColumnStyle.Groove</code>, don't ask me why.</p>
 <h1><a class="header" href="#text" id="text">Text</a></h1>
 
                     </main>

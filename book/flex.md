@@ -17,7 +17,7 @@ const { Align, Text } = Elvis;
 // Generate an `Align`
 let myAlign = Align(
   Text("Align Elvis"), {
-    alignments: Alignments.Center,
+    align: Alignments.Center,
 });
 
 Page(mySizedBox).render();
@@ -64,14 +64,14 @@ Page(mySizedBox).render();
 let flex = Flex(
   List([
     Text("hi, I'm the Lunatic Component's child No.1"),
-	Text("hi, I'm the Lunatic Component's child No.2"),
-	Text("hi, I'm the Lunatic Component's child No.3"),
+    Text("hi, I'm the Lunatic Component's child No.2"),
+    Text("hi, I'm the Lunatic Component's child No.3"),
   )], {
     basis: FlexBasis.Auto,
     direction: FlexDirection.ColumnReverse,
-	grow: 1,
-	order: 1,
-	shrink: 2,
+    grow: 1,
+    order: 1,
+    shrink: 2,
     wrap: FlexWrap.Wrap,
 });
 ```
@@ -97,7 +97,7 @@ Both `Col` and `Row` are using `flex-start`, if you want to reverse the children
 
 ## Enums 🍩
 
-Elvis Layout Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum `Aligment` here, `Alignment` is used by all `Flex` components and `Container` in Elvis.
+Elvis `Layout` Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum `Aligment` here, `Alignment` is used by all `Flex` components and `Container` in Elvis.
 
 ### Alignment
 
@@ -125,8 +125,7 @@ pub enum FlexBasis {
   MaxContent,
   MinContent,
   FitContent,
-  // em default
-  Number(f64),
+  Number(Unit),
 }
 ```
 Well, lunatic `FlexBasis` in Rust source code.

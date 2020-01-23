@@ -149,6 +149,83 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#grid" id="grid">Grid</a></h1>
+<p>Here is the <code>Grid</code> section, Just let Elvis show you how <code>Grid</code> Grid.</p>
+<h2><a class="header" href="#components-" id="components-">Components 📦</a></h2>
+<p><code>Grid</code> just have one component now, as you can see, <code>Grid</code>.</p>
+<h3><a class="header" href="#grid-1" id="grid-1">Grid</a></h3>
+<pre><code class="language-js">/* Grid */
+import { Page, Elvis } from &quot;calling-elvis&quot;;
+const { Grid, Text, List } = Elvis;
+
+// Generate an `Grid`
+let myGrid = Grid(
+  List(
+    Text(&quot;Mercury&quot;),
+    Text(&quot;Venus&quot;),
+    Text(&quot;Earth&quot;),
+    Text(&quot;Mars&quot;),
+    Text(&quot;Jupiter&quot;),
+    Text(&quot;Saturn&quot;),
+    Text(&quot;Uranus&quot;),
+    Text(&quot;Neptune&quot;),
+    Text(&quot;Pluto&quot;),
+  ), {
+    autoRows: GridAutoRows.Auto(100),
+    // col: 3,
+    // gap: 2,
+    // row: 3,
+    // template: GridTemplate.Repeat(3, 1),
+});
+
+Page(mySizedBox).render();
+</code></pre>
+<p>Aah, duplicate name occurs, take it ease, only one <code>Grid</code> Component in Elvis too.</p>
+<pre><code class="language-js">/* Grid */
+import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
+const { Grid, Text, List } = Elvis;
+
+// Generate an `Grid`
+let myGrid = Grid(
+  List(
+    Text(&quot;Mercury&quot;),
+    Text(&quot;Venus&quot;),
+    Text(&quot;Earth&quot;),
+    Text(&quot;Mars&quot;),
+    Text(&quot;Jupiter&quot;),
+    Text(&quot;Saturn&quot;),
+    Text(&quot;Uranus&quot;),
+    Text(&quot;Neptune&quot;),
+    Text(&quot;Pluto&quot;),
+  ),
+);
+
+Page(mySizedBox).render();
+</code></pre>
+<p><code>Grid</code> is quite complex in some way, usually, we just <code>Grid</code> our contains.</p>
+<h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
+<p>Elvis <code>Grid</code> follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids">Grids</a>, but trims some properties just like <code>Flex</code>.</p>
+<h3><a class="header" href="#gridautorows" id="gridautorows">GridAutoRows</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum GridAutoRows {
+  Auto(Unit, Option&lt;Unit&gt;),
+  Fixed(Unit),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>AutoRows</code> affect the width of Grid children, and the <code>Auto</code> choice use the <code>minmax</code> function in css, if doesn't pass the second argument, it will be <code>auto</code> in meaning.</p>
+<h3><a class="header" href="#gridtemplate" id="gridtemplate">GridTemplate</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum GridTemplate {
+  Plain(Vec&lt;Unit&gt;),
+  Repeat(i32, Unit),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>In the <code>Plain</code> section, <code>Vec</code>'s length will be the column count of grid, and every <code>Unit</code> is the width of each column, <code>Repeat</code> just make this easier, every child are in the same width.</p>
 
                     </main>
 

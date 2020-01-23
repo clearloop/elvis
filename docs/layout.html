@@ -178,13 +178,70 @@ const { SizedBox, Text } = Elvis;
 // Generate a `SizedBox`
 let mySizedBox = SizedBox(
   Text(&quot;My SizedBox&quot;), {
-    height: 2,
-    width: 2,
+    height: 42,
+    width: 42,
 });
 
 Page(mySizedBox).render();
 </code></pre>
 <p><code>SizedBox</code> just has <code>width</code> and <code>height</code> two arguments, we use this component to take some white space usually.</p>
+<h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
+<p>Some Enums to help <code>Layout</code> stable.</p>
+<h3><a class="header" href="#unit" id="unit">Unit</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum Unit {
+  Ch(f64),
+  Cm(f64),
+  Dpi(f64),
+  Dpcm(f64),
+  Dppx(f64),
+  Em(f64),
+  Fr(f64),
+  In(f64)
+  Mm(f64),
+  Pc(f64),
+  Pt(f64),
+  Px(f64),
+  Q(f64),
+  Rem(f64),
+  Vh(f64),
+  Vmax(f64),
+  Vmin(f64),
+  Vw(f64),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>Units</code> Follows <a href="https://drafts.csswg.org/css-values-3">CSS Values 3</a> drafted in csswg.org, if we don't use <code>Unit.X()</code> in number field, Elvis will choose <code>Unit.Px</code> by default.</p>
+<h4><a class="header" href="#absolute-lengths" id="absolute-lengths">Absolute Lengths</a></h4>
+<table><thead><tr><th>unit</th><th>name</th><th>equivalence</th></tr></thead><tbody>
+<tr><td>cm</td><td>centermeters</td><td>1cm = 96px/2.54</td></tr>
+<tr><td>mm</td><td>millimeters</td><td>1mm == 1/10th of 1cm</td></tr>
+<tr><td>Q</td><td>quarter-millimeters</td><td>1Q = 1/40th of 1cm</td></tr>
+<tr><td>in</td><td>inches</td><td>1in = 2.54cm = 96px</td></tr>
+<tr><td>pc</td><td>picas</td><td>1pc = 1/6th of 1in</td></tr>
+<tr><td>pt</td><td>points</td><td>1pt = 1/72th of 1in</td></tr>
+<tr><td>px</td><td>pixels</td><td>1px = 1/96th of 1in</td></tr>
+</tbody></table>
+<h4><a class="header" href="#relative-lengths" id="relative-lengths">Relative Lengths</a></h4>
+<table><thead><tr><th>unit</th><th>relative to</th></tr></thead><tbody>
+<tr><td>em</td><td>font size of element</td></tr>
+<tr><td>ex</td><td>x-height of element's font</td></tr>
+<tr><td>ch</td><td>width of the &quot;0&quot; (ZERO, U+0030) glyph in the element’s font</td></tr>
+<tr><td>rem</td><td>font size of the root element</td></tr>
+<tr><td>vw</td><td>1% of viewport’s width</td></tr>
+<tr><td>vh</td><td>1% of viewport’s height</td></tr>
+<tr><td>vmin</td><td>1% of viewport’s smaller dimension</td></tr>
+<tr><td>vmax</td><td>1% of viewport’s larger dimension</td></tr>
+</tbody></table>
+<h4><a class="header" href="#others" id="others">Others</a></h4>
+<table><thead><tr><th>unit</th><th>represents</th></tr></thead><tbody>
+<tr><td>dpi</td><td>Dots per inch</td></tr>
+<tr><td>dpcm</td><td>Dots per centmeter</td></tr>
+<tr><td>dppx</td><td>Dots per px unit</td></tr>
+<tr><td>fr</td><td>This unit represents one fraction of the available space in the grid container.</td></tr>
+</tbody></table>
 
                     </main>
 

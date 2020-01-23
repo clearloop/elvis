@@ -149,6 +149,58 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#multicolumn" id="multicolumn">MultiColumn</a></h1>
+<p>The very easy way to layout our pages, maybe fantastic in the old web, it means, the true web, I like it. </p>
+<p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Multiple-column_Layout">Multiple-column layout</a>.</p>
+<h2><a class="header" href="#components-" id="components-">Components 📦</a></h2>
+<p>Congratulations! one compoent got shot, again.</p>
+<h3><a class="header" href="#multicolumn-1" id="multicolumn-1">MultiColumn</a></h3>
+<pre><code class="language-js">/* MultiColumn */
+import { Colors, Page, Elvis } from &quot;calling-elvis&quot;;
+const { Grid, Text, List } = Elvis;
+
+// Generate an `Grid`
+let myMultiColumn = MultiColumn(
+  List(
+    Text(&quot;Mercury&quot;),
+    Text(&quot;Venus&quot;),
+    Text(&quot;Earth&quot;),
+    Text(&quot;Mars&quot;),
+    Text(&quot;Jupiter&quot;),
+    Text(&quot;Saturn&quot;),
+    Text(&quot;Uranus&quot;),
+    Text(&quot;Neptune&quot;),
+    Text(&quot;Pluto&quot;),
+  ), {
+    color: Colors.red,
+    count: 3,
+    gap: 20,
+    style: MultiColumnStyle.Dotted,
+});
+
+Page(mySizedBox).render();
+</code></pre>
+<p>Homework, code a New York Times.</p>
+<h2><a class="header" href="#enums" id="enums">Enums</a></h2>
+<p>Mainly the style of <code>MultiColumn</code>.</p>
+<h3><a class="header" href="#multicolumnstyle" id="multicolumnstyle">MultiColumnStyle</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum MultiColumnStyle {
+  None,
+  Hidden,
+  Dotted,
+  Dashed,
+  Solid,
+  Double,
+  Groove,
+  Ridge,
+  Inset,
+  OutSet
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>If I were you, I will choose <code>MultiColumnStyle.Groove</code>, don't ask me why.</p>
 
                     </main>
 

@@ -16,12 +16,10 @@ Writing web pages in **pure javascript** using wasm bindings, **without** `jsx` 
 
 🧙‍♂️ 🤹‍♂️ Here we go! Roll up, roll up for the mystery tour, the magical mystery tour is waiting to take you away! Hoping to take you away! Coming to take you away! Dying to take you away, take you today! 🛸
 
-## Example 🎻
-
-Let me take you down, cause I'm going to,
+🎻 Let me take you down, cause I'm going to,
 
 ```js
-/* your elvis file */
+/* my elvis file */
 import { Elvis, Page, TextStyle } from "calling-elvis";
 cnost { Center, Text } = Elvis;
 
@@ -29,12 +27,12 @@ Page(
   Center(
     Text(
       "Calling Elvis",
-	  new TextStyle({
-	    bold: true,
-		color: "red",
-		italic: true,
-		size: 42.0
-	  }),
+      new TextStyle({
+        bold: true,
+        color: "red",
+        italic: true,
+        size: 42.0
+      }),
     ),
   ),
 ).render();
