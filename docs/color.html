@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Layout - The Elvis Book</title>
+        <title>Color - The Elvis Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="layout.html" class="active"><strong aria-hidden="true">3.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">3.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">3.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">3.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">4.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">4.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">4.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">3.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">3.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">3.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">3.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">4.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html" class="active"><strong aria-hidden="true">4.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">4.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,58 +148,71 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#layout" id="layout">Layout</a></h1>
-<p>Elvis layout follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout">CSS Layout</a>.</p>
-<h2><a class="header" href="#components-" id="components-">Components 📦</a></h2>
-<p>Elvis Layout mainly contains <a href="/flex.html"><code>Flex</code></a> and <a href="/grid.html"><code>Grid</code></a>, btw, Elvis offerrs two basic components <code>Container</code> and <code>SizedBox</code> for simple usages.</p>
-<h3><a class="header" href="#container" id="container">Container</a></h3>
-<pre><code class="language-js">/* Container */
-import { Page, Elvis, Alignments, Color } from &quot;calling-elvis&quot;;
-const { SizedBox, Text } = Elvis;
-
-// Generate a `Container`
-let myContainer = Container(
-  Text(&quot;Where is my AJ-1?&quot;), {
-    alignments: Alignments.Center,
-    height: 42,
-    margin: 10,
-    padding: 10,
-    width: 42,
-    color: Colors.Black,
-    backgroundColor: Colors.Red,
-});
-
-Page(mySizedBox).render();
-</code></pre>
-<p>The <code>Alignments</code> enum is from <a href="/flex.html">Flex</a>, to be honest, <code>Container</code> component is a part of <code>Flex</code> family, but he is too brilliant to stay in <code>Flex</code> family, <code>Layout</code> calls him.</p>
-<h3><a class="header" href="#sizedbox" id="sizedbox">SizedBox</a></h3>
-<pre><code class="language-js">/* SizedBox */
-import { Page, Elvis } from &quot;calling-elvis&quot;;
-const { SizedBox, Text } = Elvis;
-
-// Generate a `SizedBox`
-let mySizedBox = SizedBox(
-  Text(&quot;My SizedBox&quot;), {
-    height: 42,
-    width: 42,
-});
-
-Page(mySizedBox).render();
-</code></pre>
-<p><code>SizedBox</code> just has <code>width</code> and <code>height</code> two arguments, we use this component to take some white space usually.</p>
+                        <h1><a class="header" href="#color" id="color">Color</a></h1>
+<p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">CSS Color Value</a></p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum Colors {
+  RGBA(i32, i32, i32, f64),
+  Hex(String),
+  HSL(Unit, i32, i32),
+  Plain(String),
+  Amber,
+  AmberAccent,
+  Black,
+  Blue,
+  BlueAccent,
+  BlueGrey,
+  Brown,
+  Cyan,
+  CyanAccent,
+  DeepOrange,
+  DeepOrangeAccent,
+  DeepPurple,
+  DeepPurpleAccent,
+  Green,
+  GreenAccent,
+  Grey,
+  Indigo,
+  IndigoAccent,
+  LightBlue,
+  LightBlueAccent,
+  LightGreen,
+  LightGreenAccent,
+  Lime,
+  LimeAccent,
+  Orange,
+  OrangeAccent,
+  Pink,
+  PinkAccent,
+  Purple,
+  PurpleAccent,
+  Red,
+  RedAccent,
+  Teal,
+  TealAccent,
+  Transparent,
+  White,
+  Yellow,
+  YellowAccent,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>So many colors...well, the <code>Colors</code> above is Elvis' color system.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="dom.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="values.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="flex.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="unit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -211,13 +224,13 @@ Page(mySizedBox).render();
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="dom.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="values.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="flex.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="unit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.</strong> Image</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">2.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">2.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">2.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">2.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="text.html" class="active"><strong aria-hidden="true">3.</strong> Text</a></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html" class="active"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">3.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">3.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">3.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">3.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">4.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">4.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">4.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,17 +149,43 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#text" id="text">Text</a></h1>
+<pre><code class="language-js">/* Text */
+import { Elvis, Page, TextStyle, Colors } from &quot;calling-elvis&quot;;
+cnost { Center, Text } = Elvis;
+
+Page(
+  Center(
+    Text(
+      &quot;Calling Elvis&quot;,
+      new TextStyle({
+        bold: true,
+        color: Colors.Red,
+        italic: true,
+        size: 42.0,
+        weight: 700,
+        height: 20,
+        stretch: 100,
+      }),
+    ),
+  ),
+).render();
+</code></pre>
+<p><code>Text</code> might be the most popular spider from Mars, Does it know the Great <code>Ziggy Stardust</code>?</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="multi_column.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="image.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
+                        
+                            <a rel="next" href="dom.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -169,11 +195,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="multi_column.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="image.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
+                
+                    <a href="dom.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.</strong> Image</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">2.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">2.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">2.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">2.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">3.</strong> Text</a></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">3.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">3.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">3.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">3.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">4.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">4.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">4.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -154,7 +154,7 @@
 <p>Is anybody home?</p>
 <p>As we know, <code>Elvis</code> is a famous rock star, and both a famous rock song named <code>Calling Elvis</code> wrote by <code>Dire Straits</code> which inspired a unknown rock star to write down these chords(code || words).</p>
 <p>For now, Elvis, the rock star, will rise, once again, <strong>beyond</strong> the internet —— truely your wasm web library, 🦀 + 🕸  =&gt; 💖</p>
-<p><a href="https://github.com/clearloop/elvis">The Evlis Book</a> mainly talks about the usage of the npm package <code>calling-elvis</code>, and if you want to use <code>&quot;low-level&quot;</code> api rusting the web, plz check out <a href="https://docs.rs/elvis">elvis' rust doc</a>.</p>
+<p><a href="https://clearloop.github.io/elviis">The Evlis Book</a> mainly talks about the usage of the npm package <code>calling-elvis</code>, and if you want to use <code>&quot;low-level&quot;</code> api rusting the web, plz check out <a href="https://docs.rs/elvis">elvis' rust doc</a>.</p>
 <h2><a class="header" href="#goals-" id="goals-">Goals 🎯</a></h2>
 <p>Writing web pages in <strong>pure javascript</strong> using wasm bindings, <strong>without</strong> <code>jsx</code> or <code>any other</code> complex syntax, <strong>just javascript</strong>, of course, <strong>not</strong> writing <code>html</code> nor <code>css</code> either.</p>
 <h2><a class="header" href="#roll-up-for-the-magical-mystery-tour-" id="roll-up-for-the-magical-mystery-tour-">Roll up for the Magical Mystery Tour! 🌈</a></h2>
@@ -181,24 +181,85 @@ Page(
 <p><strong>Strawberry Fields</strong> 🧑‍🚀</p>
 <h2><a class="header" href="#license" id="license">LICENSE</a></h2>
 <p>Heartbreak Hotel.</p>
+<h1><a class="header" href="#components" id="components">Components</a></h1>
 <h1><a class="header" href="#image" id="image">Image</a></h1>
+<pre><code class="language-js">/* Imageoo */
+import { Page, Elvis } from &quot;calling-elvis&quot;;
+const { Text, Image } = Elvis;
+
+// Generate a `Image`
+let myImage = Image({
+  child: Center(
+    Text(&quot;Hallo, Spaceboy!&quot;)
+  ),
+  url: &quot;https://images-assets.nasa.gov/image/S65-34635/S65-34635~orig.jpg&quot;,
+  height: 42,
+  width: 42,
+});
+
+Page(myImage).render();
+</code></pre>
+<p>If you don't want <code>Image</code> to play in background anonymously, just remove the child field.</p>
+<h1><a class="header" href="#text" id="text">Text</a></h1>
+<pre><code class="language-js">/* Text */
+import { Elvis, Page, TextStyle, Colors } from &quot;calling-elvis&quot;;
+cnost { Center, Text } = Elvis;
+
+Page(
+  Center(
+    Text(
+      &quot;Calling Elvis&quot;,
+      new TextStyle({
+        bold: true,
+        color: Colors.Red,
+        italic: true,
+        size: 42.0,
+        weight: 700,
+        height: 20,
+        stretch: 100,
+      }),
+    ),
+  ),
+).render();
+</code></pre>
+<p><code>Text</code> might be the most popular spider from Mars, Does it know the Great <code>Ziggy Stardust</code>?</p>
+<h1><a class="header" href="#dom" id="dom">DOM</a></h1>
+<p>Like the other UI libraries, webassemblly Elvis arms a Virtual-DOM, too.</p>
+<pre><code class="language-js">import { Component, GestureDetector, Elvis } from &quot;calling-elvis&quot;;
+const { Center, Text } = Elvis;
+
+class MyComponent extends Component {
+  state = {
+    count: 0,
+  }
+  
+  create() {
+    
+  }
+}
+</code></pre>
+<h2><a class="header" href="#create" id="create">Create</a></h2>
+<h2><a class="header" href="#update" id="update">Update</a></h2>
+<h2><a class="header" href="#drop" id="drop">Drop</a></h2>
 <h1><a class="header" href="#layout" id="layout">Layout</a></h1>
 <p>Elvis layout follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout">CSS Layout</a>.</p>
 <h2><a class="header" href="#components-" id="components-">Components 📦</a></h2>
 <p>Elvis Layout mainly contains <a href="/flex.html"><code>Flex</code></a> and <a href="/grid.html"><code>Grid</code></a>, btw, Elvis offerrs two basic components <code>Container</code> and <code>SizedBox</code> for simple usages.</p>
 <h3><a class="header" href="#container" id="container">Container</a></h3>
 <pre><code class="language-js">/* Container */
-import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
+import { Page, Elvis, Alignments, Color } from &quot;calling-elvis&quot;;
 const { SizedBox, Text } = Elvis;
 
 // Generate a `Container`
 let myContainer = Container(
-  Text(&quot;My Container&quot;), {
+  Text(&quot;Where is my AJ-1?&quot;), {
     alignments: Alignments.Center,
     height: 42,
     margin: 10,
     padding: 10,
     width: 42,
+    color: Colors.Black,
+    backgroundColor: Colors.Red,
 });
 
 Page(mySizedBox).render();
@@ -219,63 +280,6 @@ let mySizedBox = SizedBox(
 Page(mySizedBox).render();
 </code></pre>
 <p><code>SizedBox</code> just has <code>width</code> and <code>height</code> two arguments, we use this component to take some white space usually.</p>
-<h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
-<p>Some Enums to help <code>Layout</code> stable.</p>
-<h3><a class="header" href="#unit" id="unit">Unit</a></h3>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>pub enum Unit {
-  Ch(f64),
-  Cm(f64),
-  Dpi(f64),
-  Dpcm(f64),
-  Dppx(f64),
-  Em(f64),
-  Fr(f64),
-  In(f64)
-  Mm(f64),
-  Pc(f64),
-  Pt(f64),
-  Px(f64),
-  Q(f64),
-  Rem(f64),
-  Vh(f64),
-  Vmax(f64),
-  Vmin(f64),
-  Vw(f64),
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p><code>Units</code> Follows <a href="https://drafts.csswg.org/css-values-3">CSS Values 3</a> drafted in csswg.org, if we don't use <code>Unit.X()</code> in number field, Elvis will choose <code>Unit.Px</code> by default.</p>
-<h4><a class="header" href="#absolute-lengths" id="absolute-lengths">Absolute Lengths</a></h4>
-<table><thead><tr><th>unit</th><th>name</th><th>equivalence</th></tr></thead><tbody>
-<tr><td>cm</td><td>centermeters</td><td>1cm = 96px/2.54</td></tr>
-<tr><td>mm</td><td>millimeters</td><td>1mm == 1/10th of 1cm</td></tr>
-<tr><td>Q</td><td>quarter-millimeters</td><td>1Q = 1/40th of 1cm</td></tr>
-<tr><td>in</td><td>inches</td><td>1in = 2.54cm = 96px</td></tr>
-<tr><td>pc</td><td>picas</td><td>1pc = 1/6th of 1in</td></tr>
-<tr><td>pt</td><td>points</td><td>1pt = 1/72th of 1in</td></tr>
-<tr><td>px</td><td>pixels</td><td>1px = 1/96th of 1in</td></tr>
-</tbody></table>
-<h4><a class="header" href="#relative-lengths" id="relative-lengths">Relative Lengths</a></h4>
-<table><thead><tr><th>unit</th><th>relative to</th></tr></thead><tbody>
-<tr><td>em</td><td>font size of element</td></tr>
-<tr><td>ex</td><td>x-height of element's font</td></tr>
-<tr><td>ch</td><td>width of the &quot;0&quot; (ZERO, U+0030) glyph in the element’s font</td></tr>
-<tr><td>rem</td><td>font size of the root element</td></tr>
-<tr><td>vw</td><td>1% of viewport’s width</td></tr>
-<tr><td>vh</td><td>1% of viewport’s height</td></tr>
-<tr><td>vmin</td><td>1% of viewport’s smaller dimension</td></tr>
-<tr><td>vmax</td><td>1% of viewport’s larger dimension</td></tr>
-</tbody></table>
-<h4><a class="header" href="#others" id="others">Others</a></h4>
-<table><thead><tr><th>unit</th><th>represents</th></tr></thead><tbody>
-<tr><td>dpi</td><td>Dots per inch</td></tr>
-<tr><td>dpcm</td><td>Dots per centmeter</td></tr>
-<tr><td>dppx</td><td>Dots per px unit</td></tr>
-<tr><td>fr</td><td>This unit represents one fraction of the available space in the grid container.</td></tr>
-</tbody></table>
 <h1><a class="header" href="#flex" id="flex">Flex</a></h1>
 <p>Elvis Flex follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">CSS Flexible Box Layout</a></p>
 <h2><a class="header" href="#components--1" id="components--1">Components 📦</a></h2>
@@ -351,7 +355,7 @@ let myAlign = Row([
 Page(mySizedBox).render();
 </code></pre>
 <p>Both <code>Col</code> and <code>Row</code> are using <code>flex-start</code>, if you want to reverse the children of them, better to work on the list order.</p>
-<h2><a class="header" href="#enums--1" id="enums--1">Enums 🍩</a></h2>
+<h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
 <p>Elvis <code>Layout</code> Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum <code>Aligment</code> here, <code>Alignment</code> is used by all <code>Flex</code> components and <code>Container</code> in Elvis.</p>
 <h3><a class="header" href="#alignment" id="alignment">Alignment</a></h3>
 <p>Here is the <code>Alignment</code> defination in rust source code.</p>
@@ -453,7 +457,7 @@ let myGrid = Grid(
 Page(mySizedBox).render();
 </code></pre>
 <p><code>Grid</code> is quite complex in some way, usually, we just <code>Grid</code> our contains.</p>
-<h2><a class="header" href="#enums--2" id="enums--2">Enums 🍩</a></h2>
+<h2><a class="header" href="#enums--1" id="enums--1">Enums 🍩</a></h2>
 <p>Elvis <code>Grid</code> follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids">Grids</a>, but trims some properties just like <code>Flex</code>.</p>
 <h3><a class="header" href="#gridautorows" id="gridautorows">GridAutoRows</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
@@ -509,7 +513,7 @@ let myMultiColumn = MultiColumn(
 Page(mySizedBox).render();
 </code></pre>
 <p>Homework, code a New York Times.</p>
-<h2><a class="header" href="#enums" id="enums">Enums</a></h2>
+<h2><a class="header" href="#enums--2" id="enums--2">Enums 🍩</a></h2>
 <p>Mainly the style of <code>MultiColumn</code>.</p>
 <h3><a class="header" href="#multicolumnstyle" id="multicolumnstyle">MultiColumnStyle</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
@@ -530,7 +534,115 @@ Page(mySizedBox).render();
 <span class="boring">}
 </span></code></pre></pre>
 <p>If I were you, I will choose <code>MultiColumnStyle.Groove</code>, don't ask me why.</p>
-<h1><a class="header" href="#text" id="text">Text</a></h1>
+<h1><a class="header" href="#values" id="values">Values</a></h1>
+<h1><a class="header" href="#color" id="color">Color</a></h1>
+<p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">CSS Color Value</a></p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum Colors {
+  RGBA(i32, i32, i32, f64),
+  Hex(String),
+  HSL(Unit, i32, i32),
+  Plain(String),
+  Amber,
+  AmberAccent,
+  Black,
+  Blue,
+  BlueAccent,
+  BlueGrey,
+  Brown,
+  Cyan,
+  CyanAccent,
+  DeepOrange,
+  DeepOrangeAccent,
+  DeepPurple,
+  DeepPurpleAccent,
+  Green,
+  GreenAccent,
+  Grey,
+  Indigo,
+  IndigoAccent,
+  LightBlue,
+  LightBlueAccent,
+  LightGreen,
+  LightGreenAccent,
+  Lime,
+  LimeAccent,
+  Orange,
+  OrangeAccent,
+  Pink,
+  PinkAccent,
+  Purple,
+  PurpleAccent,
+  Red,
+  RedAccent,
+  Teal,
+  TealAccent,
+  Transparent,
+  White,
+  Yellow,
+  YellowAccent,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>So many colors...well, the <code>Colors</code> above is Elvis' color system.</p>
+<h1><a class="header" href="#unit" id="unit">Unit</a></h1>
+<p><code>Units</code> Follows <a href="https://drafts.csswg.org/css-values-3">CSS Values 3</a> drafted in csswg.org.</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum Unit {
+  Ch(f64),
+  Cm(f64),
+  Dpi(f64),
+  Dpcm(f64),
+  Dppx(f64),
+  Em(f64),
+  Fr(f64),
+  In(f64)
+  Mm(f64),
+  Pc(f64),
+  Pt(f64),
+  Px(f64),
+  Q(f64),
+  Rem(f64),
+  Vh(f64),
+  Vmax(f64),
+  Vmin(f64),
+  Vw(f64),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>If we don't use <code>Unit.X()</code> in number field, Elvis will choose <code>Unit.Px</code> by default.</p>
+<h2><a class="header" href="#absolute-lengths" id="absolute-lengths">Absolute Lengths</a></h2>
+<table><thead><tr><th>unit</th><th>name</th><th>equivalence</th></tr></thead><tbody>
+<tr><td>cm</td><td>centermeters</td><td>1cm = 96px/2.54</td></tr>
+<tr><td>mm</td><td>millimeters</td><td>1mm == 1/10th of 1cm</td></tr>
+<tr><td>Q</td><td>quarter-millimeters</td><td>1Q = 1/40th of 1cm</td></tr>
+<tr><td>in</td><td>inches</td><td>1in = 2.54cm = 96px</td></tr>
+<tr><td>pc</td><td>picas</td><td>1pc = 1/6th of 1in</td></tr>
+<tr><td>pt</td><td>points</td><td>1pt = 1/72th of 1in</td></tr>
+<tr><td>px</td><td>pixels</td><td>1px = 1/96th of 1in</td></tr>
+</tbody></table>
+<h2><a class="header" href="#relative-lengths" id="relative-lengths">Relative Lengths</a></h2>
+<table><thead><tr><th>unit</th><th>relative to</th></tr></thead><tbody>
+<tr><td>em</td><td>font size of element</td></tr>
+<tr><td>ex</td><td>x-height of element's font</td></tr>
+<tr><td>ch</td><td>width of the &quot;0&quot; (ZERO, U+0030) glyph in the element’s font</td></tr>
+<tr><td>rem</td><td>font size of the root element</td></tr>
+<tr><td>vw</td><td>1% of viewport’s width</td></tr>
+<tr><td>vh</td><td>1% of viewport’s height</td></tr>
+<tr><td>vmin</td><td>1% of viewport’s smaller dimension</td></tr>
+<tr><td>vmax</td><td>1% of viewport’s larger dimension</td></tr>
+</tbody></table>
+<h2><a class="header" href="#others" id="others">Others</a></h2>
+<table><thead><tr><th>unit</th><th>represents</th></tr></thead><tbody>
+<tr><td>dpi</td><td>Dots per inch</td></tr>
+<tr><td>dpcm</td><td>Dots per centmeter</td></tr>
+<tr><td>dppx</td><td>Dots per px unit</td></tr>
+<tr><td>fr</td><td>This unit represents one fraction of the available space in the grid container.</td></tr>
+</tbody></table>
 
                     </main>
 

@@ -38,7 +38,7 @@ Page(mySizedBox).render();
 
 Homework, code a New York Times.
 
-## Enums
+## Enums 🍩
 
 Mainly the style of `MultiColumn`.
 
