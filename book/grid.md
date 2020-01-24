@@ -1,5 +1,7 @@
 # Grid
 
+Follows MDN doc [Grids][1].
+
 Here is the `Grid` section, Just let Elvis show you how `Grid` Grid.
 
 ## Components 📦
@@ -64,7 +66,7 @@ Page(mySizedBox).render();
 
 ## Enums 🍩
 
-Elvis `Grid` follows the MDN doc [Grids][1], but trims some properties just like `Flex`.
+Grid `Grid` is hard to pronounce, most of time we don't need to do this.
 
 ### GridAutoRows
 ```rust
@@ -83,6 +85,6 @@ pub enum GridTemplate {
   Repeat(i32, Unit),
 }
 ```
-In the `Plain` section, `Vec`'s length will be the column count of grid, and every `Unit` is the width of each column, `Repeat` just make this easier, every child are in the same width.
+In the `Plain` choice, `Vec`'s length will be the column count of grid, and every `Unit` is the width of each column, `Repeat` just make this easier, every child are in the same width.
 
 [1]: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids

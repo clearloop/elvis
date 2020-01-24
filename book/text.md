@@ -3,7 +3,7 @@
 ```js
 /* Text */
 import { Elvis, Page, TextStyle, Colors } from "calling-elvis";
-cnost { Center, Text } = Elvis;
+const { Center, Text } = Elvis;
 
 Page(
   Center(

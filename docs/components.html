@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html" class="active"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">3.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">3.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">3.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">3.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">4.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">4.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">4.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html" class="active"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="link.html"><strong aria-hidden="true">1.2.</strong> Link</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.3.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="gesture.html"><strong aria-hidden="true">3.</strong> Gesture</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">4.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">4.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">4.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">4.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">5.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">6.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">6.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">6.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,6 +149,54 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#components" id="components">Components</a></h1>
+<p>A bunch of components is coming as they are...</p>
+<p><code>Elvis</code> just provides <code>Image</code> and <code>Text</code> for now, we've got apis to compose new <code>Component</code> in rust api, join us if you like this chapter of the score.</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>/// Elvis' Attribute is cool.
+/// 
+/// The no-cool part is, Elvis has a big Attributes Enum system, 
+/// it's more responsible to use enum than chars.
+pub struct Attribute {
+  key: Attributes,
+  value: AttributeValues,
+}
+
+/// Abstract ElvisElement
+pub trait ElvisElement {
+  // give birth to a new life
+  fn append(&amp;mut self);
+  
+  // deserialize html string to ElvisElement
+  fn de(s: String) -&gt; ElvisElement;
+  
+  // call her/his father
+  fn father(&amp;self) -&gt; ElvisElement;
+  
+  // if you don't have a girlfriend, new one.
+  fn new&lt;T&gt;() -&gt; T;
+  
+  // serlalize ElvisElement to html string
+  fn ser(&amp;self) -&gt; String;
+}
+
+/// Love is All you Need!
+///
+/// Speaking easily, you don't need to write the trait above,
+/// Elvis has a proc-macro to impl the trait defaultly, 
+/// just paint your child.
+#[derive(ElvisElement)]
+pub struct MyElement {
+  css: String,
+  tag: String,
+  attrs: Vec&lt;Attribute&gt;,
+  child: Arc&lt;AsRef&lt;ElvisElement&gt;&gt;,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#javascript" id="javascript">Javascript</a></h2>
+<p>It's quite intresting to dress componets up for a new face, we can do anything changing Elvis we want in Javascript, it depends on if you have the power to save the world, as we know, you are the one.</p>
 
                     </main>
 

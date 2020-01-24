@@ -1,10 +1,10 @@
 # Layout
 
-Elvis layout follows the MDN doc [CSS Layout][1].
+Follows MDN doc [CSS Layout][1].
 
 ## Components 📦
 
-Elvis Layout mainly contains [`Flex`](/flex.md) and [`Grid`](/grid.md), btw, Elvis offerrs two basic components `Container` and `SizedBox` for simple usages.
+Elvis Layout mainly contains `Flex` and `Grid`, btw, Elvis offerrs two basic components `Container` and `SizedBox` for simple usages.
 
 ### Container
 ```js
@@ -27,7 +27,7 @@ let myContainer = Container(
 Page(mySizedBox).render();
 ```
 
-The `Alignments` enum is from [Flex](/flex.md), to be honest, `Container` component is a part of `Flex` family, but he is too brilliant to stay in `Flex` family, `Layout` calls him.
+The `Alignments` enum is from `Flex`, to be honest, `Container` component is a part of `Flex` family, but he is too brilliant to stay in `Flex` family, `Layout` calls him.
 
 
 ### SizedBox

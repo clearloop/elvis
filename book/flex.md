@@ -1,6 +1,6 @@
 # Flex
 
-Elvis Flex follows the MDN doc [CSS Flexible Box Layout][1]
+Follows MDN doc [CSS Flexible Box Layout][1]
 
 
 ## Components 📦

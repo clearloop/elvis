@@ -1,6 +1,6 @@
 # Unit
 
-`Units` Follows [CSS Values 3][1] drafted in csswg.org.
+Follows [CSS Values 3][1] drafted in csswg.org.
 
 ```rust
 pub enum Unit {

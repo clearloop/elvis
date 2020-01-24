@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">3.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">3.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">3.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">3.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">4.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">4.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">4.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="link.html"><strong aria-hidden="true">1.2.</strong> Link</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.3.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="gesture.html"><strong aria-hidden="true">3.</strong> Gesture</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">4.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">4.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">4.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">4.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">5.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">6.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">6.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">6.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -182,8 +182,56 @@ Page(
 <h2><a class="header" href="#license" id="license">LICENSE</a></h2>
 <p>Heartbreak Hotel.</p>
 <h1><a class="header" href="#components" id="components">Components</a></h1>
+<p>A bunch of components is coming as they are...</p>
+<p><code>Elvis</code> just provides <code>Image</code> and <code>Text</code> for now, we've got apis to compose new <code>Component</code> in rust api, join us if you like this chapter of the score.</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>/// Elvis' Attribute is cool.
+/// 
+/// The no-cool part is, Elvis has a big Attributes Enum system, 
+/// it's more responsible to use enum than chars.
+pub struct Attribute {
+  key: Attributes,
+  value: AttributeValues,
+}
+
+/// Abstract ElvisElement
+pub trait ElvisElement {
+  // give birth to a new life
+  fn append(&amp;mut self);
+  
+  // deserialize html string to ElvisElement
+  fn de(s: String) -&gt; ElvisElement;
+  
+  // call her/his father
+  fn father(&amp;self) -&gt; ElvisElement;
+  
+  // if you don't have a girlfriend, new one.
+  fn new&lt;T&gt;() -&gt; T;
+  
+  // serlalize ElvisElement to html string
+  fn ser(&amp;self) -&gt; String;
+}
+
+/// Love is All you Need!
+///
+/// Speaking easily, you don't need to write the trait above,
+/// Elvis has a proc-macro to impl the trait defaultly, 
+/// just paint your child.
+#[derive(ElvisElement)]
+pub struct MyElement {
+  css: String,
+  tag: String,
+  attrs: Vec&lt;Attribute&gt;,
+  child: Arc&lt;AsRef&lt;ElvisElement&gt;&gt;,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#javascript" id="javascript">Javascript</a></h2>
+<p>It's quite intresting to dress componets up for a new face, we can do anything changing Elvis we want in Javascript, it depends on if you have the power to save the world, as we know, you are the one.</p>
 <h1><a class="header" href="#image" id="image">Image</a></h1>
-<pre><code class="language-js">/* Imageoo */
+<pre><code class="language-js">/* Image */
 import { Page, Elvis } from &quot;calling-elvis&quot;;
 const { Text, Image } = Elvis;
 
@@ -200,10 +248,11 @@ let myImage = Image({
 Page(myImage).render();
 </code></pre>
 <p>If you don't want <code>Image</code> to play in background anonymously, just remove the child field.</p>
+<h1><a class="header" href="#link" id="link">Link</a></h1>
 <h1><a class="header" href="#text" id="text">Text</a></h1>
 <pre><code class="language-js">/* Text */
 import { Elvis, Page, TextStyle, Colors } from &quot;calling-elvis&quot;;
-cnost { Center, Text } = Elvis;
+const { Center, Text } = Elvis;
 
 Page(
   Center(
@@ -225,7 +274,7 @@ Page(
 <p><code>Text</code> might be the most popular spider from Mars, Does it know the Great <code>Ziggy Stardust</code>?</p>
 <h1><a class="header" href="#dom" id="dom">DOM</a></h1>
 <p>Like the other UI libraries, webassemblly Elvis arms a Virtual-DOM, too.</p>
-<pre><code class="language-js">import { Component, GestureDetector, Elvis } from &quot;calling-elvis&quot;;
+<pre><code class="language-js">import { Component, Elvis, GestureDetector } from &quot;calling-elvis&quot;;
 const { Center, Text } = Elvis;
 
 class MyComponent extends Component {
@@ -234,17 +283,77 @@ class MyComponent extends Component {
   }
   
   create() {
-    
+    console.log(&quot;The first step is creating the dom.&quot;);
+  }
+  
+  update() {
+    console.log(&quot;Then we can update it, just like what you saw.&quot;);
+  }
+  
+  render() {
+    return Center(
+      GestureDetector(
+        Text(&quot;I'm a Elvis fans.&quot;),
+        onTap: () =&gt; this.setState({ 
+            count: this.count + 1 
+        });
+      ),
+    );
+  }
+  
+  drop() {
+    console.log(&quot;Don't be crue, if you want to drop me.&quot;);
   }
 }
 </code></pre>
-<h2><a class="header" href="#create" id="create">Create</a></h2>
-<h2><a class="header" href="#update" id="update">Update</a></h2>
-<h2><a class="header" href="#drop" id="drop">Drop</a></h2>
+<p>I won't tell you that I'm not only a <code>React</code> fan but also a <code>Flutter</code> fan, and you'll never know I'm a <code>Emacs</code> fan.</p>
+<h2><a class="header" href="#lifecycle" id="lifecycle">LifeCycle</a></h2>
+<p>Already knew you care about lifecycles, Elvis will never force you to recite 11 or more methods, Elvis just got 3, and it is enough ; )</p>
+<p>Furthermore, to be serious, we don't recommend you to write big projects such as <code>facebook</code>, <code>reddit</code>, or <code>twitter</code> calling Elvis, <code>Elvis</code> is under <strong>Proof-of-Concept</strong> for now, and...you know, we <strong>strongly recommend</strong> you to use Elvis building your persenol website, make the web better, more interesting, awesome as it has never been 🌈</p>
+<p>And if you are building a rocky start-up project, believe me, <strong>CALLING ELVIS</strong>, and the force will be with you!</p>
+<p>Life Story, Love and Glory.</p>
+<h3><a class="header" href="#diff" id="diff">Diff</a></h3>
+<p>Elvis' diff algorithm is quite simple <strong>flying with wasm</strong>, we compare the new node and the old one using dps, and then patch the updates to the old one.</p>
+<p>A TreeNode in Elvis is like this: </p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>#[derive(Clone, Eq, PartEq)]
+pub struct TreeNode {
+  css: CSS,
+  tag: String,
+  attrs: Vec&lt;Attribute&gt;,
+  child: Arc&lt;AsRef&lt;TreeNode&gt;&gt;,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#patch" id="patch">Patch</a></h3>
+<p>Elvis prefers to cure the naughty node's father node, if there are complex changes inside it, for Example: </p>
+<pre><code class="language-html">&lt;father :=&quot;I'm the naughty nodes' father&quot;&gt;
+  &lt;naughty&gt;Up&lt;/naughty&gt;
+  &lt;naughty&gt;Side&lt;/naughty&gt;
+  &lt;naughty&gt;Down&lt;/naughty&gt;
+&lt;/father&gt;
+</code></pre>
+<p>Now we upside down the <code>Up</code>, <code>Side</code>, <code>Down</code> List:</p>
+<pre><code class="language-html">&lt;father :=&quot;plz don't make me heartbreak for twice.&quot;&gt;
+  &lt;naughty&gt;Down&lt;/naughty&gt;
+  &lt;naughty&gt;Side&lt;/naughty&gt;
+  &lt;naughty&gt;Up&lt;/naughty&gt;
+&lt;/father&gt;
+</code></pre>
+<p>Elvis with not try to swap <code>&lt;li&gt;Up&lt;/li&gt;</code> and <code>&lt;li&gt;Down&lt;/li&gt;</code>, it will operate DOM twice over, we just replace the whole <code>&lt;ol&gt;...&lt;/ol&gt;</code> for once.</p>
+<h1><a class="header" href="#gesture" id="gesture">Gesture</a></h1>
+<p><code>Event</code> and <code>Gesture</code> are out of wasm, this is not cool, but still awesome, <code>Elvis</code> implement these two trouble maker in <code>Typescript</code>, because <code>wasm-bindgen</code> doesn't support passing javascript <code>Object</code> to rust for now, BUT, it will be totally cool one day.</p>
+<h2><a class="header" href="#gesturedetector" id="gesturedetector">GestureDetector</a></h2>
+<pre><code class="language-js">class GestureDetector {
+  onTap: function(e: Event): any;
+}
+</code></pre>
 <h1><a class="header" href="#layout" id="layout">Layout</a></h1>
-<p>Elvis layout follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout">CSS Layout</a>.</p>
+<p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout">CSS Layout</a>.</p>
 <h2><a class="header" href="#components-" id="components-">Components 📦</a></h2>
-<p>Elvis Layout mainly contains <a href="/flex.html"><code>Flex</code></a> and <a href="/grid.html"><code>Grid</code></a>, btw, Elvis offerrs two basic components <code>Container</code> and <code>SizedBox</code> for simple usages.</p>
+<p>Elvis Layout mainly contains <code>Flex</code> and <code>Grid</code>, btw, Elvis offerrs two basic components <code>Container</code> and <code>SizedBox</code> for simple usages.</p>
 <h3><a class="header" href="#container" id="container">Container</a></h3>
 <pre><code class="language-js">/* Container */
 import { Page, Elvis, Alignments, Color } from &quot;calling-elvis&quot;;
@@ -264,7 +373,7 @@ let myContainer = Container(
 
 Page(mySizedBox).render();
 </code></pre>
-<p>The <code>Alignments</code> enum is from <a href="/flex.html">Flex</a>, to be honest, <code>Container</code> component is a part of <code>Flex</code> family, but he is too brilliant to stay in <code>Flex</code> family, <code>Layout</code> calls him.</p>
+<p>The <code>Alignments</code> enum is from <code>Flex</code>, to be honest, <code>Container</code> component is a part of <code>Flex</code> family, but he is too brilliant to stay in <code>Flex</code> family, <code>Layout</code> calls him.</p>
 <h3><a class="header" href="#sizedbox" id="sizedbox">SizedBox</a></h3>
 <pre><code class="language-js">/* SizedBox */
 import { Page, Elvis } from &quot;calling-elvis&quot;;
@@ -281,7 +390,7 @@ Page(mySizedBox).render();
 </code></pre>
 <p><code>SizedBox</code> just has <code>width</code> and <code>height</code> two arguments, we use this component to take some white space usually.</p>
 <h1><a class="header" href="#flex" id="flex">Flex</a></h1>
-<p>Elvis Flex follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">CSS Flexible Box Layout</a></p>
+<p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">CSS Flexible Box Layout</a></p>
 <h2><a class="header" href="#components--1" id="components--1">Components 📦</a></h2>
 <p>The very basic core of <code>Flex Layout</code> components is called <code>Flex</code>, unfortunatly, it contains almost all css flex properties, not easy to use, that's why elvis composes some &quot;newbie&quot; components as well.</p>
 <h3><a class="header" href="#align" id="align">Align</a></h3>
@@ -404,6 +513,7 @@ pub enum Alignment {
 </span></code></pre></pre>
 <p>Lunatic <code>FlexDirection</code>, you know it.</p>
 <h1><a class="header" href="#grid" id="grid">Grid</a></h1>
+<p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids">Grids</a>.</p>
 <p>Here is the <code>Grid</code> section, Just let Elvis show you how <code>Grid</code> Grid.</p>
 <h2><a class="header" href="#components--2" id="components--2">Components 📦</a></h2>
 <p><code>Grid</code> just have one component now, as you can see, <code>Grid</code>.</p>
@@ -458,7 +568,7 @@ Page(mySizedBox).render();
 </code></pre>
 <p><code>Grid</code> is quite complex in some way, usually, we just <code>Grid</code> our contains.</p>
 <h2><a class="header" href="#enums--1" id="enums--1">Enums 🍩</a></h2>
-<p>Elvis <code>Grid</code> follows the MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids">Grids</a>, but trims some properties just like <code>Flex</code>.</p>
+<p>Grid <code>Grid</code> is hard to pronounce, most of time we don't need to do this.</p>
 <h3><a class="header" href="#gridautorows" id="gridautorows">GridAutoRows</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
@@ -480,10 +590,10 @@ Page(mySizedBox).render();
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>In the <code>Plain</code> section, <code>Vec</code>'s length will be the column count of grid, and every <code>Unit</code> is the width of each column, <code>Repeat</code> just make this easier, every child are in the same width.</p>
+<p>In the <code>Plain</code> choice, <code>Vec</code>'s length will be the column count of grid, and every <code>Unit</code> is the width of each column, <code>Repeat</code> just make this easier, every child are in the same width.</p>
 <h1><a class="header" href="#multicolumn" id="multicolumn">MultiColumn</a></h1>
-<p>The very easy way to layout our pages, maybe fantastic in the old web, it means, the true web, I like it. </p>
 <p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Multiple-column_Layout">Multiple-column layout</a>.</p>
+<p>The very easy way to layout our pages, maybe fantastic in the old web, it means, the true web, I like it. </p>
 <h2><a class="header" href="#components--3" id="components--3">Components 📦</a></h2>
 <p>Congratulations! one compoent got shot, again.</p>
 <h3><a class="header" href="#multicolumn-1" id="multicolumn-1">MultiColumn</a></h3>
@@ -534,7 +644,12 @@ Page(mySizedBox).render();
 <span class="boring">}
 </span></code></pre></pre>
 <p>If I were you, I will choose <code>MultiColumnStyle.Groove</code>, don't ask me why.</p>
+<h1><a class="header" href="#router" id="router">Router</a></h1>
 <h1><a class="header" href="#values" id="values">Values</a></h1>
+<p><code>Values</code> might be the most instresting part in Elvis, it focus on the design of our art.</p>
+<p>Most of <code>Elvis</code> Components have enum properties, instead of writing them in plain text, it terms to 'less thinking', free as a bird, free as in freedom.</p>
+<h2><a class="header" href="#homework" id="homework">Homework</a></h2>
+<p>Paint out the Starry Starry Night, <code>Shell</code> we?</p>
 <h1><a class="header" href="#color" id="color">Color</a></h1>
 <p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">CSS Color Value</a></p>
 <pre><pre class="playpen"><code class="language-rust">
@@ -588,7 +703,7 @@ Page(mySizedBox).render();
 </span></code></pre></pre>
 <p>So many colors...well, the <code>Colors</code> above is Elvis' color system.</p>
 <h1><a class="header" href="#unit" id="unit">Unit</a></h1>
-<p><code>Units</code> Follows <a href="https://drafts.csswg.org/css-values-3">CSS Values 3</a> drafted in csswg.org.</p>
+<p>Follows <a href="https://drafts.csswg.org/css-values-3">CSS Values 3</a> drafted in csswg.org.</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {

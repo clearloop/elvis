@@ -1,8 +1,8 @@
 # MultiColumn
 
-The very easy way to layout our pages, maybe fantastic in the old web, it means, the true web, I like it. 
-
 Follows MDN doc [Multiple-column layout][1].
+
+The very easy way to layout our pages, maybe fantastic in the old web, it means, the true web, I like it. 
 
 ## Components 📦
 

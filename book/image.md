@@ -1,7 +1,7 @@
 # Image
 
 ```js
-/* Imageoo */
+/* Image */
 import { Page, Elvis } from "calling-elvis";
 const { Text, Image } = Elvis;
 
