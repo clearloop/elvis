@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="link.html"><strong aria-hidden="true">1.2.</strong> Link</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.3.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="gesture.html"><strong aria-hidden="true">3.</strong> Gesture</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">4.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">4.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">4.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">4.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html" class="active"><strong aria-hidden="true">5.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">6.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">6.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">6.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="link.html"><strong aria-hidden="true">1.2.</strong> Link</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.3.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html" class="active"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,6 +149,51 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#router" id="router">Router</a></h1>
+<pre><code class="language-js">/* Entry */
+import { App } from &quot;calling-elvis&quot;;
+import { Africa, America, Asia, Europe, Oceania } from &quot;./map&quot;;
+
+class myApp extends App {
+  render() {
+    return App(
+      title: &quot;Across the earth&quot;,
+      initialRoute: &quot;/&quot;,
+      routes: {
+        &quot;africa&quot;: Africa,
+        &quot;america&quot;: America,
+        &quot;asia&quot;: Asia,
+        &quot;europe&quot;: Europe,
+        &quot;Oceania&quot;: Oceania,
+      },
+    );
+  }
+}
+</code></pre>
+<p>A ship have a <code>Navigator</code>, we call them App.</p>
+<pre><code class="language-js">/* Router */
+import { Elvis, Router, GestureDetector, Component } from &quot;calling-elvis&quot;;
+const { Center, Container, Text } = Elvis;
+
+export default class myComponent extends Component {
+  render() {
+    return Page(
+      Center(
+        GestureDetector(
+          // onTap: () =&gt; Router.push(&quot;/start?target=Mars&quot;),
+          onTap: () =&gt; Router.push(
+            &quot;/stars&quot;,
+            arguments: {
+              target: &quot;Mars&quot;,
+            },
+          ),
+        ),
+        Text(&quot;Lead me to the stars&quot;),
+      ),
+    );
+  }
+}
+</code></pre>
+<p>We generate our routes in the entry of our Apps usually, <code>Elvis</code> has inner url parser in the navigator process, both url parameters and object style arguments are supported, so if we want to fly to the Mars, just do it.</p>
 
                     </main>
 

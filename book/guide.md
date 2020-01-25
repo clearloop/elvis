@@ -44,5 +44,5 @@ Page(
 
 Heartbreak Hotel.
 
-[1]: https://clearloop.github.io/elviis
+[1]: https://clearloop.github.io/elvis
 [2]: https://docs.rs/elvis
