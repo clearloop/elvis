@@ -29,6 +29,23 @@ Page(mySizedBox).render();
 
 The `Alignments` enum is from `Flex`, to be honest, `Container` component is a part of `Flex` family, but he is too brilliant to stay in `Flex` family, `Layout` calls him.
 
+### List
+```js
+/* List */
+import { Page, Elvis } from "calling-elvis";
+const { List, Text } = Elvis;
+
+// Generate a `List`
+let myList = List(
+  Text("poor-orphan-1"),
+  Text("poor-orphan-2"),
+  Text("poor-orphan-3"),
+);
+
+Page(myList).render();
+```
+
+(Sorry about that), `List` is a set of poor orphan children, they don't have any style, just blowing in the wind.
 
 ### SizedBox
 

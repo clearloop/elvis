@@ -1,5 +1,5 @@
 /// CSS generator
-#[derive(Debug)]
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
 pub struct CSS(pub String);
 
 impl AsRef<str> for CSS {
@@ -8,7 +8,6 @@ impl AsRef<str> for CSS {
     }
 }
 
-use std::any::{Any, TypeId};
 macro_rules! impl_tys {
     (
         $($key:ident,)*

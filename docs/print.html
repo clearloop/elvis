@@ -504,6 +504,21 @@ let myContainer = Container(
 Page(mySizedBox).render();
 </code></pre>
 <p>The <code>Alignments</code> enum is from <code>Flex</code>, to be honest, <code>Container</code> component is a part of <code>Flex</code> family, but he is too brilliant to stay in <code>Flex</code> family, <code>Layout</code> calls him.</p>
+<h3><a class="header" href="#list" id="list">List</a></h3>
+<pre><code class="language-js">/* List */
+import { Page, Elvis } from &quot;calling-elvis&quot;;
+const { List, Text } = Elvis;
+
+// Generate a `List`
+let myList = List(
+  Text(&quot;poor-orphan-1&quot;),
+  Text(&quot;poor-orphan-2&quot;),
+  Text(&quot;poor-orphan-3&quot;),
+);
+
+Page(myList).render();
+</code></pre>
+<p>(Sorry about that), <code>List</code> is a set of poor orphan children, they don't have any style, just blowing in the wind.</p>
 <h3><a class="header" href="#sizedbox" id="sizedbox">SizedBox</a></h3>
 <pre><code class="language-js">/* SizedBox */
 import { Page, Elvis } from &quot;calling-elvis&quot;;

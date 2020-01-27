@@ -1,6 +1,6 @@
 use crate::{Layout, Text, TextStyle};
 use wasm_bindgen::{prelude::*, JsCast};
-use web_sys::{HtmlElement, Node};
+use web_sys::HtmlElement;
 
 #[wasm_bindgen]
 pub struct Element {

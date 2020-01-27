@@ -1,6 +1,5 @@
 use crate::Element;
 use wasm_bindgen::prelude::*;
-use web_sys::{HtmlElement, Node};
 
 /// Alignmment
 ///
@@ -35,7 +34,7 @@ pub enum Alignments {
 /// Layout contains Box, Flex, and Grid.
 pub struct Layout;
 impl Layout {
-    pub fn align(child: Element, _direction: &str) -> Result<Element, JsValue> {
+    pub fn align(_child: Element, _direction: &str) -> Result<Element, JsValue> {
         let container = Element::new("div")?;
         Ok(container)
     }

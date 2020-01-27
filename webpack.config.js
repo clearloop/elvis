@@ -23,7 +23,7 @@ module.exports = {
         {
           loader: 'tslint-loader',
           options: {
-            configFile: "tslint.json",
+            configFile: "./tslint.json",
           },
         },
       ],
