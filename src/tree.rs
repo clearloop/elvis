@@ -79,30 +79,8 @@ impl Tree {
             return parser::plain(h);
         }
 
-        let (tag, _) = parser::tag(&h[pos..], &mut pos)?;
-
-        // parse attrs
+        let (tag, attrs) = parser::tag(&h[pos..], &mut pos)?;
         let fe = h.find(">")?;
-        let fw = h.find(|c: char| c.is_whitespace());
-        let mut attrs = HashMap::<&'static str, &'static str>::new();
-        if fw.is_some() && fe > fw.unwrap() {
-            let ac = &h[fw.unwrap()..fe]
-                .split("\"")
-                .collect::<Vec<&'static str>>();
-
-            if ac.len() % 2 == 0 {
-                return Err(Error::DeserializeHtmlError(
-                    "invalid html attrs".to_string(),
-                ));
-            }
-
-            ac.iter().enumerate().for_each(|(p, q)| {
-                if q.contains("=") {
-                    let s = q.split("=").collect::<Vec<&'static str>>();
-                    attrs.insert(s[0].trim(), ac[p + 1].trim());
-                }
-            });
-        }
 
         // parse f*cking children
         let mut children: Vec<Box<Tree>> = vec![];
@@ -145,66 +123,91 @@ mod parser {
         h: &'static str,
         pos: &mut usize,
     ) -> Result<(&'static str, HashMap<&'static str, &'static str>), Error> {
-        let b = h.find("<")? + 1;
-        let e = &h[b..].find(|c: char| c.is_whitespace() || c == '>')? + b;
-        let tag = &h[b..e];
-        if tag.contains("<") || tag.contains(">") || tag.contains("/") {
-            return Err(Error::DeserializeHtmlError(format!(
-                "html tag parse failed: {}, html: {}",
-                &tag, &h
-            )));
-        }
-
         let (mut t, mut k, mut v) = ((0, 0), (0, 0), (0, 0));
         let mut attrs = HashMap::<&'static str, &'static str>::new();
         let mut process = TagProcess::None;
         for (p, q) in h.chars().enumerate() {
             match q {
-                '<' => process = TagProcess::Tag,
+                '<' => {
+                    process = TagProcess::Tag;
+                    t.0 = p + 1;
+                }
                 '>' => {
+                    match process {
+                        TagProcess::Tag => t.1 = p,
+                        TagProcess::Attrs => {
+                            attrs.insert(&h[k.0..k.1].trim(), &h[v.0..v.1].trim());
+                        }
+                        _ => {}
+                    }
+
                     *pos = *pos + p + 1;
-                    return Ok((tag, HashMap::new()));
+                    return Ok((&h[t.0..t.1].trim(), attrs));
                 }
                 '"' => match process {
-                    TagProcess::Quote => process = TagProcess::Attrs,
-                    _ => process = TagProcess::Quote,
+                    TagProcess::Quote => {
+                        process = TagProcess::Attrs;
+                        v.1 = p;
+                    }
+                    _ => {
+                        v.0 = p + 1;
+                        v.1 = p + 1;
+                        process = TagProcess::Quote;
+                    }
                 },
-                x if !x.is_whitespace() => match process {
-                    TagProcess::Tag => {
-                        t.1 += 1;
+                '=' => match process {
+                    TagProcess::Attrs => k.1 = p,
+                    _ => {
+                        return Err(Error::DeserializeHtmlError(format!(
+                            "html tag parse failed: {}, html: {}",
+                            &h[t.0..t.1],
+                            &h
+                        )))
                     }
-                    TagProcess::Quote => {}
-                    TagProcess::Attrs => {
-                        if k.1 - k.0 != 0 {
-                            k.1 += 1;
-                        } else {
-                            v.1 += 1;
-                        }
-                    }
-                    _ => {}
                 },
                 x if x.is_whitespace() => match process {
                     TagProcess::Tag => {
-                        if t.1 - t.0 != 0 {
-                            t.0 = p;
-                            process = TagProcess::Attrs;
-                        }
+                        process = TagProcess::Attrs;
+                        k.0 = p + 1;
+                        k.1 = p + 1;
                     }
-                    TagProcess::Quote => {}
+                    TagProcess::Quote => {
+                        v.1 = p;
+                    }
                     TagProcess::Attrs => {
                         if (k.1 - k.0 != 0) && (v.1 - v.0 != 0) {
-                            attrs.insert(&h[k.0..k.1], &h[v.0..v.1]);
+                            attrs.insert(&h[k.0..k.1].trim(), &h[v.0..v.1].trim());
+                            k.0 = p;
+                            k.1 = p;
                         }
                     }
                     _ => {}
                 },
+                x if !x.is_whitespace() => match process {
+                    TagProcess::Tag => {
+                        t.1 = p + 1;
+                    }
+                    TagProcess::Quote => {
+                        v.1 = p;
+                    }
+                    TagProcess::Attrs => {
+                        if v.0 == 0 {
+                            k.1 = p;
+                        } else {
+                            v.1 = p;
+                        }
+                    }
+                    _ => {}
+                },
+
                 _ => {}
             }
         }
 
         Err(Error::DeserializeHtmlError(format!(
             "html tag parse failed: {}, html: {}",
-            &tag, &h
+            &h[t.0..t.1],
+            &h
         )))
     }
 }
