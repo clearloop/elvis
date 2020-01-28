@@ -1,7 +1,10 @@
+use crate::tree::parser::Extra;
+
 /// Errors
 #[derive(Debug)]
 pub enum Error {
     DeserializeHtmlError(String),
+    ExtraLeft(Extra),
     SerializeHtmlError,
     NoneError,
 }
