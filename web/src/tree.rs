@@ -1,100 +1,9 @@
 //! Parser for web html tokenstream
-use crate::{Error, Tree};
+use crate::Error;
+use elvis_core::Tree;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::{Rc, Weak};
-
-impl Tree {
-    /// rescursion deserialize wrapper
-    pub fn de(h: &'static str) -> Result<Self, Error> {
-        Ok(Self::rde(h, None)?.0.borrow().to_owned())
-    }
-
-    /// Deserialize Tree from html string
-    ///
-    /// `attrs` field follows MDN doc [HTML attribute refference][1],
-    /// all values are `String` in "".
-    ///
-    /// [1]: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes#Boolean_Attributes
-    pub fn rde(
-        h: &'static str,
-        pre: Option<Weak<RefCell<Tree>>>,
-    ) -> Result<(Rc<RefCell<Self>>, Option<self::Extra>), Error> {
-        let mut pos = 0_usize;
-        if h.is_empty() {
-            return Ok((Rc::new(RefCell::new(Tree::default())), None));
-        } else if h.find("</").is_none() {
-            return Ok((Rc::new(RefCell::new(self::plain(h, pre.clone()))), None));
-        }
-
-        // the return-will tree
-        let tree = Rc::new(RefCell::new(Tree::default()));
-        let tw = Rc::downgrade(&tree);
-        let (tag, attrs) = self::tag(&h[pos..], &mut pos)?;
-
-        // parse f*cking children
-        let mut children: Vec<Rc<RefCell<Tree>>> = vec![];
-        let mut cext = self::ch(&h[pos..], Some(tw.clone()), tag, &mut children)?;
-
-        // parse parallel children
-        pos += cext.pos;
-        while !cext.end {
-            cext = self::ch(&h[pos..], Some(tw.clone()), tag, &mut children)?;
-            pos += cext.pos;
-        }
-
-        // communite with child parser
-        let mut ext = None;
-        if (pos + 1) != h.len() {
-            ext = Some(self::Extra {
-                end: false,
-                pos: pos,
-                tag: cext.tag,
-            });
-        }
-
-        tree.borrow_mut().pre = pre;
-        tree.borrow_mut().tag = tag;
-        tree.borrow_mut().attrs = attrs;
-        tree.borrow_mut().children = children;
-
-        Ok((tree, ext))
-    }
-
-    /// serialize elvis tree to html
-    pub fn ser(&self) -> String {
-        let mut html = "".to_string();
-        let mut attrs = " ".to_string();
-        let mut children = "".to_string();
-
-        // plain text
-        if self.tag == "plain" {
-            html.push_str(&self.attrs.get("text").unwrap_or(&""));
-        } else {
-            for (k, v) in self.attrs.iter() {
-                attrs.push_str(&format!("{}=\"{}\" ", k, v));
-            }
-
-            for i in &self.children {
-                children.push_str(&i.borrow().ser());
-            }
-
-            if attrs.trim().is_empty() {
-                attrs.drain(..);
-            }
-
-            html.push_str(&format!(
-                "<{}{}>{}</{}>",
-                &self.tag,
-                attrs.trim_end(),
-                children,
-                &self.tag,
-            ));
-        }
-
-        html
-    }
-}
 
 /// Extra html stream
 #[derive(Debug)]
@@ -121,6 +30,60 @@ enum TagProcess {
     Tag,
 }
 
+/// Deserialize Tree from html string
+///
+/// `attrs` field follows MDN doc [HTML attribute refference][1],
+/// all values are `String` in "".
+///
+/// [1]: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes#Boolean_Attributes
+pub fn rde(
+    h: &'static str,
+    pre: Option<Weak<RefCell<Tree>>>,
+) -> Result<(Rc<RefCell<Tree>>, Option<self::Extra>), Error> {
+    let mut pos = 0_usize;
+    if h.is_empty() {
+        return Ok((Rc::new(RefCell::new(Tree::default())), None));
+    } else if h.find("</").is_none() {
+        return Ok((Rc::new(RefCell::new(self::plain(h, pre.clone()))), None));
+    }
+
+    // the return-will tree
+    let tree = Rc::new(RefCell::new(Tree::default()));
+    let tw = Rc::downgrade(&tree);
+    let (tag, attrs) = self::tag(&h[pos..], &mut pos)?;
+
+    // parse f*cking children
+    let mut children: Vec<Rc<RefCell<Tree>>> = vec![];
+    let mut cext = self::ch(&h[pos..], Some(tw.clone()), tag, &mut children)?;
+
+    // parse parallel children
+    pos += cext.pos;
+    while !cext.end {
+        cext = self::ch(&h[pos..], Some(tw.clone()), tag, &mut children)?;
+        pos += cext.pos;
+    }
+
+    // communite with child parser
+    let mut ext = None;
+    if (pos + 1) != h.len() {
+        ext = Some(self::Extra {
+            end: false,
+            pos: pos,
+            tag: cext.tag,
+        });
+    }
+
+    let mut bt = tree.borrow_mut();
+    bt.pre = pre;
+    bt.tag = tag;
+    bt.attrs = attrs;
+    bt.children = children;
+    drop(bt);
+
+    Ok((tree, ext))
+}
+
+/// push child from html stream
 pub fn ch(
     cht: &'static str,
     pre: Option<Weak<RefCell<Tree>>>,
@@ -157,7 +120,7 @@ pub fn ch(
                 t.1 = p;
                 match process {
                     ChildrenProcess::BeginTag => {
-                        let (tree, ext) = Tree::rde(&cht[t.0..], pre.clone())?;
+                        let (tree, ext) = self::rde(&cht[t.0..], pre.clone())?;
                         children.push(tree);
 
                         // communite with father node

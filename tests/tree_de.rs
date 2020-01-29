@@ -1,4 +1,4 @@
-use elvis::Tree;
+use elvis::{Tree, TreeParser};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
@@ -101,111 +101,111 @@ fn de_tree_has_single_tag_child() {
     );
 }
 
-// #[test]
-// fn de_tree_has_deep_single_tag_child() {
-//     assert_eq!(
-//         Tree::de("<div><div><div></div></div></div>").unwrap(),
-//         Tree {
-//             pre: None,
-//             tag: "div",
-//             attrs: HashMap::new(),
-//             children: vec![Rc::new(RefCell::new(Tree {
-//                 pre: None,
-//                 tag: "div",
-//                 attrs: HashMap::new(),
-//                 children: vec![Rc::new(RefCell::new(Tree {
-//                     pre: None,
-//                     tag: "div",
-//                     attrs: HashMap::new(),
-//                     children: vec![],
-//                 }))],
-//             }))],
-//         }
-//     );
-// }
-//
-// #[test]
-// fn de_tree_has_deep_multi_tag_child() {
-//     assert_eq!(
-//         Tree::de("<div><a><b><p></p></b></a></div>").unwrap(),
-//         Tree {
-//             pre: None,
-//             tag: "div",
-//             attrs: HashMap::new(),
-//             children: vec![Rc::new(RefCell::new(Tree {
-//                 pre: None,
-//                 tag: "a",
-//                 attrs: HashMap::new(),
-//                 children: vec![Rc::new(RefCell::new(Tree {
-//                     pre: None,
-//                     tag: "b",
-//                     attrs: HashMap::new(),
-//                     children: vec![Rc::new(RefCell::new(Tree {
-//                         pre: None,
-//                         tag: "p",
-//                         attrs: HashMap::new(),
-//                         children: vec![],
-//                     }))],
-//                 }))],
-//             }))],
-//         }
-//     );
-// }
-//
-// #[test]
-// fn de_tree_has_parallel_tag_children() {
-//     assert_eq!(
-//         Tree::de("<div><div></div><div></div></div>").unwrap(),
-//         Tree {
-//             pre: None,
-//             tag: "div",
-//             attrs: HashMap::new(),
-//             children: vec![
-//                 Rc::new(RefCell::new(Tree {
-//                     pre: None,
-//                     tag: "div",
-//                     attrs: HashMap::new(),
-//                     children: vec![]
-//                 })),
-//                 Rc::new(RefCell::new(Tree {
-//                     pre: None,
-//                     tag: "div",
-//                     attrs: HashMap::new(),
-//                     children: vec![]
-//                 }))
-//             ],
-//         }
-//     );
-// }
-//
-// #[test]
-// fn de_tree_has_parallel_multi_tag_children() {
-//     assert_eq!(
-//         Tree::de("<div><a></a><b></b><p></p></div>").unwrap(),
-//         Tree {
-//             pre: None,
-//             tag: "div",
-//             attrs: HashMap::new(),
-//             children: vec![
-//                 Rc::new(RefCell::new(Tree {
-//                     pre: None,
-//                     tag: "a",
-//                     attrs: HashMap::new(),
-//                     children: vec![]
-//                 })),
-//                 Rc::new(RefCell::new(Tree {
-//                     pre: None,
-//                     tag: "b",
-//                     attrs: HashMap::new(),
-//                     children: vec![]
-//                 })),
-//                 Rc::new(RefCell::new(Tree {
-//                     pre: None,
-//                     tag: "p",
-//                     attrs: HashMap::new(),
-//                     children: vec![]
-//                 }))
-//             ],
-//         }
-//     );
-// }
+#[test]
+fn de_tree_has_deep_single_tag_child() {
+    assert_eq!(
+        Tree::de("<div><div><div></div></div></div>").unwrap(),
+        Tree {
+            pre: None,
+            tag: "div",
+            attrs: HashMap::new(),
+            children: vec![Rc::new(RefCell::new(Tree {
+                pre: None,
+                tag: "div",
+                attrs: HashMap::new(),
+                children: vec![Rc::new(RefCell::new(Tree {
+                    pre: None,
+                    tag: "div",
+                    attrs: HashMap::new(),
+                    children: vec![],
+                }))],
+            }))],
+        }
+    );
+}
+
+#[test]
+fn de_tree_has_deep_multi_tag_child() {
+    assert_eq!(
+        Tree::de("<div><a><b><p></p></b></a></div>").unwrap(),
+        Tree {
+            pre: None,
+            tag: "div",
+            attrs: HashMap::new(),
+            children: vec![Rc::new(RefCell::new(Tree {
+                pre: None,
+                tag: "a",
+                attrs: HashMap::new(),
+                children: vec![Rc::new(RefCell::new(Tree {
+                    pre: None,
+                    tag: "b",
+                    attrs: HashMap::new(),
+                    children: vec![Rc::new(RefCell::new(Tree {
+                        pre: None,
+                        tag: "p",
+                        attrs: HashMap::new(),
+                        children: vec![],
+                    }))],
+                }))],
+            }))],
+        }
+    );
+}
+
+#[test]
+fn de_tree_has_parallel_tag_children() {
+    assert_eq!(
+        Tree::de("<div><div></div><div></div></div>").unwrap(),
+        Tree {
+            pre: None,
+            tag: "div",
+            attrs: HashMap::new(),
+            children: vec![
+                Rc::new(RefCell::new(Tree {
+                    pre: None,
+                    tag: "div",
+                    attrs: HashMap::new(),
+                    children: vec![]
+                })),
+                Rc::new(RefCell::new(Tree {
+                    pre: None,
+                    tag: "div",
+                    attrs: HashMap::new(),
+                    children: vec![]
+                }))
+            ],
+        }
+    );
+}
+
+#[test]
+fn de_tree_has_parallel_multi_tag_children() {
+    assert_eq!(
+        Tree::de("<div><a></a><b></b><p></p></div>").unwrap(),
+        Tree {
+            pre: None,
+            tag: "div",
+            attrs: HashMap::new(),
+            children: vec![
+                Rc::new(RefCell::new(Tree {
+                    pre: None,
+                    tag: "a",
+                    attrs: HashMap::new(),
+                    children: vec![]
+                })),
+                Rc::new(RefCell::new(Tree {
+                    pre: None,
+                    tag: "b",
+                    attrs: HashMap::new(),
+                    children: vec![]
+                })),
+                Rc::new(RefCell::new(Tree {
+                    pre: None,
+                    tag: "p",
+                    attrs: HashMap::new(),
+                    children: vec![]
+                }))
+            ],
+        }
+    );
+}
