@@ -1,9 +1,11 @@
-use crate::tree::parser::Extra;
+#[cfg(feature = "web")]
+use crate::tree::web::Extra;
 
 /// Errors
 #[derive(Debug)]
 pub enum Error {
     DeserializeHtmlError(String),
+    #[cfg(feature = "web")]
     ExtraLeft(Extra),
     SerializeHtmlError,
     NoneError,

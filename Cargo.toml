@@ -25,6 +25,10 @@ features = [
   "Window"
 ]
 
+[features]
+web = []
+default = ["web"]
+
 [profile.release]
 lto = true
 
