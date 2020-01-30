@@ -56,5 +56,5 @@ impl TextStyle {
     }
 }
 
-#[allow(unused_import)]
+#[allow(unused_imports)]
 use crate::features::web::text;

@@ -16,3 +16,16 @@ fn test_colors() {
     assert_eq!(tred, dred);
     assert_ne!(Colors::Red, Colors::Blue);
 }
+
+#[test]
+fn test_units() {
+    let em = Unit::Em(1.0);
+    assert_eq!(em.ser(), "1.0em");
+    assert_eq!(em, Unit::de("1.0em".into()).unwrap());
+
+    let per = Unit::Percent(100.0);
+    assert_eq!(per.ser(), "100.0%");
+
+    let nu = Unit::None(42.0);
+    assert_eq!(nu.ser(), "42");
+}

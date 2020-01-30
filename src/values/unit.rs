@@ -32,6 +32,7 @@
 /// | fr   | This unit represents one fraction of the available space in the grid container. |
 ///
 /// [1]: https://drafts.csswg.org/css-values-3
+#[derive(Clone, Copy, Debug)]
 pub enum Unit {
     Ch(f64),
     Cm(f64),
@@ -51,9 +52,78 @@ pub enum Unit {
     Vmax(f64),
     Vmin(f64),
     Vw(f64),
+    Percent(f64),
+    None(f64),
 }
 
-impl std::default::Default for Unit {
+impl Unit {
+    /// generate `Unit` from str
+    pub fn from_str(s: String) -> Unit {
+        let t = s.trim();
+        let u = t
+            .find(|c: char| !c.is_numeric() && !c.eq(&'.'))
+            .unwrap_or(0);
+
+        let v: f64 = t[..u].trim().parse().unwrap_or(1.0);
+
+        match t[u..].trim().to_ascii_lowercase().as_str() {
+            "ch" => Unit::Ch(v),
+            "cm" => Unit::Cm(v),
+            "dpcm" => Unit::Dpcm(v),
+            "dpi" => Unit::Dpi(v),
+            "dppx" => Unit::Dppx(v),
+            "em" => Unit::Em(v),
+            "fr" => Unit::Fr(v),
+            "in" => Unit::In(v),
+            "mm" => Unit::Mm(v),
+            "pc" => Unit::Pc(v),
+            "pt" => Unit::Pt(v),
+            "px" => Unit::Px(v),
+            "q" => Unit::Q(v),
+            "rem" => Unit::Rem(v),
+            "vh" => Unit::Vh(v),
+            "vmax" => Unit::Vmax(v),
+            "vmin" => Unit::Vmin(v),
+            "vw" => Unit::Vw(v),
+            "%" => Unit::Percent(t[..u].parse().unwrap_or(100.0)),
+            _ => Unit::None(v),
+        }
+    }
+
+    /// common string style
+    pub fn to_string(&self) -> String {
+        match self {
+            Unit::Ch(n) => format!("{:.1}ch", n),
+            Unit::Cm(n) => format!("{:.1}cm", n),
+            Unit::Dpcm(n) => format!("{:.1}dpcm", n),
+            Unit::Dpi(n) => format!("{:.1}dpi", n),
+            Unit::Dppx(n) => format!("{:.1}dppx", n),
+            Unit::Em(n) => format!("{:.1}em", n),
+            Unit::Fr(n) => format!("{:.1}fr", n),
+            Unit::In(n) => format!("{:.1}in", n),
+            Unit::Mm(n) => format!("{:.1}mm", n),
+            Unit::Pc(n) => format!("{:.1}pc", n),
+            Unit::Pt(n) => format!("{:.1}pt", n),
+            Unit::Px(n) => format!("{:.1}px", n),
+            Unit::Q(n) => format!("{:.1}Q", n),
+            Unit::Rem(n) => format!("{:.1}rem", n),
+            Unit::Vh(n) => format!("{:.1}vh", n),
+            Unit::Vmax(n) => format!("{:.1}vmax", n),
+            Unit::Vmin(n) => format!("{:.1}vmin", n),
+            Unit::Vw(n) => format!("{:.1}vw", n),
+            Unit::Percent(n) => format!("{:.1}%", n),
+            Unit::None(n) => format!("{:.0}", n),
+        }
+    }
+}
+
+impl PartialEq for Unit {
+    fn eq(&self, o: &Self) -> bool {
+        self.to_string().eq(&o.to_string())
+    }
+}
+
+impl Default for Unit {
     fn default() -> Unit {
         Unit::Em(1.0)
     }
