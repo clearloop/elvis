@@ -12,7 +12,7 @@ keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
 [dependencies]
-elvis-web = { path = "./web" }
+# elvis-web = { path = "./web" }
 
 [features]
 web = []

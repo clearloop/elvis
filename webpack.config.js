@@ -36,13 +36,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin(),
     new WasmPackPlugin({
-      crateDirectory: path.resolve(__dirname, "./crates/web"),
-      outName: "elvis",
+      crateDirectory: path.resolve(__dirname, "./web"),
+      outName: "index",
     }),
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "pkg"),
+      "@": path.resolve(__dirname, "web/pkg"),
     },
     extensions: ['.ts', '.js', '.wasm']
   },

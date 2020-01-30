@@ -15,7 +15,7 @@
     "target": "es5"
   },
   "include": [
-    "lib/**/*"
+    "calling_elvis/**/*"
   ],
   "exclude": [
     "node_modules"

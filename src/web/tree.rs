@@ -1,7 +1,6 @@
 //! parser in #[cfg(feature = "web")]
-#![cfg(feature = "web")]
 use crate::err::Error;
-use crate::{Tree, TreeParser};
+use crate::{Parser, Tree};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::{Rc, Weak};
@@ -306,14 +305,17 @@ fn tag(
 }
 
 /// impl `TreeParser`
-impl TreeParser for Tree {
+impl Parser<Tree, String> for Tree {
     /// rescursion deserialize wrapper
-    fn de(h: &'static str) -> Result<Tree, Error> {
-        Ok(self::rde(h, None)?.0.borrow().to_owned())
+    fn de(h: String) -> Result<Tree, Error> {
+        Ok(self::rde(Box::leak(Box::new(h)), None)?
+            .0
+            .borrow()
+            .to_owned())
     }
 
     /// serialize elvis tree to html
-    fn ser(&self) -> String {
+    fn ser(self) -> String {
         let mut html = "".to_string();
         let mut attrs = " ".to_string();
         let mut children = "".to_string();
@@ -327,7 +329,7 @@ impl TreeParser for Tree {
             }
 
             for i in &self.children {
-                children.push_str(&i.borrow().ser());
+                children.push_str(&i.borrow().to_owned().ser());
             }
 
             if attrs.trim().is_empty() {

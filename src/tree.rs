@@ -52,12 +52,6 @@ impl Tree {
     }
 }
 
-/// parser api
-pub trait TreeParser {
-    fn de(h: &'static str) -> Result<Tree, Error>;
-    fn ser(&self) -> String;
-}
-
-// feature conditions
+// features condition
 #[allow(unused_imports)]
 use crate::features::web::tree;
