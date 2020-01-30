@@ -1,4 +1,4 @@
-use crate::{Parser, Tree, Unit};
+use crate::{Colors, Serde, Tree, Unit};
 use std::collections::HashMap;
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
@@ -15,6 +15,7 @@ impl Text {
     pub fn ser(self) -> String {
         let mut m = HashMap::<&'static str, &'static str>::new();
         m.insert("text", Box::leak(Box::new(self.text)));
+        m.insert("style", Box::leak(Box::new(self.style.ser())));
 
         let t = Tree::new(m, vec![], None, "plain").borrow().to_owned();
         t.ser()
@@ -25,7 +26,7 @@ impl Text {
 #[derive(Default)]
 pub struct TextStyle {
     pub bold: bool,
-    pub color: bool,
+    pub color: Colors,
     pub italic: bool,
     pub size: Unit,
     pub weight: Unit,
@@ -36,7 +37,7 @@ pub struct TextStyle {
 impl TextStyle {
     pub fn new(
         bold: bool,
-        color: bool,
+        color: Colors,
         italic: bool,
         size: Unit,
         weight: Unit,
@@ -54,3 +55,6 @@ impl TextStyle {
         }
     }
 }
+
+#[allow(unused_import)]
+use crate::features::web::text;

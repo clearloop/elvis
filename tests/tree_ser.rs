@@ -1,4 +1,4 @@
-use elvis::{Tree, TreeParser};
+use elvis::{Serde, Tree};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;

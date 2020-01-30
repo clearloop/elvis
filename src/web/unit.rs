@@ -1,6 +1,6 @@
-use crate::{Error, Parser, Unit};
+use crate::{Error, Serde, Unit};
 
-impl Parser<Unit, String> for Unit {
+impl Serde<Unit, String> for Unit {
     fn de(s: String) -> Result<Unit, Error> {
         let t = s.trim();
         let st: Vec<&str> = t.split(|p: char| p.is_ascii_alphabetic()).collect();

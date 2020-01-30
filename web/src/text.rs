@@ -1,5 +1,5 @@
 use crate::Element;
-use elvis::{Parser, Text as ElvisText, TextStyle as ElvisTextStyle, Tree};
+use elvis::{Serde, Text as ElvisText, TextStyle as ElvisTextStyle, Tree};
 use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
 /// `Text` might be the most popular spider from Mars,

@@ -1,6 +1,6 @@
 //! parser in #[cfg(feature = "web")]
 use crate::err::Error;
-use crate::{Parser, Tree};
+use crate::{Serde, Tree};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::{Rc, Weak};
@@ -304,8 +304,8 @@ fn tag(
     )))
 }
 
-/// impl `TreeParser`
-impl Parser<Tree, String> for Tree {
+/// impl `Serde`
+impl Serde<Tree, String> for Tree {
     /// rescursion deserialize wrapper
     fn de(h: String) -> Result<Tree, Error> {
         Ok(self::rde(Box::leak(Box::new(h)), None)?

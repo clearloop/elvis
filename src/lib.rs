@@ -1,15 +1,15 @@
 #![feature(try_trait)]
 mod err;
-mod parser;
+mod serde;
 mod tree;
 mod values;
 mod widgets;
 
 pub use crate::{
     err::Error,
-    parser::Parser,
+    serde::Serde,
     tree::Tree,
-    values::unit::Unit,
+    values::{color::Colors, unit::Unit},
     widgets::text::{Text, TextStyle},
 };
 
