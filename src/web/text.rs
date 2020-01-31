@@ -34,6 +34,10 @@ impl Serde<TextStyle, String> for TextStyle {
     fn de(s: String) -> Result<TextStyle, Error> {
         let mut ts = TextStyle::default();
         s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
+            if x.len() < 1 {
+                return;
+            }
+
             let v = x[(x.find(":").unwrap_or(0) + 1)..].trim();
             match x {
                 k if k.contains("color") => {
@@ -70,7 +74,7 @@ impl Serde<TextStyle, String> for TextStyle {
 
     fn ser(self) -> String {
         format!(
-            "color: {}; font-weight: {}; font-style: {}; font-size: {}; height: {}; font-stretch: {};",
+            "color: {}; font-weight: {}; font-style: {}; font-size: {}; font-stretch: {}; line-height: {};",
             self.color.ser(), match self.bold {
                 true => "700".into(),
                 false => self.weight.ser(),
@@ -80,8 +84,8 @@ impl Serde<TextStyle, String> for TextStyle {
                 false => "normal"
             },
             self.size.ser(),
-            self.height.ser(),
             self.stretch.ser(),
+            self.height.ser(),
         )
     }
 }

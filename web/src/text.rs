@@ -1,6 +1,5 @@
 use crate::{Colors, Element, Trans, Unit};
 use elvis::{Serde, Text as ElvisText, TextStyle as ElvisTextStyle};
-use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 
 /// `Text` might be the most popular spider from Mars,
