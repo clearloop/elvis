@@ -4,14 +4,40 @@ use std::rc::{Rc, Weak};
 
 /// Virtual UI Tree
 #[derive(Clone, Debug, Default)]
-pub struct Tree {
-    pub attrs: HashMap<&'static str, &'static str>,
-    pub children: Vec<Rc<RefCell<Tree>>>,
-    pub pre: Option<Weak<RefCell<Tree>>>,
-    pub tag: &'static str,
+pub struct Tree<'t> {
+    pub attrs: HashMap<&'t str, &'t str>,
+    pub children: Vec<Rc<RefCell<Tree<'t>>>>,
+    pub pre: Option<Weak<RefCell<Tree<'t>>>>,
+    pub tag: &'t str,
 }
 
-impl PartialEq for Tree {
+impl<'t> Tree<'t> {
+    /// generate a Rc<RefCell<Tree>>
+    pub fn new(
+        attrs: HashMap<&'t str, &'t str>,
+        children: Vec<Rc<RefCell<Tree<'t>>>>,
+        pre: Option<Weak<RefCell<Tree<'t>>>>,
+        tag: &'t str,
+    ) -> Rc<RefCell<Tree<'t>>> {
+        Rc::new(RefCell::new(Tree {
+            attrs,
+            children,
+            pre,
+            tag,
+        }))
+    }
+
+    /// appends two tree, use after `Tree::de` usually.
+    pub fn append(r: Self, mut c: Self) -> Rc<RefCell<Tree<'t>>> {
+        let rt = Rc::new(RefCell::new(r));
+        c.pre = Some(Rc::downgrade(&rt));
+        rt.borrow_mut().children.push(Rc::new(RefCell::new(c)));
+
+        rt
+    }
+}
+
+impl PartialEq for Tree<'_> {
     fn eq(&self, other: &Self) -> bool {
         let res = self.attrs.eq(&other.attrs) && self.tag.eq(other.tag);
 
@@ -22,32 +48,6 @@ impl PartialEq for Tree {
         }
 
         res
-    }
-}
-
-impl Tree {
-    /// generate a Rc<RefCell<Tree>>
-    pub fn new(
-        attrs: HashMap<&'static str, &'static str>,
-        children: Vec<Rc<RefCell<Tree>>>,
-        pre: Option<Weak<RefCell<Tree>>>,
-        tag: &'static str,
-    ) -> Rc<RefCell<Tree>> {
-        Rc::new(RefCell::new(Tree {
-            attrs,
-            children,
-            pre,
-            tag,
-        }))
-    }
-
-    /// appends two tree, use after `Tree::de` usually.
-    pub fn append(r: Self, mut c: Self) -> Rc<RefCell<Tree>> {
-        let rt = Rc::new(RefCell::new(r));
-        c.pre = Some(Rc::downgrade(&rt));
-        rt.borrow_mut().children.push(Rc::new(RefCell::new(c)));
-
-        rt
     }
 }
 

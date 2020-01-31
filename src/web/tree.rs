@@ -7,10 +7,10 @@ use std::rc::{Rc, Weak};
 
 /// Extra html stream
 #[derive(Debug)]
-struct Extra {
+struct Extra<'e> {
     pub end: bool,
     pub pos: usize,
-    pub tag: &'static str,
+    pub tag: &'e str,
 }
 
 /// process of parsing children
@@ -36,10 +36,10 @@ enum TagProcess {
 /// all values are `String` in "".
 ///
 /// [1]: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes#Boolean_Attributes
-fn rde(
-    h: &'static str,
-    pre: Option<Weak<RefCell<Tree>>>,
-) -> Result<(Rc<RefCell<Tree>>, Option<Extra>), Error> {
+fn rde<'t>(
+    h: &'t str,
+    pre: Option<Weak<RefCell<Tree<'t>>>>,
+) -> Result<(Rc<RefCell<Tree<'t>>>, Option<Extra<'t>>), Error> {
     let mut pos = 0_usize;
     if h.is_empty() {
         return Ok((Rc::new(RefCell::new(Tree::default())), None));
@@ -84,12 +84,12 @@ fn rde(
 }
 
 /// push child from html stream
-fn ch(
-    cht: &'static str,
-    pre: Option<Weak<RefCell<Tree>>>,
-    tag: &'static str,
-    children: &mut Vec<Rc<RefCell<Tree>>>,
-) -> Result<Extra, Error> {
+fn ch<'t>(
+    cht: &'t str,
+    pre: Option<Weak<RefCell<Tree<'t>>>>,
+    tag: &'t str,
+    children: &mut Vec<Rc<RefCell<Tree<'t>>>>,
+) -> Result<Extra<'t>, Error> {
     let mut itag = tag;
     let mut process = ChildrenProcess::None;
     let (mut t, mut c) = ((0, 0), (0, 0));
@@ -186,8 +186,8 @@ fn ch(
 }
 
 /// generate palin text
-fn plain(h: &'static str, pre: Option<Weak<RefCell<Tree>>>) -> Tree {
-    let mut attrs = HashMap::<&'static str, &'static str>::new();
+fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Tree<'t>>>>) -> Tree<'t> {
+    let mut attrs = HashMap::<&'t str, &'t str>::new();
     attrs.insert("text", h);
 
     Tree {
@@ -199,12 +199,9 @@ fn plain(h: &'static str, pre: Option<Weak<RefCell<Tree>>>) -> Tree {
 }
 
 /// parse html tag
-fn tag(
-    h: &'static str,
-    pos: &mut usize,
-) -> Result<(&'static str, HashMap<&'static str, &'static str>), Error> {
+fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, &'t str>), Error> {
     let (mut t, mut k, mut v) = ((0, 0), (0, 0), (0, 0));
-    let mut attrs = HashMap::<&'static str, &'static str>::new();
+    let mut attrs = HashMap::<&'t str, &'t str>::new();
     let mut process = TagProcess::None;
     for (p, q) in h.chars().enumerate() {
         match q {
@@ -305,9 +302,9 @@ fn tag(
 }
 
 /// impl `Serde`
-impl Serde<Tree, String> for Tree {
+impl<'t> Serde<Tree<'t>, String> for Tree<'t> {
     /// rescursion deserialize wrapper
-    fn de(h: String) -> Result<Tree, Error> {
+    fn de(h: String) -> Result<Tree<'t>, Error> {
         Ok(self::rde(Box::leak(Box::new(h)), None)?
             .0
             .borrow()

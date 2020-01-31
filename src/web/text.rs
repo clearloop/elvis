@@ -17,16 +17,19 @@ impl Serde<Text, String> for Text {
         ))
     }
 
-    fn ser(self) -> String {
-        let mut m = HashMap::<&'static str, &'static str>::new();
-        let mut cm = HashMap::<&'static str, &'static str>::new();
-        m.insert("style", Box::leak(box self.style.ser()));
-        cm.insert("text", Box::leak(box self.text));
+    fn ser<'s>(self) -> String {
+        let mut m = HashMap::<&'s str, &'s str>::new();
+        let mut cm = HashMap::<&'s str, &'s str>::new();
 
-        Tree::new(m, vec![Tree::new(cm, vec![], None, "plain")], None, "p")
+        let ss = self.style.ser();
+        m.insert("style", &ss);
+        cm.insert("text", &self.text);
+
+        let t = Tree::new(m, vec![Tree::new(cm, vec![], None, "plain")], None, "p")
             .borrow()
-            .to_owned()
-            .ser()
+            .to_owned();
+
+        t.ser()
     }
 }
 
