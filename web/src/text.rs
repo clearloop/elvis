@@ -1,5 +1,5 @@
 use crate::{Colors, Element, Trans, Unit};
-use elvis::{Serde, Text as ElvisText, TextStyle as ElvisTextStyle};
+use elvis::{Serde, Text as ElvisText};
 use wasm_bindgen::prelude::*;
 
 /// `Text` might be the most popular spider from Mars,
@@ -27,15 +27,18 @@ impl Text {
 ///
 /// `TextStyle` in `elvis-web` is a duplicate implementation to `elvis` `TextStyle`.
 #[wasm_bindgen]
-pub struct TextStyle(String);
+pub struct TextStyle {
+    pub bold: bool,
+    pub color: Colors,
+    pub italic: bool,
+    pub size: Unit,
+    pub weight: Unit,
+    pub height: Unit,
+    pub stretch: Unit,
+}
 
 #[wasm_bindgen]
 impl TextStyle {
-    /// serialze `Textstyle` to String
-    pub fn ser(&self) -> String {
-        self.0.to_string()
-    }
-
     #[wasm_bindgen(constructor)]
     pub fn new(
         bold: bool,
@@ -46,17 +49,14 @@ impl TextStyle {
         height: Unit,
         stretch: Unit,
     ) -> TextStyle {
-        TextStyle(
-            ElvisTextStyle::new(
-                bold,
-                color.trans(),
-                italic,
-                size.trans(),
-                weight.trans(),
-                height.trans(),
-                stretch.trans(),
-            )
-            .ser(),
-        )
+        TextStyle {
+            bold,
+            color,
+            italic,
+            size,
+            weight,
+            height,
+            stretch,
+        }
     }
 }

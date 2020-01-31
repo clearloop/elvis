@@ -37,7 +37,8 @@ use wasm_bindgen::prelude::*;
 ///
 /// [1]: https://drafts.csswg.org/css-values-3
 #[wasm_bindgen]
-pub struct Unit(f64, UnitAbbr);
+#[derive(Clone, Copy)]
+pub struct Unit(pub f64, pub UnitAbbr);
 
 #[wasm_bindgen]
 impl Unit {
@@ -51,36 +52,6 @@ impl Unit {
     #[wasm_bindgen(getter)]
     pub fn unit(&self) -> UnitAbbr {
         self.1
-    }
-
-    /// serialize Unit to string
-    pub fn ser(&self) -> String {
-        format!(
-            "{}{}",
-            self.0,
-            match self.1 {
-                UnitAbbr::Ch => "ch",
-                UnitAbbr::Cm => "cm",
-                UnitAbbr::Dpi => "dpi",
-                UnitAbbr::Dpcm => "dpcm",
-                UnitAbbr::Dppx => "dppx",
-                UnitAbbr::Em => "em",
-                UnitAbbr::Fr => "fr",
-                UnitAbbr::In => "in",
-                UnitAbbr::Mm => "mm",
-                UnitAbbr::Pc => "pc",
-                UnitAbbr::Pt => "pt",
-                UnitAbbr::Px => "px",
-                UnitAbbr::Q => "Q",
-                UnitAbbr::Rem => "rem",
-                UnitAbbr::Vh => "vh",
-                UnitAbbr::Vmax => "vmax",
-                UnitAbbr::Vmin => "vmin",
-                UnitAbbr::Vw => "vw",
-                UnitAbbr::Percent => "%",
-                UnitAbbr::None => "",
-            }
-        )
     }
 }
 
