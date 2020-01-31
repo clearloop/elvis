@@ -1,29 +1,20 @@
-use crate::{Colors, Serde, Tree, Unit};
-use std::collections::HashMap;
+use crate::{Colors, Unit};
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
+#[derive(Debug, Default, Eq, PartialEq)]
 pub struct Text {
-    text: String,
-    style: TextStyle,
+    pub text: String,
+    pub style: TextStyle,
 }
 
 impl Text {
     pub fn new(text: String, style: TextStyle) -> Text {
         Text { text, style }
     }
-
-    pub fn ser(self) -> String {
-        let mut m = HashMap::<&'static str, &'static str>::new();
-        m.insert("text", Box::leak(Box::new(self.text)));
-        m.insert("style", Box::leak(Box::new(self.style.ser())));
-
-        let t = Tree::new(m, vec![], None, "plain").borrow().to_owned();
-        t.ser()
-    }
 }
 
 /// style of `Text`
-#[derive(Default)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct TextStyle {
     pub bold: bool,
     pub color: Colors,
@@ -52,6 +43,20 @@ impl TextStyle {
             weight,
             height,
             stretch,
+        }
+    }
+}
+
+impl Default for TextStyle {
+    fn default() -> TextStyle {
+        TextStyle {
+            bold: true,
+            color: Colors::Pink,
+            italic: true,
+            size: Unit::Rem(42.0),
+            weight: Unit::None(400.0),
+            height: Unit::Rem(1.0),
+            stretch: Unit::Percent(100.0),
         }
     }
 }

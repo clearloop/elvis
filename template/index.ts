@@ -1,6 +1,41 @@
-import { Elvis, TextStyle } from "../web/pkg";
+import { Elvis, TextStyle, Text, Colors, Unit, UnitAbbr } from "../web/pkg";
 
 
 // tests
-// let el = Text("<h1>hello, world!</h1>", new TextStyle());
-// pElvis.render(el);
+Elvis.render(
+  new Text(
+    "hello, world!",
+    new TextStyle(
+      true,
+      Colors.Pink,
+      true,
+      new Unit(10, UnitAbbr.Rem),
+      new Unit(1, UnitAbbr.None),
+      new Unit(1, UnitAbbr.Rem),
+      new Unit(1, UnitAbbr.Rem),
+    )
+  ).html
+);
+
+console.log(new TextStyle(
+  true,
+  Colors.Pink,
+  true,
+  new Unit(10, UnitAbbr.Rem),
+  new Unit(1, UnitAbbr.None),
+  new Unit(1, UnitAbbr.Rem),
+  new Unit(1, UnitAbbr.Rem),
+).ser())
+
+console.log(new Text(
+  "hello, world!",
+  new TextStyle(
+    true,
+    Colors.Pink,
+    true,
+    new Unit(10, UnitAbbr.Rem),
+    new Unit(1, UnitAbbr.None),
+    new Unit(1, UnitAbbr.Rem),
+    new Unit(1, UnitAbbr.Rem),
+  )
+).html)

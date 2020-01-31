@@ -1,4 +1,5 @@
 #![feature(try_trait)]
+#![feature(box_syntax)]
 mod err;
 mod serde;
 mod tree;

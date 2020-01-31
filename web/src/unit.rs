@@ -1,7 +1,6 @@
 //! Elvis units
 //!
 //! Follows `CSS Values 3` drafted in csswg.org.
-use elvis::Unit as UnitAbbr;
 use wasm_bindgen::prelude::*;
 /// Follows [CSS Values 3][1] drafted in csswg.org.
 ///
@@ -39,3 +38,74 @@ use wasm_bindgen::prelude::*;
 /// [1]: https://drafts.csswg.org/css-values-3
 #[wasm_bindgen]
 pub struct Unit(f64, UnitAbbr);
+
+#[wasm_bindgen]
+impl Unit {
+    /// generaet a new `Unit`
+    #[wasm_bindgen(constructor)]
+    pub fn new(v: f64, ua: UnitAbbr) -> Unit {
+        Unit(v, ua)
+    }
+
+    /// get unit
+    #[wasm_bindgen(getter)]
+    pub fn unit(&self) -> UnitAbbr {
+        self.1
+    }
+
+    /// serialize Unit to string
+    pub fn ser(&self) -> String {
+        format!(
+            "{}{}",
+            self.0,
+            match self.1 {
+                UnitAbbr::Ch => "ch",
+                UnitAbbr::Cm => "cm",
+                UnitAbbr::Dpi => "dpi",
+                UnitAbbr::Dpcm => "dpcm",
+                UnitAbbr::Dppx => "dppx",
+                UnitAbbr::Em => "em",
+                UnitAbbr::Fr => "fr",
+                UnitAbbr::In => "in",
+                UnitAbbr::Mm => "mm",
+                UnitAbbr::Pc => "pc",
+                UnitAbbr::Pt => "pt",
+                UnitAbbr::Px => "px",
+                UnitAbbr::Q => "Q",
+                UnitAbbr::Rem => "rem",
+                UnitAbbr::Vh => "vh",
+                UnitAbbr::Vmax => "vmax",
+                UnitAbbr::Vmin => "vmin",
+                UnitAbbr::Vw => "vw",
+                UnitAbbr::Percent => "%",
+                UnitAbbr::None => "",
+            }
+        )
+    }
+}
+
+/// lack of `wasm_bindgen`, pure unit.
+#[wasm_bindgen]
+#[derive(Clone, Copy)]
+pub enum UnitAbbr {
+    Ch,
+    Cm,
+    Dpi,
+    Dpcm,
+    Dppx,
+    Em,
+    Fr,
+    In,
+    Mm,
+    Pc,
+    Pt,
+    Px,
+    Q,
+    Rem,
+    Vh,
+    Vmax,
+    Vmin,
+    Vw,
+    Percent,
+    None,
+}

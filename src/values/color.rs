@@ -42,22 +42,9 @@ pub enum Colors {
     YellowAccent,
 }
 
-impl PartialEq for Colors {
-    fn eq(&self, o: &Self) -> bool {
-        self.to_hex().eq(&o.to_hex())
-    }
-}
-
-/// Pink is the Pig
-impl Default for Colors {
-    fn default() -> Colors {
-        Colors::Pink
-    }
-}
-
 impl Colors {
     /// deserialize hex str(char) number to decimal
-    pub fn dec(c: &str) -> i16 {
+    fn dec(c: &str) -> i16 {
         match &c.trim()[0..1] {
             "F" => 15,
             "E" => 14,
@@ -181,6 +168,21 @@ impl Colors {
     /// convert `Colors` to `Colors::ORGB`
     pub fn to_orgb(&self) -> Colors {
         Colors::from_hex_to_orgb(self.to_hex())
+    }
+}
+
+impl Eq for Colors {}
+
+impl PartialEq for Colors {
+    fn eq(&self, o: &Self) -> bool {
+        self.to_hex().eq(&o.to_hex())
+    }
+}
+
+/// Pink is the Pig
+impl Default for Colors {
+    fn default() -> Colors {
+        Colors::Pink
     }
 }
 

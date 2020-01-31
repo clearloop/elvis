@@ -1,3 +1,4 @@
+//! unit system
 /// Follows [CSS Values 3][1] drafted in csswg.org.
 ///
 /// ## Absolute Lengths
@@ -64,8 +65,10 @@ impl Unit {
             .find(|c: char| !c.is_numeric() && !c.eq(&'.'))
             .unwrap_or(0);
 
-        let v: f64 = t[..u].trim().parse().unwrap_or(1.0);
-
+        let v: f64 = t[..u]
+            .trim()
+            .parse()
+            .unwrap_or(t[u..].trim().parse().unwrap_or(1.0));
         match t[u..].trim().to_ascii_lowercase().as_str() {
             "ch" => Unit::Ch(v),
             "cm" => Unit::Cm(v),
@@ -116,6 +119,8 @@ impl Unit {
         }
     }
 }
+
+impl Eq for Unit {}
 
 impl PartialEq for Unit {
     fn eq(&self, o: &Self) -> bool {

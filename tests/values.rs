@@ -11,6 +11,7 @@ fn test_colors() {
     let tred = Colors::de(wred).unwrap();
     assert_eq!(tred, Colors::ORGB(1.0, 244, 67, 54));
     assert_eq!(tred, Colors::Red);
+    assert_eq!(Colors::Red, Colors::ORGB(1.0, 244, 67, 54));
 
     let dred = Colors::from_hex(red);
     assert_eq!(tred, dred);
