@@ -5,7 +5,7 @@ use std::rc::{Rc, Weak};
 /// Virtual UI Tree
 #[derive(Clone, Debug, Default)]
 pub struct Tree<'t> {
-    pub attrs: HashMap<&'t str, &'t str>,
+    pub attrs: HashMap<&'t str, String>,
     pub children: Vec<Rc<RefCell<Tree<'t>>>>,
     pub pre: Option<Weak<RefCell<Tree<'t>>>>,
     pub tag: &'t str,
@@ -14,7 +14,7 @@ pub struct Tree<'t> {
 impl<'t> Tree<'t> {
     /// generate a Rc<RefCell<Tree>>
     pub fn new(
-        attrs: HashMap<&'t str, &'t str>,
+        attrs: HashMap<&'t str, String>,
         children: Vec<Rc<RefCell<Tree<'t>>>>,
         pre: Option<Weak<RefCell<Tree<'t>>>>,
         tag: &'t str,
@@ -50,7 +50,3 @@ impl PartialEq for Tree<'_> {
         res
     }
 }
-
-// features condition
-#[allow(unused_imports)]
-use crate::features::web::tree;

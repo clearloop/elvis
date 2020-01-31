@@ -187,8 +187,8 @@ fn ch<'t>(
 
 /// generate palin text
 fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Tree<'t>>>>) -> Tree<'t> {
-    let mut attrs = HashMap::<&'t str, &'t str>::new();
-    attrs.insert("text", h);
+    let mut attrs = HashMap::<&'t str, String>::new();
+    attrs.insert("text", h.into());
 
     Tree {
         pre: pre.clone(),
@@ -199,9 +199,9 @@ fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Tree<'t>>>>) -> Tree<'t> {
 }
 
 /// parse html tag
-fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, &'t str>), Error> {
+fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, String>), Error> {
     let (mut t, mut k, mut v) = ((0, 0), (0, 0), (0, 0));
-    let mut attrs = HashMap::<&'t str, &'t str>::new();
+    let mut attrs = HashMap::<&'t str, String>::new();
     let mut process = TagProcess::None;
     for (p, q) in h.chars().enumerate() {
         match q {
@@ -215,7 +215,7 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, &'t
                     TagProcess::Tag => t.1 = p,
                     TagProcess::Attrs => {
                         if !&h[k.0..k.1].trim().is_empty() {
-                            attrs.insert(&h[k.0..k.1].trim(), &h[v.0..v.1].trim());
+                            attrs.insert(&h[k.0..k.1].trim(), h[v.0..v.1].trim().into());
                         }
                     }
                     _ => {}
@@ -260,7 +260,7 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, &'t
                 }
                 TagProcess::Attrs => {
                     if (k.1 - k.0 != 0) && (v.1 - v.0 != 0) {
-                        attrs.insert(&h[k.0..k.1].trim(), &h[v.0..v.1].trim());
+                        attrs.insert(&h[k.0..k.1].trim(), h[v.0..v.1].trim().into());
                         k.0 = p;
                         k.1 = p;
                     }
@@ -319,7 +319,7 @@ impl<'t> Serde<Tree<'t>, String> for Tree<'t> {
 
         // plain text
         if self.tag == "plain" {
-            html.push_str(&self.attrs.get("text").unwrap_or(&""));
+            html.push_str(&self.attrs.get("text").unwrap_or(&"".into()));
         } else {
             for (k, v) in self.attrs.iter() {
                 attrs.push_str(&format!("{}=\"{}\" ", k, v));

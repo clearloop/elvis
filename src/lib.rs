@@ -1,5 +1,6 @@
 #![feature(try_trait)]
 #![feature(box_syntax)]
+mod bridge;
 mod err;
 mod serde;
 mod tree;

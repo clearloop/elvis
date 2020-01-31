@@ -1,5 +1,5 @@
 use crate::{Colors, Element, Trans, Unit};
-use elvis::{Serde, Text as ElvisText};
+use elvis::{Serde, Text as ElvisText, TextStyle as ElvisTextStyle};
 use wasm_bindgen::prelude::*;
 
 /// `Text` might be the most popular spider from Mars,
@@ -18,7 +18,7 @@ impl Text {
     /// generate a new Text
     #[wasm_bindgen(constructor)]
     pub fn new(s: String, style: TextStyle) -> Text {
-        let t = ElvisText::new(s, style.trans());
+        let t = ElvisText::new(&s, style.into());
         Text(Element::new(t.ser()))
     }
 }
@@ -58,5 +58,19 @@ impl TextStyle {
             height,
             stretch,
         }
+    }
+}
+
+impl std::convert::Into<ElvisTextStyle> for TextStyle {
+    fn into(self) -> ElvisTextStyle {
+        ElvisTextStyle::new(
+            self.bold,
+            self.color.trans(),
+            self.italic,
+            self.size.trans(),
+            self.weight.trans(),
+            self.height.trans(),
+            self.stretch.trans(),
+        )
     }
 }

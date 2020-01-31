@@ -12,23 +12,16 @@ impl Serde<Text, String> for Text {
 
         let text = t.children[0].borrow();
         Ok(Text::new(
-            text.attrs.get("text").unwrap_or(&"").to_string(),
-            TextStyle::de(t.attrs.get("style").unwrap_or(&"").to_string())?.into(),
+            text.attrs
+                .get("text")
+                .unwrap_or(&"".to_string())
+                .to_string(),
+            TextStyle::de(t.attrs.get("style").unwrap_or(&"".into()).to_string())?.into(),
         ))
     }
 
-    fn ser<'s>(self) -> String {
-        let mut m = HashMap::<&'s str, &'s str>::new();
-        let mut cm = HashMap::<&'s str, &'s str>::new();
-
-        let ss = self.style.ser();
-        m.insert("style", &ss);
-        cm.insert("text", &self.text);
-
-        let t = Tree::new(m, vec![Tree::new(cm, vec![], None, "plain")], None, "p")
-            .borrow()
-            .to_owned();
-
+    fn ser(self) -> String {
+        let t: Tree = self.into();
         t.ser()
     }
 }

@@ -1,5 +1,5 @@
-use crate::{Colors, TextStyle, Unit, UnitAbbr};
-use elvis::{Colors as ElvisColors, TextStyle as ElvisTextStyle, Unit as ElvisUnit};
+use crate::{Colors, Unit, UnitAbbr};
+use elvis::{Colors as ElvisColors, Unit as ElvisUnit};
 
 /// trans elvis-web to elvis
 pub trait Trans<T> {
@@ -36,19 +36,5 @@ impl Trans<ElvisUnit> for Unit {
             UnitAbbr::Percent => ElvisUnit::Percent(self.0),
             UnitAbbr::None => ElvisUnit::None(self.0),
         }
-    }
-}
-
-impl Trans<ElvisTextStyle> for TextStyle {
-    fn trans(self) -> ElvisTextStyle {
-        ElvisTextStyle::new(
-            self.bold,
-            self.color.trans(),
-            self.italic,
-            self.size.trans(),
-            self.weight.trans(),
-            self.height.trans(),
-            self.stretch.trans(),
-        )
     }
 }

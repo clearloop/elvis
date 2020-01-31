@@ -1,7 +1,7 @@
-use crate::{Colors, Unit};
+use crate::{Colors, Serde, Unit};
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
-#[derive(Debug, Default, Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct Text {
     pub text: String,
     pub style: TextStyle,
@@ -14,7 +14,7 @@ impl Text {
 }
 
 /// style of `Text`
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct TextStyle {
     pub bold: bool,
     pub color: Colors,
