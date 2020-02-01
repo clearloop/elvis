@@ -9,6 +9,7 @@ fn ser_tree_pure_tag() {
         pre: None,
         tag: "div",
         attrs: HashMap::new(),
+        state: HashMap::new(),
         children: vec![],
     };
 
@@ -23,6 +24,7 @@ fn ser_tree_attrs_tag() {
         pre: None,
         tag: "div",
         attrs: m.clone(),
+        state: HashMap::new(),
         children: vec![],
     };
 
@@ -37,10 +39,12 @@ fn ser_tree_plain_content() {
         pre: None,
         tag: "div",
         attrs: HashMap::new(),
+        state: HashMap::new(),
         children: vec![Rc::new(RefCell::new(Tree {
             pre: None,
             tag: "plain",
             attrs: m,
+            state: HashMap::new(),
             children: vec![],
         }))],
     };
@@ -55,10 +59,12 @@ fn ser_tree_inner_tag() {
         pre: None,
         tag: "div",
         attrs: m.clone(),
+        state: HashMap::new(),
         children: vec![Rc::new(RefCell::new(Tree {
             pre: None,
             tag: "div",
             attrs: m,
+            state: HashMap::new(),
             children: vec![],
         }))],
     };

@@ -17,6 +17,7 @@ fn de_tree_pure_tag() {
             pre: None,
             tag: "div",
             attrs: HashMap::new(),
+            state: HashMap::new(),
             children: vec![],
         }
     );
@@ -31,6 +32,7 @@ fn de_tree_has_plain_content() {
         pre: None,
         tag: "div",
         attrs: HashMap::new(),
+        state: HashMap::new(),
         children: vec![],
     }));
 
@@ -38,6 +40,7 @@ fn de_tree_has_plain_content() {
         pre: Some(Rc::downgrade(&pr)),
         tag: "plain",
         attrs: attrs,
+        state: HashMap::new(),
         children: vec![],
     }));
 
@@ -61,6 +64,7 @@ fn de_tree_tag_and_style() {
             pre: None,
             tag: "div",
             attrs: attrs,
+            state: HashMap::new(),
             children: vec![],
         }
     );
@@ -78,6 +82,7 @@ fn de_tree_tag_and_multi_attr() {
             pre: None,
             tag: "div",
             attrs: attrs,
+            state: HashMap::new(),
             children: vec![],
         }
     );
@@ -91,10 +96,12 @@ fn de_tree_has_single_tag_child() {
             pre: None,
             tag: "div",
             attrs: HashMap::new(),
+            state: HashMap::new(),
             children: vec![Rc::new(RefCell::new(Tree {
                 pre: None,
                 tag: "div",
                 attrs: HashMap::new(),
+                state: HashMap::new(),
                 children: vec![],
             }))],
         }
@@ -109,14 +116,17 @@ fn de_tree_has_deep_single_tag_child() {
             pre: None,
             tag: "div",
             attrs: HashMap::new(),
+            state: HashMap::new(),
             children: vec![Rc::new(RefCell::new(Tree {
                 pre: None,
                 tag: "div",
                 attrs: HashMap::new(),
+                state: HashMap::new(),
                 children: vec![Rc::new(RefCell::new(Tree {
                     pre: None,
                     tag: "div",
                     attrs: HashMap::new(),
+                    state: HashMap::new(),
                     children: vec![],
                 }))],
             }))],
@@ -132,18 +142,22 @@ fn de_tree_has_deep_multi_tag_child() {
             pre: None,
             tag: "div",
             attrs: HashMap::new(),
+            state: HashMap::new(),
             children: vec![Rc::new(RefCell::new(Tree {
                 pre: None,
                 tag: "a",
                 attrs: HashMap::new(),
+                state: HashMap::new(),
                 children: vec![Rc::new(RefCell::new(Tree {
                     pre: None,
                     tag: "b",
                     attrs: HashMap::new(),
+                    state: HashMap::new(),
                     children: vec![Rc::new(RefCell::new(Tree {
                         pre: None,
                         tag: "p",
                         attrs: HashMap::new(),
+                        state: HashMap::new(),
                         children: vec![],
                     }))],
                 }))],
@@ -160,17 +174,20 @@ fn de_tree_has_parallel_tag_children() {
             pre: None,
             tag: "div",
             attrs: HashMap::new(),
+            state: HashMap::new(),
             children: vec![
                 Rc::new(RefCell::new(Tree {
                     pre: None,
                     tag: "div",
                     attrs: HashMap::new(),
+                    state: HashMap::new(),
                     children: vec![]
                 })),
                 Rc::new(RefCell::new(Tree {
                     pre: None,
                     tag: "div",
                     attrs: HashMap::new(),
+                    state: HashMap::new(),
                     children: vec![]
                 }))
             ],
@@ -186,23 +203,27 @@ fn de_tree_has_parallel_multi_tag_children() {
             pre: None,
             tag: "div",
             attrs: HashMap::new(),
+            state: HashMap::new(),
             children: vec![
                 Rc::new(RefCell::new(Tree {
                     pre: None,
                     tag: "a",
                     attrs: HashMap::new(),
+                    state: HashMap::new(),
                     children: vec![]
                 })),
                 Rc::new(RefCell::new(Tree {
                     pre: None,
                     tag: "b",
                     attrs: HashMap::new(),
+                    state: HashMap::new(),
                     children: vec![]
                 })),
                 Rc::new(RefCell::new(Tree {
                     pre: None,
                     tag: "p",
                     attrs: HashMap::new(),
+                    state: HashMap::new(),
                     children: vec![]
                 }))
             ],

@@ -1,3 +1,4 @@
+use crate::LifeCycle;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::{Rc, Weak};
@@ -6,6 +7,7 @@ use std::rc::{Rc, Weak};
 #[derive(Clone, Debug, Default)]
 pub struct Tree<'t> {
     pub attrs: HashMap<&'t str, String>,
+    pub state: HashMap<&'t str, &'t str>,
     pub children: Vec<Rc<RefCell<Tree<'t>>>>,
     pub pre: Option<Weak<RefCell<Tree<'t>>>>,
     pub tag: &'t str,
@@ -15,12 +17,18 @@ impl<'t> Tree<'t> {
     /// generate a Rc<RefCell<Tree>>
     pub fn new(
         attrs: HashMap<&'t str, String>,
+        state: HashMap<&'t str, &'t str>,
         children: Vec<Rc<RefCell<Tree<'t>>>>,
         pre: Option<Weak<RefCell<Tree<'t>>>>,
         tag: &'t str,
     ) -> Rc<RefCell<Tree<'t>>> {
+        // gen lifecycle create method
+        <Self as LifeCycle<Self>>::create();
+
+        // new tree
         Rc::new(RefCell::new(Tree {
             attrs,
+            state,
             children,
             pre,
             tag,
@@ -37,6 +45,8 @@ impl<'t> Tree<'t> {
             .borrow_mut()
             .children
             .push(c);
+
+        <Self as LifeCycle<Self>>::update();
     }
 
     /// drain tree if not the root
@@ -44,18 +54,30 @@ impl<'t> Tree<'t> {
         if let Some(pre) = &t.clone().borrow().pre {
             let u = pre.upgrade().expect("drain child failed");
             u.borrow_mut().remove(t);
+            <Self as LifeCycle<Self>>::update();
         }
     }
 
     /// delete spefic child using rc
     pub fn remove(&mut self, c: Rc<RefCell<Tree<'t>>>) {
         self.children.remove_item(&c);
+        <Self as LifeCycle<Self>>::update();
     }
 
     /// replace current tree
     pub fn replace(&mut self, mut t: Tree<'t>) {
         t.pre = self.pre.clone();
         std::mem::swap(self, &mut t);
+        <Self as LifeCycle<Self>>::update();
+    }
+
+    /// set state
+    pub fn set(&mut self) {}
+}
+
+impl<'t> Drop for Tree<'t> {
+    fn drop(&mut self) {
+        <Self as LifeCycle<Self>>::dispose();
     }
 }
 

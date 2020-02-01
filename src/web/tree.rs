@@ -194,6 +194,7 @@ fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Tree<'t>>>>) -> Tree<'t> {
         pre: pre.clone(),
         tag: "plain",
         attrs: attrs,
+        state: HashMap::new(),
         children: vec![],
     }
 }

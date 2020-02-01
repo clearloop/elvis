@@ -9,8 +9,14 @@ impl<'t> Into<Tree<'t>> for Text {
         m.insert("style", self.style.ser());
         cm.insert("text", self.text.into());
 
-        Tree::new(m, vec![Tree::new(cm, vec![], None, "plain")], None, "p")
-            .borrow()
-            .to_owned()
+        Tree::new(
+            m,
+            HashMap::new(),
+            vec![Tree::new(cm, HashMap::new(), vec![], None, "plain")],
+            None,
+            "p",
+        )
+        .borrow()
+        .to_owned()
     }
 }
