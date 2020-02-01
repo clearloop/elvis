@@ -1,8 +1,5 @@
 use crate::{Serde, Text, Tree};
-use std::{
-    collections::HashMap,
-    convert::{From, Into},
-};
+use std::{collections::HashMap, convert::Into};
 
 impl<'t> Into<Tree<'t>> for Text {
     fn into(self) -> Tree<'t> {

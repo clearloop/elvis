@@ -24,8 +24,8 @@ fn de_tree_pure_tag() {
 
 #[test]
 fn de_tree_has_plain_content() {
-    let mut attrs = HashMap::<&'static str, &'static str>::new();
-    attrs.insert("text", "elvis");
+    let mut attrs = HashMap::<&'static str, String>::new();
+    attrs.insert("text", "elvis".into());
 
     let pr = Rc::new(RefCell::new(Tree {
         pre: None,
@@ -53,8 +53,8 @@ fn de_tree_has_plain_content() {
 
 #[test]
 fn de_tree_tag_and_style() {
-    let mut attrs = HashMap::<&'static str, &'static str>::new();
-    attrs.insert("style", "height: 20;");
+    let mut attrs = HashMap::<&'static str, String>::new();
+    attrs.insert("style", "height: 20;".to_string());
     assert_eq!(
         Tree::de("<div style=\"height: 20;\"></div>".into()).unwrap(),
         Tree {
@@ -68,10 +68,10 @@ fn de_tree_tag_and_style() {
 
 #[test]
 fn de_tree_tag_and_multi_attr() {
-    let mut attrs = HashMap::<&'static str, &'static str>::new();
-    attrs.insert("style", "height: 20;");
-    attrs.insert("name", "bowie");
-    attrs.insert("bool", "false");
+    let mut attrs = HashMap::<&'static str, String>::new();
+    attrs.insert("style", "height: 20;".into());
+    attrs.insert("name", "bowie".into());
+    attrs.insert("bool", "false".into());
     assert_eq!(
         Tree::de("<div style=\"height: 20;\" name=\"bowie\" bool=\"false\"></div>".into()).unwrap(),
         Tree {

@@ -1,19 +1,15 @@
-use crate::{Colors, Unit, UnitAbbr};
-use elvis::{Colors as ElvisColors, Unit as ElvisUnit};
+use crate::{Colors, TextStyle, Unit, UnitAbbr};
+use elvis::{Colors as ElvisColors, TextStyle as ElvisTextStyle, Unit as ElvisUnit};
+use std::convert::Into;
 
-/// trans elvis-web to elvis
-pub trait Trans<T> {
-    fn trans(self) -> T;
-}
-
-impl Trans<ElvisColors> for Colors {
-    fn trans(self) -> ElvisColors {
+impl Into<ElvisColors> for Colors {
+    fn into(self) -> ElvisColors {
         self.elvis()
     }
 }
 
-impl Trans<ElvisUnit> for Unit {
-    fn trans(self) -> ElvisUnit {
+impl Into<ElvisUnit> for Unit {
+    fn into(self) -> ElvisUnit {
         match self.1 {
             UnitAbbr::Ch => ElvisUnit::Ch(self.0),
             UnitAbbr::Cm => ElvisUnit::Cm(self.0),
@@ -36,5 +32,19 @@ impl Trans<ElvisUnit> for Unit {
             UnitAbbr::Percent => ElvisUnit::Percent(self.0),
             UnitAbbr::None => ElvisUnit::None(self.0),
         }
+    }
+}
+
+impl Into<ElvisTextStyle> for TextStyle {
+    fn into(self) -> ElvisTextStyle {
+        ElvisTextStyle::new(
+            self.bold,
+            self.color.into(),
+            self.italic,
+            self.size.into(),
+            self.weight.into(),
+            self.height.into(),
+            self.stretch.into(),
+        )
     }
 }

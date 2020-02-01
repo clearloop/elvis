@@ -1,4 +1,4 @@
-use crate::{Colors, Serde, Unit};
+use crate::{Colors, Unit};
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
 #[derive(Debug, Eq, PartialEq)]

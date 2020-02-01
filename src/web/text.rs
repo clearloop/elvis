@@ -1,5 +1,4 @@
 use crate::{Colors, Error, Serde, Text, TextStyle, Tree, Unit};
-use std::collections::HashMap;
 
 impl Serde<Text, String> for Text {
     fn de(s: String) -> Result<Text, Error> {

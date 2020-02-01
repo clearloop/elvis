@@ -17,8 +17,8 @@ fn ser_tree_pure_tag() {
 
 #[test]
 fn ser_tree_attrs_tag() {
-    let mut m = HashMap::<&'static str, &'static str>::new();
-    m.insert("name", "elvis");
+    let mut m = HashMap::<&'static str, String>::new();
+    m.insert("name", "elvis".into());
     let t = Tree {
         pre: None,
         tag: "div",
@@ -31,8 +31,8 @@ fn ser_tree_attrs_tag() {
 
 #[test]
 fn ser_tree_plain_content() {
-    let mut m = HashMap::<&'static str, &'static str>::new();
-    m.insert("text", "hello, world!");
+    let mut m = HashMap::<&'static str, String>::new();
+    m.insert("text", "hello, world!".into());
     let t = Tree {
         pre: None,
         tag: "div",
@@ -50,7 +50,7 @@ fn ser_tree_plain_content() {
 
 #[test]
 fn ser_tree_inner_tag() {
-    let m = HashMap::<&'static str, &'static str>::new();
+    let m = HashMap::<&'static str, String>::new();
     let t = Tree {
         pre: None,
         tag: "div",

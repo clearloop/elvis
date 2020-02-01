@@ -27,13 +27,35 @@ impl<'t> Tree<'t> {
         }))
     }
 
-    /// appends two tree, use after `Tree::de` usually.
-    pub fn append(r: Self, mut c: Self) -> Rc<RefCell<Tree<'t>>> {
-        let rt = Rc::new(RefCell::new(r));
-        c.pre = Some(Rc::downgrade(&rt));
-        rt.borrow_mut().children.push(Rc::new(RefCell::new(c)));
+    /// add second tree to the first one.
+    pub fn push(r: Rc<RefCell<Tree<'t>>>, c: Rc<RefCell<Tree<'t>>>) {
+        let pre = Rc::downgrade(&r);
+        c.borrow_mut().pre = Some(pre.clone());
 
-        rt
+        pre.upgrade()
+            .expect("push child to tree failed")
+            .borrow_mut()
+            .children
+            .push(c);
+    }
+
+    /// drain tree if not the root
+    pub fn drain(t: Rc<RefCell<Tree<'t>>>) {
+        if let Some(pre) = &t.clone().borrow().pre {
+            let u = pre.upgrade().expect("drain child failed");
+            u.borrow_mut().remove(t);
+        }
+    }
+
+    /// delete spefic child using rc
+    pub fn remove(&mut self, c: Rc<RefCell<Tree<'t>>>) {
+        self.children.remove_item(&c);
+    }
+
+    /// replace current tree
+    pub fn replace(&mut self, mut t: Tree<'t>) {
+        t.pre = self.pre.clone();
+        std::mem::swap(self, &mut t);
     }
 }
 

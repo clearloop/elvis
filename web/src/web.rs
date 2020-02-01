@@ -14,4 +14,6 @@ impl Elvis {
         body.set_inner_html(&s);
         Ok(())
     }
+
+    pub fn calling(&self) {}
 }
