@@ -1,14 +1,16 @@
+#[macro_use]
+mod macros;
 mod bridge;
 mod color;
-mod element;
+mod elvis;
 mod text;
 mod unit;
-mod web;
+mod widget;
 
 pub use crate::{
     color::Colors,
-    element::Element,
+    elvis::Elvis,
     text::{Text, TextStyle},
     unit::{Unit, UnitAbbr},
-    web::Elvis,
+    widget::Widget,
 };

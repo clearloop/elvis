@@ -1,28 +1,17 @@
-use crate::{Colors, Element, Unit};
-use elvis::{Serde, Text as ElvisText};
+use crate::{Colors, Unit};
+use elvis::Text as ElvisText;
+use std::ops::{Deref, DerefMut};
 use wasm_bindgen::prelude::*;
 
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
 #[wasm_bindgen]
-pub struct Text(Element);
+pub struct Text(ElvisText);
 
 #[wasm_bindgen]
-impl Text {
-    /// serialze `Textstyle` to String
-    #[wasm_bindgen(getter)]
-    pub fn html(self) -> String {
-        self.0.html()
-    }
+impl Text {}
 
-    /// generate a new Text
-    #[wasm_bindgen(constructor)]
-    pub fn new(s: String, style: TextStyle) -> Text {
-        let t = ElvisText::new(s, style.into());
-        Text(Element::new(t.ser()))
-    }
-}
-
+deref!(Text, ElvisText);
 /// style of `Text`
 ///
 /// `TextStyle` in `elvis-web` is a duplicate implementation to `elvis` `TextStyle`.

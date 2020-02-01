@@ -16,13 +16,13 @@ pub trait LifeCycle<T> {
     fn dispose();
 }
 
-impl<'t, T> LifeCycle<Tree<'t>> for T
+impl<T> LifeCycle<Tree> for T
 where
-    T: Into<Tree<'t>>,
+    T: Into<Tree>,
 {
     fn create() {}
     fn update() {}
-    fn render(self) -> Tree<'t> {
+    fn render(self) -> Tree {
         self.into()
     }
     fn dispose() {}

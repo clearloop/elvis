@@ -1,20 +1,20 @@
 use crate::{Serde, Text, Tree};
 use std::{collections::HashMap, convert::Into};
 
-impl<'t> Into<Tree<'t>> for Text {
-    fn into(self) -> Tree<'t> {
-        let mut m = HashMap::<&'t str, String>::new();
-        let mut cm = HashMap::<&'t str, String>::new();
+impl Into<Tree> for Text {
+    fn into(self) -> Tree {
+        let mut m = HashMap::<String, String>::new();
+        let mut cm = HashMap::<String, String>::new();
 
-        m.insert("style", self.style.ser());
-        cm.insert("text", self.text.into());
+        m.insert("style".into(), self.style.ser());
+        cm.insert("text".into(), self.text.into());
 
         Tree::new(
             m,
             HashMap::new(),
-            vec![Tree::new(cm, HashMap::new(), vec![], None, "plain")],
+            vec![Tree::new(cm, HashMap::new(), vec![], None, "plain".into())],
             None,
-            "p",
+            "p".into(),
         )
         .borrow()
         .to_owned()

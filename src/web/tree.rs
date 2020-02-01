@@ -38,8 +38,8 @@ enum TagProcess {
 /// [1]: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes#Boolean_Attributes
 fn rde<'t>(
     h: &'t str,
-    pre: Option<Weak<RefCell<Tree<'t>>>>,
-) -> Result<(Rc<RefCell<Tree<'t>>>, Option<Extra<'t>>), Error> {
+    pre: Option<Weak<RefCell<Tree>>>,
+) -> Result<(Rc<RefCell<Tree>>, Option<Extra<'t>>), Error> {
     let mut pos = 0_usize;
     if h.is_empty() {
         return Ok((Rc::new(RefCell::new(Tree::default())), None));
@@ -75,7 +75,7 @@ fn rde<'t>(
 
     let mut bt = tree.borrow_mut();
     bt.pre = pre;
-    bt.tag = tag;
+    bt.tag = tag.to_string();
     bt.attrs = attrs;
     bt.children = children;
     drop(bt);
@@ -86,9 +86,9 @@ fn rde<'t>(
 /// push child from html stream
 fn ch<'t>(
     cht: &'t str,
-    pre: Option<Weak<RefCell<Tree<'t>>>>,
+    pre: Option<Weak<RefCell<Tree>>>,
     tag: &'t str,
-    children: &mut Vec<Rc<RefCell<Tree<'t>>>>,
+    children: &mut Vec<Rc<RefCell<Tree>>>,
 ) -> Result<Extra<'t>, Error> {
     let mut itag = tag;
     let mut process = ChildrenProcess::None;
@@ -186,13 +186,13 @@ fn ch<'t>(
 }
 
 /// generate palin text
-fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Tree<'t>>>>) -> Tree<'t> {
-    let mut attrs = HashMap::<&'t str, String>::new();
-    attrs.insert("text", h.into());
+fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Tree>>>) -> Tree {
+    let mut attrs = HashMap::<String, String>::new();
+    attrs.insert("text".into(), h.into());
 
     Tree {
         pre: pre.clone(),
-        tag: "plain",
+        tag: "plain".into(),
         attrs: attrs,
         state: HashMap::new(),
         children: vec![],
@@ -200,9 +200,9 @@ fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Tree<'t>>>>) -> Tree<'t> {
 }
 
 /// parse html tag
-fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, String>), Error> {
+fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<String, String>), Error> {
     let (mut t, mut k, mut v) = ((0, 0), (0, 0), (0, 0));
-    let mut attrs = HashMap::<&'t str, String>::new();
+    let mut attrs = HashMap::<String, String>::new();
     let mut process = TagProcess::None;
     for (p, q) in h.chars().enumerate() {
         match q {
@@ -216,7 +216,7 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, Str
                     TagProcess::Tag => t.1 = p,
                     TagProcess::Attrs => {
                         if !&h[k.0..k.1].trim().is_empty() {
-                            attrs.insert(&h[k.0..k.1].trim(), h[v.0..v.1].trim().into());
+                            attrs.insert(h[k.0..k.1].trim().to_string(), h[v.0..v.1].trim().into());
                         }
                     }
                     _ => {}
@@ -261,7 +261,7 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, Str
                 }
                 TagProcess::Attrs => {
                     if (k.1 - k.0 != 0) && (v.1 - v.0 != 0) {
-                        attrs.insert(&h[k.0..k.1].trim(), h[v.0..v.1].trim().into());
+                        attrs.insert(h[k.0..k.1].trim().to_string(), h[v.0..v.1].trim().into());
                         k.0 = p;
                         k.1 = p;
                     }
@@ -303,9 +303,9 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<&'t str, Str
 }
 
 /// impl `Serde`
-impl<'t> Serde<Tree<'t>, String> for Tree<'t> {
+impl<'t> Serde<Tree, String> for Tree {
     /// rescursion deserialize wrapper
-    fn de(h: String) -> Result<Tree<'t>, Error> {
+    fn de(h: String) -> Result<Tree, Error> {
         Ok(self::rde(Box::leak(Box::new(h)), None)?
             .0
             .borrow()
