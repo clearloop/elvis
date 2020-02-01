@@ -2,7 +2,7 @@ import { Elvis, TextStyle, Text, Colors, Unit, UnitAbbr } from "../web/pkg";
 
 
 // tests
-Elvis.render(
+new Elvis(
   new Text(
     "Pink is the Pig",
     new TextStyle(
@@ -14,5 +14,5 @@ Elvis.render(
       new Unit(10, UnitAbbr.Rem),
       new Unit(30, UnitAbbr.Percent),
     )
-  ).html
-);
+  ).to_widget()
+).calling();

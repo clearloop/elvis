@@ -1,5 +1,7 @@
-use crate::{Colors, TextStyle, Unit, UnitAbbr};
-use elvis::{Colors as ElvisColors, TextStyle as ElvisTextStyle, Unit as ElvisUnit};
+use crate::{Colors, Text, TextStyle, Unit, UnitAbbr, Widget};
+use elvis::{
+    Colors as ElvisColors, Text as ElvisText, TextStyle as ElvisTextStyle, Unit as ElvisUnit,
+};
 use std::convert::Into;
 
 impl Into<ElvisColors> for Colors {
@@ -46,5 +48,19 @@ impl Into<ElvisTextStyle> for TextStyle {
             self.height.into(),
             self.stretch.into(),
         )
+    }
+}
+
+impl Into<ElvisText> for Text {
+    fn into(self) -> ElvisText {
+        let et: ElvisText = self.into();
+        et.into()
+    }
+}
+
+impl Into<Widget> for Text {
+    fn into(self) -> Widget {
+        let et: ElvisText = self.into();
+        Widget::new(et.into())
     }
 }

@@ -19,7 +19,7 @@ impl Serde<Text, String> for Text {
         ))
     }
 
-    fn ser(self) -> String {
+    fn ser(&self) -> String {
         let t: Tree = self.into();
         t.ser()
     }
@@ -67,7 +67,7 @@ impl Serde<TextStyle, String> for TextStyle {
         Ok(ts)
     }
 
-    fn ser(self) -> String {
+    fn ser(&self) -> String {
         format!(
             "color: {}; font-weight: {}; font-style: {}; font-size: {}; font-stretch: {}; line-height: {};",
             self.color.ser(), match self.bold {

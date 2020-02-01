@@ -20,3 +20,23 @@ impl Into<Tree> for Text {
         .to_owned()
     }
 }
+
+impl<'t> Into<Tree> for &'t Text {
+    fn into(self) -> Tree {
+        let mut m = HashMap::<String, String>::new();
+        let mut cm = HashMap::<String, String>::new();
+
+        m.insert("style".into(), self.style.ser());
+        cm.insert("text".into(), self.text.to_string());
+
+        Tree::new(
+            m,
+            HashMap::new(),
+            vec![Tree::new(cm, HashMap::new(), vec![], None, "plain".into())],
+            None,
+            "p".into(),
+        )
+        .borrow()
+        .to_owned()
+    }
+}

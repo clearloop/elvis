@@ -5,7 +5,7 @@ impl Serde<Unit, String> for Unit {
         Ok(Unit::from_str(s))
     }
 
-    fn ser(self) -> String {
+    fn ser(&self) -> String {
         self.to_string()
     }
 }

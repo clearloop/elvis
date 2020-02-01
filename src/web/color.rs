@@ -12,7 +12,7 @@ impl Serde<Colors, String> for Colors {
         ))
     }
 
-    fn ser(self) -> String {
+    fn ser(&self) -> String {
         match self {
             Colors::ORGB(o, r, g, b) => format!("rgba({}, {}, {}, {:.1})", r, g, b, o),
             _ => {

@@ -313,7 +313,7 @@ impl<'t> Serde<Tree, String> for Tree {
     }
 
     /// serialize elvis tree to html
-    fn ser(self) -> String {
+    fn ser(&self) -> String {
         let mut html = "".to_string();
         let mut attrs = " ".to_string();
         let mut children = "".to_string();

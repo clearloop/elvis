@@ -1,5 +1,5 @@
-use crate::{Colors, Unit};
-use elvis::Text as ElvisText;
+use crate::{Colors, Unit, Widget};
+use elvis::{Text as ElvisText, Tree};
 use std::ops::{Deref, DerefMut};
 use wasm_bindgen::prelude::*;
 
@@ -9,7 +9,16 @@ use wasm_bindgen::prelude::*;
 pub struct Text(ElvisText);
 
 #[wasm_bindgen]
-impl Text {}
+impl Text {
+    #[wasm_bindgen(constructor)]
+    pub fn new(text: String, style: TextStyle) -> Text {
+        Text(ElvisText::new(text, style.into()))
+    }
+
+    pub fn to_widget(self) -> Widget {
+        Widget::new(self.0.into())
+    }
+}
 
 deref!(Text, ElvisText);
 /// style of `Text`
