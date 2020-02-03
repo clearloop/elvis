@@ -22,7 +22,6 @@
   "linterOptions": {
     "exclude": [
       "node_modules/**",
-      "pkg/*.js",
       "template/**"
     ]
   }

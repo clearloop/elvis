@@ -1,7 +1,5 @@
-use crate::{Colors, Text, TextStyle, Unit, UnitAbbr, Widget};
-use elvis::{
-    Colors as ElvisColors, Text as ElvisText, TextStyle as ElvisTextStyle, Unit as ElvisUnit,
-};
+use crate::{Colors, TextStyle, Unit, Units};
+use elvis::{Colors as ElvisColors, TextStyle as ElvisTextStyle, Unit as ElvisUnit};
 use std::convert::Into;
 
 impl Into<ElvisColors> for Colors {
@@ -13,26 +11,26 @@ impl Into<ElvisColors> for Colors {
 impl Into<ElvisUnit> for Unit {
     fn into(self) -> ElvisUnit {
         match self.1 {
-            UnitAbbr::Ch => ElvisUnit::Ch(self.0),
-            UnitAbbr::Cm => ElvisUnit::Cm(self.0),
-            UnitAbbr::Dpi => ElvisUnit::Dpi(self.0),
-            UnitAbbr::Dpcm => ElvisUnit::Dpcm(self.0),
-            UnitAbbr::Dppx => ElvisUnit::Dppx(self.0),
-            UnitAbbr::Em => ElvisUnit::Em(self.0),
-            UnitAbbr::Fr => ElvisUnit::Fr(self.0),
-            UnitAbbr::In => ElvisUnit::In(self.0),
-            UnitAbbr::Mm => ElvisUnit::Mm(self.0),
-            UnitAbbr::Pc => ElvisUnit::Pc(self.0),
-            UnitAbbr::Pt => ElvisUnit::Pt(self.0),
-            UnitAbbr::Px => ElvisUnit::Px(self.0),
-            UnitAbbr::Q => ElvisUnit::Q(self.0),
-            UnitAbbr::Rem => ElvisUnit::Rem(self.0),
-            UnitAbbr::Vh => ElvisUnit::Vh(self.0),
-            UnitAbbr::Vmax => ElvisUnit::Vmax(self.0),
-            UnitAbbr::Vmin => ElvisUnit::Vmin(self.0),
-            UnitAbbr::Vw => ElvisUnit::Vw(self.0),
-            UnitAbbr::Percent => ElvisUnit::Percent(self.0),
-            UnitAbbr::None => ElvisUnit::None(self.0),
+            Units::Ch => ElvisUnit::Ch(self.0),
+            Units::Cm => ElvisUnit::Cm(self.0),
+            Units::Dpi => ElvisUnit::Dpi(self.0),
+            Units::Dpcm => ElvisUnit::Dpcm(self.0),
+            Units::Dppx => ElvisUnit::Dppx(self.0),
+            Units::Em => ElvisUnit::Em(self.0),
+            Units::Fr => ElvisUnit::Fr(self.0),
+            Units::In => ElvisUnit::In(self.0),
+            Units::Mm => ElvisUnit::Mm(self.0),
+            Units::Pc => ElvisUnit::Pc(self.0),
+            Units::Pt => ElvisUnit::Pt(self.0),
+            Units::Px => ElvisUnit::Px(self.0),
+            Units::Q => ElvisUnit::Q(self.0),
+            Units::Rem => ElvisUnit::Rem(self.0),
+            Units::Vh => ElvisUnit::Vh(self.0),
+            Units::Vmax => ElvisUnit::Vmax(self.0),
+            Units::Vmin => ElvisUnit::Vmin(self.0),
+            Units::Vw => ElvisUnit::Vw(self.0),
+            Units::Percent => ElvisUnit::Percent(self.0),
+            Units::None => ElvisUnit::None(self.0),
         }
     }
 }
@@ -48,19 +46,5 @@ impl Into<ElvisTextStyle> for TextStyle {
             self.height.into(),
             self.stretch.into(),
         )
-    }
-}
-
-impl Into<ElvisText> for Text {
-    fn into(self) -> ElvisText {
-        let et: ElvisText = self.into();
-        et.into()
-    }
-}
-
-impl Into<Widget> for Text {
-    fn into(self) -> Widget {
-        let et: ElvisText = self.into();
-        Widget::new(et.into())
     }
 }

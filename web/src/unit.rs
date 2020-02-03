@@ -38,19 +38,19 @@ use wasm_bindgen::prelude::*;
 /// [1]: https://drafts.csswg.org/css-values-3
 #[wasm_bindgen]
 #[derive(Clone, Copy)]
-pub struct Unit(pub f64, pub UnitAbbr);
+pub struct Unit(pub f64, pub Units);
 
 #[wasm_bindgen]
 impl Unit {
     /// generaet a new `Unit`
     #[wasm_bindgen(constructor)]
-    pub fn new(v: f64, ua: UnitAbbr) -> Unit {
-        Unit(v, ua)
+    pub fn new(v: f64, unit: Units) -> Unit {
+        Unit(v, unit)
     }
 
     /// get unit
     #[wasm_bindgen(getter)]
-    pub fn unit(&self) -> UnitAbbr {
+    pub fn unit(&self) -> Units {
         self.1
     }
 }
@@ -58,7 +58,7 @@ impl Unit {
 /// lack of `wasm_bindgen`, pure unit.
 #[wasm_bindgen]
 #[derive(Clone, Copy)]
-pub enum UnitAbbr {
+pub enum Units {
     Ch,
     Cm,
     Dpi,

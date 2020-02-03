@@ -11,15 +11,20 @@ homepage = "https://github.com/clearloop/elvis"
 keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
-[dependencies]
-wasm-bindgen = "0.2.58"
+# [dependencies]
+# wasm-bindgen = "0.2.58"
+
+[dependencies.wasm-bindgen]
+# git = "https://github.com/clearloop/wasm-bindgen.git"
+path = "../../wasm-bindgen"
 
 [dependencies.elvis]
 path = ".."
 features = ["web"]
 
 [dependencies.web-sys]
-version = "0.3.35"
+# version = "0.3.35"
+path = "../../wasm-bindgen/crates/web-sys"
 features = [
   "CssStyleDeclaration",
   "Document",

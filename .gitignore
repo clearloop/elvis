@@ -1,5 +1,5 @@
 **/*lock
 **/*node_modules
-.dist
+**/*dist
 .target
 pkg

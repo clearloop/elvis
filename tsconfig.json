@@ -1,21 +1,19 @@
 {
   "indent": [true, "spaces", 2],
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "declaration": true,
     "esModuleInterop": true,
-    "outDir": "./pkg/",
+    "outDir": "web/pkg/calling",
     "module": "esNext",
+    "moduleResolution": "node",
     "noImplicitAny": true,
-    "paths": {
-      "@/*": ["pkg/*"]
-    },
     "sourceMap": true,
-    "target": "es5"
+    "target": "es6"
   },
   "include": [
-    "calling_elvis/**/*"
+    "web/ts/**/*",
   ],
   "exclude": [
     "node_modules"
