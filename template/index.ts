@@ -1,7 +1,11 @@
-import * as r from "../web/pkg";
+import { Colors, TextStyle } from "../web/pkg";
 
-let a: r.Person = {
+const ts: TextStyle = {
+  bold: true,
+  color: Colors.Red(),
+  italic: true,
+  size: 1,
+  weight: 1,
   height: 1,
-}
-
-console.log(a);
+  stretch: 80,
+};
