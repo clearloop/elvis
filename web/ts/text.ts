@@ -1,22 +1,30 @@
-// import { Elvis, TextStyle as ETextStyle, Text as EText } from "../web/pkg";
-// 
-// interface TextStyle {
-//   bold?: boolean;
-//   color?: boolean;
-//   italic?: boolean;
-//   size?: number;
-//   weight?: number;
-//   height?: number;
-//   stretch?: number;
-// }
-// 
-// class Text {
-//   text: string;
-//   style: TextStyle;
-// 
-//   constructor(text: string, style: TextStyle) {
-// 
-//   }
-// }
+import {
+  Colors,
+  ElvisWidget,
+  Text as ElvisText,
+  TextStyle,
+} from "../pkg";
 
+// TextStyle Interface
+export interface ITextStyle {
+  bold?: boolean;
+  color?: Colors;
+  italic?: boolean;
+  size?: number;
+  weight?: number;
+  height?: number;
+  stretch?: number;
+}
 
+// Text Wrapper
+export function Text(text: string, style: ITextStyle): ElvisWidget {
+  return ElvisText(text, new TextStyle(
+    style.bold,
+    style.color,
+    style.italic,
+    style.size,
+    style.weight,
+    style.height,
+    style.stretch,
+  ));
+}

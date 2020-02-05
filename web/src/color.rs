@@ -69,7 +69,7 @@ impl Colors {
     }
 
     #[wasm_bindgen(js_name = "DeepOrange")]
-    pub fn deeporange() -> Colors {
+    pub fn deep_orange() -> Colors {
         Colors(ElvisColors::DeepOrange)
     }
 
@@ -129,7 +129,7 @@ impl Colors {
     }
 
     #[wasm_bindgen(js_name = "LightGreenAccent")]
-    pub fn light_greenaccent() -> Colors {
+    pub fn light_green_accent() -> Colors {
         Colors(ElvisColors::LightGreenAccent)
     }
 

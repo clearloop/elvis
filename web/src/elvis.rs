@@ -1,17 +1,17 @@
-use crate::Widget;
+use crate::ElvisWidget;
 use elvis::Serde;
 use wasm_bindgen::prelude::*;
 
 /// common elvis api
 #[wasm_bindgen]
 pub struct Elvis {
-    home: Widget,
+    home: ElvisWidget,
 }
 
 #[wasm_bindgen]
 impl Elvis {
     #[wasm_bindgen(constructor)]
-    pub fn new(widget: Widget) -> Elvis {
+    pub fn new(widget: ElvisWidget) -> Elvis {
         Elvis { home: widget }
     }
 

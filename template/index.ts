@@ -1,11 +1,16 @@
-import { Colors, TextStyle } from "../web/pkg";
+import { Colors, Elvis, Text, Widget } from "../web/ts";
 
-const ts: TextStyle = {
-  bold: true,
-  color: Colors.Red(),
-  italic: true,
-  size: 1,
-  weight: 1,
-  height: 1,
-  stretch: 80,
-};
+class MyWidget extends Widget {
+  public render() {
+    return Text("pink is the pig!", {
+      bold: true,
+      italic: true,
+      size: 10,
+      color: Colors.PinkAccent,
+    });
+  }
+}
+
+new Elvis({
+  home: new MyWidget(),
+}).calling();

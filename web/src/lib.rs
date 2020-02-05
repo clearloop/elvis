@@ -6,4 +6,4 @@ mod elvis;
 mod text;
 mod widget;
 
-pub use crate::{color::Colors, elvis::Elvis, text::TextStyle, widget::Widget};
+pub use crate::{color::Colors, elvis::Elvis, text::TextStyle, widget::ElvisWidget};

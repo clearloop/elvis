@@ -45,8 +45,6 @@ impl Tree {
             .borrow_mut()
             .children
             .push(c);
-
-        <Self as LifeCycle<Self>>::update();
     }
 
     /// drain tree if not the root
@@ -54,37 +52,28 @@ impl Tree {
         if let Some(pre) = &t.clone().borrow().pre {
             let u = pre.upgrade().expect("drain child failed");
             u.borrow_mut().remove(t);
-
-            <Self as LifeCycle<Self>>::update();
         }
     }
 
     /// delete spefic child using rc
     pub fn remove(&mut self, c: Rc<RefCell<Tree>>) {
         self.children.remove_item(&c);
-        <Self as LifeCycle<Self>>::update();
     }
 
     /// replace current tree
     pub fn replace(&mut self, mut t: Tree) {
         t.pre = self.pre.clone();
         std::mem::swap(self, &mut t);
-
-        <Self as LifeCycle<Self>>::update();
     }
 
     /// set state
     pub fn set<'t>(&mut self, k: &'t str, v: &'t str) {
         self.state.insert(k.into(), v.into());
-
-        <Self as LifeCycle<Self>>::update();
     }
 }
 
 impl<'t> Drop for Tree {
-    fn drop(&mut self) {
-        <Self as LifeCycle<Self>>::dispose();
-    }
+    fn drop(&mut self) {}
 }
 
 impl PartialEq for Tree {

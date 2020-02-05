@@ -1,12 +1,12 @@
-use crate::{Colors, Widget};
+use crate::{Colors, ElvisWidget};
 use elvis::{Text, TextStyle as ElvisTextStyle, Unit};
 use wasm_bindgen::prelude::*;
 
-//// `Text` might be the most popular spider from Mars,
-//// Does it know the Great Ziggy Stardust?
+/// `Text` might be the most popular spider from Mars,
+/// Does it know the Great Ziggy Stardust?
 #[wasm_bindgen(js_name = "Text")]
-pub fn text(text: Option<String>, style: Option<TextStyle>) -> Widget {
-    Widget::new(Text::new(text.unwrap_or_default(), style.unwrap_or_default().into()).into())
+pub fn text(text: Option<String>, style: Option<TextStyle>) -> ElvisWidget {
+    ElvisWidget::new(Text::new(text.unwrap_or_default(), style.unwrap_or_default().into()).into())
 }
 
 /// TextStyle Interface
@@ -20,6 +20,30 @@ pub struct TextStyle {
     pub weight: Option<f64>,
     pub height: Option<f64>,
     pub stretch: Option<f64>,
+}
+
+#[wasm_bindgen]
+impl TextStyle {
+    #[wasm_bindgen(constructor)]
+    pub fn new(
+        bold: Option<bool>,
+        color: Option<Colors>,
+        italic: Option<bool>,
+        size: Option<f64>,
+        weight: Option<f64>,
+        height: Option<f64>,
+        stretch: Option<f64>,
+    ) -> TextStyle {
+        TextStyle {
+            bold,
+            color,
+            italic,
+            size,
+            weight,
+            height,
+            stretch,
+        }
+    }
 }
 
 impl Into<ElvisTextStyle> for TextStyle {

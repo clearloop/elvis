@@ -126,7 +126,7 @@ impl Colors {
             Colors::ORGB(o, r, g, b) => format!("{:#X}{:X}{:X}{:X}", (o * 255.0) as i32, r, g, b),
             Colors::Amber => "0xFFFFC107".into(),
             Colors::AmberAccent => "0xFFFFD740".into(),
-            Colors::Black => "0x00000000".into(),
+            Colors::Black => "0xFF000000".into(),
             Colors::Blue => "0xFF2196F3".into(),
             Colors::BlueAccent => "0xFF448AFF".into(),
             Colors::BlueGrey => "0xFF607D8B".into(),
