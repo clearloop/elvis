@@ -30,6 +30,7 @@ features = [
   "Document",
   "Element",
   "HtmlElement",
+  "Location",
   "Node",
   "Window"
 ]

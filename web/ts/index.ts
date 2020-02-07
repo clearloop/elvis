@@ -1,13 +1,12 @@
-import { ElvisWidget } from "../pkg";
+import { Colors, Widget } from "../pkg";
 import Elvis from "./elvis";
+import Router from "./router";
 import { Text } from "./text";
-import * as Colors from "./values/color";
-import Widget from "./widget";
 
 export {
   Colors,
   Elvis,
+  Router,
   Text,
   Widget,
-  ElvisWidget,
 };

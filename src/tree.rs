@@ -7,32 +7,51 @@ use std::rc::{Rc, Weak};
 #[derive(Clone, Debug, Default)]
 pub struct Tree {
     pub attrs: HashMap<String, String>,
-    pub state: HashMap<String, String>,
     pub children: Vec<Rc<RefCell<Tree>>>,
     pub tag: String,
     pub pre: Option<Weak<RefCell<Tree>>>,
 }
 
 impl Tree {
+    /// drain tree if not the root
+    pub fn drain(t: Rc<RefCell<Tree>>) {
+        if let Some(pre) = &t.clone().borrow().pre {
+            let u = pre.upgrade().expect("drain child failed");
+            u.borrow_mut().remove(t);
+
+            u.borrow().update();
+        }
+    }
+
+    pub fn locate(&self, mut path: Vec<usize>) -> Vec<usize> {
+        if let Some(pre) = &self.pre {
+            let u = pre.upgrade().expect("locate widget failed");
+            for (i, t) in u.borrow().children.iter().enumerate() {
+                if t.borrow().eq(self) {
+                    path.push(i);
+                    return u.borrow().locate(path);
+                }
+            }
+        }
+
+        path
+    }
+
     /// generate a Rc<RefCell<Tree>>
     pub fn new(
         attrs: HashMap<String, String>,
-        state: HashMap<String, String>,
         children: Vec<Rc<RefCell<Tree>>>,
         pre: Option<Weak<RefCell<Tree>>>,
         tag: String,
     ) -> Rc<RefCell<Tree>> {
-        // gen lifecycle create method
-        <Self as LifeCycle<Self>>::create();
-
-        // new tree
-        Rc::new(RefCell::new(Tree {
+        let t = Tree {
             attrs,
-            state,
             children,
             pre,
             tag,
-        }))
+        };
+
+        Rc::new(RefCell::new(t))
     }
 
     /// add second tree to the first one.
@@ -45,35 +64,29 @@ impl Tree {
             .borrow_mut()
             .children
             .push(c);
-    }
 
-    /// drain tree if not the root
-    pub fn drain(t: Rc<RefCell<Tree>>) {
-        if let Some(pre) = &t.clone().borrow().pre {
-            let u = pre.upgrade().expect("drain child failed");
-            u.borrow_mut().remove(t);
-        }
+        r.borrow().update();
     }
 
     /// delete spefic child using rc
     pub fn remove(&mut self, c: Rc<RefCell<Tree>>) {
         self.children.remove_item(&c);
+        self.update();
     }
 
     /// replace current tree
     pub fn replace(&mut self, mut t: Tree) {
         t.pre = self.pre.clone();
         std::mem::swap(self, &mut t);
-    }
 
-    /// set state
-    pub fn set<'t>(&mut self, k: &'t str, v: &'t str) {
-        self.state.insert(k.into(), v.into());
+        t.update();
     }
 }
 
 impl<'t> Drop for Tree {
-    fn drop(&mut self) {}
+    fn drop(&mut self) {
+        self.dispose();
+    }
 }
 
 impl PartialEq for Tree {

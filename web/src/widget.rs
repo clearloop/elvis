@@ -1,24 +1,25 @@
-use elvis::Tree;
+use elvis::{LifeCycle, Tree};
 use std::ops::{Deref, DerefMut};
 use wasm_bindgen::prelude::*;
-
-/// mock web element
+/// basic widget without lifecycle nor state
 #[wasm_bindgen]
-#[derive(Debug, Clone)]
-pub struct ElvisWidget(Tree);
+#[derive(Clone, Debug, Default)]
+pub struct Widget(Tree);
 
-impl ElvisWidget {
-    pub fn new(tree: Tree) -> ElvisWidget {
-        ElvisWidget(tree)
+impl Widget {
+    /// new widget from tree
+    pub fn new(mut tree: Tree) -> Widget {
+        tree.create();
+        Widget(tree)
     }
 }
 
 #[wasm_bindgen]
-impl ElvisWidget {
-    #[wasm_bindgen(js_name = "setState")]
-    pub fn set_state(&mut self, k: String, v: String) {
-        self.set(&k, &v);
+impl Widget {
+    #[wasm_bindgen(constructor)]
+    pub fn constructor() -> Widget {
+        Widget::default()
     }
 }
 
-deref!(ElvisWidget, Tree);
+deref!(Widget, Tree);

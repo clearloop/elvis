@@ -1,18 +1,18 @@
-use crate::ElvisWidget;
+use crate::Widget;
 use elvis::Serde;
 use wasm_bindgen::prelude::*;
 
 /// common elvis api
 #[wasm_bindgen]
 pub struct Elvis {
-    home: ElvisWidget,
+    home: Widget,
 }
 
 #[wasm_bindgen]
 impl Elvis {
     #[wasm_bindgen(constructor)]
-    pub fn new(widget: ElvisWidget) -> Elvis {
-        Elvis { home: widget }
+    pub fn new(home: Widget) -> Elvis {
+        Elvis { home }
     }
 
     pub fn calling(&self) -> Result<(), JsValue> {

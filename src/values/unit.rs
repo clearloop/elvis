@@ -35,6 +35,7 @@
 /// [1]: https://drafts.csswg.org/css-values-3
 #[derive(Clone, Copy, Debug)]
 pub enum Unit {
+    Auto,
     Ch(f64),
     Cm(f64),
     Dpi(f64),
@@ -70,6 +71,7 @@ impl Unit {
             .parse()
             .unwrap_or(t[u..].trim().parse().unwrap_or(1.0));
         match t[u..].trim().to_ascii_lowercase().as_str() {
+            "auto" => Unit::Auto,
             "ch" => Unit::Ch(v),
             "cm" => Unit::Cm(v),
             "dpcm" => Unit::Dpcm(v),
@@ -96,6 +98,7 @@ impl Unit {
     /// common string style
     pub fn to_string(&self) -> String {
         match self {
+            Unit::Auto => "auto".into(),
             Unit::Ch(n) => format!("{:.1}ch", n),
             Unit::Cm(n) => format!("{:.1}cm", n),
             Unit::Dpcm(n) => format!("{:.1}dpcm", n),

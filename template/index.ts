@@ -1,16 +1,23 @@
-import { Colors, Elvis, Text, Widget } from "../web/ts";
+import { Colors, Elvis, Text, Widget, Router } from "../web/ts";
+const MyText = (name: string) => Text(`Pink is the ${name}!`, {
+  bold: true,
+  italic: true,
+  size: 8,
+  color: Colors.PinkAccent(),
+});
 
-class MyWidget extends Widget {
-  public render() {
-    return Text("pink is the pig!", {
-      bold: true,
-      italic: true,
-      size: 10,
-      color: Colors.PinkAccent,
-    });
-  }
-}
+// self widget
+// class Home extends Widget {
+//   constructor() {
+//     super();
+//   }
+// 
+//   public create() {
+//     console.log("create");
+//   }
+// }
 
+// entry
 new Elvis({
-  home: new MyWidget(),
+  home: MyText("Pigger")
 }).calling();

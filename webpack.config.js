@@ -5,6 +5,7 @@ const webpack = require("webpack");
 
 module.exports = {
   devServer: {
+    historyApiFallback: true,
     hot: true,
     port: 5000,
   },

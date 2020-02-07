@@ -1,16 +1,16 @@
-use crate::{Colors, ElvisWidget};
+use crate::{Colors, Widget};
 use elvis::{Text, TextStyle as ElvisTextStyle, Unit};
 use wasm_bindgen::prelude::*;
 
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
 #[wasm_bindgen(js_name = "Text")]
-pub fn text(text: Option<String>, style: Option<TextStyle>) -> ElvisWidget {
-    ElvisWidget::new(Text::new(text.unwrap_or_default(), style.unwrap_or_default().into()).into())
+pub fn text(text: Option<String>, style: Option<TextStyle>) -> Widget {
+    Widget::new(Text::new(text.unwrap_or_default(), style.unwrap_or_default().into()).into())
 }
 
 /// TextStyle Interface
-#[wasm_bindgen(plain_object)]
+#[wasm_bindgen]
 #[derive(Default)]
 pub struct TextStyle {
     pub bold: Option<bool>,
@@ -48,13 +48,18 @@ impl TextStyle {
 
 impl Into<ElvisTextStyle> for TextStyle {
     fn into(self) -> ElvisTextStyle {
+        let mut height = Unit::Auto;
+        if let Some(u) = self.height {
+            height = Unit::Rem(u);
+        }
+
         ElvisTextStyle {
             bold: self.bold.unwrap_or(false),
             color: self.color.unwrap_or_default().into(),
             italic: self.italic.unwrap_or(false),
             size: Unit::Rem(self.size.unwrap_or(1.0)),
             weight: Unit::Rem(self.weight.unwrap_or(1.0)),
-            height: Unit::Rem(self.height.unwrap_or(1.0)),
+            height: height,
             stretch: Unit::Percent(self.stretch.unwrap_or(100.0)),
         }
     }

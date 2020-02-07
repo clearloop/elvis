@@ -11,8 +11,7 @@ impl Into<Tree> for Text {
 
         Tree::new(
             m,
-            HashMap::new(),
-            vec![Tree::new(cm, HashMap::new(), vec![], None, "plain".into())],
+            vec![Tree::new(cm, vec![], None, "plain".into())],
             None,
             "p".into(),
         )
@@ -31,8 +30,7 @@ impl<'t> Into<Tree> for &'t Text {
 
         Tree::new(
             m,
-            HashMap::new(),
-            vec![Tree::new(cm, HashMap::new(), vec![], None, "plain".into())],
+            vec![Tree::new(cm, vec![], None, "plain".into())],
             None,
             "p".into(),
         )

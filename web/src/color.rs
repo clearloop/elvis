@@ -1,7 +1,7 @@
 use elvis::Colors as ElvisColors;
 use wasm_bindgen::prelude::*;
 
-#[wasm_bindgen(plain_object)]
+#[wasm_bindgen]
 #[derive(Clone, Copy)]
 pub struct Colors(ElvisColors);
 

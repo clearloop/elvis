@@ -1,8 +1,8 @@
 import {
   Colors,
-  ElvisWidget,
   Text as ElvisText,
   TextStyle,
+  Widget,
 } from "../pkg";
 
 // TextStyle Interface
@@ -17,7 +17,7 @@ export interface ITextStyle {
 }
 
 // Text Wrapper
-export function Text(text: string, style: ITextStyle): ElvisWidget {
+export function Text(text: string, style: ITextStyle): Widget {
   return ElvisText(text, new TextStyle(
     style.bold,
     style.color,
