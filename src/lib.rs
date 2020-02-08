@@ -11,7 +11,7 @@ mod widgets;
 
 pub use crate::{
     err::Error,
-    life::LifeCycle,
+    life::{Life, LifeCycle},
     serde::Serde,
     tree::Tree,
     values::{color::Colors, unit::Unit},

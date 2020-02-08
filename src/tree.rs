@@ -1,4 +1,3 @@
-use crate::LifeCycle;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::{Rc, Weak};
@@ -81,12 +80,8 @@ impl Tree {
 
         t.update();
     }
-}
 
-impl<'t> Drop for Tree {
-    fn drop(&mut self) {
-        self.dispose();
-    }
+    pub fn update(&self) {}
 }
 
 impl PartialEq for Tree {

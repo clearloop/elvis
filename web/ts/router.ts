@@ -11,11 +11,11 @@ interface IPush {
 }
 
 class Router {
-  public static back() {
+  static back() {
     window.history.back();
   }
 
-  public static push(path: string, pushProps = { props: {}, title: document.title }): void {
+  static push(path: string, pushProps = { props: {}, title: document.title }): void {
     if (window.location.pathname.slice(1) === path) {
       return;
     }

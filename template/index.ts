@@ -6,18 +6,17 @@ const MyText = (name: string) => Text(`Pink is the ${name}!`, {
   color: Colors.PinkAccent(),
 });
 
-// self widget
-// class Home extends Widget {
-//   constructor() {
-//     super();
-//   }
-// 
-//   public create() {
-//     console.log("create");
-//   }
-// }
+const Show = Text(`The Show Must Go On!`, {
+  bold: true,
+  italic: true,
+  size: 8,
+  color: Colors.PinkAccent(),
+});
 
 // entry
 new Elvis({
-  home: MyText("Pigger")
+  home: MyText("Pigger"),
+  router: new Router({
+    "show": Show,
+  })
 }).calling();

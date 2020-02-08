@@ -12,17 +12,22 @@ class Elvis {
   private proto: ElvisPrototype;
 
   constructor(props: IElvis) {
-    this.router = props.router;
-    this.home = props.home;
-    this.proto = new ElvisPrototype(this.home);
-
+    // init global route
     (window as any).route = () => {
       const ptr: string = window.location.pathname.slice(1);
       const widget = this.router.routes[ptr];
-      // widget.setProps(window.history.state);
       this.proto = new ElvisPrototype(widget);
       this.calling();
     };
+
+    // setters
+    this.router = props.router;
+    this.home = props.home;
+    if (window.location.pathname == "/") {
+      this.proto = new ElvisPrototype(this.home);
+    } else {
+      (window as any).route();
+    }
   }
 
   public calling() {

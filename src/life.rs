@@ -1,6 +1,25 @@
 //! LifeCycle in Elvis
 use crate::Tree;
-use std::convert::Into;
+use std::collections::HashMap;
+
+/// `Life` manager
+pub struct Life {
+    pub tree: Tree,
+    pub state: HashMap<String, String>,
+}
+
+impl Life {
+    pub fn new(tree: Tree) -> Life {
+        Life {
+            tree,
+            state: HashMap::new(),
+        }
+    }
+
+    pub fn set(&mut self, k: String, v: String) {
+        self.state.insert(k, v);
+    }
+}
 
 /// Lifecycle
 ///
@@ -8,22 +27,9 @@ use std::convert::Into;
 /// 2. `update()` calling after `set_state()`
 /// 3. `render()` calling after `create()` and `update()`
 /// 4. `dispose()` calling after deleting tree
-/// 5. `set_state()` calling by users
 pub trait LifeCycle<T> {
     fn create(&mut self);
     fn update(&self);
-    fn render(self) -> T;
+    fn render() -> T;
     fn dispose(&mut self);
-}
-
-impl<T> LifeCycle<Tree> for T
-where
-    T: Into<Tree>,
-{
-    fn create(&mut self) {}
-    fn update(&self) {}
-    fn render(self) -> Tree {
-        self.into()
-    }
-    fn dispose(&mut self) {}
 }

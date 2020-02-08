@@ -1,4 +1,4 @@
-use elvis::{LifeCycle, Tree};
+use elvis::Tree;
 use std::ops::{Deref, DerefMut};
 use wasm_bindgen::prelude::*;
 /// basic widget without lifecycle nor state
@@ -8,8 +8,7 @@ pub struct Widget(Tree);
 
 impl Widget {
     /// new widget from tree
-    pub fn new(mut tree: Tree) -> Widget {
-        tree.create();
+    pub fn new(tree: Tree) -> Widget {
         Widget(tree)
     }
 }
@@ -19,6 +18,12 @@ impl Widget {
     #[wasm_bindgen(constructor)]
     pub fn constructor() -> Widget {
         Widget::default()
+    }
+}
+
+impl std::convert::Into<Tree> for Widget {
+    fn into(self) -> Tree {
+        self.0
     }
 }
 
