@@ -1,4 +1,4 @@
-import { Colors, Elvis, Text, Widget, Router } from "../web/ts";
+import { Colors, Elvis, Text, Router } from "../web/ts";
 const MyText = (name: string) => Text(`Pink is the ${name}!`, {
   bold: true,
   italic: true,
@@ -15,7 +15,7 @@ const Show = Text(`The Show Must Go On!`, {
 
 // entry
 new Elvis({
-  home: MyText("Pigger"),
+  home: MyText("Pig"),
   router: new Router({
     "show": Show,
   })

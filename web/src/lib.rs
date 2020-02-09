@@ -3,7 +3,6 @@
 mod macros;
 mod color;
 mod elvis;
-mod state;
 mod text;
 mod types;
 mod widget;
@@ -11,7 +10,6 @@ mod widget;
 pub use crate::{
     color::Colors,
     elvis::Elvis,
-    state::State,
     text::{text, TextStyle},
     widget::Widget,
 };

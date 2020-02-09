@@ -152,7 +152,7 @@
                     <main>
                         <h1><a class="header" href="#roadmap" id="roadmap">RoadMap</a></h1>
 <table><thead><tr><th>Plan</th><th>Date</th></tr></thead><tbody>
-<tr><td>Virtul-DOM</td><td>2020.1.28 - 2020.2.1</td></tr>
+<tr><td>Virtual-DOM</td><td>2020.1.28 - 2020.2.1</td></tr>
 <tr><td>Basic-Component</td><td>2020.2.5 - 2020.2.7</td></tr>
 <tr><td>Router</td><td>2020.2.7 - 2020.2.10</td></tr>
 <tr><td>Native Components</td><td>2020.2.10 - 2020.2.11</td></tr>
@@ -170,22 +170,18 @@
 <p>🧙‍♂️ 🤹‍♂️ Here we go! Roll up, roll up for the mystery tour, the magical mystery tour is waiting to take you away! Hoping to take you away! Coming to take you away! Dying to take you away, take you today! 🛸</p>
 <p>🎻 Let me take you down, cause I'm going to,</p>
 <pre><code class="language-js">/* my elvis file */
-import { Elvis, Page, TextStyle } from &quot;calling-elvis&quot;;
-cnost { Center, Text } = Elvis;
+import { Colors, Elvis, Text } from &quot;calling-elvis&quot;;
 
-Page(
-  Center(
-    Text(
-      &quot;Calling Elvis&quot;,
-      new TextStyle({
-        bold: true,
-        color: &quot;red&quot;,
-        italic: true,
-        size: 42.0
-      }),
-    ),
-  ),
-).render();
+const Home = Text(&quot;Pink is the Pig!&quot;, {
+  bold: true,
+  italic: true,
+  size: 10,
+  color: Colors.PinkAccent(),
+});
+
+new Elvis({
+  home: Home,
+}).calling();
 </code></pre>
 <p><strong>Strawberry Fields</strong> 🧑‍🚀</p>
 <h2><a class="header" href="#license" id="license">LICENSE</a></h2>

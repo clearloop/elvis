@@ -15,7 +15,7 @@ pub use crate::{
     serde::Serde,
     tree::Tree,
     values::{color::Colors, unit::Unit},
-    widgets::text::{Text, TextStyle},
+    widgets::{Image, Text, TextStyle},
 };
 
 // elvis platform features

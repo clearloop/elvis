@@ -2,7 +2,7 @@
 
 | Plan              | Date                  |
 |-------------------|-----------------------|
-| Virtul-DOM        | 2020.1.28 - 2020.2.1  |
+| Virtual-DOM       | 2020.1.28 - 2020.2.1  |
 | Basic-Component   | 2020.2.5 - 2020.2.7   |
 | Router            | 2020.2.7 - 2020.2.10  |
 | Native Components | 2020.2.10 - 2020.2.11 |
@@ -31,22 +31,18 @@ Writing web pages in **pure javascript** using wasm bindings, **without** `jsx` 
 
 ```js
 /* my elvis file */
-import { Elvis, Page, TextStyle } from "calling-elvis";
-cnost { Center, Text } = Elvis;
+import { Colors, Elvis, Text } from "calling-elvis";
 
-Page(
-  Center(
-    Text(
-      "Calling Elvis",
-      new TextStyle({
-        bold: true,
-        color: "red",
-        italic: true,
-        size: 42.0
-      }),
-    ),
-  ),
-).render();
+const Home = Text("Pink is the Pig!", {
+  bold: true,
+  italic: true,
+  size: 10,
+  color: Colors.PinkAccent(),
+});
+
+new Elvis({
+  home: Home,
+}).calling();
 ```
  **Strawberry Fields** 🧑‍🚀
 

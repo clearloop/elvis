@@ -23,7 +23,7 @@ class Elvis {
     // setters
     this.router = props.router;
     this.home = props.home;
-    if (window.location.pathname == "/") {
+    if (window.location.pathname === "/") {
       this.proto = new ElvisPrototype(this.home);
     } else {
       (window as any).route();
