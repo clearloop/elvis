@@ -1,13 +1,6 @@
-use crate::{Colors, Widget};
-use elvis::{Text, TextStyle as ElvisTextStyle, Unit};
+use crate::Colors;
+use elvis::{TextStyle as ElvisTextStyle, Unit};
 use wasm_bindgen::prelude::*;
-
-/// `Text` might be the most popular spider from Mars,
-/// Does it know the Great Ziggy Stardust?
-#[wasm_bindgen(js_name = "Text")]
-pub fn text(text: Option<String>, style: Option<TextStyle>) -> Widget {
-    Widget::new(Text::new(text.unwrap_or_default(), style.unwrap_or_default().into()).into())
-}
 
 /// TextStyle Interface
 #[wasm_bindgen]
@@ -64,3 +57,5 @@ impl Into<ElvisTextStyle> for TextStyle {
         }
     }
 }
+
+//// If you don't want Image to play in background anonymously, just remove the child field.

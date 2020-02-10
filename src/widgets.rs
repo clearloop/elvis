@@ -1,4 +1,5 @@
-use crate::{Colors, Unit};
+use crate::{Colors, Tree, Unit};
+
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
 #[derive(Debug, Eq, PartialEq)]
@@ -58,5 +59,18 @@ impl Default for TextStyle {
             height: Unit::Rem(1.0),
             stretch: Unit::Percent(100.0),
         }
+    }
+}
+
+/// If you don't want Image to play in background anonymously, just remove the child field.
+pub struct Image {
+    pub src: String,
+    pub child: Tree,
+}
+
+impl Image {
+    /// image will auto-fill to the father widget
+    pub fn new(src: String, child: Tree) -> Image {
+        Image { src, child }
     }
 }

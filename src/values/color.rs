@@ -185,7 +185,3 @@ impl Default for Colors {
         Colors::Pink
     }
 }
-
-// features condition
-#[allow(unused_imports)]
-use crate::features::web::color;

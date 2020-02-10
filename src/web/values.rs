@@ -1,4 +1,4 @@
-use crate::{Colors, Error, Serde};
+use crate::{Colors, Error, Serde, Unit};
 
 /// unify in `rgba(r, g, b, a)`
 impl Serde<Colors, String> for Colors {
@@ -23,5 +23,15 @@ impl Serde<Colors, String> for Colors {
                 }
             }
         }
+    }
+}
+
+impl Serde<Unit, String> for Unit {
+    fn de(s: String) -> Result<Unit, Error> {
+        Ok(Unit::from_str(s))
+    }
+
+    fn ser(&self) -> String {
+        self.to_string()
     }
 }
