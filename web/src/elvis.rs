@@ -1,5 +1,6 @@
-use crate::Widget;
+use crate::{StyleSheet, Widget};
 use elvis::Serde;
+use std::collections::HashSet;
 use wasm_bindgen::prelude::*;
 
 /// common elvis api
@@ -15,11 +16,18 @@ impl Elvis {
         Elvis { home }
     }
 
-    pub fn calling(&self) -> Result<(), JsValue> {
+    pub fn calling(&mut self) -> Result<(), JsValue> {
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        let body = document.query_selector("body")?.unwrap();
+        let html = document.query_selector("html")?.unwrap();
 
+        // set style
+        let style = document.create_element("style")?;
+        style.set_inner_html(StyleSheet::batch(&mut self.home, &mut HashSet::new()).trim());
+        html.append_child(&style)?;
+
+        // set body
+        let body = document.query_selector("body")?.unwrap();
         body.set_inner_html(&self.home.ser());
         Ok(())
     }

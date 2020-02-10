@@ -5,11 +5,11 @@ mod color;
 mod elvis;
 mod style;
 mod types;
-mod widget;
+mod widgets;
 
 pub use crate::{
     color::Colors,
     elvis::Elvis,
-    style::TextStyle,
-    widget::{text, Widget},
+    style::{StyleSheet, TextStyle},
+    widgets::{text, Widget},
 };

@@ -1,5 +1,6 @@
 use crate::Colors;
-use elvis::{TextStyle as ElvisTextStyle, Unit};
+use elvis::{TextStyle as ElvisTextStyle, Tree, Unit};
+use std::collections::HashSet;
 use wasm_bindgen::prelude::*;
 
 /// TextStyle Interface
@@ -58,4 +59,64 @@ impl Into<ElvisTextStyle> for TextStyle {
     }
 }
 
-//// If you don't want Image to play in background anonymously, just remove the child field.
+/// style sheet
+pub struct StyleSheet(pub String);
+
+impl<'s> StyleSheet {
+    pub fn batch(t: &'s mut Tree, hs: &mut HashSet<String>) -> String {
+        let mut ss = StyleSheet("".into());
+        if let Some(style) = t.attrs.remove("style") {
+            let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
+            ss.id(&id, &style);
+        }
+
+        let class = t.attrs.get("class").unwrap_or(&"".to_string()).to_string();
+        class.split(|x: char| x.is_whitespace()).for_each(|c| {
+            let ct = c.trim();
+            if !ct.is_empty() {
+                if !hs.contains(ct) {
+                    hs.insert(ct.into());
+                    ss.class(ct);
+                }
+            }
+        });
+
+        t.children
+            .iter()
+            .for_each(|it| ss.0.push_str(&StyleSheet::batch(&mut it.borrow_mut(), hs)));
+        ss.0
+    }
+
+    pub fn class(&mut self, name: &'s str) {
+        match name {
+            "elvis-image" => self.0.push_str(
+                &vec![
+                    "\n\n.elvis-image {",
+                    "  background-position: center;",
+                    "  background-repeat: no-repeat;",
+                    "  background-size: cover;",
+                    "  height: 100%;",
+                    "  width: 100%;",
+                    "}",
+                ]
+                .join("\n"),
+            ),
+            _ => {}
+        }
+    }
+
+    pub fn id(&mut self, ti: &'s str, s: &'s str) {
+        let mut style = "".to_string();
+        s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
+            style.push_str("  ");
+            style.push_str(x.trim());
+            style.push_str(";\n");
+        });
+
+        self.0.push_str(&format!(
+            "{}{}",
+            &format!("\n\n#{} ", ti),
+            vec!["{\n", &style[..(style.len() - 5)], "\n}"].join("")
+        ));
+    }
+}

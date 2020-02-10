@@ -11,9 +11,6 @@ homepage = "https://github.com/clearloop/elvis"
 keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
-[dependencies]
-# elvis-web = { path = "./web" }
-
 [features]
 web = []
 default = ["web"]
@@ -22,6 +19,3 @@ default = ["web"]
 members = [
   "web"
 ]
-
-[profile.release]
-lto = true
