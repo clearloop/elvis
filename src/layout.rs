@@ -1,5 +1,5 @@
 use crate::{
-    Alignments, Colors, FlexBasis, FlexDirection, GridAutoRows, GridTemplate, MultiColumnStyle,
+    Alignments, Colors, FlexBasis, FlexDirection, GridAutoRows, GridTemplate, MultiColumnLineStyle,
     Tree, Unit,
 };
 
@@ -29,6 +29,11 @@ pub struct List {
 /// SizedBox just has width and height two arguments, we use this component to take some white space usually.
 pub struct SizedBox {
     pub child: Tree,
+    pub style: SizedBoxStyle,
+}
+
+/// SizedBox style
+pub struct SizedBoxStyle {
     pub height: Unit,
     pub width: Unit,
 }
@@ -77,5 +82,5 @@ pub struct MultiColumn {
     pub color: Colors,
     pub count: Unit,
     pub gap: Unit,
-    pub style: MultiColumnStyle,
+    pub style: MultiColumnLineStyle,
 }

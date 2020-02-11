@@ -26,6 +26,12 @@ pub enum FlexBasis {
     Number(Unit),
 }
 
+impl Default for FlexBasis {
+    fn default() -> FlexBasis {
+        FlexBasis::Fill
+    }
+}
+
 pub enum FlexDirection {
     Column,
     ColumnReverse,
@@ -33,17 +39,43 @@ pub enum FlexDirection {
     RowReverse,
 }
 
+impl Default for FlexDirection {
+    fn default() -> FlexDirection {
+        FlexDirection::Column
+    }
+}
+
 pub enum GridAutoRows {
-    Auto(Unit, Option<Unit>),
+    Auto,
+    MaxContent,
+    MinContent,
     Fixed(Unit),
 }
 
+impl Default for GridAutoRows {
+    fn default() -> GridAutoRows {
+        GridAutoRows::Auto
+    }
+}
+
+pub struct GridTemplateColumns(GridTemplate);
+pub struct GridTemplateRow(GridTemplate);
+
 pub enum GridTemplate {
+    Auto,
+    MaxContent,
+    MinContent,
     Plain(Vec<Unit>),
     Repeat(i32, Unit),
 }
 
-pub enum MultiColumnStyle {
+impl Default for GridTemplate {
+    fn default() -> GridTemplate {
+        GridTemplate::Repeat(1, Unit::Fr(1.0))
+    }
+}
+
+pub enum MultiColumnLineStyle {
     None,
     Hidden,
     Dotted,
@@ -54,4 +86,10 @@ pub enum MultiColumnStyle {
     Ridge,
     Inset,
     OutSet,
+}
+
+impl Default for MultiColumnLineStyle {
+    fn default() -> MultiColumnLineStyle {
+        MultiColumnLineStyle::None
+    }
 }

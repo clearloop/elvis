@@ -1,5 +1,5 @@
 //! Convert widgets to Tree
-use crate::{Image, Serde, Text, Tree};
+use crate::{Container, Image, List, Serde, Text, Tree};
 use std::{
     cell::RefCell,
     collections::{hash_map::DefaultHasher, HashMap},
@@ -58,6 +58,39 @@ impl<'i> Into<Tree> for &'i Image {
     }
 }
 
+// layout
+impl<'i> Into<Tree> for &'i Container {
+    fn into(self) -> Tree {
+        let ss = self.style.ser();
+        let id = hash("container", ss.as_bytes());
+        let mut m = HashMap::<String, String>::new();
+        m.insert("id".into(), id);
+        m.insert("style".into(), ss);
+
+        Tree::new(
+            m,
+            vec![Rc::new(RefCell::new(self.child.to_owned()))],
+            None,
+            "div".into(),
+        )
+        .borrow()
+        .to_owned()
+    }
+}
+
+impl<'i> Into<Tree> for &'i List {
+    fn into(self) -> Tree {
+        let mut cs = vec![];
+        self.children.iter().for_each(|x| {
+            cs.push(Rc::new(RefCell::new(x.to_owned())));
+        });
+
+        Tree::new(HashMap::new(), cs, None, "div".into())
+            .borrow()
+            .to_owned()
+    }
+}
+
 macro_rules! it {
     {$($widget:ident,)*} => {
         $(
@@ -74,4 +107,5 @@ macro_rules! it {
 it! {
     Image,
     Text,
+    Container,
 }
