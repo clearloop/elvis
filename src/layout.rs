@@ -41,8 +41,13 @@ pub struct SizedBoxStyle {
 // Flex
 /// Align inherits the core usage of Alignments, it's quite simple, just one property.
 pub struct Align {
-    pub align: Alignments,
     pub child: Tree,
+    pub style: AlignStyle,
+}
+
+/// Align style
+pub struct AlignStyle {
+    pub align: Alignments,
 }
 
 /// Align inherits the core usage of Alignment, it's quite simple, just one property.

@@ -1,27 +1,40 @@
 use crate::{
-    Alignments, Colors, Container, ContainerStyle, Error, FlexBasis, FlexDirection, GridAutoRows,
-    GridTemplate, MultiColumnLineStyle, Serde, Tree, Unit,
+    Align, AlignStyle, Alignments, Colors, Container, ContainerStyle, Error, FlexBasis,
+    FlexDirection, GridAutoRows, GridTemplate, MultiColumnLineStyle, Serde, SizedBoxStyle, Tree,
+    Unit,
 };
 
-// widgets
-impl Serde<Container, String> for Container {
-    fn de(s: String) -> Result<Container, Error> {
-        let t = Tree::de(s)?;
-        assert!(t.children.len() == 1);
+/// serde single child widgets with match style
+macro_rules! ss {
+    {$(($widget:ident, $style:ident),)*} => {
+        $(
+            impl Serde<$widget, String> for $widget {
+                fn de(s: String) -> Result<$widget, Error> {
+                    let t = Tree::de(s)?;
+                    assert!(t.children.len() == 1);
 
-        let child = t.children[0].borrow().to_owned();
-        let style = t.attrs.get("style").unwrap_or(&"".to_string()).to_string();
+                    let child = t.children[0].borrow().to_owned();
+                    let style = t.attrs.get("style").unwrap_or(&"".to_string()).to_string();
 
-        Ok(Container {
-            child,
-            style: ContainerStyle::de(style)?,
-        })
-    }
+                    Ok($widget {
+                        child,
+                        style: $style::de(style)?,
+                    })
+                }
 
-    fn ser(&self) -> String {
-        let t: Tree = self.into();
-        t.ser()
-    }
+                fn ser(&self) -> String {
+                    let t: Tree = self.into();
+                    t.ser()
+                }
+            }
+
+        )*
+    };
+}
+
+ss! {
+    (Align, AlignStyle),
+    (Container, ContainerStyle),
 }
 
 // styles
@@ -59,6 +72,52 @@ impl Serde<ContainerStyle, String> for ContainerStyle {
         s += &format!("margin: {};", self.margin.ser());
         s += &format!("background-color: {};", self.background_color.ser());
         s
+    }
+}
+
+impl Serde<SizedBoxStyle, String> for SizedBoxStyle {
+    fn de(s: String) -> Result<SizedBoxStyle, Error> {
+        let mut sbs = SizedBoxStyle {
+            height: Unit::Auto,
+            width: Unit::Auto,
+        };
+
+        let hw = s.split(";").collect::<Vec<&str>>();
+        for a in hw {
+            if let Some(i) = a.find(":") {
+                match a[..i].trim() {
+                    "height" => {
+                        sbs.height = Unit::de(a[i..].trim().to_string()).unwrap_or(Unit::Auto)
+                    }
+                    "width" => {
+                        sbs.width = Unit::de(a[i..].trim().to_string()).unwrap_or(Unit::Auto)
+                    }
+                    _ => {}
+                }
+            }
+        }
+
+        Ok(sbs)
+    }
+
+    fn ser(&self) -> String {
+        format!(
+            "height: {}; width: {};",
+            self.height.ser(),
+            self.width.ser()
+        )
+    }
+}
+
+impl Serde<AlignStyle, String> for AlignStyle {
+    fn de(s: String) -> Result<AlignStyle, Error> {
+        Ok(AlignStyle {
+            align: Alignments::de(s).unwrap_or(Alignments::Center),
+        })
+    }
+
+    fn ser(&self) -> String {
+        self.align.ser()
     }
 }
 

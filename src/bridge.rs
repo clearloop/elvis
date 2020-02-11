@@ -1,5 +1,5 @@
 //! Convert widgets to Tree
-use crate::{Container, Image, List, Serde, Text, Tree};
+use crate::{Align, Container, Image, List, Serde, Text, Tree};
 use std::{
     cell::RefCell,
     collections::{hash_map::DefaultHasher, HashMap},
@@ -58,26 +58,7 @@ impl<'i> Into<Tree> for &'i Image {
     }
 }
 
-// layout
-impl<'i> Into<Tree> for &'i Container {
-    fn into(self) -> Tree {
-        let ss = self.style.ser();
-        let id = hash("container", ss.as_bytes());
-        let mut m = HashMap::<String, String>::new();
-        m.insert("id".into(), id);
-        m.insert("style".into(), ss);
-
-        Tree::new(
-            m,
-            vec![Rc::new(RefCell::new(self.child.to_owned()))],
-            None,
-            "div".into(),
-        )
-        .borrow()
-        .to_owned()
-    }
-}
-
+// layouts
 impl<'i> Into<Tree> for &'i List {
     fn into(self) -> Tree {
         let mut cs = vec![];
@@ -91,6 +72,38 @@ impl<'i> Into<Tree> for &'i List {
     }
 }
 
+/// single child widgets
+macro_rules! sw {
+    {$($widget:ident,)*} => {
+        $(
+            impl<'s> Into<Tree> for &'s $widget {
+                fn into(self) -> Tree {
+                    let ss = self.style.ser();
+                    let id = hash(&stringify!($widget).to_lowercase(), ss.as_bytes());
+                    let mut m = HashMap::<String, String>::new();
+                    m.insert("id".into(), id);
+                    m.insert("style".into(), ss);
+
+                    Tree::new(
+                        m,
+                        vec![Rc::new(RefCell::new(self.child.to_owned()))],
+                        None,
+                        "div".into(),
+                    )
+                        .borrow()
+                        .to_owned()
+                }
+            }
+        )*
+    };
+}
+
+sw! {
+    Align,
+    Container,
+}
+
+/// toOwned widget into tree
 macro_rules! it {
     {$($widget:ident,)*} => {
         $(
@@ -108,4 +121,5 @@ it! {
     Image,
     Text,
     Container,
+    List,
 }
