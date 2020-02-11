@@ -1,3 +1,1 @@
-# elvis-web
-
-Elvis web library
+../book/guide.md

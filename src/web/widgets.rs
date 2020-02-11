@@ -1,4 +1,4 @@
-use crate::{Colors, Error, Image, Serde, Text, TextStyle, Tree, Unit};
+use crate::{Colors, Error, Image, ImageSrc, Serde, Text, TextStyle, Tree, Unit};
 
 /// Serde for Image
 impl Serde<Image, String> for Image {
@@ -24,6 +24,16 @@ impl Serde<Image, String> for Image {
     fn ser(&self) -> String {
         let t: Tree = self.into();
         t.ser()
+    }
+}
+
+impl Serde<ImageSrc, String> for ImageSrc {
+    fn de(s: String) -> Result<ImageSrc, Error> {
+        Ok(ImageSrc(s))
+    }
+
+    fn ser(&self) -> String {
+        format!("background-image: url({})", self.0)
     }
 }
 

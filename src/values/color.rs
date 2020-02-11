@@ -1,6 +1,7 @@
 /// Elvis colors
 #[derive(Clone, Copy, Debug)]
 pub enum Colors {
+    Inherit,
     ORGB(f32, i16, i16, i16),
     Amber,
     AmberAccent,
@@ -123,6 +124,7 @@ impl Colors {
     /// convert `Colors` to hex string
     pub fn to_hex(&self) -> String {
         match *self {
+            Colors::Inherit => "0xFFFFFFFF".into(),
             Colors::ORGB(o, r, g, b) => format!("{:#X}{:X}{:X}{:X}", (o * 255.0) as i32, r, g, b),
             Colors::Amber => "0xFFFFC107".into(),
             Colors::AmberAccent => "0xFFFFD740".into(),

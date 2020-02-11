@@ -16,7 +16,7 @@ fn hash(tag: &str, s: &[u8]) -> String {
     format!("{}-{}", &tag, &res[(res.len() - 6)..])
 }
 
-/// Text
+// widgets
 impl<'t> Into<Tree> for &'t Text {
     fn into(self) -> Tree {
         let s = self.style.ser();
@@ -45,10 +45,7 @@ impl<'i> Into<Tree> for &'i Image {
         let mut m = HashMap::<String, String>::new();
         m.insert("class".into(), "elvis-image".into());
         m.insert("id".into(), id);
-        m.insert(
-            "style".into(),
-            format!("background-image: url({});", &self.src),
-        );
+        m.insert("style".into(), self.src.ser());
 
         Tree::new(
             m,

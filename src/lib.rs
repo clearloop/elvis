@@ -3,6 +3,7 @@
 #![feature(vec_remove_item)]
 mod bridge;
 mod err;
+mod layout;
 mod life;
 mod serde;
 mod tree;
@@ -11,11 +12,12 @@ mod widgets;
 
 pub use crate::{
     err::Error,
+    layout::*,
     life::{Life, LifeCycle},
     serde::Serde,
     tree::Tree,
-    values::{color::Colors, unit::Unit},
-    widgets::{Image, Text, TextStyle},
+    values::{color::Colors, layout::*, unit::Unit},
+    widgets::{Image, ImageSrc, Text, TextStyle},
 };
 
 // elvis platform features
