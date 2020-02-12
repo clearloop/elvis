@@ -1,7 +1,7 @@
 use crate::{
     Align, AlignStyle, Alignments, Colors, Container, ContainerStyle, Error, FlexBasis,
-    FlexDirection, FlexStyle, Grid, GridAutoRows, GridStyle, GridTemplate, MultiColumnLineStyle,
-    MultiColumnStyle, Serde, SizedBox, SizedBoxStyle, Tree, Unit,
+    FlexDirection, FlexStyle, Grid, GridAutoRows, GridStyle, GridTemplate, MultiColumn,
+    MultiColumnLineStyle, MultiColumnStyle, Serde, SizedBox, SizedBoxStyle, Tree, Unit,
 };
 
 /// serde single child widgets with match style
@@ -36,6 +36,7 @@ ss! {
     (Align, AlignStyle),
     (Container, ContainerStyle),
     (Grid, GridStyle),
+    (MultiColumn, MultiColumnStyle),
     (SizedBox, SizedBoxStyle),
 }
 

@@ -1,20 +1,10 @@
 use crate::Colors;
-use elvis::{TextStyle as ElvisTextStyle, Tree, Unit};
+use elvis::{
+    AlignStyle as ElvisAlignStyle, Alignments as ElvisAlignments, TextStyle as ElvisTextStyle,
+    Tree, Unit,
+};
 use std::collections::HashSet;
 use wasm_bindgen::prelude::*;
-
-#[wasm_bindgen(typescript_custom_section)]
-const ITEXT_STYLE: &'static str = r#"
-export interface ITextStyle {
-  bold?: boolean;
-  color?: Colors;
-  italic?: boolean;
-  size?: number;
-  weight?: number;
-  height?: number;
-  stretch?: number;
-}
-"#;
 
 /// TextStyle Interface
 #[wasm_bindgen]
@@ -28,6 +18,19 @@ pub struct TextStyle {
     pub height: Option<f64>,
     pub stretch: Option<f64>,
 }
+
+#[wasm_bindgen(typescript_custom_section)]
+const ITEXT_STYLE: &'static str = r#"
+export interface ITextStyle {
+  bold?: boolean;
+  color?: Colors;
+  italic?: boolean;
+  size?: number;
+  weight?: number;
+  height?: number;
+  stretch?: number;
+}
+"#;
 
 #[wasm_bindgen]
 impl TextStyle {
@@ -69,6 +72,18 @@ impl Into<ElvisTextStyle> for TextStyle {
             height: height,
             stretch: Unit::Percent(self.stretch.unwrap_or(100.0)),
         }
+    }
+}
+
+/// AlignStyle interface
+#[wasm_bindgen]
+pub struct AlignStyle;
+
+#[wasm_bindgen]
+impl AlignStyle {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> AlignStyle {
+        unimplemented!()
     }
 }
 
