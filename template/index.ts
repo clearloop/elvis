@@ -7,7 +7,7 @@ const MyText = Text(`Pink is the Pig!`, {
   color: Colors.PinkAccent(),
 });
 
-const MyImage = Image("http://img1.gtimg.com/cul/pics/hv1/58/22/2141/139224193.jpg", MyText);
+const MyImage = Image("http://08imgmini.eastday.com/mobile/20190221/20190221225048_ce81ae14103486b54f05f608ca64a7f6_1.jpeg", MyText);
 
 const Show = Text(`The Show Must Go On!`, {
   bold: true,

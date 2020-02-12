@@ -32,12 +32,44 @@ macro_rules! ss {
     };
 }
 
+/// serde single child widgets with match style
+macro_rules! sm {
+    {$(($widget:ident, $style:ident),)*} => {
+        $(
+            impl Serde<$widget, String> for $widget {
+                fn de(s: String) -> Result<$widget, Error> {
+                    let t = Tree::de(s)?;
+
+                    let children = t.children.iter().map(
+                        |w| w.borrow().to_owned()
+                    ).collect::<Vec<Tree>>();
+                    let style = t.attrs.get("style").unwrap_or(&"".to_string()).to_string();
+
+                    Ok($widget {
+                        children,
+                        style: $style::de(style)?,
+                    })
+                }
+
+                fn ser(&self) -> String {
+                    let t: Tree = self.into();
+                    t.ser()
+                }
+            }
+
+        )*
+    };
+}
+
 ss! {
     (Align, AlignStyle),
     (Container, ContainerStyle),
+    (SizedBox, SizedBoxStyle),
+}
+
+sm! {
     (Grid, GridStyle),
     (MultiColumn, MultiColumnStyle),
-    (SizedBox, SizedBoxStyle),
 }
 
 fn parse<'p>(s: &'p str) -> Vec<(&'p str, &'p str)> {

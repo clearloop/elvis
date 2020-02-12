@@ -66,12 +66,6 @@ impl FlexBasis {
     }
 }
 
-impl Into<ElvisFlexBasis> for FlexBasis {
-    fn into(self) -> ElvisFlexBasis {
-        self.0
-    }
-}
-
 #[wasm_bindgen]
 pub enum FlexDirection {
     Column,
@@ -147,6 +141,12 @@ impl GridTemplate {
     pub fn repeat(t: i32, s: f64) -> GridTemplate {
         GridTemplate(ElvisGridTemplate::Repeat(t, Unit::Fr(s)))
     }
+}
+
+into! {
+    (FlexBasis, ElvisFlexBasis),
+    (GridAutoRows, ElvisGridAutoRows),
+    (GridTemplate, ElvisGridTemplate),
 }
 
 #[wasm_bindgen]

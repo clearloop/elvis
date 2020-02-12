@@ -113,6 +113,11 @@ impl Colors {
         Colors(ElvisColors::IndigoAccent)
     }
 
+    #[wasm_bindgen(js_name = "Inherit")]
+    pub fn inherit() -> Colors {
+        Colors(ElvisColors::Inherit)
+    }
+
     #[wasm_bindgen(js_name = "LightBlue")]
     pub fn light_blue() -> Colors {
         Colors(ElvisColors::LightBlue)

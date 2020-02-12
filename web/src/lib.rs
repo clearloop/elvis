@@ -12,6 +12,7 @@ mod widgets;
 pub use crate::{
     app::Elvis,
     color::Colors,
-    style::{AlignStyle, StyleSheet, TextStyle},
+    enums::*,
+    style::*,
     widgets::{text, Widget},
 };

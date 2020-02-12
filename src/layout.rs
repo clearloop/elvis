@@ -83,7 +83,7 @@ pub struct Row {
 // Grid
 /// Grid is quite complex in some way, usually, we just `Grid` our contains.
 pub struct Grid {
-    pub child: Tree,
+    pub children: Vec<Tree>,
     pub style: GridStyle,
 }
 
@@ -99,7 +99,7 @@ pub struct GridStyle {
 // MultiColumn
 /// Homework: code a New York Times.
 pub struct MultiColumn {
-    pub child: Tree,
+    pub children: Vec<Tree>,
     pub style: MultiColumnStyle,
 }
 

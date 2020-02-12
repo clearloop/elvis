@@ -1,5 +1,8 @@
 //! Convert widgets to Tree
-use crate::{Align, Container, Flex, Grid, Image, List, MultiColumn, Serde, SizedBox, Text, Tree};
+use crate::{
+    Align, Center, Col, Container, Flex, Grid, Image, List, MultiColumn, Row, Serde, SizedBox,
+    Text, Tree,
+};
 use std::{
     cell::RefCell,
     collections::{hash_map::DefaultHasher, HashMap},
@@ -59,16 +62,70 @@ impl<'i> Into<Tree> for &'i Image {
 }
 
 // layouts
-impl<'i> Into<Tree> for &'i List {
+impl<'i> Into<Tree> for &'i Center {
     fn into(self) -> Tree {
-        let mut cs = vec![];
-        self.children.iter().for_each(|x| {
-            cs.push(Rc::new(RefCell::new(x.to_owned())));
-        });
+        let mut m = HashMap::<String, String>::new();
+        m.insert("class".into(), "elvis-center".into());
 
-        Tree::new(HashMap::new(), cs, None, "div".into())
-            .borrow()
-            .to_owned()
+        let mut cs = vec![];
+        cs.push(Rc::new(RefCell::new(self.child.to_owned())));
+        Tree::new(m, cs, None, "div".into()).borrow().to_owned()
+    }
+}
+
+/// multi-child widget
+macro_rules! mcw {
+    {$($widget:ident,)*} => {
+        $(
+            impl<'i> Into<Tree> for &'i $widget {
+                fn into(self) -> Tree {
+                    let mut m = HashMap::<String, String>::new();
+                    m.insert(
+                        "class".into(),
+                        format!("elvis-{}", stringify!($widget).to_lowercase())
+                    );
+
+                    let mut cs = vec![];
+                    self.children.iter().for_each(|x| {
+                        cs.push(Rc::new(RefCell::new(x.to_owned())));
+                    });
+
+                    Tree::new(m, cs, None, "div".into())
+                        .borrow()
+                        .to_owned()
+                }
+            }
+        )*
+    }
+}
+
+/// multi-child widget with style
+macro_rules! mcws {
+    {$($widget:ident,)*} => {
+        $(
+            impl<'i> Into<Tree> for &'i $widget {
+                fn into(self) -> Tree {
+                    let ss = self.style.ser();
+                    let id = hash(&stringify!($widget).to_lowercase(), ss.as_bytes());
+                    let mut m = HashMap::<String, String>::new();
+                    m.insert("id".into(), id);
+                    m.insert("style".into(), ss);
+
+                    let mut cs = vec![];
+                    self.children.iter().for_each(|x| {
+                        cs.push(Rc::new(RefCell::new(x.to_owned())));
+                    });
+
+                    Tree::new(m, cs, None, "div".into())
+                        .borrow()
+                        .to_owned()
+                }
+            }
+
+            it! {
+                $widget,
+            }
+        )*
     }
 }
 
@@ -103,9 +160,7 @@ macro_rules! sw {
                         vec![Rc::new(RefCell::new(self.child.to_owned()))],
                         None,
                         "div".into(),
-                    )
-                        .borrow()
-                        .to_owned()
+                    ).borrow().to_owned()
                 }
             }
 
@@ -120,12 +175,24 @@ sw! {
     Align,
     Container,
     Flex,
-    Grid,
-    MultiColumn,
     SizedBox,
 }
 
+mcw! {
+    Col,
+    List,
+    Row,
+}
+
+mcws! {
+    Grid,
+    MultiColumn,
+}
+
 it! {
+    Center,
+    Col,
+    Row,
     Image,
     Text,
     List,
