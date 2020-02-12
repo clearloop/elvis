@@ -58,9 +58,6 @@ impl Default for GridAutoRows {
     }
 }
 
-pub struct GridTemplateColumns(GridTemplate);
-pub struct GridTemplateRow(GridTemplate);
-
 pub enum GridTemplate {
     Auto,
     MaxContent,

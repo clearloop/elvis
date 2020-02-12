@@ -62,6 +62,12 @@ pub struct Col {
 
 /// This is a Lunatic Widget to Ground Control, I'm stepping throw the Window.
 pub struct Flex {
+    pub child: Tree,
+    pub style: FlexStyle,
+}
+
+/// Flex Style
+pub struct FlexStyle {
     pub basis: FlexBasis,
     pub direction: FlexDirection,
     pub grow: Unit,
@@ -69,14 +75,24 @@ pub struct Flex {
     pub wrap: bool,
 }
 
+/// Both Col and Row are using flex-start, if you want to reverse the children of them, better to work on the list order.
+pub struct Row {
+    pub children: Vec<Tree>,
+}
+
 // Grid
 /// Grid is quite complex in some way, usually, we just `Grid` our contains.
 pub struct Grid {
     pub child: Tree,
+    pub style: GridStyle,
+}
+
+pub struct GridStyle {
     pub col: Unit,
     pub row: Unit,
     pub gap: Unit,
-    pub template: GridTemplate,
+    pub template_col: GridTemplate,
+    pub template_row: GridTemplate,
     pub auto_rows: GridAutoRows,
 }
 
@@ -84,6 +100,10 @@ pub struct Grid {
 /// Homework: code a New York Times.
 pub struct MultiColumn {
     pub child: Tree,
+    pub style: MultiColumnStyle,
+}
+
+pub struct MultiColumnStyle {
     pub color: Colors,
     pub count: Unit,
     pub gap: Unit,

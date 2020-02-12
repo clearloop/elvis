@@ -1,7 +1,7 @@
 use crate::{
     Align, AlignStyle, Alignments, Colors, Container, ContainerStyle, Error, FlexBasis,
-    FlexDirection, GridAutoRows, GridTemplate, MultiColumnLineStyle, Serde, SizedBoxStyle, Tree,
-    Unit,
+    FlexDirection, FlexStyle, Grid, GridAutoRows, GridStyle, GridTemplate, MultiColumnLineStyle,
+    MultiColumnStyle, Serde, SizedBox, SizedBoxStyle, Tree, Unit,
 };
 
 /// serde single child widgets with match style
@@ -35,28 +35,49 @@ macro_rules! ss {
 ss! {
     (Align, AlignStyle),
     (Container, ContainerStyle),
+    (Grid, GridStyle),
+    (SizedBox, SizedBoxStyle),
+}
+
+fn parse<'p>(s: &'p str) -> Vec<(&'p str, &'p str)> {
+    let mut attrs: Vec<(&str, &str)> = vec![];
+    s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
+        if let Some(m) = x.find(":") {
+            attrs.push((x[..m].trim(), &x[m..].trim()));
+        }
+    });
+
+    attrs
 }
 
 // styles
+impl Serde<AlignStyle, String> for AlignStyle {
+    fn de(s: String) -> Result<AlignStyle, Error> {
+        Ok(AlignStyle {
+            align: Alignments::de(s).unwrap_or(Alignments::Center),
+        })
+    }
+
+    fn ser(&self) -> String {
+        self.align.ser()
+    }
+}
+
 impl Serde<ContainerStyle, String> for ContainerStyle {
     fn de(s: String) -> Result<ContainerStyle, Error> {
         let mut cs = ContainerStyle::default();
         let mut align = "".to_string();
-        s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
-            let m = x.find(":").unwrap_or(0);
-            let (k, v) = (x[..m].trim(), x[m..].trim().to_string());
-            match k {
-                "height" => cs.height = Unit::de(v).unwrap_or(Unit::Rem(1.0)),
-                "width" => cs.width = Unit::de(v).unwrap_or(Unit::Rem(1.0)),
-                "padding" => cs.padding = Unit::de(v).unwrap_or(Unit::Rem(0.0)),
-                "margin" => cs.margin = Unit::de(v).unwrap_or(Unit::Rem(0.0)),
-                "background-color" => {
-                    cs.background_color = Colors::de(v).unwrap_or(Colors::Inherit)
-                }
-                "alignment-items" => align.push_str(&format!("alignment-items: {};", v)),
-                "justify-content" => align.push_str(&format!("justify-content: {};", v)),
-                _ => {}
+        parse(&s).iter().for_each(|(k, v)| match *k {
+            "height" => cs.height = Unit::de(v.to_string()).unwrap_or(Unit::Rem(1.0)),
+            "width" => cs.width = Unit::de(v.to_string()).unwrap_or(Unit::Rem(1.0)),
+            "padding" => cs.padding = Unit::de(v.to_string()).unwrap_or(Unit::Rem(0.0)),
+            "margin" => cs.margin = Unit::de(v.to_string()).unwrap_or(Unit::Rem(0.0)),
+            "background-color" => {
+                cs.background_color = Colors::de(v.to_string()).unwrap_or(Colors::Inherit)
             }
+            "alignment-items" => align.push_str(&format!("alignment-items: {};", v.to_string())),
+            "justify-content" => align.push_str(&format!("justify-content: {};", v.to_string())),
+            _ => {}
         });
 
         cs.align = Alignments::de(align)?;
@@ -75,6 +96,131 @@ impl Serde<ContainerStyle, String> for ContainerStyle {
     }
 }
 
+impl Serde<FlexStyle, String> for FlexStyle {
+    fn de(s: String) -> Result<FlexStyle, Error> {
+        let mut fs = FlexStyle {
+            basis: FlexBasis::Fill,
+            direction: FlexDirection::Column,
+            grow: Unit::None(1.0),
+            order: Unit::None(1.0),
+            wrap: true,
+        };
+
+        parse(&s).iter().for_each(|(k, v)| match *k {
+            "flex-basis" => fs.basis = FlexBasis::de(v.to_string()).unwrap_or(FlexBasis::Fill),
+            "flex-direction" => {
+                fs.direction = FlexDirection::de(v.to_string()).unwrap_or(FlexDirection::Column)
+            }
+            "flex-grow" => fs.grow = Unit::de(v.to_string()).unwrap_or(Unit::None(1.0)),
+            "flex-order" => fs.order = Unit::de(v.to_string()).unwrap_or(Unit::None(1.0)),
+            "flex-wrap" => {
+                fs.wrap = match *v {
+                    "wrap" => true,
+                    _ => false,
+                }
+            }
+            _ => {}
+        });
+
+        Ok(fs)
+    }
+
+    fn ser(&self) -> String {
+        let mut s = "".to_string();
+        s += &format!("flex-basis: {};", self.basis.ser());
+        s += &format!("flex-direction: {};", self.direction.ser());
+        s += &format!("flex-grow: {};", self.grow.ser());
+        s += &format!("flex-order: {};", self.order.ser());
+        s += &format!(
+            "wrap: {};",
+            match self.wrap {
+                true => "wrap",
+                false => "no-wrap",
+            }
+        );
+        s
+    }
+}
+
+impl Serde<GridStyle, String> for GridStyle {
+    fn de(s: String) -> Result<GridStyle, Error> {
+        let mut gs = GridStyle {
+            col: Unit::Auto,
+            row: Unit::Auto,
+            gap: Unit::Auto,
+            template_col: GridTemplate::Auto,
+            template_row: GridTemplate::Auto,
+            auto_rows: GridAutoRows::Auto,
+        };
+
+        parse(&s).iter().for_each(|(k, v)| match *k {
+            "col" => gs.col = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            "row" => gs.row = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            "gap" => gs.gap = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            "template-columns" => {
+                gs.template_col = GridTemplate::de(v.to_string()).unwrap_or(GridTemplate::Auto)
+            }
+            "template-rows" => {
+                gs.template_row = GridTemplate::de(v.to_string()).unwrap_or(GridTemplate::Auto)
+            }
+            "auto-rows" => {
+                gs.auto_rows = GridAutoRows::de(v.to_string()).unwrap_or(GridAutoRows::Auto)
+            }
+            _ => {}
+        });
+
+        Ok(gs)
+    }
+
+    fn ser(&self) -> String {
+        let mut ss = "".to_string();
+
+        ss.push_str(&format!("col: {}", self.col.ser()));
+        ss.push_str(&format!("row: {}", self.row.ser()));
+        ss.push_str(&format!("gap: {}", self.gap.ser()));
+        ss.push_str(&format!("template-columns: {}", self.template_col.ser()));
+        ss.push_str(&format!("template-rows: {}", self.template_row.ser()));
+        ss.push_str(&format!("auto-rows: {}", self.template_row.ser()));
+
+        ss
+    }
+}
+
+impl Serde<MultiColumnStyle, String> for MultiColumnStyle {
+    fn de(s: String) -> Result<MultiColumnStyle, Error> {
+        let mut mc = MultiColumnStyle {
+            color: Colors::Inherit,
+            count: Unit::Auto,
+            gap: Unit::Auto,
+            style: MultiColumnLineStyle::None,
+        };
+
+        parse(&s).iter().for_each(|(k, v)| match *k {
+            "color" => mc.color = Colors::de(v.to_string()).unwrap_or(Colors::Inherit),
+            "count" => mc.count = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            "gap" => mc.gap = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            "style" => {
+                mc.style =
+                    MultiColumnLineStyle::de(v.to_string()).unwrap_or(MultiColumnLineStyle::None)
+            }
+            _ => {}
+        });
+
+        Ok(mc)
+    }
+
+    fn ser(&self) -> String {
+        let mut ss = "".to_string();
+
+        ss.push_str(&format!("color: {}", self.color.ser()));
+        ss.push_str(&format!("count: {}", self.count.ser()));
+        ss.push_str(&format!("gap: {}", self.gap.ser()));
+        ss.push_str(&format!("style: {}", self.style.ser()));
+
+        ss
+    }
+}
+
 impl Serde<SizedBoxStyle, String> for SizedBoxStyle {
     fn de(s: String) -> Result<SizedBoxStyle, Error> {
         let mut sbs = SizedBoxStyle {
@@ -82,20 +228,11 @@ impl Serde<SizedBoxStyle, String> for SizedBoxStyle {
             width: Unit::Auto,
         };
 
-        let hw = s.split(";").collect::<Vec<&str>>();
-        for a in hw {
-            if let Some(i) = a.find(":") {
-                match a[..i].trim() {
-                    "height" => {
-                        sbs.height = Unit::de(a[i..].trim().to_string()).unwrap_or(Unit::Auto)
-                    }
-                    "width" => {
-                        sbs.width = Unit::de(a[i..].trim().to_string()).unwrap_or(Unit::Auto)
-                    }
-                    _ => {}
-                }
-            }
-        }
+        parse(&s).iter().for_each(|(k, v)| match *k {
+            "height" => sbs.height = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            "width" => sbs.width = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            _ => {}
+        });
 
         Ok(sbs)
     }
@@ -106,18 +243,6 @@ impl Serde<SizedBoxStyle, String> for SizedBoxStyle {
             self.height.ser(),
             self.width.ser()
         )
-    }
-}
-
-impl Serde<AlignStyle, String> for AlignStyle {
-    fn de(s: String) -> Result<AlignStyle, Error> {
-        Ok(AlignStyle {
-            align: Alignments::de(s).unwrap_or(Alignments::Center),
-        })
-    }
-
-    fn ser(&self) -> String {
-        self.align.ser()
     }
 }
 

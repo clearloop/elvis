@@ -1,5 +1,5 @@
 //! Convert widgets to Tree
-use crate::{Align, Container, Image, List, Serde, Text, Tree};
+use crate::{Align, Container, Flex, Grid, Image, List, MultiColumn, Serde, SizedBox, Text, Tree};
 use std::{
     cell::RefCell,
     collections::{hash_map::DefaultHasher, HashMap},
@@ -72,6 +72,20 @@ impl<'i> Into<Tree> for &'i List {
     }
 }
 
+/// owned widget into tree
+macro_rules! it {
+    {$($widget:ident,)*} => {
+        $(
+            impl Into<Tree> for $widget {
+                fn into(self) -> Tree {
+                    let ref s = self;
+                    s.into()
+                }
+            }
+        )*
+    };
+}
+
 /// single child widgets
 macro_rules! sw {
     {$($widget:ident,)*} => {
@@ -94,6 +108,10 @@ macro_rules! sw {
                         .to_owned()
                 }
             }
+
+            it! {
+                $widget,
+            }
         )*
     };
 }
@@ -101,25 +119,14 @@ macro_rules! sw {
 sw! {
     Align,
     Container,
-}
-
-/// toOwned widget into tree
-macro_rules! it {
-    {$($widget:ident,)*} => {
-        $(
-            impl Into<Tree> for $widget {
-                fn into(self) -> Tree {
-                    let ref s = self;
-                    s.into()
-                }
-            }
-        )*
-    };
+    Flex,
+    Grid,
+    MultiColumn,
+    SizedBox,
 }
 
 it! {
     Image,
     Text,
-    Container,
     List,
 }
