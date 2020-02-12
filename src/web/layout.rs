@@ -108,7 +108,7 @@ impl Serde<ContainerStyle, String> for ContainerStyle {
             "background-color" => {
                 cs.background_color = Colors::de(v.to_string()).unwrap_or(Colors::Inherit)
             }
-            "alignment-items" => align.push_str(&format!("alignment-items: {};", v.to_string())),
+            "align-items" => align.push_str(&format!("align-items: {};", v.to_string())),
             "justify-content" => align.push_str(&format!("justify-content: {};", v.to_string())),
             _ => {}
         });
@@ -144,7 +144,7 @@ impl Serde<FlexStyle, String> for FlexStyle {
             "flex-direction" => {
                 fs.direction = FlexDirection::de(v.to_string()).unwrap_or(FlexDirection::Column)
             }
-            "flex-grow" => fs.grow = Unit::de(v.to_string()).unwrap_or(Unit::None(1.0)),
+            "flex-grow" => fs.grow = Unit::de(v.to_string()).unwrap_or(Unit::Percent(0.0)),
             "flex-order" => fs.order = Unit::de(v.to_string()).unwrap_or(Unit::None(1.0)),
             "flex-wrap" => {
                 fs.wrap = match *v {
@@ -323,7 +323,7 @@ impl Serde<Alignments, String> for Alignments {
             Alignments::TopRight => ("flex-start", "flex-end"),
         };
 
-        format!("alignment-items: {}; justify-content: {};", ai, jc)
+        format!("align-items: {}; justify-content: {};", ai, jc)
     }
 }
 

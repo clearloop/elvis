@@ -70,11 +70,11 @@ impl Into<ElvisTextStyle> for TextStyle {
         ElvisTextStyle {
             bold: self.bold.unwrap_or(false),
             color: self.color.unwrap_or_default().into(),
+            height: height,
             italic: self.italic.unwrap_or(false),
             size: Unit::Rem(self.size.unwrap_or(1.0)),
-            weight: Unit::Rem(self.weight.unwrap_or(1.0)),
-            height: height,
             stretch: Unit::Percent(self.stretch.unwrap_or(100.0)),
+            weight: Unit::Rem(self.weight.unwrap_or(1.0)),
         }
     }
 }
@@ -117,11 +117,11 @@ pub struct ContainerStyle(ElvisContainerStyle);
 const ICONTAINER_STYLE: &'static str = r#"
 export interface IContainerStyle {
   align?: Alignments;
-  height?: number;
-  width?: number;
-  padding?: number;
-  margin?: number;
   color?: Colors,
+  height?: number;
+  margin?: number;
+  padding?: number;
+  width?: number;
 }
 "#;
 
@@ -130,16 +130,26 @@ impl ContainerStyle {
     #[wasm_bindgen(constructor)]
     pub fn new(
         align: Option<Alignments>,
-        height: Option<f64>,
-        width: Option<f64>,
-        padding: Option<f64>,
-        margin: Option<f64>,
         color: Option<Colors>,
+        height: Option<f64>,
+        margin: Option<f64>,
+        padding: Option<f64>,
+        width: Option<f64>,
     ) -> ContainerStyle {
+        let mut oheight = Unit::Percent(100.0);
+        let mut owidth = Unit::Percent(100.0);
+        if let Some(h) = height {
+            oheight = Unit::Rem(h);
+        }
+
+        if let Some(w) = width {
+            owidth = Unit::Rem(w);
+        }
+
         ContainerStyle(ElvisContainerStyle {
             align: align.unwrap_or(Alignments::Center).into(),
-            height: Unit::Rem(height.unwrap_or(1.0)),
-            width: Unit::Rem(width.unwrap_or(1.0)),
+            height: oheight,
+            width: owidth,
             padding: Unit::Rem(padding.unwrap_or(0.0)),
             margin: Unit::Rem(margin.unwrap_or(0.0)),
             background_color: color.unwrap_or(Colors::inherit()).into(),
@@ -168,9 +178,17 @@ export interface ISizedBoxStyle {
 impl SizedBoxStyle {
     #[wasm_bindgen(constructor)]
     pub fn new(height: Option<f64>, width: Option<f64>) -> SizedBoxStyle {
+        let (mut oheight, mut owidth) = (Unit::Auto, Unit::Auto);
+        if let Some(h) = height {
+            oheight = Unit::Rem(h);
+        }
+        if let Some(w) = width {
+            owidth = Unit::Rem(w);
+        }
+
         SizedBoxStyle(ElvisSizedBoxStyle {
-            height: Unit::Rem(height.unwrap_or(1.0)),
-            width: Unit::Rem(width.unwrap_or(1.0)),
+            height: oheight,
+            width: owidth,
         })
     }
 }
@@ -317,11 +335,29 @@ into! {
 pub struct StyleSheet(pub String);
 
 impl<'s> StyleSheet {
+    pub fn new() -> StyleSheet {
+        StyleSheet(format!(
+            "{}",
+            &vec![
+                "html, body {\n",
+                "  margin: 0;\n",
+                "  padding: 0;\n",
+                "  height: 100%;\n",
+                "  width: 100%;\n",
+                "  overflow: hidden;\n",
+                "}\n\n",
+            ]
+            .join("")
+        ))
+    }
     pub fn batch(t: &'s mut Tree, hs: &mut HashSet<String>) -> String {
         let mut ss = StyleSheet("".into());
         if let Some(style) = t.attrs.remove("style") {
             let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
-            ss.id(&id, &style);
+            if !hs.contains(&id) {
+                ss.id(&id, &style);
+                hs.insert(id.into());
+            }
         }
 
         let class = t.attrs.get("class").unwrap_or(&"".to_string()).to_string();
@@ -329,8 +365,8 @@ impl<'s> StyleSheet {
             let ct = c.trim();
             if !ct.is_empty() {
                 if !hs.contains(ct) {
-                    hs.insert(ct.into());
                     ss.class(ct);
+                    hs.insert(ct.into());
                 }
             }
         });
@@ -350,6 +386,28 @@ impl<'s> StyleSheet {
                     "  background-repeat: no-repeat;",
                     "  background-size: cover;",
                     "  height: 100%;",
+                    "  width: 100%;",
+                    "}",
+                ]
+                .join("\n"),
+            ),
+            "elvis-center" => self.0.push_str(
+                &vec![
+                    "\n\n.elvis-center {",
+                    "  align-items: center;",
+                    "  height: 100%;",
+                    "  justify-content: center;",
+                    "  width: 100%,",
+                    "}",
+                ]
+                .join("\n"),
+            ),
+            "elvis-flex" => self.0.push_str(
+                &vec![
+                    "\n\n.elvis-flex {",
+                    "  display: flex;",
+                    "  height: 100%;",
+                    "  flex: 1;",
                     "  width: 100%;",
                     "}",
                 ]

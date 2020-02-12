@@ -23,7 +23,9 @@ impl Elvis {
 
         // set style
         let style = document.create_element("style")?;
-        style.set_inner_html(StyleSheet::batch(&mut self.home, &mut HashSet::new()).trim());
+        let mut stylesheet = StyleSheet::new();
+        stylesheet.0 += StyleSheet::batch(&mut self.home, &mut HashSet::new()).trim();
+        style.set_inner_html(&stylesheet.0);
         html.append_child(&style)?;
 
         // set body

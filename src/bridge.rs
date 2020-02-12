@@ -110,6 +110,7 @@ macro_rules! mcws {
                     let mut m = HashMap::<String, String>::new();
                     m.insert("id".into(), id);
                     m.insert("style".into(), ss);
+                    m.insert("class".into(), "elvis-flex".into());
 
                     let mut cs = vec![];
                     self.children.iter().for_each(|x| {
@@ -154,6 +155,7 @@ macro_rules! sw {
                     let mut m = HashMap::<String, String>::new();
                     m.insert("id".into(), id);
                     m.insert("style".into(), ss);
+                    m.insert("class".into(), "elvis-flex".into());
 
                     Tree::new(
                         m,
