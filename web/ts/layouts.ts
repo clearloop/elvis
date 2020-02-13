@@ -12,8 +12,11 @@ import {
   IContainerStyle,
   IFlexStyle,
   IGridStyle,
+  IMultiColumnStyle,
   ISizedBoxStyle,
   List as ElvisList,
+  MultiColumn as ElvisMultiColumn,
+  MultiColumnStyle,
   Row as ElvisRow,
   SizedBox as ElvisSizedBox,
   SizedBoxStyle,
@@ -98,6 +101,26 @@ export function List(widgets: Widget[]): Widget {
   }
 
   return list.widget();
+}
+
+export function MultiColumn(widgets: Widget[], style?: IMultiColumnStyle): Widget {
+  if (style === undefined) {
+    style = {};
+  }
+
+  const mc = new ElvisMultiColumn(new MultiColumnStyle(
+    style.color,
+    style.count,
+    style.gap,
+    style.style,
+  ));
+  for (const i in widgets) {
+    if (widgets[i] !== undefined) {
+      mc.push(widgets[i]);
+    }
+  }
+
+  return mc.widget();
 }
 
 export function Row(widgets: Widget[]): Widget {

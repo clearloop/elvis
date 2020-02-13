@@ -17,6 +17,4 @@ const Show = Text(`The Show Must Go On!`, {
 const MyCenter = Grid([Pig, Show]);
 
 // entry
-new Elvis({
-  home: MyCenter,
-}).calling();
+Elvis.call(MyCenter);

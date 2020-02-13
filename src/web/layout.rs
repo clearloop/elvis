@@ -239,10 +239,10 @@ impl Serde<MultiColumnStyle, String> for MultiColumnStyle {
         };
 
         parse(&s).iter().for_each(|(k, v)| match *k {
-            "color" => mc.color = Colors::de(v.to_string()).unwrap_or(Colors::Inherit),
-            "count" => mc.count = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
-            "gap" => mc.gap = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
-            "style" => {
+            "column-count" => mc.count = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            "column-gap" => mc.gap = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
+            "column-rule-color" => mc.color = Colors::de(v.to_string()).unwrap_or(Colors::Inherit),
+            "column-rule-style" => {
                 mc.style =
                     MultiColumnLineStyle::de(v.to_string()).unwrap_or(MultiColumnLineStyle::None)
             }
@@ -254,12 +254,10 @@ impl Serde<MultiColumnStyle, String> for MultiColumnStyle {
 
     fn ser(&self) -> String {
         let mut ss = "".to_string();
-
-        ss.push_str(&format!("color: {}", self.color.ser()));
-        ss.push_str(&format!("count: {}", self.count.ser()));
-        ss.push_str(&format!("gap: {}", self.gap.ser()));
-        ss.push_str(&format!("style: {}", self.style.ser()));
-
+        ss.push_str(&format!("column-count: {}", self.count.ser()));
+        ss.push_str(&format!("column-gap: {}", self.gap.ser()));
+        ss.push_str(&format!("column-rule-color: {}", self.color.ser()));
+        ss.push_str(&format!("column-rule-style: {}", self.style.ser()));
         ss
     }
 }

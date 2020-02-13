@@ -316,8 +316,8 @@ impl MultiColumnStyle {
     ) -> MultiColumnStyle {
         MultiColumnStyle(ElvisMultiColumnStyle {
             color: color.unwrap_or(Colors::inherit()).into(),
-            count: Unit::None(count.unwrap_or(0.0)),
-            gap: Unit::Fr(gap.unwrap_or(1.0)),
+            count: Unit::None(count.unwrap_or(1.0)),
+            gap: Unit::None(gap.unwrap_or(0.0)),
             style: style.unwrap_or(MultiColumnLineStyle::None).into(),
         })
     }

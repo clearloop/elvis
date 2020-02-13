@@ -7,6 +7,10 @@ interface IElvis {
 }
 
 class Elvis {
+  public static call(widget: Widget) {
+    new ElvisPrototype(widget).calling();
+  }
+
   public router: Router;
   private home: Widget;
   private proto: ElvisPrototype;
