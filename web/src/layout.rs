@@ -39,6 +39,10 @@ impl Col {
     pub fn push(&mut self, widget: Widget) {
         self.0.children.push(widget.into())
     }
+
+    pub fn widget(self) -> Widget {
+        Widget::new(self.0)
+    }
 }
 
 #[wasm_bindgen]

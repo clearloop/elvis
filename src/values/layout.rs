@@ -45,25 +45,50 @@ impl Default for FlexDirection {
     }
 }
 
-pub enum GridAutoRows {
+pub enum GridAuto {
     Auto,
     MaxContent,
     MinContent,
+    MinMax(Unit, Unit),
     Fixed(Unit),
+    Inherit,
+    Initial,
+    Unset,
 }
 
-impl Default for GridAutoRows {
-    fn default() -> GridAutoRows {
-        GridAutoRows::Auto
+impl Default for GridAuto {
+    fn default() -> GridAuto {
+        GridAuto::Unset
+    }
+}
+
+pub enum GridFlow {
+    Column,
+    Row,
+    Dense,
+    ColumnDense,
+    RowDense,
+    Inherit,
+    Initial,
+    Unset,
+}
+
+impl Default for GridFlow {
+    fn default() -> GridFlow {
+        GridFlow::Unset
     }
 }
 
 pub enum GridTemplate {
-    Auto,
-    MaxContent,
-    MinContent,
+    FitContent(Unit),
+    Inherit,
+    Initial,
+    MinMax(Unit, Unit),
+    None,
     Plain(Vec<Unit>),
     Repeat(i32, Unit),
+    SubGrid,
+    Unset,
 }
 
 impl Default for GridTemplate {

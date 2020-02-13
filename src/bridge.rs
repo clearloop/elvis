@@ -82,7 +82,7 @@ macro_rules! mcw {
                     let mut m = HashMap::<String, String>::new();
                     m.insert(
                         "class".into(),
-                        format!("elvis-{}", stringify!($widget).to_lowercase())
+                        format!("elvis-{} elvis-flex", stringify!($widget).to_lowercase())
                     );
 
                     let mut cs = vec![];

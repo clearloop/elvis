@@ -1,6 +1,6 @@
 use crate::{
     Align, AlignStyle, Alignments, Colors, Container, ContainerStyle, Error, FlexBasis,
-    FlexDirection, FlexStyle, Grid, GridAutoRows, GridStyle, GridTemplate, MultiColumn,
+    FlexDirection, FlexStyle, Grid, GridAuto, GridFlow, GridStyle, GridTemplate, MultiColumn,
     MultiColumnLineStyle, MultiColumnStyle, Serde, SizedBox, SizedBoxStyle, Tree, Unit,
 };
 
@@ -132,6 +132,7 @@ impl Serde<ContainerStyle, String> for ContainerStyle {
 impl Serde<FlexStyle, String> for FlexStyle {
     fn de(s: String) -> Result<FlexStyle, Error> {
         let mut fs = FlexStyle {
+            align: Alignments::Center,
             basis: FlexBasis::Fill,
             direction: FlexDirection::Column,
             grow: Unit::None(1.0),
@@ -139,6 +140,7 @@ impl Serde<FlexStyle, String> for FlexStyle {
             wrap: true,
         };
 
+        let mut align = "".to_string();
         parse(&s).iter().for_each(|(k, v)| match *k {
             "flex-basis" => fs.basis = FlexBasis::de(v.to_string()).unwrap_or(FlexBasis::Fill),
             "flex-direction" => {
@@ -152,16 +154,20 @@ impl Serde<FlexStyle, String> for FlexStyle {
                     _ => false,
                 }
             }
+            "align-items" => align.push_str(&format!("align-items: {};", v.to_string())),
+            "justify-content" => align.push_str(&format!("justify-content: {};", v.to_string())),
             _ => {}
         });
 
+        fs.align = Alignments::de(align)?;
         Ok(fs)
     }
 
     fn ser(&self) -> String {
         let mut s = "".to_string();
-        s += &format!("flex-basis: {};", self.basis.ser());
-        s += &format!("flex-direction: {};", self.direction.ser());
+        s += &self.align.ser();
+        s += &self.basis.ser();
+        s += &self.direction.ser();
         s += &format!("flex-grow: {};", self.grow.ser());
         s += &format!("flex-order: {};", self.order.ser());
         s += &format!(
@@ -178,26 +184,26 @@ impl Serde<FlexStyle, String> for FlexStyle {
 impl Serde<GridStyle, String> for GridStyle {
     fn de(s: String) -> Result<GridStyle, Error> {
         let mut gs = GridStyle {
-            col: Unit::Auto,
-            row: Unit::Auto,
-            gap: Unit::Auto,
-            template_col: GridTemplate::Auto,
-            template_row: GridTemplate::Auto,
-            auto_rows: GridAutoRows::Auto,
+            col: GridAuto::Auto,
+            col_gap: Unit::Auto,
+            flow: GridFlow::Row,
+            row: GridAuto::Auto,
+            row_gap: Unit::Auto,
+            template_col: GridTemplate::None,
+            template_row: GridTemplate::None,
         };
 
         parse(&s).iter().for_each(|(k, v)| match *k {
-            "col" => gs.col = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
-            "row" => gs.row = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
-            "gap" => gs.gap = Unit::de(v.to_string()).unwrap_or(Unit::Auto),
-            "template-columns" => {
-                gs.template_col = GridTemplate::de(v.to_string()).unwrap_or(GridTemplate::Auto)
+            "grid-auto-columns" => gs.col = GridAuto::de(v.to_string()).unwrap_or(GridAuto::Auto),
+            "grid-auto-flow" => gs.flow = GridFlow::de(v.to_string()).unwrap_or(GridFlow::Row),
+            "grid-auto-row" => gs.row = GridAuto::de(v.to_string()).unwrap_or(GridAuto::Auto),
+            "grid-column-gap" => gs.col_gap = Unit::de(v.to_string()).unwrap_or(Unit::None(0.0)),
+            "grid-row-gap" => gs.row_gap = Unit::de(v.to_string()).unwrap_or(Unit::None(0.0)),
+            "grid-template-columns" => {
+                gs.template_col = GridTemplate::de(v.to_string()).unwrap_or(GridTemplate::None)
             }
-            "template-rows" => {
-                gs.template_row = GridTemplate::de(v.to_string()).unwrap_or(GridTemplate::Auto)
-            }
-            "auto-rows" => {
-                gs.auto_rows = GridAutoRows::de(v.to_string()).unwrap_or(GridAutoRows::Auto)
+            "grid-template-rows" => {
+                gs.template_row = GridTemplate::de(v.to_string()).unwrap_or(GridTemplate::None)
             }
             _ => {}
         });
@@ -208,13 +214,17 @@ impl Serde<GridStyle, String> for GridStyle {
     fn ser(&self) -> String {
         let mut ss = "".to_string();
 
-        ss.push_str(&format!("col: {}", self.col.ser()));
-        ss.push_str(&format!("row: {}", self.row.ser()));
-        ss.push_str(&format!("gap: {}", self.gap.ser()));
-        ss.push_str(&format!("template-columns: {}", self.template_col.ser()));
-        ss.push_str(&format!("template-rows: {}", self.template_row.ser()));
-        ss.push_str(&format!("auto-rows: {}", self.template_row.ser()));
-
+        ss.push_str("display: grid;");
+        ss.push_str(&format!("grid-auto-columns: {};", self.col.ser()));
+        ss.push_str(&format!("grid-auto-flow: {};", self.template_row.ser()));
+        ss.push_str(&format!("grid-auto-rows: {};", self.template_row.ser()));
+        ss.push_str(&format!("grid-column-gap: {};", self.col_gap.ser()));
+        ss.push_str(&format!("grid-row-gap: {};", self.row_gap.ser()));
+        ss.push_str(&format!(
+            "grid-template-columns: {};",
+            self.template_col.ser()
+        ));
+        ss.push_str(&format!("grid-template-rows: {};", self.template_row.ser()));
         ss
     }
 }
@@ -382,25 +392,77 @@ impl Serde<FlexDirection, String> for FlexDirection {
     }
 }
 
-impl Serde<GridAutoRows, String> for GridAutoRows {
-    fn de(s: String) -> Result<GridAutoRows, Error> {
+impl Serde<GridAuto, String> for GridAuto {
+    fn de(s: String) -> Result<GridAuto, Error> {
         let v = s.split(":").collect::<Vec<&str>>()[1].trim();
         Ok(match v {
-            "auto" => GridAutoRows::Auto,
-            "max-content" => GridAutoRows::MaxContent,
-            "min-content" => GridAutoRows::MinContent,
-            u => GridAutoRows::Fixed(Unit::de(u.to_string()).unwrap_or(Unit::Auto)),
+            "auto" => GridAuto::Auto,
+            "max-content" => GridAuto::MaxContent,
+            "min-content" => GridAuto::MinContent,
+            "inherit" => GridAuto::Inherit,
+            "initial" => GridAuto::Initial,
+            "unset" => GridAuto::Unset,
+            m if m.contains("minmax") => {
+                if let Some(i) = m.find("(") {
+                    let cr = m[i..(m.len() - 1)].split(",").collect::<Vec<&str>>();
+                    assert!(cr.len() == 2);
+
+                    GridAuto::MinMax(
+                        Unit::de(cr[0].trim().to_string())?,
+                        Unit::de(cr[1].trim().to_string())?,
+                    )
+                } else {
+                    GridAuto::Unset
+                }
+            }
+            u => GridAuto::Fixed(Unit::de(u.to_string()).unwrap_or(Unit::Auto)),
         })
     }
 
     fn ser(&self) -> String {
         format!(
-            "grid-auto-rows: {};",
+            "{}",
             match self {
-                GridAutoRows::Auto => "auto".to_string(),
-                GridAutoRows::MaxContent => "max-content".to_string(),
-                GridAutoRows::MinContent => "min-content".to_string(),
-                GridAutoRows::Fixed(u) => u.ser(),
+                GridAuto::Auto => "auto".to_string(),
+                GridAuto::MaxContent => "max-content".to_string(),
+                GridAuto::MinContent => "min-content".to_string(),
+                GridAuto::MinMax(c, r) => format!("minmax({}, {})", c.ser(), r.ser()),
+                GridAuto::Fixed(u) => u.ser(),
+                GridAuto::Inherit => "inherit".to_string(),
+                GridAuto::Initial => "initial".to_string(),
+                GridAuto::Unset => "unset".to_string(),
+            }
+        )
+    }
+}
+
+impl Serde<GridFlow, String> for GridFlow {
+    fn de(s: String) -> Result<GridFlow, Error> {
+        let v = s.split(":").collect::<Vec<&str>>()[1].trim();
+        Ok(match v {
+            "column" => GridFlow::Column,
+            "column dense" => GridFlow::ColumnDense,
+            "dense" => GridFlow::Dense,
+            "inherit" => GridFlow::Inherit,
+            "initial" => GridFlow::Initial,
+            "row" => GridFlow::Row,
+            "row dense" => GridFlow::RowDense,
+            "unset" | _ => GridFlow::Unset,
+        })
+    }
+
+    fn ser(&self) -> String {
+        format!(
+            "{}",
+            match self {
+                GridFlow::Column => "column",
+                GridFlow::ColumnDense => "column dense",
+                GridFlow::Dense => "dense",
+                GridFlow::Inherit => "inherit",
+                GridFlow::Initial => "initial",
+                GridFlow::Row => "row",
+                GridFlow::RowDense => "row dense",
+                GridFlow::Unset => "unset",
             }
         )
     }
@@ -412,9 +474,31 @@ impl Serde<GridTemplate, String> for GridTemplate {
         assert!(kv.len() == 2);
 
         Ok(match kv[1].trim() {
-            "auto" => GridTemplate::Auto,
-            "max-content" => GridTemplate::MaxContent,
-            "min-content" => GridTemplate::MinContent,
+            "inherit" => GridTemplate::Inherit,
+            "initial" => GridTemplate::Initial,
+            "subgrid" => GridTemplate::SubGrid,
+            "unset" => GridTemplate::Unset,
+            "none" => GridTemplate::None,
+            x if x.contains("fit-content") => {
+                if let Some(i) = x.find("(") {
+                    GridTemplate::FitContent(Unit::de(x[i..(x.len() - 1)].trim().to_string())?)
+                } else {
+                    GridTemplate::Unset
+                }
+            }
+            m if m.contains("minmax") => {
+                if let Some(i) = m.find("(") {
+                    let ai = m[i..(m.len() - 1)].split(",").collect::<Vec<&str>>();
+                    assert!(ai.len() == 2);
+
+                    GridTemplate::MinMax(
+                        Unit::de(ai[0].trim().to_string())?,
+                        Unit::de(ai[1].trim().to_string())?,
+                    )
+                } else {
+                    GridTemplate::Unset
+                }
+            }
             _ => {
                 if let Some(b) = kv[1].find("(") {
                     let nv = kv[1][b..(kv[1].len() - 1)]
@@ -444,9 +528,11 @@ impl Serde<GridTemplate, String> for GridTemplate {
         format!(
             "{}",
             match self {
-                GridTemplate::Auto => "auto".to_string(),
-                GridTemplate::MaxContent => "max-content".to_string(),
-                GridTemplate::MinContent => "min-content".to_string(),
+                GridTemplate::FitContent(u) => format!("fit-content({})", u.ser()),
+                GridTemplate::Inherit => "inherit".to_string(),
+                GridTemplate::Initial => "initial".to_string(),
+                GridTemplate::MinMax(i, a) => format!("minmax({}, {})", i.ser(), a.ser()),
+                GridTemplate::None => "none".to_string(),
                 GridTemplate::Plain(x) => {
                     let mut s = "".to_string();
                     for i in x {
@@ -458,6 +544,8 @@ impl Serde<GridTemplate, String> for GridTemplate {
                 GridTemplate::Repeat(n, u) => {
                     format!("({}, {})", n, u.ser())
                 }
+                GridTemplate::SubGrid => "subgrid".to_string(),
+                GridTemplate::Unset => "unit".to_string(),
             }
         )
     }

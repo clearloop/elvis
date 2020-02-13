@@ -1,6 +1,6 @@
 use crate::{
-    Alignments, Colors, FlexBasis, FlexDirection, GridAutoRows, GridTemplate, MultiColumnLineStyle,
-    Tree, Unit,
+    Alignments, Colors, FlexBasis, FlexDirection, GridAuto, GridFlow, GridTemplate,
+    MultiColumnLineStyle, Tree, Unit,
 };
 
 // Core Layout
@@ -68,6 +68,7 @@ pub struct Flex {
 
 /// Flex Style
 pub struct FlexStyle {
+    pub align: Alignments,
     pub basis: FlexBasis,
     pub direction: FlexDirection,
     pub grow: Unit,
@@ -88,12 +89,13 @@ pub struct Grid {
 }
 
 pub struct GridStyle {
-    pub col: Unit,
-    pub row: Unit,
-    pub gap: Unit,
+    pub col: GridAuto,
+    pub col_gap: Unit,
+    pub flow: GridFlow,
+    pub row: GridAuto,
+    pub row_gap: Unit,
     pub template_col: GridTemplate,
     pub template_row: GridTemplate,
-    pub auto_rows: GridAutoRows,
 }
 
 // MultiColumn

@@ -206,6 +206,7 @@ pub struct FlexStyle(ElvisFlexStyle);
 #[wasm_bindgen(typescript_custom_section)]
 const IFLEX_STYLE: &'static str = r#"
 export interface IFlexStyle {
+  align?: Alignments;
   basis?: FlexBasis;
   direction?: FlexDirection;
   grow?: number;
@@ -218,6 +219,7 @@ export interface IFlexStyle {
 impl FlexStyle {
     #[wasm_bindgen(constructor)]
     pub fn new(
+        align: Option<Alignments>,
         basis: Option<FlexBasis>,
         direction: Option<FlexDirection>,
         grow: Option<f64>,
@@ -225,6 +227,7 @@ impl FlexStyle {
         wrap: Option<bool>,
     ) -> FlexStyle {
         FlexStyle(ElvisFlexStyle {
+            align: align.unwrap_or(Alignments::Center).into(),
             basis: basis.unwrap_or(FlexBasis::fill()).into(),
             direction: direction.unwrap_or(FlexDirection::Column).into(),
             grow: Unit::None(grow.unwrap_or(1.0)),
@@ -236,7 +239,7 @@ impl FlexStyle {
 
 impl Default for FlexStyle {
     fn default() -> FlexStyle {
-        FlexStyle::new(None, None, None, None, None)
+        FlexStyle::new(None, None, None, None, None, None)
     }
 }
 
@@ -260,12 +263,12 @@ export interface IGridStyle {
 impl GridStyle {
     #[wasm_bindgen(constructor)]
     pub fn new(
+        auto_rows: Option<GridAutoRows>,
         col: Option<f64>,
-        row: Option<f64>,
         gap: Option<f64>,
+        row: Option<f64>,
         template_col: Option<GridTemplate>,
         template_row: Option<GridTemplate>,
-        auto_rows: Option<GridAutoRows>,
     ) -> GridStyle {
         GridStyle(ElvisGridStyle {
             col: Unit::Fr(col.unwrap_or(1.0)),
@@ -350,6 +353,7 @@ impl<'s> StyleSheet {
             .join("")
         ))
     }
+
     pub fn batch(t: &'s mut Tree, hs: &mut HashSet<String>) -> String {
         let mut ss = StyleSheet("".into());
         if let Some(style) = t.attrs.remove("style") {
@@ -379,6 +383,31 @@ impl<'s> StyleSheet {
 
     pub fn class(&mut self, name: &'s str) {
         match name {
+            "elvis-center" => self.0.push_str(
+                &vec![
+                    "\n\n.elvis-center {",
+                    "  align-items: center;",
+                    "  height: 100%;",
+                    "  justify-content: center;",
+                    "  width: 100%,",
+                    "}",
+                ]
+                .join("\n"),
+            ),
+            "elvis-col" => self
+                .0
+                .push_str(&vec!["\n\n.elvis-col {", "  flex-direction: column", "}"].join("\n")),
+            "elvis-flex" => self.0.push_str(
+                &vec![
+                    "\n\n.elvis-flex {",
+                    "  display: flex;",
+                    "  height: 100%;",
+                    "  flex: 1;",
+                    "  width: 100%;",
+                    "}",
+                ]
+                .join("\n"),
+            ),
             "elvis-image" => self.0.push_str(
                 &vec![
                     "\n\n.elvis-image {",
@@ -391,28 +420,9 @@ impl<'s> StyleSheet {
                 ]
                 .join("\n"),
             ),
-            "elvis-center" => self.0.push_str(
-                &vec![
-                    "\n\n.elvis-center {",
-                    "  align-items: center;",
-                    "  height: 100%;",
-                    "  justify-content: center;",
-                    "  width: 100%,",
-                    "}",
-                ]
-                .join("\n"),
-            ),
-            "elvis-flex" => self.0.push_str(
-                &vec![
-                    "\n\n.elvis-flex {",
-                    "  display: flex;",
-                    "  height: 100%;",
-                    "  flex: 1;",
-                    "  width: 100%;",
-                    "}",
-                ]
-                .join("\n"),
-            ),
+            "elvis-row" => self
+                .0
+                .push_str(&vec!["\n\n.elvis-row {", "  flex-direction: row", "}"].join("\n")),
             _ => {}
         }
     }
