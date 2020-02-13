@@ -1,4 +1,4 @@
-import { Colors, Elvis, Grid, Text } from "../web/ts";
+import { Colors, Elvis, Grid, GridFlow, Text } from "../web/ts";
 
 const Pig = Text(`Pink is the Pig!`, {
   bold: true,
@@ -14,9 +14,7 @@ const Show = Text(`The Show Must Go On!`, {
   color: Colors.BlueAccent(),
 });
 
-const MyCenter = Grid([Pig, Show], {
-
-});
+const MyCenter = Grid([Pig, Show]);
 
 // entry
 new Elvis({

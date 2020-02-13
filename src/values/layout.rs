@@ -47,12 +47,13 @@ impl Default for FlexDirection {
 
 pub enum GridAuto {
     Auto,
-    MaxContent,
-    MinContent,
-    MinMax(Unit, Unit),
     Fixed(Unit),
     Inherit,
     Initial,
+    MaxContent,
+    MinContent,
+    MinMax(Unit, Unit),
+    Plain(Vec<Unit>),
     Unset,
 }
 

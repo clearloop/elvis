@@ -185,10 +185,10 @@ impl Serde<GridStyle, String> for GridStyle {
     fn de(s: String) -> Result<GridStyle, Error> {
         let mut gs = GridStyle {
             col: GridAuto::Auto,
-            col_gap: Unit::Auto,
+            col_gap: Unit::None(0.0),
             flow: GridFlow::Row,
             row: GridAuto::Auto,
-            row_gap: Unit::Auto,
+            row_gap: Unit::None(0.0),
             template_col: GridTemplate::None,
             template_row: GridTemplate::None,
         };
@@ -196,7 +196,7 @@ impl Serde<GridStyle, String> for GridStyle {
         parse(&s).iter().for_each(|(k, v)| match *k {
             "grid-auto-columns" => gs.col = GridAuto::de(v.to_string()).unwrap_or(GridAuto::Auto),
             "grid-auto-flow" => gs.flow = GridFlow::de(v.to_string()).unwrap_or(GridFlow::Row),
-            "grid-auto-row" => gs.row = GridAuto::de(v.to_string()).unwrap_or(GridAuto::Auto),
+            "grid-auto-rows" => gs.row = GridAuto::de(v.to_string()).unwrap_or(GridAuto::Auto),
             "grid-column-gap" => gs.col_gap = Unit::de(v.to_string()).unwrap_or(Unit::None(0.0)),
             "grid-row-gap" => gs.row_gap = Unit::de(v.to_string()).unwrap_or(Unit::None(0.0)),
             "grid-template-columns" => {
@@ -216,8 +216,8 @@ impl Serde<GridStyle, String> for GridStyle {
 
         ss.push_str("display: grid;");
         ss.push_str(&format!("grid-auto-columns: {};", self.col.ser()));
-        ss.push_str(&format!("grid-auto-flow: {};", self.template_row.ser()));
-        ss.push_str(&format!("grid-auto-rows: {};", self.template_row.ser()));
+        ss.push_str(&format!("grid-auto-flow: {};", self.flow.ser()));
+        ss.push_str(&format!("grid-auto-rows: {};", self.row.ser()));
         ss.push_str(&format!("grid-column-gap: {};", self.col_gap.ser()));
         ss.push_str(&format!("grid-row-gap: {};", self.row_gap.ser()));
         ss.push_str(&format!(
@@ -415,6 +415,15 @@ impl Serde<GridAuto, String> for GridAuto {
                     GridAuto::Unset
                 }
             }
+            x if x.trim().contains(|w: char| w.is_whitespace()) => {
+                let mut o: Vec<Unit> = vec![];
+                x.split(|c: char| c.is_whitespace())
+                    .collect::<Vec<&str>>()
+                    .iter()
+                    .for_each(|u| o.push(Unit::de(u.to_string()).unwrap_or(Unit::Auto)));
+
+                GridAuto::Plain(o)
+            }
             u => GridAuto::Fixed(Unit::de(u.to_string()).unwrap_or(Unit::Auto)),
         })
     }
@@ -431,6 +440,15 @@ impl Serde<GridAuto, String> for GridAuto {
                 GridAuto::Inherit => "inherit".to_string(),
                 GridAuto::Initial => "initial".to_string(),
                 GridAuto::Unset => "unset".to_string(),
+                GridAuto::Plain(x) => {
+                    let mut s = "".to_string();
+                    for i in x {
+                        s += &i.ser();
+                        s += " ";
+                    }
+
+                    s
+                }
             }
         )
     }
@@ -537,6 +555,7 @@ impl Serde<GridTemplate, String> for GridTemplate {
                     let mut s = "".to_string();
                     for i in x {
                         s += &i.ser();
+                        s += " ";
                     }
 
                     s

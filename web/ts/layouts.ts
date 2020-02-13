@@ -35,7 +35,11 @@ export function Col(widgets: Widget[]): Widget {
   return col.widget();
 }
 
-export function Container(widget: Widget, style: IContainerStyle): Widget {
+export function Container(widget: Widget, style?: IContainerStyle): Widget {
+  if (style === undefined) {
+    style = {};
+  }
+
   return ElvisContainer(widget, new ContainerStyle(
     style.align,
     style.color,
@@ -46,7 +50,11 @@ export function Container(widget: Widget, style: IContainerStyle): Widget {
   ));
 }
 
-export function Flex(widget: Widget, style: IFlexStyle): Widget {
+export function Flex(widget: Widget, style?: IFlexStyle): Widget {
+  if (style === undefined) {
+    style = {};
+  }
+
   return ElvisFlex(widget, new FlexStyle(
     style.align,
     style.basis,
@@ -57,12 +65,17 @@ export function Flex(widget: Widget, style: IFlexStyle): Widget {
   ));
 }
 
-export function Grid(widgets: Widget[], style: IGridStyle): Widget {
+export function Grid(widgets: Widget[], style?: IGridStyle): Widget {
+  if (style === undefined) {
+    style = {};
+  }
+
   const grid = new ElvisGrid(new GridStyle(
-    style.auto_rows,
     style.col,
-    style.gap,
+    style.col_gap,
+    style.flow,
     style.row,
+    style.row_gap,
     style.template_col,
     style.template_row,
   ));

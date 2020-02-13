@@ -80,10 +80,12 @@ macro_rules! mcw {
             impl<'i> Into<Tree> for &'i $widget {
                 fn into(self) -> Tree {
                     let mut m = HashMap::<String, String>::new();
-                    m.insert(
-                        "class".into(),
-                        format!("elvis-{} elvis-flex", stringify!($widget).to_lowercase())
-                    );
+                    if stringify!($widget) != "List" {
+                        m.insert(
+                            "class".into(),
+                            format!("elvis-{} elvis-flex", stringify!($widget).to_lowercase())
+                        );
+                    }
 
                     let mut cs = vec![];
                     self.children.iter().for_each(|x| {
@@ -110,7 +112,6 @@ macro_rules! mcws {
                     let mut m = HashMap::<String, String>::new();
                     m.insert("id".into(), id);
                     m.insert("style".into(), ss);
-                    m.insert("class".into(), "elvis-flex".into());
 
                     let mut cs = vec![];
                     self.children.iter().for_each(|x| {

@@ -1,5 +1,6 @@
 use crate::{
-    Alignments, Colors, FlexBasis, FlexDirection, GridAutoRows, GridTemplate, MultiColumnLineStyle,
+    Alignments, Colors, FlexBasis, FlexDirection, GridAuto, GridFlow, GridTemplate,
+    MultiColumnLineStyle,
 };
 use elvis::{
     AlignStyle as ElvisAlignStyle, ContainerStyle as ElvisContainerStyle,
@@ -250,12 +251,13 @@ pub struct GridStyle(ElvisGridStyle);
 #[wasm_bindgen(typescript_custom_section)]
 const IGRID_STYLE: &'static str = r#"
 export interface IGridStyle {
-  col?: number;
-  row?: number;
-  gap?: number;
+  col?: GridAuto;
+  col_gap?: number;
+  flow?: GridFlow;
+  row?: GridAuto;
+  row_gap?: number;
   template_col?: GridTemplate;
   template_row?: GridTemplate;
-  auto_rows?: GridAutoRows;
 }
 "#;
 
@@ -263,27 +265,29 @@ export interface IGridStyle {
 impl GridStyle {
     #[wasm_bindgen(constructor)]
     pub fn new(
-        auto_rows: Option<GridAutoRows>,
-        col: Option<f64>,
-        gap: Option<f64>,
-        row: Option<f64>,
+        col: Option<GridAuto>,
+        col_gap: Option<f64>,
+        flow: Option<GridFlow>,
+        row: Option<GridAuto>,
+        row_gap: Option<f64>,
         template_col: Option<GridTemplate>,
         template_row: Option<GridTemplate>,
     ) -> GridStyle {
         GridStyle(ElvisGridStyle {
-            col: Unit::Fr(col.unwrap_or(1.0)),
-            row: Unit::Fr(row.unwrap_or(1.0)),
-            gap: Unit::Fr(gap.unwrap_or(1.0)),
-            template_col: template_col.unwrap_or(GridTemplate::auto()).into(),
-            template_row: template_row.unwrap_or(GridTemplate::auto()).into(),
-            auto_rows: auto_rows.unwrap_or(GridAutoRows::auto()).into(),
+            col: col.unwrap_or(GridAuto::auto()).into(),
+            col_gap: Unit::Rem(col_gap.unwrap_or(0.0)),
+            flow: flow.unwrap_or(GridFlow::col()).into(),
+            row: row.unwrap_or(GridAuto::auto()).into(),
+            row_gap: Unit::Rem(row_gap.unwrap_or(0.0)),
+            template_col: template_col.unwrap_or(GridTemplate::none()).into(),
+            template_row: template_row.unwrap_or(GridTemplate::none()).into(),
         })
     }
 }
 
 impl Default for GridStyle {
     fn default() -> GridStyle {
-        GridStyle::new(None, None, None, None, None, None)
+        GridStyle::new(None, None, None, None, None, None, None)
     }
 }
 

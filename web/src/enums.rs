@@ -1,6 +1,6 @@
 use elvis::{
     Alignments as ElvisAlignments, FlexBasis as ElvisFlexBasis,
-    FlexDirection as ElvisFlexDirection, GridAutoRows as ElvisGridAutoRows,
+    FlexDirection as ElvisFlexDirection, GridAuto as ElvisGridAuto, GridFlow as ElvisGridFlow,
     GridTemplate as ElvisGridTemplate, MultiColumnLineStyle as ElvisMultiColumnLineStyle, Unit,
 };
 use std::convert::Into;
@@ -86,28 +86,95 @@ impl Into<ElvisFlexDirection> for FlexDirection {
 }
 
 #[wasm_bindgen]
-pub struct GridAutoRows(ElvisGridAutoRows);
+pub struct GridAuto(ElvisGridAuto);
 
 #[wasm_bindgen]
-impl GridAutoRows {
+impl GridAuto {
     #[wasm_bindgen(js_name = "Auto")]
-    pub fn auto() -> GridAutoRows {
-        GridAutoRows(ElvisGridAutoRows::Auto)
-    }
-
-    #[wasm_bindgen(js_name = "MaxContent")]
-    pub fn max_content() -> GridAutoRows {
-        GridAutoRows(ElvisGridAutoRows::MaxContent)
-    }
-
-    #[wasm_bindgen(js_name = "MinContent")]
-    pub fn min_content() -> GridAutoRows {
-        GridAutoRows(ElvisGridAutoRows::MinContent)
+    pub fn auto() -> GridAuto {
+        GridAuto(ElvisGridAuto::Auto)
     }
 
     #[wasm_bindgen(js_name = "Fixed")]
-    pub fn fixed(n: f64) -> GridAutoRows {
-        GridAutoRows(ElvisGridAutoRows::Fixed(Unit::Fr(n)))
+    pub fn fixed(n: f64) -> GridAuto {
+        GridAuto(ElvisGridAuto::Fixed(Unit::Fr(n)))
+    }
+
+    #[wasm_bindgen(js_name = "Inherit")]
+    pub fn inherit() -> GridAuto {
+        GridAuto(ElvisGridAuto::Inherit)
+    }
+
+    #[wasm_bindgen(js_name = "Initial")]
+    pub fn initial() -> GridAuto {
+        GridAuto(ElvisGridAuto::Initial)
+    }
+
+    #[wasm_bindgen(js_name = "MaxContent")]
+    pub fn max_content() -> GridAuto {
+        GridAuto(ElvisGridAuto::MaxContent)
+    }
+
+    #[wasm_bindgen(js_name = "MinContent")]
+    pub fn min_content() -> GridAuto {
+        GridAuto(ElvisGridAuto::MinContent)
+    }
+
+    #[wasm_bindgen(js_name = "MinMax")]
+    pub fn min_max(i: f64, a: f64) -> GridAuto {
+        GridAuto(ElvisGridAuto::MinMax(Unit::Fr(i), Unit::Fr(a)))
+    }
+
+    #[wasm_bindgen(js_name = "Plain")]
+    pub fn plain(src: Vec<f64>) -> GridAuto {
+        let us = src.iter().map(|n| Unit::Fr(*n)).collect::<Vec<Unit>>();
+        GridAuto(ElvisGridAuto::Plain(us))
+    }
+
+    #[wasm_bindgen(js_name = "Unset")]
+    pub fn unset() -> GridAuto {
+        GridAuto(ElvisGridAuto::Unset)
+    }
+}
+
+#[wasm_bindgen]
+pub struct GridFlow(ElvisGridFlow);
+
+#[wasm_bindgen]
+impl GridFlow {
+    #[wasm_bindgen(js_name = "Column")]
+    pub fn col() -> GridFlow {
+        GridFlow(ElvisGridFlow::Column)
+    }
+
+    #[wasm_bindgen(js_name = "ColumnDense")]
+    pub fn col_dense() -> GridFlow {
+        GridFlow(ElvisGridFlow::ColumnDense)
+    }
+
+    #[wasm_bindgen(js_name = "Inherit")]
+    pub fn inherit() -> GridFlow {
+        GridFlow(ElvisGridFlow::Inherit)
+    }
+
+    #[wasm_bindgen(js_name = "Initial")]
+    pub fn initial() -> GridFlow {
+        GridFlow(ElvisGridFlow::Initial)
+    }
+
+    #[wasm_bindgen(js_name = "Row")]
+    pub fn row() -> GridFlow {
+        GridFlow(ElvisGridFlow::Row)
+    }
+
+    #[wasm_bindgen(js_name = "RowDense")]
+    pub fn row_dense() -> GridFlow {
+        GridFlow(ElvisGridFlow::RowDense)
+    }
+
+    #[wasm_bindgen(js_name = "Unset")]
+    pub fn unset() -> GridFlow {
+        GridFlow(ElvisGridFlow::Unset)
     }
 }
 
@@ -116,19 +183,29 @@ pub struct GridTemplate(ElvisGridTemplate);
 
 #[wasm_bindgen]
 impl GridTemplate {
-    #[wasm_bindgen(js_name = "Auto")]
-    pub fn auto() -> GridTemplate {
-        GridTemplate(ElvisGridTemplate::Auto)
+    #[wasm_bindgen(js_name = "FitContent")]
+    pub fn fit_content(u: f64) -> GridTemplate {
+        GridTemplate(ElvisGridTemplate::FitContent(Unit::Percent(u)))
     }
 
-    #[wasm_bindgen(js_name = "MaxContent")]
-    pub fn max_content() -> GridTemplate {
-        GridTemplate(ElvisGridTemplate::MaxContent)
+    #[wasm_bindgen(js_name = "Inherit")]
+    pub fn inherit() -> GridTemplate {
+        GridTemplate(ElvisGridTemplate::Inherit)
     }
 
-    #[wasm_bindgen(js_name = "MinContent")]
-    pub fn min_content() -> GridTemplate {
-        GridTemplate(ElvisGridTemplate::MinContent)
+    #[wasm_bindgen(js_name = "Initial")]
+    pub fn initial() -> GridTemplate {
+        GridTemplate(ElvisGridTemplate::Initial)
+    }
+
+    #[wasm_bindgen(js_name = "MinMax")]
+    pub fn min_max(i: f64, a: f64) -> GridTemplate {
+        GridTemplate(ElvisGridTemplate::MinMax(Unit::Fr(i), Unit::Fr(a)))
+    }
+
+    #[wasm_bindgen(js_name = "None")]
+    pub fn none() -> GridTemplate {
+        GridTemplate(ElvisGridTemplate::None)
     }
 
     #[wasm_bindgen(js_name = "Plain")]
@@ -141,11 +218,16 @@ impl GridTemplate {
     pub fn repeat(t: i32, s: f64) -> GridTemplate {
         GridTemplate(ElvisGridTemplate::Repeat(t, Unit::Fr(s)))
     }
+
+    pub fn sub_grid() -> GridTemplate {
+        GridTemplate(ElvisGridTemplate::SubGrid)
+    }
 }
 
 into! {
     (FlexBasis, ElvisFlexBasis),
-    (GridAutoRows, ElvisGridAutoRows),
+    (GridAuto, ElvisGridAuto),
+    (GridFlow, ElvisGridFlow),
     (GridTemplate, ElvisGridTemplate),
 }
 
