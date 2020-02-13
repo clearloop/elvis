@@ -1,4 +1,4 @@
-/// Elvis colors
+/// `Color` system, accroding to material design's color system.
 #[derive(Clone, Copy, Debug)]
 pub enum Colors {
     Inherit,

@@ -3,7 +3,7 @@ use elvis::Serde;
 use std::collections::HashSet;
 use wasm_bindgen::prelude::*;
 
-/// common elvis api
+/// Elvis App entry
 #[wasm_bindgen]
 pub struct Elvis {
     home: Widget,

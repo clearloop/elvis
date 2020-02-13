@@ -11,7 +11,7 @@ use elvis::{
 use std::collections::HashSet;
 use wasm_bindgen::prelude::*;
 
-/// TextStyle Interface
+/// `TextStyle` Interface
 #[wasm_bindgen]
 #[derive(Default)]
 pub struct TextStyle {
@@ -80,7 +80,7 @@ impl Into<ElvisTextStyle> for TextStyle {
     }
 }
 
-/// AlignStyle Interface
+/// `AlignStyle` Interface
 #[wasm_bindgen]
 pub struct AlignStyle(ElvisAlignStyle);
 
@@ -109,7 +109,7 @@ impl Default for AlignStyle {
     }
 }
 
-/// ContainerStyle Interface
+/// `ContainerStyle` Interface
 #[wasm_bindgen]
 #[derive(Default)]
 pub struct ContainerStyle(ElvisContainerStyle);
@@ -158,7 +158,7 @@ impl ContainerStyle {
     }
 }
 
-/// SizedBox Interface
+/// `SizedBox` interface
 #[wasm_bindgen]
 pub struct SizedBoxStyle(ElvisSizedBoxStyle);
 
@@ -200,7 +200,7 @@ impl Default for SizedBoxStyle {
     }
 }
 
-/// FlexStyle Interface
+/// `FlexStyle` Interface
 #[wasm_bindgen]
 pub struct FlexStyle(ElvisFlexStyle);
 
@@ -244,7 +244,7 @@ impl Default for FlexStyle {
     }
 }
 
-/// GridStyle Interface
+/// `GridStyle` Interface
 #[wasm_bindgen]
 pub struct GridStyle(ElvisGridStyle);
 
@@ -291,7 +291,7 @@ impl Default for GridStyle {
     }
 }
 
-/// GridStyle Interface
+/// `GridStyle` Interface
 #[wasm_bindgen]
 pub struct MultiColumnStyle(ElvisMultiColumnStyle);
 

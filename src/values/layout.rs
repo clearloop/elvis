@@ -1,5 +1,6 @@
 use crate::Unit;
 
+/// `Flex` Alignments
 pub enum Alignments {
     BottomCenter,
     BottomLeft,
@@ -18,6 +19,7 @@ impl Default for Alignments {
     }
 }
 
+/// `flex-basis` property
 pub enum FlexBasis {
     Fill,
     MaxContent,
@@ -32,6 +34,7 @@ impl Default for FlexBasis {
     }
 }
 
+/// `flex-direction` property
 pub enum FlexDirection {
     Column,
     ColumnReverse,
@@ -45,6 +48,7 @@ impl Default for FlexDirection {
     }
 }
 
+/// config columns and rows in `Grid`
 pub enum GridAuto {
     Auto,
     Fixed(Unit),
@@ -63,6 +67,7 @@ impl Default for GridAuto {
     }
 }
 
+/// manage `Grid` direction
 pub enum GridFlow {
     Column,
     Row,
@@ -80,6 +85,7 @@ impl Default for GridFlow {
     }
 }
 
+/// template rule in `Grid` columns an rows
 pub enum GridTemplate {
     FitContent(Unit),
     Inherit,
@@ -98,6 +104,7 @@ impl Default for GridTemplate {
     }
 }
 
+/// line-style in `MultiColumn`
 pub enum MultiColumnLineStyle {
     None,
     Hidden,

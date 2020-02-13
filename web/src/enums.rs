@@ -6,6 +6,7 @@ use elvis::{
 use std::convert::Into;
 use wasm_bindgen::prelude::*;
 
+/// `Alignments` interface
 #[wasm_bindgen]
 pub enum Alignments {
     BottomCenter,
@@ -35,6 +36,7 @@ impl Into<ElvisAlignments> for Alignments {
     }
 }
 
+/// `FlexBasis` interface
 #[wasm_bindgen]
 pub struct FlexBasis(ElvisFlexBasis);
 
@@ -66,6 +68,7 @@ impl FlexBasis {
     }
 }
 
+/// `FlexDirection` interface
 #[wasm_bindgen]
 pub enum FlexDirection {
     Column,
@@ -85,6 +88,7 @@ impl Into<ElvisFlexDirection> for FlexDirection {
     }
 }
 
+/// `GridAuto` interface
 #[wasm_bindgen]
 pub struct GridAuto(ElvisGridAuto);
 
@@ -137,6 +141,7 @@ impl GridAuto {
     }
 }
 
+/// `GridFlow` interface
 #[wasm_bindgen]
 pub struct GridFlow(ElvisGridFlow);
 
@@ -178,6 +183,7 @@ impl GridFlow {
     }
 }
 
+/// `GridTemplate` interface
 #[wasm_bindgen]
 pub struct GridTemplate(ElvisGridTemplate);
 
@@ -231,6 +237,7 @@ into! {
     (GridTemplate, ElvisGridTemplate),
 }
 
+/// `MultiColumnLineStyle` interface
 #[wasm_bindgen]
 pub enum MultiColumnLineStyle {
     None,

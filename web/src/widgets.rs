@@ -44,7 +44,7 @@ pub fn text(text: Option<String>, style: Option<TextStyle>) -> Widget {
     ))
 }
 
-/// If you don't want Image to play in background anonymously, just remove the child field.
+/// If you don't want Image playing in background anonymously, just remove the child field.
 ///
 /// **Note**: It's important to wrap a container outsize the `Image`
 #[wasm_bindgen(js_name = "Image")]

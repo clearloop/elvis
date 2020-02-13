@@ -1,3 +1,4 @@
+/// shared `into` to elvis widgets
 #[macro_export]
 macro_rules! into {
     {$(($widget:ident, $target:ident),)*} => {
@@ -11,6 +12,7 @@ macro_rules! into {
     };
 }
 
+/// shared `deref` to elvis widgets
 #[macro_export]
 macro_rules! deref {
     ($name: ident, $target: ident) => {

@@ -301,9 +301,7 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<String, Stri
     )))
 }
 
-/// impl `Serde`
 impl<'t> Serde<Tree, String> for Tree {
-    /// rescursion deserialize wrapper
     fn de(h: String) -> Result<Tree, Error> {
         Ok(self::rde(Box::leak(Box::new(h)), None)?
             .0
@@ -311,7 +309,6 @@ impl<'t> Serde<Tree, String> for Tree {
             .to_owned())
     }
 
-    /// serialize elvis tree to html
     fn ser(&self) -> String {
         let mut html = "".to_string();
         let mut attrs = " ".to_string();

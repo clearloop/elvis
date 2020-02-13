@@ -3,14 +3,14 @@ use crate::{
     MultiColumnLineStyle, Tree, Unit,
 };
 
-// Core Layout
+// Basic Layout
 /// To be honest, `Container` is a part of Flex family, but he is too brilliant to stay in Flex family, Layout calls him.
 pub struct Container {
     pub child: Tree,
     pub style: ContainerStyle,
 }
 
-/// Container style
+/// `Container` style
 #[derive(Default)]
 pub struct ContainerStyle {
     pub align: Alignments,
@@ -26,47 +26,47 @@ pub struct List {
     pub children: Vec<Tree>,
 }
 
-/// SizedBox just has width and height two arguments, we use this component to take some white space usually.
+/// `SizedBox` just has width and height two arguments, we use this component to take some white space usually.
 pub struct SizedBox {
     pub child: Tree,
     pub style: SizedBoxStyle,
 }
 
-/// SizedBox style
+/// `SizedBox` style
 pub struct SizedBoxStyle {
     pub height: Unit,
     pub width: Unit,
 }
 
 // Flex
-/// Align inherits the core usage of Alignments, it's quite simple, just one property.
+/// `Align` inherits the core usage of Alignments, it's quite simple, just one property.
 pub struct Align {
     pub child: Tree,
     pub style: AlignStyle,
 }
 
-/// Align style
+/// `Align` style
 pub struct AlignStyle {
     pub align: Alignments,
 }
 
-/// Align inherits the core usage of Alignment, it's quite simple, just one property.
+/// `Center` is a very nice widget, if your website only have a line of chars, use it!
 pub struct Center {
     pub child: Tree,
 }
 
-/// Col is the typical flow in html, with flexible enhance.
+/// `Col` is the typical flow in html, with flexible enhance.
 pub struct Col {
     pub children: Vec<Tree>,
 }
 
-/// This is a Lunatic Widget to Ground Control, I'm stepping throw the Window.
+/// This is the Lunatic Widget to Ground Control, 'I`m stepping throw the Window.'
 pub struct Flex {
     pub child: Tree,
     pub style: FlexStyle,
 }
 
-/// Flex Style
+/// `Flex` Style
 pub struct FlexStyle {
     pub align: Alignments,
     pub basis: FlexBasis,
@@ -76,18 +76,19 @@ pub struct FlexStyle {
     pub wrap: bool,
 }
 
-/// Both Col and Row are using flex-start, if you want to reverse the children of them, better to work on the list order.
+/// Both `Col` and `Row` are using flex-start, if you want to reverse the children of them, better to work on the list order.
 pub struct Row {
     pub children: Vec<Tree>,
 }
 
 // Grid
-/// Grid is quite complex in some way, usually, we just `Grid` our contains.
+/// `Grid` is quite complex in some way, usually, we just `Grid` our contains.
 pub struct Grid {
     pub children: Vec<Tree>,
     pub style: GridStyle,
 }
 
+/// `Grid` Style
 pub struct GridStyle {
     pub col: GridAuto,
     pub col_gap: Unit,
@@ -99,12 +100,13 @@ pub struct GridStyle {
 }
 
 // MultiColumn
-/// Homework: code a New York Times.
+/// **Homework**: code a New York Times.
 pub struct MultiColumn {
     pub children: Vec<Tree>,
     pub style: MultiColumnStyle,
 }
 
+/// `Multicolumn` Style
 pub struct MultiColumnStyle {
     pub color: Colors,
     pub count: Unit,

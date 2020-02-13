@@ -1,6 +1,7 @@
 use elvis::Colors as ElvisColors;
 use wasm_bindgen::prelude::*;
 
+/// `Colors` interface
 #[wasm_bindgen]
 #[derive(Clone, Copy)]
 pub struct Colors(ElvisColors);

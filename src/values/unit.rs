@@ -1,5 +1,5 @@
 //! unit system
-/// Follows [CSS Values 3][1] drafted in csswg.org.
+/// Follows [CSS Values 3][1] drafted in [csswg.org][2].
 ///
 /// ## Absolute Lengths
 /// | unit | name                | equivalence          |
@@ -33,6 +33,7 @@
 /// | fr   | This unit represents one fraction of the available space in the grid container. |
 ///
 /// [1]: https://drafts.csswg.org/css-values-3
+/// [2]: https://drafts.csswg.org
 #[derive(Clone, Copy, Debug)]
 pub enum Unit {
     Auto,

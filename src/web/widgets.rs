@@ -1,6 +1,5 @@
 use crate::{Colors, Error, Image, ImageSrc, Serde, Text, TextStyle, Tree, Unit};
 
-/// Serde for Image
 impl Serde<Image, String> for Image {
     fn de(s: String) -> Result<Image, Error> {
         let t = Tree::de(s)?;
@@ -37,7 +36,6 @@ impl Serde<ImageSrc, String> for ImageSrc {
     }
 }
 
-/// Serde for Text
 impl Serde<Text, String> for Text {
     fn de(s: String) -> Result<Text, Error> {
         let t = Tree::de(s)?;
@@ -63,7 +61,6 @@ impl Serde<Text, String> for Text {
     }
 }
 
-/// Serde for TextStyle
 impl Serde<TextStyle, String> for TextStyle {
     fn de(s: String) -> Result<TextStyle, Error> {
         let mut ts = TextStyle::default();

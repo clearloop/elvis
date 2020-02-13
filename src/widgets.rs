@@ -62,7 +62,7 @@ impl Default for TextStyle {
     }
 }
 
-/// If you don't want Image to play in background anonymously, just remove the child field.
+/// If you don't want Image playing in background anonymously, just remove its child.
 pub struct Image {
     pub src: ImageSrc,
     pub child: Tree,

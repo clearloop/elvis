@@ -1,6 +1,5 @@
 use crate::{Colors, Error, Serde, Unit};
 
-/// unify in `rgba(r, g, b, a)`
 impl Serde<Colors, String> for Colors {
     fn de(s: String) -> Result<Colors, Error> {
         if s.contains("inherit") {
