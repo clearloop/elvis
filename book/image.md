@@ -2,20 +2,15 @@
 
 ```js
 /* Image */
-import { Page, Elvis } from "calling-elvis";
-const { Text, Image } = Elvis;
+import { Center, Elvis, Text, Image } from "calling-elvis";
 
 // Generate a `Image`
-let myImage = Image({
-  child: Center(
-    Text("Hallo, Spaceboy!")
-  ),
-  url: "https://images-assets.nasa.gov/image/S65-34635/S65-34635~orig.jpg",
-  height: 42,
-  width: 42,
-});
+const myImage = Image(
+  "https://images-assets.nasa.gov/image/S65-34635/S65-34635~orig.jpg", 
+  Text("hallo, spaceboy!"),
+);
 
-Page(myImage).render();
+Elvis.call(Center(myImage));
 ```
 
-If you don't want `Image` to play in background anonymously, just remove the child field.
+If you don't want `Image` playing in background anonymously, just remove the child field.

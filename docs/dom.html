@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="components.html"><strong aria-hidden="true">1.</strong> Components</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="link.html"><strong aria-hidden="true">1.2.</strong> Link</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.3.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html" class="active"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html" class="active"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,11 +149,13 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#dom" id="dom">DOM</a></h1>
+<blockquote>
+<p><strong>Note</strong>: Elvis just render static html pages now, DOM is in progress.</p>
+</blockquote>
 <p>Like the other UI libraries, webassemblly Elvis arms a Virtual-DOM, too.</p>
-<pre><code class="language-js">import { Component, Elvis, GestureDetector } from &quot;calling-elvis&quot;;
-const { Center, Text } = Elvis;
+<pre><code class="language-js">import { Center, Elvis, GestureDetector, State, Text } from &quot;calling-elvis&quot;;
 
-class MyComponent extends Component {
+class MyState extends State {
   state = {
     count: 0,
   }
@@ -199,7 +201,7 @@ pub struct TreeNode {
   css: CSS,
   tag: String,
   attrs: Vec&lt;Attribute&gt;,
-  child: Arc&lt;AsRef&lt;TreeNode&gt;&gt;,
+  children: Vec&lt;Rc&lt;AsRef&lt;TreeNode&gt;&gt;&gt;,
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -218,7 +220,7 @@ pub struct TreeNode {
   &lt;naughty&gt;Up&lt;/naughty&gt;
 &lt;/father&gt;
 </code></pre>
-<p>Elvis with not try to swap <code>&lt;li&gt;Up&lt;/li&gt;</code> and <code>&lt;li&gt;Down&lt;/li&gt;</code>, it will operate DOM twice over, we just replace the whole <code>&lt;ol&gt;...&lt;/ol&gt;</code> for once.</p>
+<p>Elvis with not trying to swap <code>&lt;li&gt;Up&lt;/li&gt;</code> and <code>&lt;li&gt;Down&lt;/li&gt;</code>, it will operate DOM twice over, we just replace the whole <code>&lt;ol&gt;...&lt;/ol&gt;</code> for once.</p>
 
                     </main>
 

@@ -1,9 +1,8 @@
 # Summary
 
 [Calling Elvis](./guide.md)
-- [Components](./components.md)
+- [Widgets](./widgets.md)
   - [Image](./image.md)
-  - [Link](./link.md)
   - [Text](./text.md)
 - [DOM](./dom.md)
 - [Events](./events.md)

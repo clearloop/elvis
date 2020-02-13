@@ -1,8 +1,10 @@
 # Events
 
+> **Note**: In progress.
+
 Follows MDN docs [Events][1]
 
-`Events` is kind like a third-part plugin in `Elvis`, it implelements both in `rust` and `typescript`.
+`Events` share properties to `State`, kind like a third-part plugin in `Elvis`, it implelements both in `rust` and `typescript`.
 
 ## Javascript
 ```js
@@ -10,7 +12,7 @@ Follows MDN docs [Events][1]
 import { Component, Elvis, Events } from "calling-elvis";
 const { Text } = Elvis;
 
-class myClickAbleText extends Component {
+class myClickAbleText extends State {
   state = {
     msg: "",
   }

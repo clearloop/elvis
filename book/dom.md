@@ -1,12 +1,12 @@
 # DOM
+> **Note**: Elvis just render static html pages now, DOM is in progress.
 
 Like the other UI libraries, webassemblly Elvis arms a Virtual-DOM, too.
 
 ```js
-import { Component, Elvis, GestureDetector } from "calling-elvis";
-const { Center, Text } = Elvis;
+import { Center, Elvis, GestureDetector, State, Text } from "calling-elvis";
 
-class MyComponent extends Component {
+class MyState extends State {
   state = {
     count: 0,
   }
@@ -60,7 +60,7 @@ pub struct TreeNode {
   css: CSS,
   tag: String,
   attrs: Vec<Attribute>,
-  child: Arc<AsRef<TreeNode>>,
+  children: Vec<Rc<AsRef<TreeNode>>>,
 }
 ```
 
@@ -86,4 +86,4 @@ Now we upside down the `Up`, `Side`, `Down` List:
 </father>
 ```
 
-Elvis with not try to swap `<li>Up</li>` and `<li>Down</li>`, it will operate DOM twice over, we just replace the whole `<ol>...</ol>` for once.
+Elvis with not trying to swap `<li>Up</li>` and `<li>Down</li>`, it will operate DOM twice over, we just replace the whole `<ol>...</ol>` for once.
