@@ -8,7 +8,7 @@ repository = "https://github.com/clearloop/elvis"
 license = "MIT"
 documentation = "https://docs.rs/elvis"
 homepage = "https://github.com/clearloop/elvis"
-include = ["src/**/*", "Cargo.toml", "README.md"]
+include = ["src/**/*", "Cargo.toml", "./README.md"]
 keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
