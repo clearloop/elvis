@@ -3,16 +3,15 @@
 Follows MDN doc [CSS Flexible Box Layout][1]
 
 
-## Components 📦
+## Widgets 📦
 
-The very basic core of `Flex Layout` components is called `Flex`, unfortunatly, it contains almost all css flex properties, not easy to use, that's why elvis composes some "newbie" components as well.
+The very basic core of `Flex` Layout widgets is called `Flex`, unfortunatly, it contains almost all css flex properties, no easy to use, that's why elvis composes some newbie components as well.
 
 ### Align
 
 ```js
 /* Align */
-import { Page, Elvis, Alignments } from "calling-elvis";
-const { Align, Text } = Elvis;
+import { Align, Alignments, Elvis, Text } from "calling-elvis";
 
 // Generate an `Align`
 let myAlign = Align(
@@ -20,80 +19,124 @@ let myAlign = Align(
     align: Alignments.Center,
 });
 
-Page(mySizedBox).render();
+Elvis.call(myAlign);
 ```
 
 `Align` inherits the core usage of `Alignment`, it's quite simple, just one property.
 
+> Declaration: 
+> 
+> ```js
+> function Align(
+>   child: Widget, {
+>   align: Alignments, 
+> }): Widget;
+> ```
+
 ### Center
 ```js
 /* Center */
-import { Page, Elvis, Alignments } from "calling-elvis";
-const { Center, Text } = Elvis;
+import { Center, Elvis, Text } from "calling-elvis";
 
 // Generate an `Center`
 let myCenter = Center(
   Text("My website only have a line of chars 🦀 "),
 );
 
-Page(mySizedBox).render();
+Elvis.call(myCenter);
 ```
-`Center` is a very nice component, if your website only have a line of chars, use it!
 
+`Center` is a very nice widget, if your website only have a line of chars, use it!
+
+> Declaration: 
+> 
+> ```js
+> function Center(child: Widget): Widget;
+> ```
 
 ### Col
 ```js
 /* Col */
-import { Page, Elvis, Alignments } from "calling-elvis";
-const { Col, Text } = Elvis;
+import { Col, Elvis, Text } from "calling-elvis";
 
-// Generate an `Col`
-let myAlign = Col([
+// Generate a `Col`
+const myCol = Col([
   Text("All is above you all is sky"),
   Text("All is behind you all is sea"),
 ]);
 
-Page(mySizedBox).render();
+Elvis.call(myCol);
 ```
 
 `Col` towards column, the typical flow in html, with flexible enhance.
 
+> Declaration: 
+> 
+> ```js
+> function Col(widgets: Widget[]): Widget;
+> ```
 
 ### Flex
 ```js
-let flex = Flex(
+/* Flex */
+import { Elvis, Flex, List, Text } from "calling-elvis";
+
+const myFlex = Flex(
   List([
-    Text("hi, I'm the Lunatic Component's child No.1"),
-    Text("hi, I'm the Lunatic Component's child No.2"),
-    Text("hi, I'm the Lunatic Component's child No.3"),
+    Text("hi, I'm the Lunatic Widget's child No.1"),
+    Text("hi, I'm the Lunatic widget's child No.2"),
+    Text("hi, I'm the Lunatic Widget's child No.3"),
   )], {
-    basis: FlexBasis.Auto,
+    align: Alignments.Center,
+    basis: FlexBasis.Fill(),
     direction: FlexDirection.ColumnReverse,
     grow: 1,
     order: 1,
-    shrink: 2,
-    wrap: FlexWrap.Wrap,
+    shrink: 1,
+    wrap: true,
 });
-```
-This is `the Lunatic Component` to `Ground Control`, I'm stepping throw the `Window`.
 
+Elvis.call(myFlex);
+```
+
+This is the Lunatic Widget to Ground Control, I'm stepping throw the `Window`.
+
+
+> Declaration: 
+> 
+> ```js
+> function Flex(widget: Widget, {
+>   align: Alignments,
+>   basis: FlexBasis,
+>   direction: FlexDirection,
+>   grow: number,             // no unit
+>   order: number,            // no unit
+>   shrink: number,           // no unit
+>   wrap: boolean,
+> }): Widget;
+> ```
 
 ### Row
 ```js
 /* Row */
-import { Page, Elvis, Alignments } from "calling-elvis";
-const { Row, Text } = Elvis;
+import { Elvis, Row, Text, } from "calling-elvis";
 
 // Generate a `Row`
-let myAlign = Row([
+let myRow = Row([
   Text("I'm Wrong"),
   Text("I'm Right"),
 ]);
 
-Page(mySizedBox).render();
+Elvis.call(myRow);
 ```
 
 Both `Col` and `Row` are using `flex-start`, if you want to reverse the children of them, better to work on the list order.
+
+> Declaration: 
+> 
+> ```js
+> function Row(widgets: Widget[]): Widget;
+> ```
 
 ## Enums 🍩
 
@@ -125,7 +168,7 @@ pub enum FlexBasis {
   MaxContent,
   MinContent,
   FitContent,
-  Number(Unit),
+  Number(Unit), // Rem
 }
 ```
 Well, lunatic `FlexBasis` in Rust source code.

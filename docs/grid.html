@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html" class="active"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM*</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events*</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures*</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html" class="active"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -151,15 +151,12 @@
                         <h1><a class="header" href="#grid" id="grid">Grid</a></h1>
 <p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids">Grids</a>.</p>
 <p>Here is the <code>Grid</code> section, Just let Elvis show you how <code>Grid</code> Grid.</p>
-<h2><a class="header" href="#components-" id="components-">Components 📦</a></h2>
-<p><code>Grid</code> just have one component now, as you can see, <code>Grid</code>.</p>
 <h3><a class="header" href="#grid-1" id="grid-1">Grid</a></h3>
 <pre><code class="language-js">/* Grid */
-import { Page, Elvis } from &quot;calling-elvis&quot;;
-const { Grid, Text, List } = Elvis;
+import { Grid, GridAuto, GridFlow, GridTemplate, Elvis, Text } from &quot;calling-elvis&quot;;
 
 // Generate an `Grid`
-let myGrid = Grid(
+const myGrid = Grid(
   List(
     Text(&quot;Mercury&quot;),
     Text(&quot;Venus&quot;),
@@ -171,22 +168,23 @@ let myGrid = Grid(
     Text(&quot;Neptune&quot;),
     Text(&quot;Pluto&quot;),
   ), {
-    autoRows: GridAutoRows.Auto(100),
-    // col: 3,
-    // gap: 2,
-    // row: 3,
-    // template: GridTemplate.Repeat(3, 1),
+    col: Grid.Auto(),
+    col_gap: 1,
+    flow: GridFlow.Column(),
+    row: Grid.Auto(),
+    row_gap: 1,
+    template_col: GridTemplate.Inherit(),
+    template_row: GridTemplate.Inherit(),
 });
 
-Page(mySizedBox).render();
+Elvis.call(mySizedBox);
 </code></pre>
-<p>Aah, duplicate name occurs, take it ease, only one <code>Grid</code> Component in Elvis too.</p>
+<p>Take it ease, only one <code>Grid</code> widget in Elvis.</p>
 <pre><code class="language-js">/* Grid */
-import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
-const { Grid, Text, List } = Elvis;
+import { Grid, Elvis, List, Text } from &quot;calling-elvis&quot;;
 
 // Generate an `Grid`
-let myGrid = Grid(
+const myGrid = Grid(
   List(
     Text(&quot;Mercury&quot;),
     Text(&quot;Venus&quot;),
@@ -200,29 +198,73 @@ let myGrid = Grid(
   ),
 );
 
-Page(mySizedBox).render();
+Elvis.call(myGrid);
 </code></pre>
 <p><code>Grid</code> is quite complex in some way, usually, we just <code>Grid</code> our contains.</p>
+<blockquote>
+<p><strong>Declaration</strong></p>
+<pre><code class="language-js">function Grid(widget: Widget, {
+  col: GridAuto,
+  col_gap: number,              // Rem
+  flow: GridFlow,
+  row: GridAuto,
+  row_gap: number,              // Rem
+  template_col: GridTemplate,
+  template_row: GridTemplate,
+}): Widget;
+</code></pre>
+</blockquote>
 <h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
 <p>Grid <code>Grid</code> is hard to pronounce, most of time we don't need to do this.</p>
-<h3><a class="header" href="#gridautorows" id="gridautorows">GridAutoRows</a></h3>
+<h3><a class="header" href="#gridauto" id="gridauto">GridAuto</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>pub enum GridAutoRows {
-  Auto(Unit, Option&lt;Unit&gt;),
-  Fixed(Unit),
+</span>pub enum GridAuto {
+    Auto,
+    Fixed(Unit),
+    Inherit,
+    Initial,
+    MaxContent,
+    MinContent,
+    MinMax(Unit, Unit),
+    Plain(Vec&lt;Unit&gt;),
+    Unset,
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><code>AutoRows</code> affect the width of Grid children, and the <code>Auto</code> choice use the <code>minmax</code> function in css, if doesn't pass the second argument, it will be <code>auto</code> in meaning.</p>
+<p><code>GridAuto</code> affect the width of Grid children, and the <code>Auto</code> choice use the <code>minmax</code> function in css, if doesn't pass the second argument, it will be <code>auto</code> in meaning.</p>
+<h3><a class="header" href="#gridflow" id="gridflow">GridFlow</a></h3>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub enum GridFlow {
+    Column,
+    Row,
+    Dense,
+    ColumnDense,
+    RowDense,
+    Inherit,
+    Initial,
+    Unset,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>GridFlow::Column</code> by default.</p>
 <h3><a class="header" href="#gridtemplate" id="gridtemplate">GridTemplate</a></h3>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
 </span>pub enum GridTemplate {
-  Plain(Vec&lt;Unit&gt;),
-  Repeat(i32, Unit),
+    FitContent(Unit),
+    Inherit,
+    Initial,
+    MinMax(Unit, Unit),
+    None,
+    Plain(Vec&lt;Unit&gt;),
+    Repeat(i32, Unit),
+    SubGrid,
+    Unset,
 }
 <span class="boring">}
 </span></code></pre></pre>

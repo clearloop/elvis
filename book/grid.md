@@ -4,18 +4,13 @@ Follows MDN doc [Grids][1].
 
 Here is the `Grid` section, Just let Elvis show you how `Grid` Grid.
 
-## Components 📦
-
-`Grid` just have one component now, as you can see, `Grid`.
-
 ### Grid
 ```js
 /* Grid */
-import { Page, Elvis } from "calling-elvis";
-const { Grid, Text, List } = Elvis;
+import { Grid, GridAuto, GridFlow, GridTemplate, Elvis, Text } from "calling-elvis";
 
 // Generate an `Grid`
-let myGrid = Grid(
+const myGrid = Grid(
   List(
     Text("Mercury"),
     Text("Venus"),
@@ -27,25 +22,26 @@ let myGrid = Grid(
     Text("Neptune"),
     Text("Pluto"),
   ), {
-    autoRows: GridAutoRows.Auto(100),
-    // col: 3,
-    // gap: 2,
-    // row: 3,
-    // template: GridTemplate.Repeat(3, 1),
+    col: Grid.Auto(),
+    col_gap: 1,
+    flow: GridFlow.Column(),
+    row: Grid.Auto(),
+    row_gap: 1,
+    template_col: GridTemplate.Inherit(),
+    template_row: GridTemplate.Inherit(),
 });
 
-Page(mySizedBox).render();
+Elvis.call(mySizedBox);
 ```
 
-Aah, duplicate name occurs, take it ease, only one `Grid` Component in Elvis too.
+Take it ease, only one `Grid` widget in Elvis.
 
 ```js
 /* Grid */
-import { Page, Elvis, Alignments } from "calling-elvis";
-const { Grid, Text, List } = Elvis;
+import { Grid, Elvis, List, Text } from "calling-elvis";
 
 // Generate an `Grid`
-let myGrid = Grid(
+const myGrid = Grid(
   List(
     Text("Mercury"),
     Text("Venus"),
@@ -59,30 +55,75 @@ let myGrid = Grid(
   ),
 );
 
-Page(mySizedBox).render();
+Elvis.call(myGrid);
 ```
 
 `Grid` is quite complex in some way, usually, we just `Grid` our contains.
+
+> **Declaration**
+> 
+> ```js
+> function Grid(widget: Widget, {
+>   col: GridAuto,
+>   col_gap: number,              // Rem
+>   flow: GridFlow,
+>   row: GridAuto,
+>   row_gap: number,              // Rem
+>   template_col: GridTemplate,
+>   template_row: GridTemplate,
+> }): Widget;
+> ```
 
 ## Enums 🍩
 
 Grid `Grid` is hard to pronounce, most of time we don't need to do this.
 
-### GridAutoRows
+### GridAuto
 ```rust
-pub enum GridAutoRows {
-  Auto(Unit, Option<Unit>),
-  Fixed(Unit),
+pub enum GridAuto {
+    Auto,
+    Fixed(Unit),
+    Inherit,
+    Initial,
+    MaxContent,
+    MinContent,
+    MinMax(Unit, Unit),
+    Plain(Vec<Unit>),
+    Unset,
 }
 ```
 
-`AutoRows` affect the width of Grid children, and the `Auto` choice use the `minmax` function in css, if doesn't pass the second argument, it will be `auto` in meaning.
+`GridAuto` affect the width of Grid children, and the `Auto` choice use the `minmax` function in css, if doesn't pass the second argument, it will be `auto` in meaning.
+
+
+### GridFlow
+```rust
+pub enum GridFlow {
+    Column,
+    Row,
+    Dense,
+    ColumnDense,
+    RowDense,
+    Inherit,
+    Initial,
+    Unset,
+}
+```
+
+`GridFlow::Column` by default.
 
 ### GridTemplate
 ```rust
 pub enum GridTemplate {
-  Plain(Vec<Unit>),
-  Repeat(i32, Unit),
+    FitContent(Unit),
+    Inherit,
+    Initial,
+    MinMax(Unit, Unit),
+    None,
+    Plain(Vec<Unit>),
+    Repeat(i32, Unit),
+    SubGrid,
+    Unset,
 }
 ```
 In the `Plain` choice, `Vec`'s length will be the column count of grid, and every `Unit` is the width of each column, `Repeat` just make this easier, every child are in the same width.

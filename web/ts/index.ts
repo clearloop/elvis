@@ -3,12 +3,11 @@ import {
   Center, Colors,
   FlexBasis, FlexDirection,
   GridAuto, GridFlow, GridTemplate,
-  Image,
 } from "../pkg";
 import Elvis from "./elvis";
 import { Align, Col, Container, Flex, Grid, List, MultiColumn, Row, SizedBox } from "./layouts";
 import Router from "./router";
-import { Text } from "./widgets";
+import { Image, Text } from "./widgets";
 
 export {
   Align, Alignments,

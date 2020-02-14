@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html" class="active"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM*</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events*</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures*</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html" class="active"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -150,12 +150,11 @@
                     <main>
                         <h1><a class="header" href="#flex" id="flex">Flex</a></h1>
 <p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">CSS Flexible Box Layout</a></p>
-<h2><a class="header" href="#components-" id="components-">Components 📦</a></h2>
-<p>The very basic core of <code>Flex Layout</code> components is called <code>Flex</code>, unfortunatly, it contains almost all css flex properties, not easy to use, that's why elvis composes some &quot;newbie&quot; components as well.</p>
+<h2><a class="header" href="#widgets-" id="widgets-">Widgets 📦</a></h2>
+<p>The very basic core of <code>Flex</code> Layout widgets is called <code>Flex</code>, unfortunatly, it contains almost all css flex properties, no easy to use, that's why elvis composes some newbie components as well.</p>
 <h3><a class="header" href="#align" id="align">Align</a></h3>
 <pre><code class="language-js">/* Align */
-import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
-const { Align, Text } = Elvis;
+import { Align, Alignments, Elvis, Text } from &quot;calling-elvis&quot;;
 
 // Generate an `Align`
 let myAlign = Align(
@@ -163,66 +162,105 @@ let myAlign = Align(
     align: Alignments.Center,
 });
 
-Page(mySizedBox).render();
+Elvis.call(myAlign);
 </code></pre>
 <p><code>Align</code> inherits the core usage of <code>Alignment</code>, it's quite simple, just one property.</p>
+<blockquote>
+<p>Declaration: </p>
+<pre><code class="language-js">function Align(
+  child: Widget, {
+  align: Alignments, 
+}): Widget;
+</code></pre>
+</blockquote>
 <h3><a class="header" href="#center" id="center">Center</a></h3>
 <pre><code class="language-js">/* Center */
-import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
-const { Center, Text } = Elvis;
+import { Center, Elvis, Text } from &quot;calling-elvis&quot;;
 
 // Generate an `Center`
 let myCenter = Center(
   Text(&quot;My website only have a line of chars 🦀 &quot;),
 );
 
-Page(mySizedBox).render();
+Elvis.call(myCenter);
 </code></pre>
-<p><code>Center</code> is a very nice component, if your website only have a line of chars, use it!</p>
+<p><code>Center</code> is a very nice widget, if your website only have a line of chars, use it!</p>
+<blockquote>
+<p>Declaration: </p>
+<pre><code class="language-js">function Center(child: Widget): Widget;
+</code></pre>
+</blockquote>
 <h3><a class="header" href="#col" id="col">Col</a></h3>
 <pre><code class="language-js">/* Col */
-import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
-const { Col, Text } = Elvis;
+import { Col, Elvis, Text } from &quot;calling-elvis&quot;;
 
-// Generate an `Col`
-let myAlign = Col([
+// Generate a `Col`
+const myCol = Col([
   Text(&quot;All is above you all is sky&quot;),
   Text(&quot;All is behind you all is sea&quot;),
 ]);
 
-Page(mySizedBox).render();
+Elvis.call(myCol);
 </code></pre>
 <p><code>Col</code> towards column, the typical flow in html, with flexible enhance.</p>
+<blockquote>
+<p>Declaration: </p>
+<pre><code class="language-js">function Col(widgets: Widget[]): Widget;
+</code></pre>
+</blockquote>
 <h3><a class="header" href="#flex-1" id="flex-1">Flex</a></h3>
-<pre><code class="language-js">let flex = Flex(
+<pre><code class="language-js">/* Flex */
+import { Elvis, Flex, List, Text } from &quot;calling-elvis&quot;;
+
+const myFlex = Flex(
   List([
-    Text(&quot;hi, I'm the Lunatic Component's child No.1&quot;),
-    Text(&quot;hi, I'm the Lunatic Component's child No.2&quot;),
-    Text(&quot;hi, I'm the Lunatic Component's child No.3&quot;),
+    Text(&quot;hi, I'm the Lunatic Widget's child No.1&quot;),
+    Text(&quot;hi, I'm the Lunatic widget's child No.2&quot;),
+    Text(&quot;hi, I'm the Lunatic Widget's child No.3&quot;),
   )], {
-    basis: FlexBasis.Auto,
+    align: Alignments.Center,
+    basis: FlexBasis.Fill(),
     direction: FlexDirection.ColumnReverse,
     grow: 1,
     order: 1,
-    shrink: 2,
-    wrap: FlexWrap.Wrap,
+    shrink: 1,
+    wrap: true,
 });
+
+Elvis.call(myFlex);
 </code></pre>
-<p>This is <code>the Lunatic Component</code> to <code>Ground Control</code>, I'm stepping throw the <code>Window</code>.</p>
+<p>This is the Lunatic Widget to Ground Control, I'm stepping throw the <code>Window</code>.</p>
+<blockquote>
+<p>Declaration: </p>
+<pre><code class="language-js">function Flex(widget: Widget, {
+  align: Alignments,
+  basis: FlexBasis,
+  direction: FlexDirection,
+  grow: number,             // no unit
+  order: number,            // no unit
+  shrink: number,           // no unit
+  wrap: boolean,
+}): Widget;
+</code></pre>
+</blockquote>
 <h3><a class="header" href="#row" id="row">Row</a></h3>
 <pre><code class="language-js">/* Row */
-import { Page, Elvis, Alignments } from &quot;calling-elvis&quot;;
-const { Row, Text } = Elvis;
+import { Elvis, Row, Text, } from &quot;calling-elvis&quot;;
 
 // Generate a `Row`
-let myAlign = Row([
+let myRow = Row([
   Text(&quot;I'm Wrong&quot;),
   Text(&quot;I'm Right&quot;),
 ]);
 
-Page(mySizedBox).render();
+Elvis.call(myRow);
 </code></pre>
 <p>Both <code>Col</code> and <code>Row</code> are using <code>flex-start</code>, if you want to reverse the children of them, better to work on the list order.</p>
+<blockquote>
+<p>Declaration: </p>
+<pre><code class="language-js">function Row(widgets: Widget[]): Widget;
+</code></pre>
+</blockquote>
 <h2><a class="header" href="#enums-" id="enums-">Enums 🍩</a></h2>
 <p>Elvis <code>Layout</code> Aligns follows the MDN doc [CSS Box Alignment][2], but simplify it into a enum <code>Aligment</code> here, <code>Alignment</code> is used by all <code>Flex</code> components and <code>Container</code> in Elvis.</p>
 <h3><a class="header" href="#alignment" id="alignment">Alignment</a></h3>
@@ -253,7 +291,7 @@ pub enum Alignment {
   MaxContent,
   MinContent,
   FitContent,
-  Number(Unit),
+  Number(Unit), // Rem
 }
 <span class="boring">}
 </span></code></pre></pre>

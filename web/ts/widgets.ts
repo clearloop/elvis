@@ -1,9 +1,15 @@
 import {
+  IImage,
+  Image as ElvisImage,
   ITextStyle,
   Text as ElvisText,
   TextStyle,
   Widget,
 } from "../pkg";
+
+export function Image(cfg: IImage): Widget {
+  return ElvisImage(cfg.src, cfg.child);
+}
 
 // Text Wrapper
 export function Text(text: string, style: ITextStyle): Widget {

@@ -54,3 +54,11 @@ pub fn img(src: Option<String>, child: Option<Widget>) -> Widget {
         child.unwrap_or_default().into(),
     ))
 }
+
+#[wasm_bindgen(typescript_custom_section)]
+const IIMAGE: &'static str = r#"
+export interface IImage {
+  src: string;
+  child: Widget;
+}
+"#;

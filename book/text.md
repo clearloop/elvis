@@ -20,3 +20,17 @@ Elvis.call(
 ```
 
 `Text` might be the most popular spider from Mars, Does it know the Great `Ziggy Stardust`?
+
+> Declaration:
+>
+> ```js
+> function Text(text: string, {
+>   bold: boolean,
+>   color: Colors,
+>   italic: boolean,
+>   size: number,    // rem
+>   weight: number,  // rem
+>   height: number,  // rem
+>   stretch: number, // percent
+> }): Widget;
+> ```

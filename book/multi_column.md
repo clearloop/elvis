@@ -4,18 +4,13 @@ Follows MDN doc [Multiple-column layout][1].
 
 The very easy way to layout our pages, maybe fantastic in the old web, it means, the true web, I like it. 
 
-## Components 📦
-
-Congratulations! one compoent got shot, again.
-
 ### MultiColumn
 ```js
 /* MultiColumn */
-import { Colors, Page, Elvis } from "calling-elvis";
-const { Grid, Text, List } = Elvis;
+import { Colors, Elvis, MultiColumn, MultiColumnLineStyle, Text } from "calling-elvis";
 
-// Generate an `Grid`
-let myMultiColumn = MultiColumn(
+// Generate an `MultiColumn`
+const myMultiColumn = MultiColumn(
   List(
     Text("Mercury"),
     Text("Venus"),
@@ -27,24 +22,36 @@ let myMultiColumn = MultiColumn(
     Text("Neptune"),
     Text("Pluto"),
   ), {
-    color: Colors.red,
+    color: Colors.Black(),
     count: 3,
     gap: 20,
-    style: MultiColumnStyle.Dotted,
+    style: MultiColumnLineStyle.Groove,
 });
 
-Page(mySizedBox).render();
+Elvis.call(mySizedBox);
 ```
 
-Homework, code a New York Times.
+Homework: code a New York Times.
+
+**Declaration**
+
+```js
+function MultiColumn(
+  widget: Widget, {
+    color: Colors,
+    count: number,                  // no unit
+    gap: number,                    // Rem
+    style: MultiColumnLineStyle,
+}): Widget;
+```
 
 ## Enums 🍩
 
-Mainly the style of `MultiColumn`.
+The style of `MultiColumnLine`.
 
-### MultiColumnStyle
+### MultiColumnLineStyle
 ```rust
-pub enum MultiColumnStyle {
+pub enum MultiColumnLineStyle {
   None,
   Hidden,
   Dotted,
@@ -58,6 +65,6 @@ pub enum MultiColumnStyle {
 }
 ```
 
-If I were you, I will choose `MultiColumnStyle.Groove`, don't ask me why.
+If I were you, I will choose `MultiColumnStyle.Groove`, don't ask why.
 
 [1]: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Multiple-column_Layout
