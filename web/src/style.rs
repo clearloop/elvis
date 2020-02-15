@@ -393,7 +393,7 @@ impl<'s> StyleSheet {
                     "  align-items: center;",
                     "  height: 100%;",
                     "  justify-content: center;",
-                    "  width: 100%,",
+                    "  width: 100%;",
                     "}",
                 ]
                 .join("\n"),

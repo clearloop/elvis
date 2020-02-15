@@ -1,6 +1,6 @@
 [package]
 name = "elvis-web"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "Calling Elvis, is anybody home?"
@@ -34,6 +34,3 @@ features = [
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-
-[profile.release]
-lto = true

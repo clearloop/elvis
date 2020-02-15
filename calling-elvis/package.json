@@ -4,7 +4,7 @@
     "clearloop <udtrokia@gmail.com>"
   ],
   "description": "Calling Elvis, is anybody home?",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,6 +18,6 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "dependencies": {
-    "elvis-web": "^0.1.0"
+    "elvis-web": "^0.1.1"
   }
 }

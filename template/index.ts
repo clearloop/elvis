@@ -1,20 +1,6 @@
-import { Colors, Elvis, Grid, GridFlow, Text } from "../web/ts";
+import { Center, Elvis, Text } from "../calling-elvis";
 
-const Pig = Text(`Pink is the Pig!`, {
-  bold: true,
-  italic: true,
-  size: 1,
-  color: Colors.PinkAccent(),
-});
-
-const Show = Text(`The Show Must Go On!`, {
-  bold: true,
-  italic: true,
-  size: 1,
-  color: Colors.BlueAccent(),
-});
-
-const MyCenter = Grid([Pig, Show]);
+const MyCenter = Center(Text("Is anybody home?", {}));
 
 // entry
 Elvis.call(MyCenter);

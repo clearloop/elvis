@@ -20,3 +20,6 @@ default = ["web"]
 members = [
   "web"
 ]
+
+[profile.release]
+lto = true

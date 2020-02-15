@@ -43,7 +43,8 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "web/pkg"),
+      "@": path.resolve(__dirname, "web/pkg/"),
+      "elvis-web": path.resolve(__dirname, "web/pkg/"),
     },
     extensions: ['.ts', '.js', '.wasm']
   },
