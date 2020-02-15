@@ -1,4 +1,4 @@
-import { Widget } from "../pkg";
+import { Widget } from "elvis-web";
 
 interface IRoutes {
   [name: string]: Widget;

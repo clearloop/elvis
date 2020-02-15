@@ -5,7 +5,7 @@
     "baseUrl": ".",
     "declaration": true,
     "esModuleInterop": true,
-    "outDir": "web/pkg/calling",
+    "outDir": "calling-elvis/lib",
     "module": "esNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -13,9 +13,11 @@
     "target": "es6"
   },
   "include": [
-    "web/ts/**/*",
+    "calling-elvis/index.ts",
+    "calling-elvis/src/**/*",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "calling-elvis/lib"
   ]
 }

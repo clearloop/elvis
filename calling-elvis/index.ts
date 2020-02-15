@@ -3,11 +3,11 @@ import {
   Center, Colors,
   FlexBasis, FlexDirection,
   GridAuto, GridFlow, GridTemplate,
-} from "../pkg";
-import Elvis from "./elvis";
-import { Align, Col, Container, Flex, Grid, List, MultiColumn, Row, SizedBox } from "./layouts";
-import Router from "./router";
-import { Image, Text } from "./widgets";
+} from "elvis-web";
+import Elvis from "./src/elvis";
+import { Align, Col, Container, Flex, Grid, List, MultiColumn, Row, SizedBox } from "./src/layouts";
+import Router from "./src/router";
+import { Image, Text } from "./src/widgets";
 
 export {
   Align, Alignments,

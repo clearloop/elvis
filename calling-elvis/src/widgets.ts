@@ -5,7 +5,7 @@ import {
   Text as ElvisText,
   TextStyle,
   Widget,
-} from "../pkg";
+} from "elvis-web";
 
 export function Image(cfg: IImage): Widget {
   return ElvisImage(cfg.src, cfg.child);

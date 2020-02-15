@@ -1,4 +1,4 @@
-import { Elvis as ElvisPrototype, Widget } from "../pkg";
+import { Elvis as ElvisPrototype, Widget } from "elvis-web";
 import Router from "./router";
 
 interface IElvis {
