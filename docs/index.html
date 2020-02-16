@@ -150,9 +150,9 @@
                     <main>
                         <h1><a class="header" href="#calling-elvis--------" id="calling-elvis--------">Calling Elvis 🦀 🕸  🎸 📡 🚀 🪐 🛰</a></h1>
 <p>Is anybody home?</p>
-<p>As we know, <code>Elvis</code> is a famous rock star, and both a famous rock song named <code>Calling Elvis</code> wrote by <code>Dire Straits</code> which inspired a unknown rock star to write down these chords.</p>
+<p>As we know, <code>Elvis</code> is a famous rock star, but both a famous rock song named <code>Calling Elvis</code> wrote by <code>Dire Straits</code> which inspired a unknown rock star writing down these chords.</p>
 <p>For now, Elvis, the rock star, will rise, once again, <strong>beyond</strong> the internet —— truely your wasm web library, 🦀 + 🕸  =&gt; 💖</p>
-<p><a href="https://clearloop.github.io/elvis">The Evlis Book</a> mainly talks about the usage of the npm package <code>calling-elvis</code>, and if you want to use <code>low-level</code> api rusting the web, plz check out <a href="https://docs.rs/elvis">elvis' rust doc</a>.</p>
+<p><a href="https://clearloop.github.io/elvis">The Evlis Book</a> mainly talks about the usage of <a href="https://github.com/clearloop/elvis.js">elvis.js</a>, and if you want to use <code>low-level</code> api rusting the web, plz check out <a href="https://docs.rs/elvis">elvis' rust doc</a>.</p>
 <h2><a class="header" href="#goals-" id="goals-">Goals 🎯</a></h2>
 <p>Writing web pages in <strong>pure javascript</strong> using wasm bindings, <strong>without</strong> <code>jsx</code> or <code>any other</code> complex syntax, <strong>just javascript</strong>, of course, <strong>not</strong> writing <code>html</code> nor <code>css</code> either.</p>
 <h2><a class="header" href="#roll-up-for-the-magical-mystery-tour-" id="roll-up-for-the-magical-mystery-tour-">Roll up for the Magical Mystery Tour! 🌈</a></h2>
@@ -172,6 +172,34 @@ new Elvis({
 }).calling();
 </code></pre>
 <p><strong>Strawberry Fields</strong> 🧑‍🚀</p>
+<h2><a class="header" href="#21st-century-schizoid-magic-" id="21st-century-schizoid-magic-">21st Century Schizoid Magic 🍩</a></h2>
+<pre><code class="language-text">$ yarn create elvis-app
+✔ What is your project named? … my-awesome-app
+[ info ] Generating elvis files ...
+[ wait ] Installing elvis dependencies ...
+[ done ] Let's Roll up for the Magical Mystery Tour!
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │                                                             │
+   │   Success! Created my-awesome-app at:                       │
+   │                                                             │
+   │     /path/to/my-awesome-app                                 │
+   │                                                             │
+   │   Inside that directory, you can run several commands:      │
+   │                                                             │
+   │     - yarn dev:    Starts the development server.           │
+   │     - yarn docs:   Open The Elvis Book.                     │
+   │     - yarn build:  Builds my-awesome-app for production.    │
+   │     - yarn start:  Runs my-awesome-app production mode.     │
+   │                                                             │
+   │   We suggest that you begin by typing:                      │
+   │                                                             │
+   │     - cd my-awesome-app                                     │
+   │     - yarn dev                                              │
+   │                                                             │
+   │                                                             │
+   └─────────────────────────────────────────────────────────────┘
+</code></pre>
 <h2><a class="header" href="#license" id="license">LICENSE</a></h2>
 <p>Heartbreak Hotel.</p>
 
@@ -204,21 +232,6 @@ new Elvis({
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3001");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload(true); // force reload from server (not from cache)
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

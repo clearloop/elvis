@@ -2,11 +2,11 @@
 
 Is anybody home?
 
-As we know, `Elvis` is a famous rock star, and both a famous rock song named `Calling Elvis` wrote by `Dire Straits` which inspired a unknown rock star to write down these chords.
+As we know, `Elvis` is a famous rock star, but both a famous rock song named `Calling Elvis` wrote by `Dire Straits` which inspired a unknown rock star writing down these chords.
 
 For now, Elvis, the rock star, will rise, once again, **beyond** the internet —— truely your wasm web library, 🦀 + 🕸  => 💖
 
-[The Evlis Book][1] mainly talks about the usage of the npm package `calling-elvis`, and if you want to use `low-level` api rusting the web, plz check out [elvis' rust doc][2].
+[The Evlis Book][1] mainly talks about the usage of [elvis.js][2], and if you want to use `low-level` api rusting the web, plz check out [elvis' rust doc][3].
 
 ## Goals 🎯
 
@@ -35,9 +35,41 @@ new Elvis({
  **Strawberry Fields** 🧑‍🚀
 
 
+## 21st Century Schizoid Magic 🍩
+
+```text
+$ yarn create elvis-app
+✔ What is your project named? … my-awesome-app
+[ info ] Generating elvis files ...
+[ wait ] Installing elvis dependencies ...
+[ done ] Let's Roll up for the Magical Mystery Tour!
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │                                                             │
+   │   Success! Created my-awesome-app at:                       │
+   │                                                             │
+   │     /path/to/my-awesome-app                                 │
+   │                                                             │
+   │   Inside that directory, you can run several commands:      │
+   │                                                             │
+   │     - yarn dev:    Starts the development server.           │
+   │     - yarn docs:   Open The Elvis Book.                     │
+   │     - yarn build:  Builds my-awesome-app for production.    │
+   │     - yarn start:  Runs my-awesome-app production mode.     │
+   │                                                             │
+   │   We suggest that you begin by typing:                      │
+   │                                                             │
+   │     - cd my-awesome-app                                     │
+   │     - yarn dev                                              │
+   │                                                             │
+   │                                                             │
+   └─────────────────────────────────────────────────────────────┘
+```
+
 ## LICENSE
 
 Heartbreak Hotel.
 
 [1]: https://clearloop.github.io/elvis
-[2]: https://docs.rs/elvis
+[2]: https://github.com/clearloop/elvis.js
+[3]: https://docs.rs/elvis
