@@ -7,7 +7,7 @@ pub struct Func(pub Function);
 deref!(Func, Function);
 
 impl FnBox for Func {
-    fn call_box(self: Box<Self>) -> Result<(), Error> {
+    fn call(&mut self) -> Result<(), Error> {
         let r = self.call0(&JsValue::NULL);
         if r.is_err() {
             return Err(Error::FunctionError(

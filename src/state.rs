@@ -9,36 +9,34 @@ pub struct State<W> {
     state: HashMap<String, String>,
     create: Hook,
     update: Hook,
-    render: Hook,
     dispose: Hook,
 }
 
 impl<W> State<W> {
-    pub fn new(widget: W, create: Hook, update: Hook, render: Hook, dispose: Hook) -> State<W> {
+    pub fn new(widget: W, create: Hook, update: Hook, dispose: Hook) -> State<W> {
         State {
             state: HashMap::new(),
             widget,
             create,
             update,
-            render,
             dispose,
         }
     }
 
-    pub fn create(self) -> Result<(), Error> {
-        self.create.call_box()
+    pub fn set_widget(&mut self, w: W) {
+        self.widget = w;
     }
 
-    pub fn update(self) -> Result<(), Error> {
-        self.update.call_box()
+    pub fn create(&mut self) -> Result<(), Error> {
+        self.create.call()
     }
 
-    pub fn render(self) -> Result<(), Error> {
-        self.render.call_box()
+    pub fn update(&mut self) -> Result<(), Error> {
+        self.update.call()
     }
 
-    pub fn dispose(self) -> Result<(), Error> {
-        self.dispose.call_box()
+    pub fn dispose(&mut self) -> Result<(), Error> {
+        self.dispose.call()
     }
 
     pub fn get(&self, k: String) -> String {

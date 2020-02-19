@@ -358,7 +358,7 @@ impl<'s> StyleSheet {
         ))
     }
 
-    pub fn batch(t: &'s mut Tree, hs: &mut HashSet<String>) -> String {
+    pub fn batch(t: &mut Tree, hs: &mut HashSet<String>) -> String {
         let mut ss = StyleSheet("".into());
         if let Some(style) = t.attrs.remove("style") {
             let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
