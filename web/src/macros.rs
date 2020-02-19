@@ -15,7 +15,7 @@ macro_rules! into {
 /// shared `deref` to elvis widgets
 #[macro_export]
 macro_rules! deref {
-    ($name: ident, $target: ident) => {
+    ($name: ident, $target: ty) => {
         impl Deref for $name {
             type Target = $target;
 

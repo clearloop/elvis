@@ -17,11 +17,11 @@ impl Tree {
         if let Some(pre) = &t.clone().borrow().pre {
             let u = pre.upgrade().expect("drain child failed");
             u.borrow_mut().remove(t);
-
-            u.borrow().update();
+            u.borrow_mut().update();
         }
     }
 
+    /// locate tree
     pub fn locate(&self, mut path: Vec<usize>) -> Vec<usize> {
         if let Some(pre) = &self.pre {
             let u = pre.upgrade().expect("locate widget failed");
@@ -64,7 +64,7 @@ impl Tree {
             .children
             .push(c);
 
-        r.borrow().update();
+        r.borrow_mut().update();
     }
 
     /// delete spefic child using rc
@@ -81,7 +81,8 @@ impl Tree {
         t.update();
     }
 
-    pub fn update(&self) {}
+    /// update tree
+    pub fn update(&mut self) {}
 }
 
 impl PartialEq for Tree {
