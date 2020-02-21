@@ -1,6 +1,6 @@
 use crate::Error;
 
 /// store closures
-pub trait FnBox {
-    fn call(&mut self) -> Result<(), Error>;
+pub trait FnBox<P> {
+    fn call(&mut self, props: &P) -> Result<(), Error>;
 }

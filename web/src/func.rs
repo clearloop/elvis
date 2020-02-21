@@ -1,14 +1,13 @@
 use elvis::{Error, FnBox};
-use js_sys::Function;
+use js_sys::{Function, Number};
 use std::ops::{Deref, DerefMut};
-use wasm_bindgen::prelude::JsValue;
-
+use wasm_bindgen::JsValue;
 pub struct Func(pub Function);
 deref!(Func, Function);
 
-impl FnBox for Func {
-    fn call(&mut self) -> Result<(), Error> {
-        let r = self.call0(&JsValue::NULL);
+impl FnBox<Number> for Func {
+    fn call(&mut self, p: &Number) -> Result<(), Error> {
+        let r = self.call1(&JsValue::NULL, &p);
         if r.is_err() {
             return Err(Error::FunctionError(
                 "call javascript function failed".to_string(),

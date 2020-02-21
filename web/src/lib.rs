@@ -6,7 +6,6 @@
 #![feature(extern_types)]
 #[macro_use]
 mod macros;
-mod app;
 mod color;
 mod enums;
 mod func;
@@ -17,7 +16,6 @@ mod types;
 mod widgets;
 
 pub use crate::{
-    app::Elvis,
     color::Colors,
     enums::{
         Alignments, FlexBasis, FlexDirection, GridAuto, GridFlow, GridTemplate,

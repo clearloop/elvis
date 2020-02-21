@@ -1,42 +1,26 @@
 use crate::{Error, FnBox};
 use std::collections::HashMap;
 
-type Hook = Box<dyn FnBox>;
+type Hook<P> = Box<dyn FnBox<P>>;
 
 /// state for tree
-pub struct State<W> {
+pub struct State<W, P> {
     pub widget: W,
+    pub trigger: Hook<P>,
     state: HashMap<String, String>,
-    create: Hook,
-    update: Hook,
-    dispose: Hook,
 }
 
-impl<W> State<W> {
-    pub fn new(widget: W, create: Hook, update: Hook, dispose: Hook) -> State<W> {
+impl<W, P> State<W, P> {
+    pub fn new(widget: W, trigger: Hook<P>) -> State<W, P> {
         State {
             state: HashMap::new(),
             widget,
-            create,
-            update,
-            dispose,
+            trigger,
         }
     }
 
-    pub fn set_widget(&mut self, w: W) {
-        self.widget = w;
-    }
-
-    pub fn create(&mut self) -> Result<(), Error> {
-        self.create.call()
-    }
-
-    pub fn update(&mut self) -> Result<(), Error> {
-        self.update.call()
-    }
-
-    pub fn dispose(&mut self) -> Result<(), Error> {
-        self.dispose.call()
+    pub fn process(&mut self, p: &P) -> Result<(), Error> {
+        self.trigger.call(p)
     }
 
     pub fn get(&self, k: String) -> String {
