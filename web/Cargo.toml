@@ -24,6 +24,8 @@ features = ["web"]
 [dependencies.web-sys]
 version = "0.3.35"
 features = [
+  "CssStyleRule",
+  "CssStyleSheet",
   "CssStyleDeclaration",
   "Document",
   "Element",

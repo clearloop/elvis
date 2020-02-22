@@ -1,6 +1,17 @@
 use std::cell::RefCell;
-use std::collections::HashMap;
 use std::rc::{Rc, Weak};
+use std::{
+    collections::{hash_map::DefaultHasher, HashMap},
+    hash::Hasher,
+};
+
+fn hash(tag: &str, s: &[u8]) -> String {
+    let mut hasher = DefaultHasher::new();
+    hasher.write(s);
+
+    let res = format!("{:x}", hasher.finish());
+    format!("{}-{}", &tag, &res[(res.len() - 6)..])
+}
 
 /// Virtual UI Tree
 #[derive(Clone, Debug, Default)]
@@ -18,6 +29,17 @@ impl Tree {
             let u = pre.upgrade().expect("drain child failed");
             u.borrow_mut().remove(t);
             u.borrow_mut().update();
+        }
+    }
+
+    pub fn idx(&mut self, path: &mut Vec<u8>) {
+        self.attrs.insert("id".into(), hash(&self.tag, &path));
+        path.push(0);
+        for t in self.children.iter() {
+            t.borrow_mut().idx(path);
+            if let Some(last) = path.last_mut() {
+                *last += 1;
+            }
         }
     }
 
