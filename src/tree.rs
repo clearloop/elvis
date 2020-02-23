@@ -33,7 +33,10 @@ impl Tree {
     }
 
     pub fn idx(&mut self, path: &mut Vec<u8>) {
-        self.attrs.insert("id".into(), hash(&self.tag, &path));
+        self.attrs
+            .entry("id".into())
+            .or_insert(hash(&self.tag, &path));
+
         path.push(0);
         for t in self.children.iter() {
             t.borrow_mut().idx(path);

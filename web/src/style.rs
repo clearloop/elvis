@@ -344,30 +344,81 @@ pub struct StyleSheet {
     pub table: HashMap<String, String>,
 }
 
-impl<'s> StyleSheet {
-    pub fn new() -> StyleSheet {
-        let mut table = HashMap::<String, String>::new();
-        table.insert(
-            "html, body".to_string(),
-            vec![
-                "  margin: 0;",
-                "  padding: 0;",
-                "  height: 100%;",
-                "  width: 100%;",
-                "  overflow: hidden;",
-            ]
-            .join("\n"),
-        );
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+}
 
-        StyleSheet { table }
+impl<'s> StyleSheet {
+    pub fn shared() -> Result<(), JsValue> {
+        let window = web_sys::window().unwrap();
+        let document = window.document().unwrap();
+        if document.query_selector("#elvis-style-shared")?.is_none() {
+            let sheet = document.create_element("style").unwrap();
+            sheet.set_id("elvis-style-shared");
+
+            sheet.set_inner_html(
+                &vec![
+                    "html, body {",
+                    "  margin: 0;",
+                    "  padding: 0;",
+                    "  height: 100%;",
+                    "  width: 100%;",
+                    "  overflow: hidden;",
+                    "}",
+                ]
+                .join("\n"),
+            );
+
+            document
+                .query_selector("html")?
+                .unwrap()
+                .append_child(&sheet)?;
+        }
+
+        Ok(())
     }
 
-    pub fn ser(&self) -> String {
+    pub fn ser(&self) -> Result<String, JsValue> {
         let mut style = String::new();
+        let mut should_append_class_sheet = false;
+        let window = web_sys::window().unwrap();
+        let document = window.document().unwrap();
+        let class_style_sheet = document
+            .query_selector("#elvis-style-class")?
+            .unwrap_or_else(|| {
+                should_append_class_sheet = true;
+                let sheet = document.create_element("style").unwrap();
+                sheet.set_id("elvis-style-class");
+                sheet
+            });
+
+        let class_style_sheet_inner = class_style_sheet.inner_html();
+        let mut class = class_style_sheet_inner.clone();
         self.table.iter().for_each(|(k, v)| {
-            style.push_str(&format!("\n\n{}{{\n{}\n}}", k, v));
+            let css_text = format!("\n\n{} {{\n{}\n}}", k, v);
+            if k.starts_with(".") {
+                if !class.contains(&k[..]) {
+                    class.push_str(&css_text);
+                }
+            } else {
+                style.push_str(&css_text);
+            }
         });
-        style
+
+        if class_style_sheet_inner.ne(&class) {
+            class_style_sheet.set_inner_html(&class.trim());
+        }
+
+        if should_append_class_sheet {
+            document
+                .query_selector("html")?
+                .unwrap()
+                .append_child(&class_style_sheet)?;
+        }
+
+        Ok(style)
     }
 
     pub fn batch(&mut self, t: &mut Tree) {

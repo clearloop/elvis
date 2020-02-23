@@ -21,27 +21,41 @@ impl Widget {
         t.idx(&mut vec![]);
         Widget {
             tree: t,
-            style: Rc::new(RefCell::new(StyleSheet::new())),
+            style: Rc::new(RefCell::new(StyleSheet::default())),
         }
+    }
+
+    pub fn style(&mut self) -> Result<String, JsValue> {
+        self.style.borrow_mut().batch(&mut self.tree);
+        Ok(self.style.borrow().ser()?)
     }
 }
 
 #[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
-}
-
-#[wasm_bindgen]
 impl Widget {
+    pub fn id(&self) -> String {
+        self.tree
+            .attrs
+            .get("id")
+            .unwrap_or(&"".to_string())
+            .to_string()
+    }
+
+    #[wasm_bindgen(js_name = "setIdx")]
+    pub fn set_idx(&mut self, id: String) {
+        self.tree.attrs.insert("id".to_string(), id);
+    }
+
     pub fn calling(&mut self) -> Result<(), JsValue> {
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
         let html = document.query_selector("html")?.unwrap();
 
         // set style
+        StyleSheet::shared()?;
         let style = document.create_element("style")?;
-        style.set_inner_html(self.style().trim());
+        style.set_inner_html(self.style()?.trim());
+        style.set_id(&format!("elvis-style-{}", self.id()));
         html.append_child(&style)?;
 
         // set body
@@ -55,21 +69,16 @@ impl Widget {
         Widget::default()
     }
 
-    pub fn id(&self) -> String {
-        self.tree
-            .attrs
-            .get("id")
-            .unwrap_or(&"".to_string())
-            .to_string()
-    }
-
     pub fn patch(&mut self) -> Result<bool, JsValue> {
         let mut res = false;
         let id = self.id();
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        let style = self.style();
-        let cur_style = document.create_element("style")?.inner_html();
+        let style = self.style()?;
+        let cur_style = document
+            .query_selector(&format!("#elvis-style-{}", id))?
+            .unwrap()
+            .inner_html();
         let html = self.tree.ser();
         if let Some(element) = document.query_selector(&format!("#{}", id))? {
             if element.outer_html().ne(&html) || style.ne(&cur_style) {
@@ -78,11 +87,6 @@ impl Widget {
             }
         }
         Ok(res)
-    }
-
-    pub fn style(&mut self) -> String {
-        self.style.borrow_mut().batch(&mut self.tree);
-        self.style.borrow().ser()
     }
 }
 
@@ -117,6 +121,10 @@ pub fn img(src: Option<String>, child: Option<Widget>) -> Widget {
 const IIMAGE: &'static str = r#"
 export interface IImage {
   src: string;
-  child: Widget;
+  child: IElvisWidget;
+}
+
+export interface IElvisWidget {
+  calling: () => void;
 }
 "#;
