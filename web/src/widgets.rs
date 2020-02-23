@@ -1,17 +1,15 @@
 use crate::{StyleSheet, TextStyle};
 use elvis::{Image, Serde, Text, Tree};
-use std::convert::Into;
-use std::{
-    collections::HashSet,
-    ops::{Deref, DerefMut},
-};
+use std::{cell::RefCell, convert::Into, rc::Rc};
 use wasm_bindgen::prelude::*;
 
 /// basic widget without lifecycle nor state
 #[wasm_bindgen]
 #[derive(Clone, Debug, Default)]
-pub struct Widget(Tree);
-deref!(Widget, Tree);
+pub struct Widget {
+    tree: Tree,
+    style: Rc<RefCell<StyleSheet>>,
+}
 
 impl Widget {
     /// new widget from tree
@@ -21,7 +19,10 @@ impl Widget {
     {
         let mut t = tree.into();
         t.idx(&mut vec![]);
-        Widget(t)
+        Widget {
+            tree: t,
+            style: Rc::new(RefCell::new(StyleSheet::new())),
+        }
     }
 }
 
@@ -40,14 +41,12 @@ impl Widget {
 
         // set style
         let style = document.create_element("style")?;
-        let mut stylesheet = StyleSheet::new();
-        stylesheet.0 += &self.style();
-        style.set_inner_html(&stylesheet.0);
+        style.set_inner_html(self.style().trim());
         html.append_child(&style)?;
 
         // set body
         let body = document.query_selector("body")?.unwrap();
-        body.set_inner_html(&self.ser());
+        body.set_inner_html(&self.tree.ser());
         Ok(())
     }
 
@@ -57,31 +56,39 @@ impl Widget {
     }
 
     pub fn id(&self) -> String {
-        self.attrs.get("id").unwrap_or(&"".to_string()).to_string()
+        self.tree
+            .attrs
+            .get("id")
+            .unwrap_or(&"".to_string())
+            .to_string()
     }
 
-    pub fn patch(&mut self) -> Result<(), JsValue> {
+    pub fn patch(&mut self) -> Result<bool, JsValue> {
+        let mut res = false;
         let id = self.id();
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
+        let style = self.style();
+        let cur_style = document.create_element("style")?.inner_html();
+        let html = self.tree.ser();
         if let Some(element) = document.query_selector(&format!("#{}", id))? {
-            if element.outer_html() != self.ser() {
-                element.set_outer_html(&self.ser());
+            if element.outer_html().ne(&html) || style.ne(&cur_style) {
+                res = true;
+                element.set_outer_html(&html);
             }
         }
-        Ok(())
+        Ok(res)
     }
 
     pub fn style(&mut self) -> String {
-        StyleSheet::batch(self, &mut HashSet::new())
-            .trim()
-            .to_string()
+        self.style.borrow_mut().batch(&mut self.tree);
+        self.style.borrow().ser()
     }
 }
 
 impl std::convert::Into<Tree> for Widget {
     fn into(self) -> Tree {
-        self.0
+        self.tree
     }
 }
 

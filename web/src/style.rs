@@ -8,7 +8,7 @@ use elvis::{
     MultiColumnStyle as ElvisMultiColumnStyle, SizedBoxStyle as ElvisSizedBoxStyle,
     TextStyle as ElvisTextStyle, Tree, Unit,
 };
-use std::collections::HashSet;
+use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
 
 /// `TextStyle` Interface
@@ -339,96 +339,92 @@ into! {
 }
 
 /// style sheet
-pub struct StyleSheet(pub String);
+#[derive(Clone, Default, Debug)]
+pub struct StyleSheet {
+    pub table: HashMap<String, String>,
+}
 
 impl<'s> StyleSheet {
     pub fn new() -> StyleSheet {
-        StyleSheet(format!(
-            "{}",
-            &vec![
-                "html, body {\n",
-                "  margin: 0;\n",
-                "  padding: 0;\n",
-                "  height: 100%;\n",
-                "  width: 100%;\n",
-                "  overflow: hidden;\n",
-                "}\n\n",
+        let mut table = HashMap::<String, String>::new();
+        table.insert(
+            "html, body".to_string(),
+            vec![
+                "  margin: 0;",
+                "  padding: 0;",
+                "  height: 100%;",
+                "  width: 100%;",
+                "  overflow: hidden;",
             ]
-            .join("")
-        ))
+            .join("\n"),
+        );
+
+        StyleSheet { table }
     }
 
-    pub fn batch(t: &mut Tree, hs: &mut HashSet<String>) -> String {
-        let mut ss = StyleSheet("".into());
+    pub fn ser(&self) -> String {
+        let mut style = String::new();
+        self.table.iter().for_each(|(k, v)| {
+            style.push_str(&format!("\n\n{}{{\n{}\n}}", k, v));
+        });
+        style
+    }
+
+    pub fn batch(&mut self, t: &mut Tree) {
         if let Some(style) = t.attrs.remove("style") {
             let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
-            if !hs.contains(&id) {
-                ss.id(&id, &style);
-                hs.insert(id.into());
-            }
+            self.id(&id, &style);
         }
 
         let class = t.attrs.get("class").unwrap_or(&"".to_string()).to_string();
         class.split(|x: char| x.is_whitespace()).for_each(|c| {
             let ct = c.trim();
-            if !ct.is_empty() {
-                if !hs.contains(ct) {
-                    ss.class(ct);
-                    hs.insert(ct.into());
-                }
-            }
+            self.class(ct);
         });
 
         t.children
             .iter()
-            .for_each(|it| ss.0.push_str(&StyleSheet::batch(&mut it.borrow_mut(), hs)));
-        ss.0
+            .for_each(|it| self.batch(&mut it.borrow_mut()));
     }
 
     pub fn class(&mut self, name: &'s str) {
-        match name {
-            "elvis-center" => self.0.push_str(
-                &vec![
-                    "\n\n.elvis-center {",
-                    "  align-items: center;",
-                    "  height: 100%;",
-                    "  justify-content: center;",
-                    "  width: 100%;",
-                    "}",
-                ]
-                .join("\n"),
-            ),
-            "elvis-col" => self
-                .0
-                .push_str(&vec!["\n\n.elvis-col {", "  flex-direction: column", "}"].join("\n")),
-            "elvis-flex" => self.0.push_str(
-                &vec![
-                    "\n\n.elvis-flex {",
-                    "  display: flex;",
-                    "  height: 100%;",
-                    "  flex: 1;",
-                    "  width: 100%;",
-                    "}",
-                ]
-                .join("\n"),
-            ),
-            "elvis-image" => self.0.push_str(
-                &vec![
-                    "\n\n.elvis-image {",
-                    "  background-position: center;",
-                    "  background-repeat: no-repeat;",
-                    "  background-size: cover;",
-                    "  height: 100%;",
-                    "  width: 100%;",
-                    "}",
-                ]
-                .join("\n"),
-            ),
-            "elvis-row" => self
-                .0
-                .push_str(&vec!["\n\n.elvis-row {", "  flex-direction: row", "}"].join("\n")),
-            _ => {}
+        if self.table.contains_key(name) && self.table.get(name) != Some(&"".to_string()) {
+            return;
         }
+
+        let style = match name {
+            "elvis-center" => vec![
+                "  align-items: center;",
+                "  height: 100%;",
+                "  justify-content: center;",
+                "  width: 100%;",
+            ]
+            .join("\n"),
+            "elvis-col" => vec!["  flex-direction: column;"].join("\n"),
+            "elvis-flex" => vec![
+                "  display: flex;",
+                "  height: 100%;",
+                "  flex: 1;",
+                "  width: 100%;",
+            ]
+            .join("\n"),
+            "elvis-image" => vec![
+                "  background-position: center;",
+                "  background-repeat: no-repeat;",
+                "  background-size: cover;",
+                "  height: 100%;",
+                "  width: 100%;",
+            ]
+            .join("\n"),
+            "elvis-row" => vec!["  flex-direction: row;"].join("\n"),
+            _ => "".to_string(),
+        };
+
+        if style == "".to_string() {
+            return;
+        }
+
+        self.table.insert(format!(".{}", name), style);
     }
 
     pub fn id(&mut self, ti: &'s str, s: &'s str) {
@@ -441,10 +437,9 @@ impl<'s> StyleSheet {
             }
         });
 
-        self.0.push_str(&format!(
-            "{}{}",
-            &format!("\n\n#{} ", ti),
-            vec!["{\n", &style[..(style.len() - 1)], "\n}"].join("")
-        ));
+        let v = self.table.entry(format!("#{}", ti)).or_default();
+        if v != &style {
+            *v = style[..(style.len() - 1)].to_string();
+        }
     }
 }
