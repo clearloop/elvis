@@ -380,45 +380,78 @@ impl<'s> StyleSheet {
         Ok(())
     }
 
-    pub fn ser(&self) -> Result<String, JsValue> {
-        let mut style = String::new();
+    pub fn ser(&self, id: String) -> Result<bool, JsValue> {
         let mut should_append_class_sheet = false;
+        let mut should_append_widget_sheet = false;
+        let mut should_reset_class_sheet = false;
+        let mut should_reset_widget_sheet = false;
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        let class_style_sheet = document
-            .query_selector("#elvis-style-class")?
+        let class_ss = document
+            .query_selector("#elvis-style-classes")?
             .unwrap_or_else(|| {
                 should_append_class_sheet = true;
                 let sheet = document.create_element("style").unwrap();
-                sheet.set_id("elvis-style-class");
+                sheet.set_id("elvis-style-classes");
                 sheet
             });
 
-        let class_style_sheet_inner = class_style_sheet.inner_html();
-        let mut class = class_style_sheet_inner.clone();
+        let widget_ss = document
+            .query_selector(&format!("#elvis-style-{}", &id))?
+            .unwrap_or_else(|| {
+                should_append_widget_sheet = true;
+                let sheet = document.create_element("style").unwrap();
+                sheet.set_id(&format!("elvis-style-{}", &id));
+                sheet
+            });
+
+        let class_ss_inner = class_ss.inner_html();
+        let widget_ss_inner = widget_ss.inner_html();
+
+        let mut class = class_ss_inner.clone();
+        let mut widget = widget_ss_inner.clone();
         self.table.iter().for_each(|(k, v)| {
             let css_text = format!("\n\n{} {{\n{}\n}}", k, v);
             if k.starts_with(".") {
                 if !class.contains(&k[..]) {
                     class.push_str(&css_text);
+                    if !should_reset_class_sheet {
+                        should_reset_class_sheet = true;
+                    }
                 }
-            } else {
-                style.push_str(&css_text);
+            } else if k.starts_with("#") {
+                if !widget.contains(&css_text.trim()) {
+                    widget.push_str(&css_text);
+                    if !should_reset_widget_sheet {
+                        should_reset_widget_sheet = true;
+                    }
+                }
             }
         });
 
-        if class_style_sheet_inner.ne(&class) {
-            class_style_sheet.set_inner_html(&class.trim());
+        if should_reset_class_sheet {
+            class_ss.set_inner_html(class.trim());
+        }
+
+        if widget_ss_inner.ne(&widget) {
+            widget_ss.set_inner_html(widget.trim());
         }
 
         if should_append_class_sheet {
             document
                 .query_selector("html")?
                 .unwrap()
-                .append_child(&class_style_sheet)?;
+                .append_child(&class_ss)?;
         }
 
-        Ok(style)
+        if should_append_widget_sheet {
+            document
+                .query_selector("html")?
+                .unwrap()
+                .append_child(&widget_ss)?;
+        }
+
+        Ok(should_reset_class_sheet && should_reset_widget_sheet)
     }
 
     pub fn batch(&mut self, t: &mut Tree) {

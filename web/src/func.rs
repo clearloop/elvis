@@ -1,7 +1,7 @@
 use elvis::{Error, FnBox};
 use js_sys::{Function, Number};
 use std::ops::{Deref, DerefMut};
-use wasm_bindgen::JsValue;
+use wasm_bindgen::prelude::*;
 pub struct Func(pub Function);
 deref!(Func, Function);
 
