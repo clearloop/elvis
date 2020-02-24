@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.</strong> DOM*</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events*</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures*</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html" class="active"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="benchmark.html"><strong aria-hidden="true">1.</strong> Benchmark</a></li><li class="expanded "><a href="lib.html"><strong aria-hidden="true">2.</strong> Library</a></li><li><ol class="section"><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">2.1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">2.1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">2.1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">2.3.</strong> Events*</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">2.4.</strong> Gestures*</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">2.5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">2.5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html" class="active"><strong aria-hidden="true">2.5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">2.5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">2.6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">2.7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">2.7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">2.7.2.</strong> Unit</a></li></ol></li></ol></li><li class="expanded "><a href="tutorial.html"><strong aria-hidden="true">3.</strong> Tutorial</a></li><li><ol class="section"><li class="expanded "><a href="tutorial/widgets.html"><strong aria-hidden="true">3.1.</strong> Widgets</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -307,21 +307,6 @@ Elvis.call(myGrid);
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3001");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload(true); // force reload from server (not from cache)
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

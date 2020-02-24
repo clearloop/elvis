@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>DOM* - The Elvis Book</title>
+        <title>DOM - The Elvis Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html" class="active"><strong aria-hidden="true">2.</strong> DOM*</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">3.</strong> Events*</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">4.</strong> Gestures*</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">7.2.</strong> Unit</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="benchmark.html"><strong aria-hidden="true">1.</strong> Benchmark</a></li><li class="expanded "><a href="lib.html"><strong aria-hidden="true">2.</strong> Library</a></li><li><ol class="section"><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">2.1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">2.1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">2.1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html" class="active"><strong aria-hidden="true">2.2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">2.3.</strong> Events*</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">2.4.</strong> Gestures*</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">2.5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">2.5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">2.5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">2.5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">2.6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">2.7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">2.7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">2.7.2.</strong> Unit</a></li></ol></li></ol></li><li class="expanded "><a href="tutorial.html"><strong aria-hidden="true">3.</strong> Tutorial</a></li><li><ol class="section"><li class="expanded "><a href="tutorial/widgets.html"><strong aria-hidden="true">3.1.</strong> Widgets</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,13 +149,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#dom" id="dom">DOM</a></h1>
-<blockquote>
-<p><strong>Note</strong>: Elvis just render static html pages now, DOM is in progress.</p>
-</blockquote>
 <p>Like the other UI libraries, webassemblly Elvis arms a Virtual-DOM, too.</p>
-<pre><code class="language-js">import { Center, Elvis, GestureDetector, State, Text } from &quot;calling-elvis&quot;;
+<pre><code class="language-js">import { Center, Elvis, GestureDetector, StatefulWidget, Text } from &quot;calling-elvis&quot;;
 
-class MyState extends State {
+class MyState extends StatefulWidget {
   state = {
     count: 0,
   }
@@ -179,12 +176,12 @@ class MyState extends State {
     );
   }
   
-  drop() {
+  dispose() {
     console.log(&quot;Don't be crue, if you want to drop me.&quot;);
   }
 }
 </code></pre>
-<p>I won't tell you that I'm not only a <code>React</code> fan but also a <code>Flutter</code> fan, and you'll never know I'm a <code>Emacs</code> fan.</p>
+<p>I won't tell you that <code>Elvis</code> is not only a <code>React</code> fan but also a <code>Flutter</code> fan, and you'll never know he is a <code>Emacs</code> fan.</p>
 <h2><a class="header" href="#lifecycle" id="lifecycle">LifeCycle</a></h2>
 <p>Already knew you care about lifecycles, Elvis will never force you to recite 11 or more methods, Elvis just got 3, and it is enough ; )</p>
 <p>Furthermore, to be serious, we don't recommend you to write big projects such as <code>facebook</code>, <code>reddit</code>, or <code>twitter</code> calling Elvis, <code>Elvis</code> is under <strong>Proof-of-Concept</strong> for now, and...you know, we <strong>strongly recommend</strong> you to use Elvis building your persenol website, make the web better, more interesting, awesome as it has never been 🌈</p>
@@ -192,19 +189,6 @@ class MyState extends State {
 <p>Life Story, Love and Glory.</p>
 <h3><a class="header" href="#diff" id="diff">Diff</a></h3>
 <p>Elvis' diff algorithm is quite simple <strong>flying with wasm</strong>, we compare the new node and the old one using dps, and then patch the updates to the old one.</p>
-<p>A TreeNode in Elvis is like this: </p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>#[derive(Clone, Eq, PartEq)]
-pub struct TreeNode {
-  css: CSS,
-  tag: String,
-  attrs: Vec&lt;Attribute&gt;,
-  children: Vec&lt;Rc&lt;AsRef&lt;TreeNode&gt;&gt;&gt;,
-}
-<span class="boring">}
-</span></code></pre></pre>
 <h3><a class="header" href="#patch" id="patch">Patch</a></h3>
 <p>Elvis prefers to cure the naughty node's father node, if there are complex changes inside it, for Example: </p>
 <pre><code class="language-html">&lt;father :=&quot;I'm the naughty nodes' father&quot;&gt;
@@ -259,21 +243,6 @@ pub struct TreeNode {
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3001");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload(true); // force reload from server (not from cache)
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         

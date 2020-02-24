@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Color - The Elvis Book</title>
+        <title>Benchmark - The Elvis Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="benchmark.html"><strong aria-hidden="true">1.</strong> Benchmark</a></li><li class="expanded "><a href="lib.html"><strong aria-hidden="true">2.</strong> Library</a></li><li><ol class="section"><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">2.1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">2.1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">2.1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">2.3.</strong> Events*</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">2.4.</strong> Gestures*</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">2.5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">2.5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">2.5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">2.5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">2.6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">2.7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html" class="active"><strong aria-hidden="true">2.7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">2.7.2.</strong> Unit</a></li></ol></li></ol></li><li class="expanded "><a href="tutorial.html"><strong aria-hidden="true">3.</strong> Tutorial</a></li><li><ol class="section"><li class="expanded "><a href="tutorial/widgets.html"><strong aria-hidden="true">3.1.</strong> Widgets</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="guide.html">Calling Elvis</a></li><li class="expanded "><a href="benchmark.html" class="active"><strong aria-hidden="true">1.</strong> Benchmark</a></li><li class="expanded "><a href="lib.html"><strong aria-hidden="true">2.</strong> Library</a></li><li><ol class="section"><li class="expanded "><a href="widgets.html"><strong aria-hidden="true">2.1.</strong> Widgets</a></li><li><ol class="section"><li class="expanded "><a href="image.html"><strong aria-hidden="true">2.1.1.</strong> Image</a></li><li class="expanded "><a href="text.html"><strong aria-hidden="true">2.1.2.</strong> Text</a></li></ol></li><li class="expanded "><a href="dom.html"><strong aria-hidden="true">2.2.</strong> DOM</a></li><li class="expanded "><a href="events.html"><strong aria-hidden="true">2.3.</strong> Events*</a></li><li class="expanded "><a href="gestures.html"><strong aria-hidden="true">2.4.</strong> Gestures*</a></li><li class="expanded "><a href="layout.html"><strong aria-hidden="true">2.5.</strong> Layout</a></li><li><ol class="section"><li class="expanded "><a href="flex.html"><strong aria-hidden="true">2.5.1.</strong> Flex</a></li><li class="expanded "><a href="grid.html"><strong aria-hidden="true">2.5.2.</strong> Grid</a></li><li class="expanded "><a href="multi_column.html"><strong aria-hidden="true">2.5.3.</strong> MultiColumn</a></li></ol></li><li class="expanded "><a href="router.html"><strong aria-hidden="true">2.6.</strong> Router</a></li><li class="expanded "><a href="values.html"><strong aria-hidden="true">2.7.</strong> Values</a></li><li><ol class="section"><li class="expanded "><a href="color.html"><strong aria-hidden="true">2.7.1.</strong> Color</a></li><li class="expanded "><a href="unit.html"><strong aria-hidden="true">2.7.2.</strong> Unit</a></li></ol></li></ol></li><li class="expanded "><a href="tutorial.html"><strong aria-hidden="true">3.</strong> Tutorial</a></li><li><ol class="section"><li class="expanded "><a href="tutorial/widgets.html"><strong aria-hidden="true">3.1.</strong> Widgets</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,71 +148,77 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#color" id="color">Color</a></h1>
-<p>Follows MDN doc <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">CSS Color Value</a></p>
-<pre><pre class="playpen"><code class="language-rust">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>pub enum Colors {
-  RGBA(i32, i32, i32, f64),
-  Hex(String),
-  HSL(Unit, i32, i32),
-  Plain(String),
-  Amber,
-  AmberAccent,
-  Black,
-  Blue,
-  BlueAccent,
-  BlueGrey,
-  Brown,
-  Cyan,
-  CyanAccent,
-  DeepOrange,
-  DeepOrangeAccent,
-  DeepPurple,
-  DeepPurpleAccent,
-  Green,
-  GreenAccent,
-  Grey,
-  Indigo,
-  IndigoAccent,
-  LightBlue,
-  LightBlueAccent,
-  LightGreen,
-  LightGreenAccent,
-  Lime,
-  LimeAccent,
-  Orange,
-  OrangeAccent,
-  Pink,
-  PinkAccent,
-  Purple,
-  PurpleAccent,
-  Red,
-  RedAccent,
-  Teal,
-  TealAccent,
-  Transparent,
-  White,
-  Yellow,
-  YellowAccent,
+                        <h1><a class="header" href="#benchmark" id="benchmark">Benchmark</a></h1>
+<p>A counter App is the target where elvis tests runs.</p>
+<pre><code class="language-js">/* PATH='counter/pages/index.js' */
+import { Center, Text, StatefulWidget } from &quot;calling-elvis&quot;;
+
+class Counter extends StatefulWidget {
+  state = {
+    hello: &quot;Is anybody home?&quot;
+  }
+
+  create() {
+    let start = new Date().getTime();
+    for (let i = 0; i &lt; 100000000; i++) {
+      this.state.hello = i.toString();
+    }
+    let end = new Date().getTime();
+    console.log((end - start) + &quot;ms&quot;);
+  }
+
+  render() {
+    return Center(
+      Text(this.state.hello, {
+        bold: true,
+        italic: true,
+        size: 6,
+      })
+    );
+  }
+
+  update() {
+    console.log(&quot;update...&quot;);
+  }
+
+  dispose() {
+    console.log(&quot;dispose...&quot;);
+  }
 }
-<span class="boring">}
-</span></code></pre></pre>
-<p>So many colors...well, the <code>Colors</code> above is Elvis' color system.</p>
+
+export default Counter;
+</code></pre>
+<pre><code class="language-sh"># PATH='counter/'
+yarn dev
+</code></pre>
+<table><thead><tr><th>Model</th><th>Processor</th><th>Memory</th></tr></thead><tbody>
+<tr><td>mbp.Catalina.17.13-inch</td><td>2.3 GHz Dual-Core Intel Core i5</td><td>16 GB 2133 MHz LPDDR3</td></tr>
+</tbody></table>
+<h2><a class="header" href="#dom-update" id="dom-update">DOM Update</a></h2>
+<table><thead><tr><th>library</th><th>10,000</th><th>100,000</th><th>1,000,000</th><th>10,000,000</th><th>100,000,000</th></tr></thead><tbody>
+<tr><td>elvis</td><td>~1ms</td><td>~10ms</td><td>~100ms</td><td>~900ms</td><td>~8s</td></tr>
+<tr><td>react</td><td>~35ms</td><td>~125ms</td><td>~830ms</td><td>~8000ms</td><td>broken</td></tr>
+<tr><td>vue</td><td>~7ms</td><td>~40ms</td><td>~280ms</td><td>~3000ms</td><td>~26s</td></tr>
+</tbody></table>
+<h2><a class="header" href="#bundle-size" id="bundle-size">Bundle Size</a></h2>
+<table><thead><tr><th>library</th><th>size</th></tr></thead><tbody>
+<tr><td>elvis</td><td>432kb</td></tr>
+<tr><td>react</td><td>484kb</td></tr>
+<tr><td>vue</td><td>592kb</td></tr>
+</tbody></table>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="values.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="unit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="lib.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -224,13 +230,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="values.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="unit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="lib.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

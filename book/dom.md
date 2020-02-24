@@ -1,12 +1,11 @@
 # DOM
-> **Note**: Elvis just render static html pages now, DOM is in progress.
 
 Like the other UI libraries, webassemblly Elvis arms a Virtual-DOM, too.
 
 ```js
-import { Center, Elvis, GestureDetector, State, Text } from "calling-elvis";
+import { Center, Elvis, GestureDetector, StatefulWidget, Text } from "calling-elvis";
 
-class MyState extends State {
+class MyState extends StatefulWidget {
   state = {
     count: 0,
   }
@@ -30,13 +29,13 @@ class MyState extends State {
     );
   }
   
-  drop() {
+  dispose() {
     console.log("Don't be crue, if you want to drop me.");
   }
 }
 ```
 
-I won't tell you that I'm not only a `React` fan but also a `Flutter` fan, and you'll never know I'm a `Emacs` fan.
+I won't tell you that `Elvis` is not only a `React` fan but also a `Flutter` fan, and you'll never know he is a `Emacs` fan.
 
 ## LifeCycle
 
@@ -52,17 +51,6 @@ Life Story, Love and Glory.
 
 Elvis' diff algorithm is quite simple **flying with wasm**, we compare the new node and the old one using dps, and then patch the updates to the old one.
 
-A TreeNode in Elvis is like this: 
-
-```rust
-#[derive(Clone, Eq, PartEq)]
-pub struct TreeNode {
-  css: CSS,
-  tag: String,
-  attrs: Vec<Attribute>,
-  children: Vec<Rc<AsRef<TreeNode>>>,
-}
-```
 
 ### Patch
 
