@@ -1,0 +1,23 @@
+name: leetcode-cli
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest]
+    steps:
+      - name: Checkout the source code
+        uses: actions/checkout@master
+        with:
+          rust-version: nightly
+      - name: Environment
+        run: |
+          rustup update
+          rustup toolchain install nightly
+      - name: Build
+        run: cargo +nightly build --verbose
+      - name: Run tests
+        run: cargo +nightly test --verbose

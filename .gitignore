@@ -1,5 +1,6 @@
 **/*lock
 **/*node_modules
 **/*dist
-.target
+target
 pkg
+.DS_Store

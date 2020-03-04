@@ -1,5 +1,12 @@
 # Calling Elvis 🦀 🕸  🎸 📡 🚀 🪐 🛰
 
+![Rust](https://github.com/clearloop/leetcode-cli/workflows/Rust/badge.svg)
+[![crate](https://img.shields.io/crates/v/elvis.svg)](https://crates.io/crates/elvis)
+[![doc](https://img.shields.io/badge/current-docs-brightgreen.svg)](https://docs.rs/elvis/)
+[![dependency status](https://deps.rs/repo/github/clearloop/elvis/status.svg)](https://deps.rs/repo/github/clearloop/elvis)
+[![downloads](https://img.shields.io/crates/d/leetcode-cli.svg)](https://crates.io/crates/elvis)
+[![LICENSE](https://img.shields.io/crates/l/leetcode-cli.svg)](https://choosealicense.com/licenses/mit/)
+
 Is anybody home?
 
 As we know, `Elvis` is a famous rock star, but both a famous rock song named `Calling Elvis` wrote by `Dire Straits` which inspired a unknown rock star writing down these chords.

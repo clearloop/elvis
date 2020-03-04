@@ -17,7 +17,7 @@ wasm-bindgen = "0.2.58"
 js-sys = "0.3.35"
 
 [dependencies.elvis]
-path = ".."
+path = "../.."
 version = "0.2.1"
 features = ["web"]
 
@@ -40,21 +40,3 @@ crate-type = ["cdylib", "rlib"]
 
 [package.metadata.wasm-pack.profile.dev]
 wasm-opt = ['-Os']
-
-[package.metadata.wasm-pack.profile.dev.wasm-bindgen]
-debug-js-glue = true
-demangle-name-section = true
-dwarf-debug-info = false
-
-[package.metadata.wasm-pack.profile.profiling]
-wasm-opt = ['-Os']
-
-[package.metadata.wasm-pack.profile.profiling.wasm-bindgen]
-debug-js-glue = false
-demangle-name-section = true
-dwarf-debug-info = false
-
-[package.metadata.wasm-pack.profile.release.wasm-bindgen]
-debug-js-glue = false
-demangle-name-section = true
-dwarf-debug-info = false
