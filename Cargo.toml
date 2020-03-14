@@ -18,8 +18,7 @@ default = ["web"]
 
 [workspace]
 members = [
-  "crates/web",
-  "crates/flutter"
+  "web",
 ]
 
 [profile.release]
