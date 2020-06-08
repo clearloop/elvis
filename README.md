@@ -5,7 +5,6 @@ Preparing to merge `elvis.js` and `elvis-web` into this one repo.
 ![Rust](https://github.com/clearloop/leetcode-cli/workflows/Rust/badge.svg)
 [![crate](https://img.shields.io/crates/v/elvis.svg)](https://crates.io/crates/elvis)
 [![doc](https://img.shields.io/badge/current-docs-brightgreen.svg)](https://docs.rs/elvis/)
-[![dependency status](https://deps.rs/repo/github/clearloop/elvis/status.svg)](https://deps.rs/repo/github/clearloop/elvis)
 [![downloads](https://img.shields.io/crates/d/elvis.svg)](https://crates.io/crates/elvis)
 [![LICENSE](https://img.shields.io/crates/l/elvis.svg)](https://choosealicense.com/licenses/mit/)
 
