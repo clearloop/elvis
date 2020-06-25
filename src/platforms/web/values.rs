@@ -1,5 +1,5 @@
 use crate::{
-    values::{Colors, Unit},
+    widgets::values::{Colors, Unit},
     Error, Serde,
 };
 

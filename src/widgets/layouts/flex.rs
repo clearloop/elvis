@@ -1,15 +1,15 @@
 //! Flex Layout
 use crate::{
-    values::{
-        layout::{Alignments, FlexBasis, FlexDirection},
+    widgets::values::{
+        layouts::{Alignments, FlexBasis, FlexDirection},
         Unit,
     },
-    Tree,
+    Node,
 };
 
 /// `Align` inherits the core usage of Alignments, it's quite simple, just one property.
 pub struct Align {
-    pub child: Tree,
+    pub child: Node,
     pub style: AlignStyle,
 }
 
@@ -20,17 +20,17 @@ pub struct AlignStyle {
 
 /// `Center` is a very nice widget, if your website only have a line of chars, use it!
 pub struct Center {
-    pub child: Tree,
+    pub child: Node,
 }
 
 /// `Col` is the typical flow in html, with flexible enhance.
 pub struct Col {
-    pub children: Vec<Tree>,
+    pub children: Vec<Node>,
 }
 
 /// This is the Lunatic Widget to Ground Control, 'I`m stepping throw the Window.'
 pub struct Flex {
-    pub child: Tree,
+    pub child: Node,
     pub style: FlexStyle,
 }
 
@@ -46,5 +46,5 @@ pub struct FlexStyle {
 
 /// Both `Col` and `Row` are using flex-start, if you want to reverse the children of them, better to work on the list order.
 pub struct Row {
-    pub children: Vec<Tree>,
+    pub children: Vec<Node>,
 }

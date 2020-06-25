@@ -1,20 +1,20 @@
 use crate::{
     widgets::{Image, Text},
-    Serde, Tree,
+    Node, Serde,
 };
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
-impl<'t> Into<Tree> for &'t Text {
-    fn into(self) -> Tree {
+impl<'t> Into<Node> for &'t Text {
+    fn into(self) -> Node {
         let mut m = HashMap::<String, String>::new();
         let mut cm = HashMap::<String, String>::new();
 
         m.insert("style".into(), self.style.ser());
         cm.insert("text".into(), self.text.to_string());
 
-        Tree::new(
+        Node::new(
             m,
-            vec![Tree::new(cm, vec![], None, "plain".into())],
+            vec![Node::new(cm, vec![], None, "plain".into())],
             None,
             "p".into(),
         )
@@ -23,13 +23,13 @@ impl<'t> Into<Tree> for &'t Text {
     }
 }
 
-impl<'i> Into<Tree> for &'i Image {
-    fn into(self) -> Tree {
+impl<'i> Into<Node> for &'i Image {
+    fn into(self) -> Node {
         let mut m = HashMap::<String, String>::new();
         m.insert("class".into(), "elvis-image".into());
         m.insert("style".into(), self.src.ser());
 
-        Tree::new(
+        Node::new(
             m,
             vec![Rc::new(RefCell::new(self.child.to_owned()))],
             None,

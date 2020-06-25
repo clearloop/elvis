@@ -1,6 +1,6 @@
 //! parser in #[cfg(feature = "web")]
 use crate::err::Error;
-use crate::{Serde, Tree};
+use crate::{Serde, Node};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::{Rc, Weak};
@@ -30,7 +30,7 @@ enum TagProcess {
     Tag,
 }
 
-/// Deserialize Tree from html string
+/// Deserialize Node from html string
 ///
 /// `attrs` field follows MDN doc [HTML attribute refference][1],
 /// all values are `String` in "".
@@ -38,22 +38,22 @@ enum TagProcess {
 /// [1]: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes#Boolean_Attributes
 fn rde<'t>(
     h: &'t str,
-    pre: Option<Weak<RefCell<Tree>>>,
-) -> Result<(Rc<RefCell<Tree>>, Option<Extra<'t>>), Error> {
+    pre: Option<Weak<RefCell<Node>>>,
+) -> Result<(Rc<RefCell<Node>>, Option<Extra<'t>>), Error> {
     let mut pos = 0_usize;
     if h.is_empty() {
-        return Ok((Rc::new(RefCell::new(Tree::default())), None));
+        return Ok((Rc::new(RefCell::new(Node::default())), None));
     } else if h.find("</").is_none() {
         return Ok((Rc::new(RefCell::new(self::plain(h, pre.clone()))), None));
     }
 
     // the return-will tree
-    let tree = Rc::new(RefCell::new(Tree::default()));
+    let tree = Rc::new(RefCell::new(Node::default()));
     let tw = Rc::downgrade(&tree);
     let (tag, attrs) = self::tag(&h[pos..], &mut pos)?;
 
     // parse f*cking children
-    let mut children: Vec<Rc<RefCell<Tree>>> = vec![];
+    let mut children: Vec<Rc<RefCell<Node>>> = vec![];
     let mut cext = self::ch(&h[pos..], Some(tw.clone()), tag, &mut children)?;
 
     // parse parallel children
@@ -86,9 +86,9 @@ fn rde<'t>(
 /// push child from html stream
 fn ch<'t>(
     cht: &'t str,
-    pre: Option<Weak<RefCell<Tree>>>,
+    pre: Option<Weak<RefCell<Node>>>,
     tag: &'t str,
-    children: &mut Vec<Rc<RefCell<Tree>>>,
+    children: &mut Vec<Rc<RefCell<Node>>>,
 ) -> Result<Extra<'t>, Error> {
     let mut itag = tag;
     let mut process = ChildrenProcess::None;
@@ -186,11 +186,11 @@ fn ch<'t>(
 }
 
 /// generate palin text
-fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Tree>>>) -> Tree {
+fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Node>>>) -> Node {
     let mut attrs = HashMap::<String, String>::new();
     attrs.insert("text".into(), h.into());
 
-    Tree {
+    Node {
         pre: pre.clone(),
         tag: "plain".into(),
         attrs: attrs,
@@ -301,8 +301,8 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<String, Stri
     )))
 }
 
-impl<'t> Serde<Tree, String> for Tree {
-    fn de(h: String) -> Result<Tree, Error> {
+impl<'t> Serde<Node, String> for Node {
+    fn de(h: String) -> Result<Node, Error> {
         Ok(self::rde(Box::leak(Box::new(h)), None)?
             .0
             .borrow()

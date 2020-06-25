@@ -1,7 +1,7 @@
 use crate::{
-    layout::*,
-    values::{layout::*, *},
-    Error, Serde, Tree,
+    widgets::layouts::*,
+    widgets::values::{layouts::*, *},
+    Error, Node, Serde,
 };
 
 /// serde single child widgets with match style
@@ -10,7 +10,7 @@ macro_rules! ss {
         $(
             impl Serde<$widget, String> for $widget {
                 fn de(s: String) -> Result<$widget, Error> {
-                    let t = Tree::de(s)?;
+                    let t = Node::de(s)?;
                     assert!(t.children.len() == 1);
 
                     let child = t.children[0].borrow().to_owned();
@@ -23,7 +23,7 @@ macro_rules! ss {
                 }
 
                 fn ser(&self) -> String {
-                    let t: Tree = self.into();
+                    let t: Node = self.into();
                     t.ser()
                 }
             }
@@ -38,11 +38,11 @@ macro_rules! sm {
         $(
             impl Serde<$widget, String> for $widget {
                 fn de(s: String) -> Result<$widget, Error> {
-                    let t = Tree::de(s)?;
+                    let t = Node::de(s)?;
 
                     let children = t.children.iter().map(
                         |w| w.borrow().to_owned()
-                    ).collect::<Vec<Tree>>();
+                    ).collect::<Vec<Node>>();
                     let style = t.attrs.get("style").unwrap_or(&"".to_string()).to_string();
 
                     Ok($widget {
@@ -52,7 +52,7 @@ macro_rules! sm {
                 }
 
                 fn ser(&self) -> String {
-                    let t: Tree = self.into();
+                    let t: Node = self.into();
                     t.ser()
                 }
             }

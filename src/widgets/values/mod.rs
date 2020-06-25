@@ -1,5 +1,5 @@
 mod color;
-pub mod layout;
+pub mod layouts;
 mod unit;
 
 pub use {color::Colors, unit::Unit};

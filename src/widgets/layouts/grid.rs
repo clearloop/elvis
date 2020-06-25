@@ -1,14 +1,14 @@
 use crate::{
-    values::{
-        layout::{GridAuto, GridFlow, GridTemplate},
+    widgets::values::{
+        layouts::{GridAuto, GridFlow, GridTemplate},
         Unit,
     },
-    Tree,
+    Node,
 };
 
 /// `Grid` is quite complex in some way, usually, we just `Grid` our contains.
 pub struct Grid {
-    pub children: Vec<Tree>,
+    pub children: Vec<Node>,
     pub style: GridStyle,
 }
 

@@ -1,12 +1,11 @@
 use crate::{
-    values::layout::Alignments,
-    values::{Colors, Unit},
-    Tree,
+    widgets::values::{layouts::Alignments, Colors, Unit},
+    Node,
 };
 
 /// To be honest, `Container` is a part of Flex family, but he is too brilliant to stay in Flex family, Layout calls him.
 pub struct Container {
-    pub child: Tree,
+    pub child: Node,
     pub style: ContainerStyle,
 }
 
@@ -23,12 +22,12 @@ pub struct ContainerStyle {
 
 /// `List` is a set of poor orphan children, they don't have any style, just blowing in the wind.
 pub struct List {
-    pub children: Vec<Tree>,
+    pub children: Vec<Node>,
 }
 
 /// `SizedBox` just has width and height two arguments, we use this component to take some white space usually.
 pub struct SizedBox {
-    pub child: Tree,
+    pub child: Node,
     pub style: SizedBoxStyle,
 }
 

@@ -1,8 +1,11 @@
-mod layout;
+mod layouts;
 mod macros;
 mod widgets;
 
-use crate::{layout::*, widgets::*, Error, Tree};
+use crate::{
+    widgets::{layouts::*, *},
+    Error, Node,
+};
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
 /// data format transfer

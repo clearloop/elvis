@@ -1,14 +1,14 @@
-use crate::Tree;
+use crate::Node;
 
 /// If you don't want Image playing in background anonymously, just remove its child.
 pub struct Image {
     pub src: ImageSrc,
-    pub child: Tree,
+    pub child: Node,
 }
 
 impl Image {
     /// image will auto-fill to the father widget
-    pub fn new(src: String, child: Tree) -> Image {
+    pub fn new(src: String, child: Node) -> Image {
         Image {
             src: ImageSrc(src),
             child,

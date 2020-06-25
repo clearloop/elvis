@@ -1,4 +1,4 @@
-use crate::values::{Colors, Unit};
+use crate::widgets::values::{Colors, Unit};
 
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?

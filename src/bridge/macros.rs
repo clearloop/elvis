@@ -4,8 +4,8 @@
 macro_rules! mcw {
     {$($widget:ident,)*} => {
         $(
-            impl<'i> Into<Tree> for &'i $widget {
-                fn into(self) -> Tree {
+            impl<'i> Into<Node> for &'i $widget {
+                fn into(self) -> Node {
                     let mut m = HashMap::<String, String>::new();
                     if stringify!($widget) != "List" {
                         m.insert(
@@ -19,7 +19,7 @@ macro_rules! mcw {
                         cs.push(Rc::new(RefCell::new(x.to_owned())));
                     });
 
-                    Tree::new(m, cs, None, "div".into())
+                    Node::new(m, cs, None, "div".into())
                         .borrow()
                         .to_owned()
                 }
@@ -32,8 +32,8 @@ macro_rules! mcw {
 macro_rules! mcws {
     {$($widget:ident,)*} => {
         $(
-            impl<'i> Into<Tree> for &'i $widget {
-                fn into(self) -> Tree {
+            impl<'i> Into<Node> for &'i $widget {
+                fn into(self) -> Node {
                     let ss = self.style.ser();
                     let mut m = HashMap::<String, String>::new();
                     m.insert("style".into(), ss);
@@ -43,7 +43,7 @@ macro_rules! mcws {
                         cs.push(Rc::new(RefCell::new(x.to_owned())));
                     });
 
-                    Tree::new(m, cs, None, "div".into())
+                    Node::new(m, cs, None, "div".into())
                         .borrow()
                         .to_owned()
                 }
@@ -60,8 +60,8 @@ macro_rules! mcws {
 macro_rules! it {
     {$($widget:ident,)*} => {
         $(
-            impl Into<Tree> for $widget {
-                fn into(self) -> Tree {
+            impl Into<Node> for $widget {
+                fn into(self) -> Node {
                     let ref s = self;
                     s.into()
                 }
@@ -74,14 +74,14 @@ macro_rules! it {
 macro_rules! sw {
     {$($widget:ident,)*} => {
         $(
-            impl<'s> Into<Tree> for &'s $widget {
-                fn into(self) -> Tree {
+            impl<'s> Into<Node> for &'s $widget {
+                fn into(self) -> Node {
                     let ss = self.style.ser();
                     let mut m = HashMap::<String, String>::new();
                     m.insert("style".into(), ss);
                     m.insert("class".into(), "elvis-flex".into());
 
-                    Tree::new(
+                    Node::new(
                         m,
                         vec![Rc::new(RefCell::new(self.child.to_owned()))],
                         None,

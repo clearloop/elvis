@@ -13,18 +13,18 @@ fn hash(tag: &str, s: &[u8]) -> String {
     format!("{}-{}", &tag, &res[(res.len() - 6)..])
 }
 
-/// Virtual UI Tree
+/// Virtual UI Node
 #[derive(Clone, Debug, Default)]
-pub struct Tree {
+pub struct Node {
     pub attrs: HashMap<String, String>,
-    pub children: Vec<Rc<RefCell<Tree>>>,
+    pub children: Vec<Rc<RefCell<Node>>>,
     pub tag: String,
-    pub pre: Option<Weak<RefCell<Tree>>>,
+    pub pre: Option<Weak<RefCell<Node>>>,
 }
 
-impl Tree {
+impl Node {
     /// drain tree if not the root
-    pub fn drain(t: Rc<RefCell<Tree>>) {
+    pub fn drain(t: Rc<RefCell<Node>>) {
         if let Some(pre) = &t.clone().borrow().pre {
             let u = pre.upgrade().expect("drain child failed");
             u.borrow_mut().remove(t);
@@ -61,14 +61,14 @@ impl Tree {
         path
     }
 
-    /// generate a Rc<RefCell<Tree>>
+    /// generate a Rc<RefCell<Node>>
     pub fn new(
         attrs: HashMap<String, String>,
-        children: Vec<Rc<RefCell<Tree>>>,
-        pre: Option<Weak<RefCell<Tree>>>,
+        children: Vec<Rc<RefCell<Node>>>,
+        pre: Option<Weak<RefCell<Node>>>,
         tag: String,
-    ) -> Rc<RefCell<Tree>> {
-        let t = Tree {
+    ) -> Rc<RefCell<Node>> {
+        let t = Node {
             attrs,
             children,
             pre,
@@ -79,7 +79,7 @@ impl Tree {
     }
 
     /// add second tree to the first one.
-    pub fn push(r: Rc<RefCell<Tree>>, c: Rc<RefCell<Tree>>) {
+    pub fn push(r: Rc<RefCell<Node>>, c: Rc<RefCell<Node>>) {
         let pre = Rc::downgrade(&r);
         c.borrow_mut().pre = Some(pre.clone());
 
@@ -93,13 +93,13 @@ impl Tree {
     }
 
     /// delete spefic child using rc
-    pub fn remove(&mut self, c: Rc<RefCell<Tree>>) {
+    pub fn remove(&mut self, c: Rc<RefCell<Node>>) {
         self.children.remove_item(&c);
         self.update();
     }
 
     /// replace current tree
-    pub fn replace(&mut self, mut t: Tree) {
+    pub fn replace(&mut self, mut t: Node) {
         t.pre = self.pre.clone();
         std::mem::swap(self, &mut t);
 
@@ -110,7 +110,7 @@ impl Tree {
     pub fn update(&mut self) {}
 }
 
-impl PartialEq for Tree {
+impl PartialEq for Node {
     fn eq(&self, other: &Self) -> bool {
         let res = self.attrs.eq(&other.attrs) && self.tag.eq(&other.tag);
 

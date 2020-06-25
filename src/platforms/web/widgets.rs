@@ -1,20 +1,20 @@
 use crate::{
-    values::{Colors, Unit},
-    Error, Image, ImageSrc, Serde, Text, TextStyle, Tree,
+    widgets::values::{Colors, Unit},
+    Error, Image, ImageSrc, Node, Serde, Text, TextStyle,
 };
 
 impl Serde<Image, String> for Image {
     fn de(s: String) -> Result<Image, Error> {
-        let t = Tree::de(s)?;
+        let t = Node::de(s)?;
         if t.children.len() != 1 {
             return Err(Error::DeserializeHtmlError(
                 "deserialize Text failed, children's length should be 1".into(),
             ));
         }
 
-        let child: Tree = match t.children.len() > 0 {
+        let child: Node = match t.children.len() > 0 {
             true => t.children[0].borrow().to_owned(),
-            false => Tree::default(),
+            false => Node::default(),
         };
 
         Ok(Image::new(
@@ -24,7 +24,7 @@ impl Serde<Image, String> for Image {
     }
 
     fn ser(&self) -> String {
-        let t: Tree = self.into();
+        let t: Node = self.into();
         t.ser()
     }
 }
@@ -41,7 +41,7 @@ impl Serde<ImageSrc, String> for ImageSrc {
 
 impl Serde<Text, String> for Text {
     fn de(s: String) -> Result<Text, Error> {
-        let t = Tree::de(s)?;
+        let t = Node::de(s)?;
         if t.children.len() != 1 {
             return Err(Error::DeserializeHtmlError(
                 "deserialize Text failed, children's length should be 1".into(),
@@ -59,7 +59,7 @@ impl Serde<Text, String> for Text {
     }
 
     fn ser(&self) -> String {
-        let t: Tree = self.into();
+        let t: Node = self.into();
         t.ser()
     }
 }
