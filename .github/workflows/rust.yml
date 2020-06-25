@@ -1,4 +1,4 @@
-name: leetcode-cli
+name: elvis
 
 on: [push, pull_request]
 

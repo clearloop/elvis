@@ -18,7 +18,9 @@ default = ["web"]
 
 [workspace]
 members = [
-  "web",
+  "crates/web",
+  "crates/macro",
+  "examples/hello-world",
 ]
 
 [profile.release]

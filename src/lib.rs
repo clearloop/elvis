@@ -57,27 +57,18 @@
 #![feature(vec_remove_item)]
 mod bridge;
 mod err;
-mod func;
-mod layout;
-mod serde;
-mod state;
 mod tree;
-mod values;
-mod widgets;
+pub mod widgets;
 
 pub use crate::{
+    bridge::Serde,
     err::Error,
-    func::FnBox,
-    layout::*,
-    serde::Serde,
-    state::State,
-    tree::Tree,
-    values::{color::Colors, layout::*, unit::Unit},
+    tree::{FnBox, Node, State},
     widgets::{Image, ImageSrc, Text, TextStyle},
 };
 
 // elvis platform features
-
 /// Browser data bridge, as default feature.
 #[cfg(feature = "web")]
+#[path = "platforms/web/mod.rs"]
 mod web;

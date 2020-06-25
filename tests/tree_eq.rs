@@ -1,8 +1,8 @@
-use elvis::Tree;
+use elvis::Node;
 
 #[test]
 fn eq() {
-    let a = Tree::default();
-    let b = Tree::default();
+    let a = Node::default();
+    let b = Node::default();
     assert_eq!(a, b);
 }

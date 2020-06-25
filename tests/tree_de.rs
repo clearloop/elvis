@@ -1,4 +1,4 @@
-use elvis::{Serde, Tree};
+use elvis::{Node, Serde};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
@@ -6,14 +6,14 @@ use std::rc::Rc;
 #[test]
 fn de_tree_empty_string() {
     let plain = "";
-    assert_eq!(Tree::de(plain.into()).unwrap(), Tree::default());
+    assert_eq!(Node::de(plain.into()).unwrap(), Node::default());
 }
 
 #[test]
 fn de_tree_pure_tag() {
     assert_eq!(
-        Tree::de("<div></div>".into()).unwrap(),
-        Tree {
+        Node::de("<div></div>".into()).unwrap(),
+        Node {
             pre: None,
             tag: "div".into(),
             attrs: HashMap::new(),
@@ -27,14 +27,14 @@ fn de_tree_has_plain_content() {
     let mut attrs = HashMap::<String, String>::new();
     attrs.insert("text".into(), "elvis".into());
 
-    let pr = Rc::new(RefCell::new(Tree {
+    let pr = Rc::new(RefCell::new(Node {
         pre: None,
         tag: "div".into(),
         attrs: HashMap::new(),
         children: vec![],
     }));
 
-    let pc = Rc::new(RefCell::new(Tree {
+    let pc = Rc::new(RefCell::new(Node {
         pre: Some(Rc::downgrade(&pr)),
         tag: "plain".into(),
         attrs: attrs,
@@ -44,11 +44,11 @@ fn de_tree_has_plain_content() {
     pr.borrow_mut().children.push(pc);
 
     let pr = pr.borrow().to_owned();
-    assert_eq!(Tree::de("<div>elvis</div>".into()).unwrap(), pr);
-    assert_eq!(Tree::de("<div>elvis</ div>".into()).unwrap(), pr);
-    assert_eq!(Tree::de("<div>elvis</ div >".into()).unwrap(), pr);
-    assert_eq!(Tree::de("< div>elvis</div>".into()).unwrap(), pr);
-    assert_eq!(Tree::de("< div >elvis</div>".into()).unwrap(), pr);
+    assert_eq!(Node::de("<div>elvis</div>".into()).unwrap(), pr);
+    assert_eq!(Node::de("<div>elvis</ div>".into()).unwrap(), pr);
+    assert_eq!(Node::de("<div>elvis</ div >".into()).unwrap(), pr);
+    assert_eq!(Node::de("< div>elvis</div>".into()).unwrap(), pr);
+    assert_eq!(Node::de("< div >elvis</div>".into()).unwrap(), pr);
 }
 
 #[test]
@@ -56,8 +56,8 @@ fn de_tree_tag_and_style() {
     let mut attrs = HashMap::<String, String>::new();
     attrs.insert("style".into(), "height: 20;".to_string());
     assert_eq!(
-        Tree::de("<div style=\"height: 20;\"></div>".into()).unwrap(),
-        Tree {
+        Node::de("<div style=\"height: 20;\"></div>".into()).unwrap(),
+        Node {
             pre: None,
             tag: "div".into(),
             attrs: attrs,
@@ -73,8 +73,8 @@ fn de_tree_tag_and_multi_attr() {
     attrs.insert("name".into(), "bowie".into());
     attrs.insert("bool".into(), "false".into());
     assert_eq!(
-        Tree::de("<div style=\"height: 20;\" name=\"bowie\" bool=\"false\"></div>".into()).unwrap(),
-        Tree {
+        Node::de("<div style=\"height: 20;\" name=\"bowie\" bool=\"false\"></div>".into()).unwrap(),
+        Node {
             pre: None,
             tag: "div".into(),
             attrs: attrs,
@@ -86,12 +86,12 @@ fn de_tree_tag_and_multi_attr() {
 #[test]
 fn de_tree_has_single_tag_child() {
     assert_eq!(
-        Tree::de("<div><div></div></div>".into()).unwrap(),
-        Tree {
+        Node::de("<div><div></div></div>".into()).unwrap(),
+        Node {
             pre: None,
             tag: "div".into(),
             attrs: HashMap::new(),
-            children: vec![Rc::new(RefCell::new(Tree {
+            children: vec![Rc::new(RefCell::new(Node {
                 pre: None,
                 tag: "div".into(),
                 attrs: HashMap::new(),
@@ -104,16 +104,16 @@ fn de_tree_has_single_tag_child() {
 #[test]
 fn de_tree_has_deep_single_tag_child() {
     assert_eq!(
-        Tree::de("<div><div><div></div></div></div>".into()).unwrap(),
-        Tree {
+        Node::de("<div><div><div></div></div></div>".into()).unwrap(),
+        Node {
             pre: None,
             tag: "div".into(),
             attrs: HashMap::new(),
-            children: vec![Rc::new(RefCell::new(Tree {
+            children: vec![Rc::new(RefCell::new(Node {
                 pre: None,
                 tag: "div".into(),
                 attrs: HashMap::new(),
-                children: vec![Rc::new(RefCell::new(Tree {
+                children: vec![Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "div".into(),
                     attrs: HashMap::new(),
@@ -127,20 +127,20 @@ fn de_tree_has_deep_single_tag_child() {
 #[test]
 fn de_tree_has_deep_multi_tag_child() {
     assert_eq!(
-        Tree::de("<div><a><b><p></p></b></a></div>".into()).unwrap(),
-        Tree {
+        Node::de("<div><a><b><p></p></b></a></div>".into()).unwrap(),
+        Node {
             pre: None,
             tag: "div".into(),
             attrs: HashMap::new(),
-            children: vec![Rc::new(RefCell::new(Tree {
+            children: vec![Rc::new(RefCell::new(Node {
                 pre: None,
                 tag: "a".into(),
                 attrs: HashMap::new(),
-                children: vec![Rc::new(RefCell::new(Tree {
+                children: vec![Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "b".into(),
                     attrs: HashMap::new(),
-                    children: vec![Rc::new(RefCell::new(Tree {
+                    children: vec![Rc::new(RefCell::new(Node {
                         pre: None,
                         tag: "p".into(),
                         attrs: HashMap::new(),
@@ -155,19 +155,19 @@ fn de_tree_has_deep_multi_tag_child() {
 #[test]
 fn de_tree_has_parallel_tag_children() {
     assert_eq!(
-        Tree::de("<div><div></div><div></div></div>".into()).unwrap(),
-        Tree {
+        Node::de("<div><div></div><div></div></div>".into()).unwrap(),
+        Node {
             pre: None,
             tag: "div".into(),
             attrs: HashMap::new(),
             children: vec![
-                Rc::new(RefCell::new(Tree {
+                Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "div".into(),
                     attrs: HashMap::new(),
                     children: vec![]
                 })),
-                Rc::new(RefCell::new(Tree {
+                Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "div".into(),
                     attrs: HashMap::new(),
@@ -181,25 +181,25 @@ fn de_tree_has_parallel_tag_children() {
 #[test]
 fn de_tree_has_parallel_multi_tag_children() {
     assert_eq!(
-        Tree::de("<div><a></a><b></b><p></p></div>".into()).unwrap(),
-        Tree {
+        Node::de("<div><a></a><b></b><p></p></div>".into()).unwrap(),
+        Node {
             pre: None,
             tag: "div".into(),
             attrs: HashMap::new(),
             children: vec![
-                Rc::new(RefCell::new(Tree {
+                Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "a".into(),
                     attrs: HashMap::new(),
                     children: vec![]
                 })),
-                Rc::new(RefCell::new(Tree {
+                Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "b".into(),
                     attrs: HashMap::new(),
                     children: vec![]
                 })),
-                Rc::new(RefCell::new(Tree {
+                Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "p".into(),
                     attrs: HashMap::new(),

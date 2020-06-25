@@ -1,4 +1,7 @@
-use elvis::{Colors, Serde, TextStyle, Unit};
+use elvis::{
+    widgets::values::{Colors, Unit},
+    Serde, TextStyle,
+};
 
 #[test]
 fn test_text_style() {

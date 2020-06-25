@@ -1,0 +1,42 @@
+[package]
+name = "elvis-web"
+version = "0.1.2"
+authors = ["clearloop <udtrokia@gmail.com>"]
+edition = "2018"
+description = "Calling Elvis, is anybody home?"
+repository = "https://github.com/clearloop/elvis"
+license = "MIT"
+documentation = "https://docs.rs/elvis"
+homepage = "https://github.com/clearloop/elvis"
+exclude = ["ts/**/*"]
+keywords = ["js", "wasm", "spa", "web"]
+readme = './README.md'
+
+[dependencies]
+wasm-bindgen = "0.2.60"
+js-sys = "0.3.37"
+
+[dependencies.elvis]
+path = "../.."
+version = "0.2.1"
+features = ["web"]
+
+[dependencies.web-sys]
+version = "0.3.37"
+features = [
+  "CssStyleRule",
+  "CssStyleSheet",
+  "CssStyleDeclaration",
+  "Document",
+  "Element",
+  "HtmlElement",
+  "Location",
+  "Node",
+  "Window"
+]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[package.metadata.wasm-pack.profile.dev]
+wasm-opt = ['-Os']
