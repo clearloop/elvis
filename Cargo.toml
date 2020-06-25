@@ -19,6 +19,7 @@ default = ["web"]
 [workspace]
 members = [
   "web",
+  "examples/hello-world",
 ]
 
 [profile.release]

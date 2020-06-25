@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    </head>
+    <body>
+        <!-- Note the usage of `type=module` here as this is an ES6 module -->
+        <script type="module">
+         import init, { run } from './pkg/hello_world.js';
+         (async () => {
+             await init();
+             run()
+         })();
+        </script>
+    </body>
+</html>
