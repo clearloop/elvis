@@ -1,7 +1,10 @@
-use elvis::{
-    Alignments as ElvisAlignments, FlexBasis as ElvisFlexBasis,
-    FlexDirection as ElvisFlexDirection, GridAuto as ElvisGridAuto, GridFlow as ElvisGridFlow,
-    GridTemplate as ElvisGridTemplate, MultiColumnLineStyle as ElvisMultiColumnLineStyle, Unit,
+use elvis::widgets::values::{
+    layouts::{
+        Alignments as ElvisAlignments, FlexBasis as ElvisFlexBasis,
+        FlexDirection as ElvisFlexDirection, GridAuto as ElvisGridAuto, GridFlow as ElvisGridFlow,
+        GridTemplate as ElvisGridTemplate, MultiColumnLineStyle as ElvisMultiColumnLineStyle,
+    },
+    Unit,
 };
 use std::convert::Into;
 use wasm_bindgen::prelude::*;

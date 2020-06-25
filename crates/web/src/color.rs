@@ -1,4 +1,4 @@
-use elvis::Colors as ElvisColors;
+use elvis::widgets::values::Colors as ElvisColors;
 use wasm_bindgen::prelude::*;
 
 /// `Colors` interface

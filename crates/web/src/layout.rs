@@ -1,7 +1,7 @@
 use crate::{
     AlignStyle, ContainerStyle, FlexStyle, GridStyle, MultiColumnStyle, SizedBoxStyle, Widget,
 };
-use elvis::{
+use elvis::widgets::layouts::{
     Align, Center, Col as ElvisCol, Container, Flex, Grid as ElvisGrid, List as ElvisList,
     MultiColumn as ElvisMultiColumn, Row as ElvisRow, SizedBox,
 };

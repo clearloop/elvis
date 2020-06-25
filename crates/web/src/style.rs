@@ -3,10 +3,16 @@ use crate::{
     MultiColumnLineStyle,
 };
 use elvis::{
-    AlignStyle as ElvisAlignStyle, ContainerStyle as ElvisContainerStyle,
-    FlexStyle as ElvisFlexStyle, GridStyle as ElvisGridStyle,
-    MultiColumnStyle as ElvisMultiColumnStyle, SizedBoxStyle as ElvisSizedBoxStyle,
-    TextStyle as ElvisTextStyle, Tree, Unit,
+    widgets::{
+        layouts::{
+            AlignStyle as ElvisAlignStyle, ContainerStyle as ElvisContainerStyle,
+            FlexStyle as ElvisFlexStyle, GridStyle as ElvisGridStyle,
+            MultiColumnStyle as ElvisMultiColumnStyle, SizedBoxStyle as ElvisSizedBoxStyle,
+        },
+        values::Unit,
+        TextStyle as ElvisTextStyle,
+    },
+    Node,
 };
 use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
@@ -454,7 +460,7 @@ impl<'s> StyleSheet {
         Ok(should_reset_class_sheet && should_reset_widget_sheet)
     }
 
-    pub fn batch(&mut self, t: &mut Tree) {
+    pub fn batch(&mut self, t: &mut Node) {
         if let Some(style) = t.attrs.remove("style") {
             let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
             self.id(&id, &style);

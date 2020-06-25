@@ -1,5 +1,5 @@
 use crate::{StyleSheet, TextStyle};
-use elvis::{Image, Serde, Text, Tree};
+use elvis::{Image, Node, Serde, Text};
 use std::{cell::RefCell, convert::Into, rc::Rc};
 use wasm_bindgen::prelude::*;
 
@@ -7,7 +7,7 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 #[derive(Clone, Debug, Default)]
 pub struct Widget {
-    tree: Tree,
+    tree: Node,
     style: Rc<RefCell<StyleSheet>>,
 }
 
@@ -15,7 +15,7 @@ impl Widget {
     /// new widget from tree
     pub fn new<W>(tree: W) -> Widget
     where
-        W: Into<Tree>,
+        W: Into<Node>,
     {
         let mut t = tree.into();
         t.idx(&mut vec![]);
@@ -85,8 +85,8 @@ impl Widget {
     }
 }
 
-impl std::convert::Into<Tree> for Widget {
-    fn into(self) -> Tree {
+impl std::convert::Into<Node> for Widget {
+    fn into(self) -> Node {
         self.tree
     }
 }
