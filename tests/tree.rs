@@ -1,23 +1,23 @@
-use elvis::{Serde, Tree};
+use elvis::{Node, Serde};
 use std::collections::HashMap;
 
 #[test]
 fn test_push() {
-    let t = Tree::de("<h1><p></p></h1>".into()).unwrap();
+    let t = Node::de("<h1><p></p></h1>".into()).unwrap();
 
-    let r = Tree::new(HashMap::new(), vec![], None, "h1".into());
-    let c = Tree::new(HashMap::new(), vec![], None, "p".into());
-    Tree::push(r.clone(), c);
+    let r = Node::new(HashMap::new(), vec![], None, "h1".into());
+    let c = Node::new(HashMap::new(), vec![], None, "p".into());
+    Node::push(r.clone(), c);
     assert_eq!(t, r.borrow().to_owned());
 }
 
 #[test]
 fn test_remove() {
-    let t = Tree::de("<h1></h1>".into()).unwrap();
+    let t = Node::de("<h1></h1>".into()).unwrap();
 
-    let r = Tree::new(HashMap::new(), vec![], None, "h1".into());
-    let c = Tree::new(HashMap::new(), vec![], None, "p".into());
-    Tree::push(r.clone(), c.clone());
+    let r = Node::new(HashMap::new(), vec![], None, "h1".into());
+    let c = Node::new(HashMap::new(), vec![], None, "p".into());
+    Node::push(r.clone(), c.clone());
 
     r.borrow_mut().remove(c);
     assert_eq!(t, r.borrow().to_owned());
@@ -25,24 +25,24 @@ fn test_remove() {
 
 #[test]
 fn test_drain() {
-    let t = Tree::de("<h1></h1>".into()).unwrap();
+    let t = Node::de("<h1></h1>".into()).unwrap();
 
-    let r = Tree::new(HashMap::new(), vec![], None, "h1".into());
-    let c = Tree::new(HashMap::new(), vec![], None, "p".into());
-    Tree::push(r.clone(), c.clone());
-    Tree::drain(c);
+    let r = Node::new(HashMap::new(), vec![], None, "h1".into());
+    let c = Node::new(HashMap::new(), vec![], None, "p".into());
+    Node::push(r.clone(), c.clone());
+    Node::drain(c);
 
     assert_eq!(t, r.borrow().to_owned());
 }
 
 #[test]
 fn test_replace() {
-    let t = Tree::de("<h1><n></n></h1>".into()).unwrap();
+    let t = Node::de("<h1><n></n></h1>".into()).unwrap();
 
-    let r = Tree::new(HashMap::new(), vec![], None, "h1".into());
-    let c = Tree::new(HashMap::new(), vec![], None, "p".into());
-    let n = Tree::new(HashMap::new(), vec![], None, "n".into());
-    Tree::push(r.clone(), c.clone());
+    let r = Node::new(HashMap::new(), vec![], None, "h1".into());
+    let c = Node::new(HashMap::new(), vec![], None, "p".into());
+    let n = Node::new(HashMap::new(), vec![], None, "n".into());
+    Node::push(r.clone(), c.clone());
     c.replace(n.borrow().to_owned());
 
     assert_eq!(t, r.borrow().to_owned());

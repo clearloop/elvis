@@ -1,11 +1,11 @@
-use elvis::{Serde, Tree};
+use elvis::{Node, Serde};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
 
 #[test]
 fn ser_tree_pure_tag() {
-    let t = Tree {
+    let t = Node {
         pre: None,
         tag: "div".into(),
         attrs: HashMap::new(),
@@ -19,7 +19,7 @@ fn ser_tree_pure_tag() {
 fn ser_tree_attrs_tag() {
     let mut m = HashMap::<String, String>::new();
     m.insert("name".into(), "elvis".into());
-    let t = Tree {
+    let t = Node {
         pre: None,
         tag: "div".into(),
         attrs: m.clone(),
@@ -33,11 +33,11 @@ fn ser_tree_attrs_tag() {
 fn ser_tree_plain_content() {
     let mut m = HashMap::<String, String>::new();
     m.insert("text".into(), "hello, world!".into());
-    let t = Tree {
+    let t = Node {
         pre: None,
         tag: "div".into(),
         attrs: HashMap::new(),
-        children: vec![Rc::new(RefCell::new(Tree {
+        children: vec![Rc::new(RefCell::new(Node {
             pre: None,
             tag: "plain".into(),
             attrs: m,
@@ -51,11 +51,11 @@ fn ser_tree_plain_content() {
 #[test]
 fn ser_tree_inner_tag() {
     let m = HashMap::<String, String>::new();
-    let t = Tree {
+    let t = Node {
         pre: None,
         tag: "div".into(),
         attrs: m.clone(),
-        children: vec![Rc::new(RefCell::new(Tree {
+        children: vec![Rc::new(RefCell::new(Node {
             pre: None,
             tag: "div".into(),
             attrs: m,
