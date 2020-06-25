@@ -1,4 +1,7 @@
-use crate::{Colors, Error, Serde, Unit};
+use crate::{
+    values::{Colors, Unit},
+    Error, Serde,
+};
 
 impl Serde<Colors, String> for Colors {
     fn de(s: String) -> Result<Colors, Error> {

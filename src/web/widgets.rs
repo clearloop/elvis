@@ -1,4 +1,7 @@
-use crate::{Colors, Error, Image, ImageSrc, Serde, Text, TextStyle, Tree, Unit};
+use crate::{
+    values::{Colors, Unit},
+    Error, Image, ImageSrc, Serde, Text, TextStyle, Tree,
+};
 
 impl Serde<Image, String> for Image {
     fn de(s: String) -> Result<Image, Error> {

@@ -1,6 +1,12 @@
-use crate::{Error, FnBox};
+use crate::Error;
 use std::collections::HashMap;
 
+/// store closures
+pub trait FnBox<P> {
+    fn call(&mut self, props: &P) -> Result<(), Error>;
+}
+
+/// Func hook
 type Hook<P> = Box<dyn FnBox<P>>;
 
 /// state for tree
