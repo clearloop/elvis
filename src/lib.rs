@@ -68,4 +68,7 @@ pub use crate::{
 };
 
 // elvis platform features
-mod platforms;
+/// Browser data bridge, as default feature.
+#[cfg(feature = "web")]
+#[path = "platforms/web/mod.rs"]
+mod web;
