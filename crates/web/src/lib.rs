@@ -4,27 +4,7 @@
 //!
 //! [1]: https://clearloop.github.io/elvis
 #![feature(extern_types)]
-#[macro_use]
-mod macros;
-mod color;
-mod enums;
-mod func;
-mod layout;
 mod style;
-mod types;
 mod widgets;
 
-pub use crate::{
-    color::Colors,
-    enums::{
-        Alignments, FlexBasis, FlexDirection, GridAuto, GridFlow, GridTemplate,
-        MultiColumnLineStyle,
-    },
-    func::Func,
-    layout::{align, center, container, flex, sized_box, Col, Grid, List, MultiColumn, Row},
-    style::{
-        AlignStyle, ContainerStyle, FlexStyle, GridStyle, MultiColumnStyle, SizedBoxStyle,
-        StyleSheet, TextStyle,
-    },
-    widgets::{img, text, Widget},
-};
+pub use crate::{style::StyleSheet, widgets::Widget};

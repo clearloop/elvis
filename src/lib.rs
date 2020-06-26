@@ -67,6 +67,15 @@ pub use crate::{
     widgets::{Image, ImageSrc, Text, TextStyle},
 };
 
+/// A module which is typically glob imported from:
+///
+/// ```
+/// use elvis::prelude::*;
+/// ```
+pub mod prelude {
+    pub use elvis_derive::elvis;
+}
+
 // elvis platform features
 /// Browser data bridge, as default feature.
 #[cfg(feature = "web")]

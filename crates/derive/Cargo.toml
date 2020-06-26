@@ -1,0 +1,23 @@
+[package]
+name = "elvis-derive"
+version = "0.1.0"
+authors = ["clearloop <udtrokia@gmail.com>"]
+edition = "2018"
+license = "MIT/Apache-2.0"
+repository = "https://github.com/elvisjs/elvis/tree/master/crates/derive"
+homepage = "https://github.com/elvisjs"
+documentation = "https://docs.rs/elvis-derive"
+description = """
+Definition of the `#[elvis]` attribute, an internal dependency
+"""
+
+[lib]
+proc-macro = true
+
+[features]
+web = []
+default = ["web"]
+
+[dependencies]
+quote = "1.0.7"
+syn = "1.0.33"

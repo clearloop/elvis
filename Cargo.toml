@@ -16,10 +16,15 @@ readme = './README.md'
 web = []
 default = ["web"]
 
+[dependencies]
+elvis-derive = { path = "crates/derive" }
+elvis-shared = { path = "crates/shared" }
+
 [workspace]
 members = [
   "crates/web",
-  "crates/macro",
+  "crates/derive",
+  "crates/shared",
   "examples/hello-world",
 ]
 

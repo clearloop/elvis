@@ -1,5 +1,5 @@
 [package]
-name = "elvis-macro"
+name = "elvis-shared"
 version = "0.1.0"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"

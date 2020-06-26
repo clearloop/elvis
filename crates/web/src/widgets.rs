@@ -1,5 +1,5 @@
-use crate::{StyleSheet, TextStyle};
-use elvis::{Image, Node, Serde, Text};
+use crate::StyleSheet;
+use elvis::{Node, Serde};
 use std::{cell::RefCell, convert::Into, rc::Rc};
 use wasm_bindgen::prelude::*;
 
@@ -90,36 +90,3 @@ impl std::convert::Into<Node> for Widget {
         self.tree
     }
 }
-
-/// `Text` might be the most popular spider from Mars,
-/// Does it know the Great Ziggy Stardust?
-#[wasm_bindgen(js_name = "Text")]
-pub fn text(text: Option<String>, style: Option<TextStyle>) -> Widget {
-    Widget::new(Text::new(
-        text.unwrap_or_default(),
-        style.unwrap_or_default().into(),
-    ))
-}
-
-/// If you don't want Image playing in background anonymously, just remove the child field.
-///
-/// **Note**: It's important to wrap a container outsize the `Image`
-#[wasm_bindgen(js_name = "Image")]
-pub fn img(src: Option<String>, child: Option<Widget>) -> Widget {
-    Widget::new(Image::new(
-        src.unwrap_or("".into()),
-        child.unwrap_or_default().into(),
-    ))
-}
-
-#[wasm_bindgen(typescript_custom_section)]
-const IIMAGE: &'static str = r#"
-export interface IImage {
-  src: string;
-  child: IElvisWidget;
-}
-
-export interface IElvisWidget {
-  calling: () => void;
-}
-"#;

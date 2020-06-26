@@ -13,8 +13,8 @@ keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
 [dependencies]
-wasm-bindgen = "0.2.60"
-js-sys = "0.3.37"
+wasm-bindgen = "0.2.63"
+js-sys = "0.3.40"
 
 [dependencies.elvis]
 path = "../.."
@@ -22,7 +22,7 @@ version = "0.2.1"
 features = ["web"]
 
 [dependencies.web-sys]
-version = "0.3.37"
+version = "0.3.40"
 features = [
   "CssStyleRule",
   "CssStyleSheet",
