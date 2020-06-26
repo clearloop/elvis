@@ -23,6 +23,7 @@ elvis-shared = { path = "crates/shared" }
 [workspace]
 members = [
   "crates/web",
+  "crates/backend",
   "crates/derive",
   "crates/shared",
   "examples/hello-world",
