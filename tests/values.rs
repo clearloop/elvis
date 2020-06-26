@@ -1,7 +1,5 @@
-use elvis::{
-    widgets::values::{Colors, Unit},
-    Serde,
-};
+use elvis::widgets::values::{Colors, Unit};
+use elvis_shared::Serde;
 
 #[test]
 fn test_colors() {

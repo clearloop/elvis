@@ -60,12 +60,22 @@ mod err;
 mod tree;
 pub mod widgets;
 
+use elvis_shared::Serde;
+
 pub use crate::{
-    bridge::Serde,
     err::Error,
     tree::{FnBox, Node, State},
     widgets::{Image, ImageSrc, Text, TextStyle},
 };
+
+/// A module which is typically glob imported from:
+///
+/// ```
+/// use elvis::prelude::*;
+/// ```
+pub mod prelude {
+    pub use elvis_derive::elvis;
+}
 
 // elvis platform features
 /// Browser data bridge, as default feature.

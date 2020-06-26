@@ -8,7 +8,7 @@ use crate::{
 macro_rules! ss {
     {$(($widget:ident, $style:ident),)*} => {
         $(
-            impl Serde<$widget, String> for $widget {
+            impl Serde<$widget, String, Error> for $widget {
                 fn de(s: String) -> Result<$widget, Error> {
                     let t = Node::de(s)?;
                     assert!(t.children.len() == 1);
@@ -36,7 +36,7 @@ macro_rules! ss {
 macro_rules! sm {
     {$(($widget:ident, $style:ident),)*} => {
         $(
-            impl Serde<$widget, String> for $widget {
+            impl Serde<$widget, String, Error> for $widget {
                 fn de(s: String) -> Result<$widget, Error> {
                     let t = Node::de(s)?;
 
@@ -84,7 +84,7 @@ fn parse<'p>(s: &'p str) -> Vec<(&'p str, &'p str)> {
 }
 
 // styles
-impl Serde<AlignStyle, String> for AlignStyle {
+impl Serde<AlignStyle, String, Error> for AlignStyle {
     fn de(s: String) -> Result<AlignStyle, Error> {
         Ok(AlignStyle {
             align: Alignments::de(s).unwrap_or(Alignments::Center),
@@ -96,7 +96,7 @@ impl Serde<AlignStyle, String> for AlignStyle {
     }
 }
 
-impl Serde<ContainerStyle, String> for ContainerStyle {
+impl Serde<ContainerStyle, String, Error> for ContainerStyle {
     fn de(s: String) -> Result<ContainerStyle, Error> {
         let mut cs = ContainerStyle::default();
         let mut align = "".to_string();
@@ -129,7 +129,7 @@ impl Serde<ContainerStyle, String> for ContainerStyle {
     }
 }
 
-impl Serde<FlexStyle, String> for FlexStyle {
+impl Serde<FlexStyle, String, Error> for FlexStyle {
     fn de(s: String) -> Result<FlexStyle, Error> {
         let mut fs = FlexStyle {
             align: Alignments::Center,
@@ -181,7 +181,7 @@ impl Serde<FlexStyle, String> for FlexStyle {
     }
 }
 
-impl Serde<GridStyle, String> for GridStyle {
+impl Serde<GridStyle, String, Error> for GridStyle {
     fn de(s: String) -> Result<GridStyle, Error> {
         let mut gs = GridStyle {
             col: GridAuto::Auto,
@@ -229,7 +229,7 @@ impl Serde<GridStyle, String> for GridStyle {
     }
 }
 
-impl Serde<MultiColumnStyle, String> for MultiColumnStyle {
+impl Serde<MultiColumnStyle, String, Error> for MultiColumnStyle {
     fn de(s: String) -> Result<MultiColumnStyle, Error> {
         let mut mc = MultiColumnStyle {
             color: Colors::Inherit,
@@ -262,7 +262,7 @@ impl Serde<MultiColumnStyle, String> for MultiColumnStyle {
     }
 }
 
-impl Serde<SizedBoxStyle, String> for SizedBoxStyle {
+impl Serde<SizedBoxStyle, String, Error> for SizedBoxStyle {
     fn de(s: String) -> Result<SizedBoxStyle, Error> {
         let mut sbs = SizedBoxStyle {
             height: Unit::Auto,
@@ -288,7 +288,7 @@ impl Serde<SizedBoxStyle, String> for SizedBoxStyle {
 }
 
 // enums
-impl Serde<Alignments, String> for Alignments {
+impl Serde<Alignments, String, Error> for Alignments {
     fn de(s: String) -> Result<Alignments, Error> {
         let ss = s.split(";").collect::<Vec<&str>>();
         assert!(ss.len() == 2);
@@ -335,7 +335,7 @@ impl Serde<Alignments, String> for Alignments {
     }
 }
 
-impl Serde<FlexBasis, String> for FlexBasis {
+impl Serde<FlexBasis, String, Error> for FlexBasis {
     fn de(s: String) -> Result<FlexBasis, Error> {
         let kv = s.split(":").collect::<Vec<&str>>();
         assert!(kv.len() == 2);
@@ -363,7 +363,7 @@ impl Serde<FlexBasis, String> for FlexBasis {
     }
 }
 
-impl Serde<FlexDirection, String> for FlexDirection {
+impl Serde<FlexDirection, String, Error> for FlexDirection {
     fn de(s: String) -> Result<FlexDirection, Error> {
         let kv = s.split(":").collect::<Vec<&str>>();
         assert!(kv.len() == 2);
@@ -390,7 +390,7 @@ impl Serde<FlexDirection, String> for FlexDirection {
     }
 }
 
-impl Serde<GridAuto, String> for GridAuto {
+impl Serde<GridAuto, String, Error> for GridAuto {
     fn de(s: String) -> Result<GridAuto, Error> {
         let v = s.split(":").collect::<Vec<&str>>()[1].trim();
         Ok(match v {
@@ -452,7 +452,7 @@ impl Serde<GridAuto, String> for GridAuto {
     }
 }
 
-impl Serde<GridFlow, String> for GridFlow {
+impl Serde<GridFlow, String, Error> for GridFlow {
     fn de(s: String) -> Result<GridFlow, Error> {
         let v = s.split(":").collect::<Vec<&str>>()[1].trim();
         Ok(match v {
@@ -484,7 +484,7 @@ impl Serde<GridFlow, String> for GridFlow {
     }
 }
 
-impl Serde<GridTemplate, String> for GridTemplate {
+impl Serde<GridTemplate, String, Error> for GridTemplate {
     fn de(s: String) -> Result<GridTemplate, Error> {
         let kv = s.split(":").collect::<Vec<&str>>();
         assert!(kv.len() == 2);
@@ -568,7 +568,7 @@ impl Serde<GridTemplate, String> for GridTemplate {
     }
 }
 
-impl Serde<MultiColumnLineStyle, String> for MultiColumnLineStyle {
+impl Serde<MultiColumnLineStyle, String, Error> for MultiColumnLineStyle {
     fn de(s: String) -> Result<MultiColumnLineStyle, Error> {
         let kv = s.split(":").collect::<Vec<&str>>();
         assert!(kv.len() == 2);

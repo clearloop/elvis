@@ -1,6 +1,12 @@
-use elvis::widgets::{layouts::Center, Text, TextStyle};
+use elvis::{
+    prelude::elvis,
+    widgets::{layouts::Center, Text, TextStyle},
+};
 use elvis_web::Widget;
 use wasm_bindgen::prelude::*;
+
+#[elvis]
+pub struct Index;
 
 #[wasm_bindgen(start)]
 pub fn run() {

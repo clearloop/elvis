@@ -54,7 +54,7 @@ impl Default for TextStyle {
             bold: true,
             color: Colors::Pink,
             italic: true,
-            size: Unit::Rem(42.0),
+            size: Unit::Rem(2.0),
             weight: Unit::None(400.0),
             height: Unit::Rem(1.0),
             stretch: Unit::Percent(100.0),
