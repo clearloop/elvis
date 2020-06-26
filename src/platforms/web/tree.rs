@@ -1,6 +1,6 @@
 //! parser in #[cfg(feature = "web")]
 use crate::err::Error;
-use crate::{Serde, Node};
+use crate::{Node, Serde};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::{Rc, Weak};
@@ -301,7 +301,7 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<String, Stri
     )))
 }
 
-impl<'t> Serde<Node, String> for Node {
+impl<'t> Serde<Node, String, Error> for Node {
     fn de(h: String) -> Result<Node, Error> {
         Ok(self::rde(Box::leak(Box::new(h)), None)?
             .0

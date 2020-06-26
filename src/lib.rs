@@ -60,8 +60,9 @@ mod err;
 mod tree;
 pub mod widgets;
 
+use elvis_shared::Serde;
+
 pub use crate::{
-    bridge::Serde,
     err::Error,
     tree::{FnBox, Node, State},
     widgets::{Image, ImageSrc, Text, TextStyle},

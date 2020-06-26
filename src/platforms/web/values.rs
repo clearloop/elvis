@@ -3,7 +3,7 @@ use crate::{
     Error, Serde,
 };
 
-impl Serde<Colors, String> for Colors {
+impl Serde<Colors, String, Error> for Colors {
     fn de(s: String) -> Result<Colors, Error> {
         if s.contains("inherit") {
             return Ok(Colors::Inherit);
@@ -33,7 +33,7 @@ impl Serde<Colors, String> for Colors {
     }
 }
 
-impl Serde<Unit, String> for Unit {
+impl Serde<Unit, String, Error> for Unit {
     fn de(s: String) -> Result<Unit, Error> {
         Ok(Unit::from_str(s))
     }

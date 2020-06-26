@@ -4,15 +4,9 @@ mod widgets;
 
 use crate::{
     widgets::{layouts::*, *},
-    Error, Node,
+    Node, Serde,
 };
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
-
-/// data format transfer
-pub trait Serde<S, T> {
-    fn de(h: T) -> Result<S, Error>;
-    fn ser(&self) -> T;
-}
 
 sw! {
     Align,

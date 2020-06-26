@@ -3,7 +3,7 @@ use crate::{
     Error, Image, ImageSrc, Node, Serde, Text, TextStyle,
 };
 
-impl Serde<Image, String> for Image {
+impl Serde<Image, String, Error> for Image {
     fn de(s: String) -> Result<Image, Error> {
         let t = Node::de(s)?;
         if t.children.len() != 1 {
@@ -29,7 +29,7 @@ impl Serde<Image, String> for Image {
     }
 }
 
-impl Serde<ImageSrc, String> for ImageSrc {
+impl Serde<ImageSrc, String, Error> for ImageSrc {
     fn de(s: String) -> Result<ImageSrc, Error> {
         Ok(ImageSrc(s))
     }
@@ -39,7 +39,7 @@ impl Serde<ImageSrc, String> for ImageSrc {
     }
 }
 
-impl Serde<Text, String> for Text {
+impl Serde<Text, String, Error> for Text {
     fn de(s: String) -> Result<Text, Error> {
         let t = Node::de(s)?;
         if t.children.len() != 1 {
@@ -64,7 +64,7 @@ impl Serde<Text, String> for Text {
     }
 }
 
-impl Serde<TextStyle, String> for TextStyle {
+impl Serde<TextStyle, String, Error> for TextStyle {
     fn de(s: String) -> Result<TextStyle, Error> {
         let mut ts = TextStyle::default();
         s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
