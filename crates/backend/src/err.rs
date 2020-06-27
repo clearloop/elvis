@@ -1,3 +1,4 @@
+use notify::Error as NotifyError;
 use std::{convert::From, io::Error as IoError};
 use toml::de::Error as TomlError;
 
@@ -6,6 +7,7 @@ use toml::de::Error as TomlError;
 pub enum Error {
     IoError(IoError),
     TomlError(TomlError),
+    NotifyError(NotifyError),
     Custom(String),
 }
 
@@ -18,5 +20,11 @@ impl From<IoError> for Error {
 impl From<TomlError> for Error {
     fn from(err: TomlError) -> Error {
         Error::TomlError(err)
+    }
+}
+
+impl From<NotifyError> for Error {
+    fn from(err: NotifyError) -> Error {
+        Error::NotifyError(err)
     }
 }
