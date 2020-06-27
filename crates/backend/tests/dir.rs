@@ -1,7 +1,12 @@
-use elvis_backend::{build, BuildMode};
+use elvis_backend::Crate;
 use std::path::PathBuf;
 
 #[test]
 fn test_build() {
-    build(PathBuf::from("."), BuildMode::Debug).unwrap();
+    let root = PathBuf::from(".");
+    let pkg = Crate::new(root).unwrap();
+
+    // println!("{:?}", env::var("OUT_DIR").unwrap());
+    pkg.build().unwrap();
+    pkg.bindgen().unwrap();
 }
