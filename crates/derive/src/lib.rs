@@ -18,6 +18,6 @@ pub fn elvis(_attr: TokenStream, item: TokenStream) -> TokenStream {
             }
         }
     };
-    println!("{:?}", &expanded);
+
     TokenStream::from(expanded)
 }
