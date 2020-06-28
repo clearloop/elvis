@@ -1,9 +1,15 @@
 //! Cargo Manifest
+use crate::{
+    cargo::{CargoManifest, ManifestAndUnsedKeys},
+    err::Error,
+    html::HTML_TEMPLATE,
+};
 use cargo_metadata::{Metadata, MetadataCommand};
+use futures::join;
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
 use std::{
     collections::BTreeSet,
-    fs,
+    env, fs,
     path::PathBuf,
     process::{Command, ExitStatus},
     sync::mpsc::channel,
@@ -11,12 +17,6 @@ use std::{
 };
 use strsim::levenshtein;
 use wasm_bindgen_cli_support::Bindgen;
-
-use crate::{
-    cargo::{CargoManifest, ManifestAndUnsedKeys},
-    err::Error,
-    html::HTML_TEMPLATE,
-};
 
 const ELVIS_METADATA_KEY: &str = "package.metadata.elvis";
 
@@ -35,7 +35,8 @@ pub struct Crate {
 
 impl Crate {
     /// New crate data
-    pub fn new(root: PathBuf) -> Result<Crate, Error> {
+    pub fn new() -> Result<Crate, Error> {
+        let root = env::current_dir().unwrap_or(PathBuf::from("."));
         let manifest = root.join("Cargo.toml");
         let data = MetadataCommand::new()
             .manifest_path(&manifest)
@@ -72,25 +73,30 @@ impl Crate {
         self
     }
 
+    /// Reset root dir
+    pub fn root(&mut self, dir: PathBuf) -> &mut Self {
+        self.root = dir;
+        self
+    }
+
     /// Serve the backend
     #[tokio::main]
     pub async fn serve(&self) -> Result<(), Error> {
-        self.watch()?;
-
         fs::write(
             &self.wasm.join("index.html"),
             HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
         )?;
 
-        warp::serve(warp::filters::fs::dir(self.wasm.clone()))
-            .run(([0, 0, 0, 0], 3000))
-            .await;
+        let watcher = self.watch();
+        let server =
+            warp::serve(warp::filters::fs::dir(self.wasm.clone())).run(([0, 0, 0, 0], 3000));
 
+        join!(watcher, server).0?;
         Ok(())
     }
 
     /// Watch the file system
-    pub fn watch(&self) -> Result<(), Error> {
+    pub async fn watch(&self) -> Result<(), Error> {
         self.build_and_bindgen()?;
 
         let (tx, rx) = channel();
