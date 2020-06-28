@@ -13,5 +13,4 @@ pub struct CargoPackage {
 
 pub struct ManifestAndUnsedKeys {
     pub manifest: CargoManifest,
-    // unused_keys: BTreeSet<String>,
 }
