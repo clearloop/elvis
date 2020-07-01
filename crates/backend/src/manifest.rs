@@ -42,6 +42,8 @@ impl Crate {
             .manifest_path(&manifest)
             .exec()
             .unwrap();
+
+        // Get manifest data
         let mnk = Crate::parse_crate_data(&manifest)?;
         let idx = data
             .packages
@@ -51,6 +53,12 @@ impl Crate {
                     && Crate::is_same_path(&pkg.manifest_path, &manifest)
             })
             .ok_or_else(|| Error::Custom("failed to find package in metadata".to_string()))?;
+
+        // create dirs
+        let pkg = root.join("pkg");
+        if !pkg.exists() {
+            fs::create_dir_all(pkg)?;
+        }
 
         Ok(Crate {
             idx,
@@ -82,6 +90,7 @@ impl Crate {
     /// Serve the backend
     #[tokio::main]
     pub async fn serve(&self) -> Result<(), Error> {
+        println!("{:?}", &self.wasm);
         fs::write(
             &self.wasm.join("index.html"),
             HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
