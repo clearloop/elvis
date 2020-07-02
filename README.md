@@ -1,4 +1,5 @@
-Preparing to merge `elvis.js` and `elvis-web` into this one repo.
++ Preparing to merge `elvis.js` and `elvis-web` into this one repo.
++ Rewriting the web client of [rust.cc][rust.cc]...
 
 # Calling Elvis 🦀 🕸  🎸 📡 🚀 🪐 🛰
 
@@ -81,3 +82,4 @@ Heartbreak Hotel.
 [1]: https://elvisjs.github.io/the-elvis-book
 [2]: https://github.com/elvisjs/calling-elvis
 [3]: https://docs.rs/elvis
+[rust.cc]: https://rustcc.cn

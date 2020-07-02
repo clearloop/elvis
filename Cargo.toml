@@ -25,6 +25,7 @@ members = [
   "crates/web",
   "crates/backend",
   "crates/derive",
+  "crates/epm",
   "crates/shared",
   "examples/hello-world",
 ]

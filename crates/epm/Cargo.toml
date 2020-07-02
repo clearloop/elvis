@@ -1,0 +1,19 @@
+[package]
+name = "epm"
+version = "0.0.1"
+authors = ["clearloop <udtrokia@gmail.com>"]
+edition = "2018"
+description = "Substrate pallet manager"
+repository = "https://github.com/clearloop/epm"
+license = "MIT"
+documentation = "https://docs.rs/epm"
+homepage = "https://github.com/clearloop/epm"
+include = ["src/**/*", "Cargo.toml", "./README.md"]
+keywords = ["elvis", "web"]
+readme = './README.md'
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+structopt = "0.3.14"
+elvis-backend = { path = "../backend" }
