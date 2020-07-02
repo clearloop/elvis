@@ -21,6 +21,7 @@ use wasm_bindgen_cli_support::Bindgen;
 const ELVIS_METADATA_KEY: &str = "package.metadata.elvis";
 
 /// Elvis crate
+#[derive(Clone)]
 pub struct Crate {
     idx: usize,
     /// Build mode
@@ -87,25 +88,31 @@ impl Crate {
         self
     }
 
-    /// Serve the backend
-    #[tokio::main]
-    pub async fn serve(&self) -> Result<(), Error> {
-        println!("{:?}", &self.wasm);
+    pub fn pre_serve(&self) -> Result<(), Error> {
+        self.build_and_bindgen()?;
         fs::write(
             &self.wasm.join("index.html"),
             HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
         )?;
+        Ok(())
+    }
 
-        let watcher = self.watch();
+    /// Serve the backend
+    #[tokio::main]
+    pub async fn serve(self) -> Result<(), Error> {
+        println!("develop server start at 3000...");
         let server =
             warp::serve(warp::filters::fs::dir(self.wasm.clone())).run(([0, 0, 0, 0], 3000));
+        let watcher = tokio::task::spawn_blocking(move || self.watch());
 
-        join!(watcher, server).0?;
+        if let Err(e) = join!(watcher, server).0 {
+            return Err(Error::Custom(e.to_string()));
+        }
         Ok(())
     }
 
     /// Watch the file system
-    pub async fn watch(&self) -> Result<(), Error> {
+    pub fn watch(&self) -> Result<(), Error> {
         self.build_and_bindgen()?;
 
         let (tx, rx) = channel();
