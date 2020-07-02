@@ -5,7 +5,7 @@ use crate::{
     html::HTML_TEMPLATE,
 };
 use cargo_metadata::{Metadata, MetadataCommand};
-use futures::join;
+use futures::{join, FutureExt, StreamExt};
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
 use std::{
     collections::BTreeSet,
@@ -16,6 +16,7 @@ use std::{
     time::Duration,
 };
 use strsim::levenshtein;
+use warp::{ws::Ws, Filter};
 use wasm_bindgen_cli_support::Bindgen;
 
 const ELVIS_METADATA_KEY: &str = "package.metadata.elvis";
@@ -88,54 +89,6 @@ impl Crate {
         self
     }
 
-    pub fn pre_serve(&self) -> Result<(), Error> {
-        self.build_and_bindgen()?;
-        fs::write(
-            &self.wasm.join("index.html"),
-            HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
-        )?;
-        Ok(())
-    }
-
-    /// Serve the backend
-    #[tokio::main]
-    pub async fn serve(self) -> Result<(), Error> {
-        println!("develop server start at 3000...");
-        let server =
-            warp::serve(warp::filters::fs::dir(self.wasm.clone())).run(([0, 0, 0, 0], 3000));
-        let watcher = tokio::task::spawn_blocking(move || self.watch());
-
-        if let Err(e) = join!(watcher, server).0 {
-            return Err(Error::Custom(e.to_string()));
-        }
-        Ok(())
-    }
-
-    /// Watch the file system
-    pub fn watch(&self) -> Result<(), Error> {
-        self.build_and_bindgen()?;
-
-        let (tx, rx) = channel();
-        let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(2))?;
-        watcher.watch(&self.root, RecursiveMode::Recursive)?;
-
-        loop {
-            match rx.recv() {
-                Ok(event) => match event {
-                    DebouncedEvent::Write(event) | DebouncedEvent::Remove(event) => {
-                        if let Some(ext) = event.extension() {
-                            if ext == "rs" {
-                                self.build_and_bindgen()?;
-                            }
-                        }
-                    }
-                    _ => {}
-                },
-                Err(e) => println!("watcher error: {:?}", e),
-            }
-        }
-    }
-
     /// Build the crate
     pub fn build(&self) -> Result<ExitStatus, Error> {
         let mut cmd = Command::new("cargo");
@@ -186,6 +139,79 @@ impl Crate {
     pub fn build_and_bindgen(&self) -> Result<(), Error> {
         self.build()?;
         self.bindgen()
+    }
+
+    /// Watch the file system
+    pub fn watch(&self) -> Result<(), Error> {
+        self.build_and_bindgen()?;
+
+        // channels
+        let (tx, rx) = channel();
+        let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(2))?;
+        watcher.watch(&self.root, RecursiveMode::Recursive)?;
+
+        loop {
+            match rx.recv() {
+                Ok(event) => match event {
+                    DebouncedEvent::Write(event) | DebouncedEvent::Remove(event) => {
+                        if let Some(ext) = event.extension() {
+                            if ext == "rs" {
+                                self.build_and_bindgen()?;
+                            }
+                        }
+                    }
+                    _ => {}
+                },
+                Err(e) => println!("watcher error: {:?}", e),
+            }
+        }
+    }
+
+    /// Pre-serve app
+    fn pre_serve(&self) -> Result<(), Error> {
+        self.build_and_bindgen()?;
+        fs::write(
+            &self.wasm.join("index.html"),
+            HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
+        )?;
+        Ok(())
+    }
+
+    /// Serve the backend
+    #[tokio::main]
+    async fn tokio_serve(self) -> Result<(), Error> {
+        let index = warp::filters::fs::dir(self.wasm.clone());
+        let updater = warp::path("updater").and(warp::ws()).map(|ws: Ws| {
+            ws.on_upgrade(move |socket| {
+                let (tx, rx) = socket.split();
+                rx.forward(tx).map(|result| {
+                    if let Err(e) = result {
+                        eprintln!("websocket error: {:?}", e);
+                    }
+                })
+            })
+        });
+
+        // dev http server
+        let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], 3000));
+
+        // file watcher
+        let watcher = tokio::task::spawn_blocking(move || self.watch());
+        if let Err(e) = join!(watcher, server).0 {
+            return Err(Error::Custom(e.to_string()));
+        }
+
+        Ok(())
+    }
+
+    /// Serve app
+    pub fn serve(self) -> Result<(), Error> {
+        &self.pre_serve()?;
+        if let Err(_) = self.tokio_serve() {
+            return Err(Error::Custom("tokio error".into()));
+        }
+
+        Ok(())
     }
 
     fn name(&self) -> String {

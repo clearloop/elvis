@@ -12,7 +12,7 @@ pub struct Index;
 pub fn run() {
     let mut center = Widget::new(Center {
         child: Text {
-            text: "hello, world!!".into(),
+            text: "hello, world!!!".into(),
             style: TextStyle::default(),
         }
         .into(),
