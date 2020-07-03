@@ -2,28 +2,21 @@
 use crate::{
     cargo::{CargoManifest, ManifestAndUnsedKeys},
     err::Error,
-    html::DEV_HTML_TEMPLATE,
+    html::HTML_TEMPLATE,
 };
 use cargo_metadata::{Metadata, MetadataCommand};
 use futures::{join, FutureExt, StreamExt};
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
 use std::{
-    collections::{BTreeSet, HashMap},
+    collections::BTreeSet,
     env, fs,
     path::PathBuf,
     process::{Command, ExitStatus},
-    sync::{
-        mpsc::{channel, Sender},
-        Arc,
-    },
+    sync::mpsc::channel,
     time::Duration,
 };
 use strsim::levenshtein;
-use tokio::sync::{mpsc, RwLock};
-use warp::{
-    ws::{Message, Ws},
-    Filter,
-};
+use warp::{ws::Ws, Filter};
 use wasm_bindgen_cli_support::Bindgen;
 
 const ELVIS_METADATA_KEY: &str = "package.metadata.elvis";
@@ -41,8 +34,6 @@ pub struct Crate {
     /// The out wasm path
     wasm: PathBuf,
 }
-
-type Clients = Arc<RwLock<HashMap<usize, mpsc::UnboundedSender<Result<Message, warp::Error>>>>>;
 
 impl Crate {
     /// New crate data
@@ -151,20 +142,18 @@ impl Crate {
     }
 
     /// Watch the file system
-    pub fn watch(self, updater: Sender<bool>) -> Result<(), Error> {
+    pub fn watch(&self) -> Result<(), Error> {
         self.build_and_bindgen()?;
 
-        // channel
+        // channels
         let (tx, rx) = channel();
         let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(2))?;
         watcher.watch(&self.root, RecursiveMode::Recursive)?;
 
-        // watch files
         loop {
-            if let Ok(event) = rx.recv() {
-                match event {
+            match rx.recv() {
+                Ok(event) => match event {
                     DebouncedEvent::Write(event) | DebouncedEvent::Remove(event) => {
-                        updater.send(true);
                         if let Some(ext) = event.extension() {
                             if ext == "rs" {
                                 self.build_and_bindgen()?;
@@ -172,7 +161,8 @@ impl Crate {
                         }
                     }
                     _ => {}
-                }
+                },
+                Err(e) => println!("watcher error: {:?}", e),
             }
         }
     }
@@ -182,7 +172,7 @@ impl Crate {
         self.build_and_bindgen()?;
         fs::write(
             &self.wasm.join("index.html"),
-            DEV_HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
+            HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
         )?;
         Ok(())
     }
@@ -190,34 +180,23 @@ impl Crate {
     /// Serve the backend
     #[tokio::main]
     async fn tokio_serve(self) -> Result<(), Error> {
-        // file watcher
-        let clients = warp::any().map(move || Clients::default());
-
         let index = warp::filters::fs::dir(self.wasm.clone());
-        let updater =
-            warp::path("updater")
-                .and(warp::ws())
-                .and(clients)
-                .map(|ws: Ws, client: Clients| {
-                    ws.on_upgrade(move |socket| {
-                        let (tx, rx) = socket.split();
-                        // if let Ok(b) = wrx.recv() {
-                        //     println!("hello");
-                        // }
-
-                        rx.forward(tx).map(|result| {
-                            if let Err(e) = result {
-                                eprintln!("websocket error: {:?}", e);
-                            }
-                        })
-                    })
-                });
-
-        // start watcher
-        let watcher = tokio::task::spawn_blocking(move || self.watch(wtx));
+        let updater = warp::path("updater").and(warp::ws()).map(|ws: Ws| {
+            ws.on_upgrade(move |socket| {
+                let (tx, rx) = socket.split();
+                rx.forward(tx).map(|result| {
+                    if let Err(e) = result {
+                        eprintln!("websocket error: {:?}", e);
+                    }
+                })
+            })
+        });
 
         // dev http server
         let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], 3000));
+
+        // file watcher
+        let watcher = tokio::task::spawn_blocking(move || self.watch());
         if let Err(e) = join!(watcher, server).0 {
             return Err(Error::Custom(e.to_string()));
         }

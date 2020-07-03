@@ -94,7 +94,7 @@ impl Node {
 
     /// delete spefic child using rc
     pub fn remove(&mut self, c: Rc<RefCell<Node>>) {
-        self.children.remove_item(&c);
+        self.children.retain(|x| x != &c);
         self.update();
     }
 

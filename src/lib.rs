@@ -52,9 +52,6 @@
 //!
 //! [1]: https://clearloop.github.io/elvis
 //! [2]: https://docs.rs/elvis
-#![feature(try_trait)]
-#![feature(box_syntax)]
-#![feature(vec_remove_item)]
 mod bridge;
 mod err;
 mod tree;
