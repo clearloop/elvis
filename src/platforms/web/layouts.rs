@@ -170,13 +170,7 @@ impl Serde<FlexStyle, String, Error> for FlexStyle {
         s += &self.direction.ser();
         s += &format!("flex-grow: {};", self.grow.ser());
         s += &format!("flex-order: {};", self.order.ser());
-        s += &format!(
-            "wrap: {};",
-            match self.wrap {
-                true => "wrap",
-                false => "no-wrap",
-            }
-        );
+        s += &format!("wrap: {};", if self.wrap { "wrap" } else { "no-wrap" });
         s
     }
 }

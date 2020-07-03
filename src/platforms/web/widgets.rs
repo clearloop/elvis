@@ -12,9 +12,10 @@ impl Serde<Image, String, Error> for Image {
             ));
         }
 
-        let child: Node = match t.children.is_empty() {
-            true => Node::default(),
-            false => t.children[0].borrow().to_owned(),
+        let child: Node = if t.children.is_empty() {
+            t.children[0].borrow().to_owned()
+        } else {
+            Node::default()
         };
 
         Ok(Image::new(
@@ -109,13 +110,16 @@ impl Serde<TextStyle, String, Error> for TextStyle {
     fn ser(&self) -> String {
         format!(
             "color: {}; font-weight: {}; font-style: {}; font-size: {}; font-stretch: {}; line-height: {};",
-            self.color.ser(), match self.bold {
-                true => "700".into(),
-                false => self.weight.ser(),
+            self.color.ser(),
+            if self.bold {
+                "700".into()
+            } else {
+                self.weight.ser()
             },
-            match self.italic {
-                true => "italic",
-                false => "normal"
+            if self.italic {
+                "italic"
+            } else {
+                "normal"
             },
             self.size.ser(),
             self.stretch.ser(),
