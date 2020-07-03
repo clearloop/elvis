@@ -4,4 +4,4 @@ mod err;
 mod html;
 mod manifest;
 
-pub use self::{err::Error, html::DEV_HTML_TEMPLATE, manifest::Crate};
+pub use self::{err::Error, html::HTML_TEMPLATE, manifest::Crate};

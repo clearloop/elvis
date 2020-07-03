@@ -2,21 +2,24 @@
 use crate::{
     cargo::{CargoManifest, ManifestAndUnsedKeys},
     err::Error,
-    html::HTML_TEMPLATE,
+    html::DEV_HTML_TEMPLATE,
 };
 use cargo_metadata::{Metadata, MetadataCommand};
-use futures::{join, FutureExt, StreamExt};
+use futures::{join, sink::SinkExt, StreamExt};
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
 use std::{
     collections::BTreeSet,
     env, fs,
     path::PathBuf,
     process::{Command, ExitStatus},
-    sync::mpsc::channel,
+    sync::mpsc::{channel, Sender},
     time::Duration,
 };
 use strsim::levenshtein;
-use warp::{ws::Ws, Filter};
+use warp::{
+    ws::{Message, WebSocket, Ws},
+    Filter,
+};
 use wasm_bindgen_cli_support::Bindgen;
 
 const ELVIS_METADATA_KEY: &str = "package.metadata.elvis";
@@ -142,7 +145,7 @@ impl Crate {
     }
 
     /// Watch the file system
-    pub fn watch(&self) -> Result<(), Error> {
+    pub fn watch(&self, _: Sender<bool>) -> Result<(), Error> {
         self.build_and_bindgen()?;
 
         // channels
@@ -172,31 +175,34 @@ impl Crate {
         self.build_and_bindgen()?;
         fs::write(
             &self.wasm.join("index.html"),
-            HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
+            DEV_HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
         )?;
         Ok(())
+    }
+
+    /// Handle the updater
+    async fn client_connect(ws: WebSocket) {
+        let (mut tx, _) = ws.split();
+        if let Err(e) = tx.send(Message::text("hello")).await {
+            eprintln!("websocket err :{:?}", e);
+        }
     }
 
     /// Serve the backend
     #[tokio::main]
     async fn tokio_serve(self) -> Result<(), Error> {
+        let (tx, _) = channel();
+
         let index = warp::filters::fs::dir(self.wasm.clone());
-        let updater = warp::path("updater").and(warp::ws()).map(|ws: Ws| {
-            ws.on_upgrade(move |socket| {
-                let (tx, rx) = socket.split();
-                rx.forward(tx).map(|result| {
-                    if let Err(e) = result {
-                        eprintln!("websocket error: {:?}", e);
-                    }
-                })
-            })
-        });
+        let updater = warp::path("updater")
+            .and(warp::ws())
+            .map(|ws: Ws| ws.on_upgrade(move |socket| Self::client_connect(socket)));
 
         // dev http server
         let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], 3000));
 
         // file watcher
-        let watcher = tokio::task::spawn_blocking(move || self.watch());
+        let watcher = tokio::task::spawn_blocking(move || self.watch(tx));
         if let Err(e) = join!(watcher, server).0 {
             return Err(Error::Custom(e.to_string()));
         }
@@ -204,7 +210,7 @@ impl Crate {
         Ok(())
     }
 
-    /// Serve app
+    /// Serve APP
     pub fn serve(self) -> Result<(), Error> {
         &self.pre_serve()?;
         if let Err(_) = self.tokio_serve() {

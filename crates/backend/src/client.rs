@@ -4,7 +4,7 @@ use std::sync::{
     Arc,
 };
 
-use futures::{FutureExt, StreamExt};
+use futures::{sink::SinkExt, FutureExt, StreamExt};
 use tokio::sync::{mpsc, RwLock};
 use warp::ws::{Message, WebSocket};
 
@@ -24,7 +24,10 @@ pub async fn client_connected(ws: WebSocket, clients: Clients) {
     eprintln!("new chat client: {}", my_id);
 
     // Split the socket into a sender and receive of messages.
-    let (client_ws_tx, mut client_ws_rx) = ws.split();
+    let (mut client_ws_tx, mut client_ws_rx) = ws.split();
+
+    // send messages to client
+    client_ws_tx.send(Message::text("hello")).await.unwrap();
 
     // Use an unbounded channel to handle buffering and flushing of messages
     // to the websocket...
