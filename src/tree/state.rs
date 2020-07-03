@@ -33,7 +33,7 @@ impl<W, P> State<W, P> {
         self.state.get(&k).unwrap_or(&"".to_string()).to_string()
     }
 
-    pub fn set<'s>(&mut self, k: &str, v: &str) {
+    pub fn set(&mut self, k: &str, v: &str) {
         self.state.insert(k.to_string(), v.to_string());
     }
 }

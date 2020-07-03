@@ -1,4 +1,7 @@
 //! unit system
+use crate::Error;
+use std::str::FromStr;
+
 /// Follows [CSS Values 3][1] drafted in [csswg.org][2].
 ///
 /// ## Absolute Lengths
@@ -59,9 +62,24 @@ pub enum Unit {
     None(f64),
 }
 
-impl Unit {
-    /// generate `Unit` from str
-    pub fn from_str(s: String) -> Unit {
+impl Eq for Unit {}
+
+impl PartialEq for Unit {
+    fn eq(&self, o: &Self) -> bool {
+        self.to_string().eq(&o.to_string())
+    }
+}
+
+impl Default for Unit {
+    fn default() -> Unit {
+        Unit::Em(1.0)
+    }
+}
+
+impl FromStr for Unit {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Unit, Self::Err> {
         let t = s.trim();
         let u = t
             .find(|c: char| !c.is_numeric() && !c.eq(&'.'))
@@ -70,8 +88,9 @@ impl Unit {
         let v: f64 = t[..u]
             .trim()
             .parse()
-            .unwrap_or(t[u..].trim().parse().unwrap_or(1.0));
-        match t[u..].trim().to_ascii_lowercase().as_str() {
+            .unwrap_or_else(|_| t[u..].trim().parse().unwrap_or(1.0));
+
+        Ok(match t[u..].trim().to_ascii_lowercase().as_str() {
             "inherit" => Unit::Auto,
             "ch" => Unit::Ch(v),
             "cm" => Unit::Cm(v),
@@ -93,11 +112,12 @@ impl Unit {
             "vw" => Unit::Vw(v),
             "%" => Unit::Percent(t[..u].parse().unwrap_or(100.0)),
             _ => Unit::None(v),
-        }
+        })
     }
+}
 
-    /// common string style
-    pub fn to_string(&self) -> String {
+impl ToString for Unit {
+    fn to_string(&self) -> String {
         match self {
             Unit::Auto => "inherit".into(),
             Unit::Ch(n) => format!("{:.1}ch", n),
@@ -121,19 +141,5 @@ impl Unit {
             Unit::Percent(n) => format!("{:.1}%", n),
             Unit::None(n) => format!("{:.0}", n),
         }
-    }
-}
-
-impl Eq for Unit {}
-
-impl PartialEq for Unit {
-    fn eq(&self, o: &Self) -> bool {
-        self.to_string().eq(&o.to_string())
-    }
-}
-
-impl Default for Unit {
-    fn default() -> Unit {
-        Unit::Em(1.0)
     }
 }

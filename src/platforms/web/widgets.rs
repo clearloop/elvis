@@ -12,9 +12,10 @@ impl Serde<Image, String, Error> for Image {
             ));
         }
 
-        let child: Node = match t.children.len() > 0 {
-            true => t.children[0].borrow().to_owned(),
-            false => Node::default(),
+        let child: Node = if t.children.is_empty() {
+            t.children[0].borrow().to_owned()
+        } else {
+            Node::default()
         };
 
         Ok(Image::new(
@@ -54,7 +55,7 @@ impl Serde<Text, String, Error> for Text {
                 .get("text")
                 .unwrap_or(&"".to_string())
                 .to_string(),
-            TextStyle::de(t.attrs.get("style").unwrap_or(&"".into()).to_string())?.into(),
+            TextStyle::de(t.attrs.get("style").unwrap_or(&"".into()).to_string())?,
         ))
     }
 
@@ -67,12 +68,12 @@ impl Serde<Text, String, Error> for Text {
 impl Serde<TextStyle, String, Error> for TextStyle {
     fn de(s: String) -> Result<TextStyle, Error> {
         let mut ts = TextStyle::default();
-        s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
-            if x.len() < 1 {
+        s.split(';').collect::<Vec<&str>>().iter().for_each(|x| {
+            if x.is_empty() {
                 return;
             }
 
-            let v = x[(x.find(":").unwrap_or(0) + 1)..].trim();
+            let v = x[(x.find(':').unwrap_or(0) + 1)..].trim();
             match x {
                 k if k.contains("color") => {
                     ts.color = Colors::de(v.into()).unwrap_or(Colors::Black)
@@ -80,7 +81,7 @@ impl Serde<TextStyle, String, Error> for TextStyle {
                 k if k.contains("font-weight") => {
                     ts.weight = Unit::de(v.into()).unwrap_or(Unit::None(400.0));
                     ts.bold = match ts.weight {
-                        Unit::None(x) => x == 700.0,
+                        Unit::None(x) => (x - 700.0).abs() == 0.0,
                         _ => false,
                     }
                 }
@@ -109,13 +110,16 @@ impl Serde<TextStyle, String, Error> for TextStyle {
     fn ser(&self) -> String {
         format!(
             "color: {}; font-weight: {}; font-style: {}; font-size: {}; font-stretch: {}; line-height: {};",
-            self.color.ser(), match self.bold {
-                true => "700".into(),
-                false => self.weight.ser(),
+            self.color.ser(),
+            if self.bold {
+                "700".into()
+            } else {
+                self.weight.ser()
             },
-            match self.italic {
-                true => "italic",
-                false => "normal"
+            if self.italic {
+                "italic"
+            } else {
+                "normal"
             },
             self.size.ser(),
             self.stretch.ser(),

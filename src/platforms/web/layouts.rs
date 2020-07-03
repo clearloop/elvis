@@ -74,8 +74,8 @@ sm! {
 
 fn parse<'p>(s: &'p str) -> Vec<(&'p str, &'p str)> {
     let mut attrs: Vec<(&str, &str)> = vec![];
-    s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
-        if let Some(m) = x.find(":") {
+    s.split(';').collect::<Vec<&str>>().iter().for_each(|x| {
+        if let Some(m) = x.find(':') {
             attrs.push((x[..m].trim(), &x[m..].trim()));
         }
     });
@@ -170,13 +170,7 @@ impl Serde<FlexStyle, String, Error> for FlexStyle {
         s += &self.direction.ser();
         s += &format!("flex-grow: {};", self.grow.ser());
         s += &format!("flex-order: {};", self.order.ser());
-        s += &format!(
-            "wrap: {};",
-            match self.wrap {
-                true => "wrap",
-                false => "no-wrap",
-            }
-        );
+        s += &format!("wrap: {};", if self.wrap { "wrap" } else { "no-wrap" });
         s
     }
 }
@@ -290,11 +284,11 @@ impl Serde<SizedBoxStyle, String, Error> for SizedBoxStyle {
 // enums
 impl Serde<Alignments, String, Error> for Alignments {
     fn de(s: String) -> Result<Alignments, Error> {
-        let ss = s.split(";").collect::<Vec<&str>>();
+        let ss = s.split(';').collect::<Vec<&str>>();
         assert!(ss.len() == 2);
 
-        let ai = ss[0][ss[0].find(":").unwrap_or(0)..].trim();
-        let jc = ss[1][ss[1].find(":").unwrap_or(0)..].trim();
+        let ai = ss[0][ss[0].find(':').unwrap_or(0)..].trim();
+        let jc = ss[1][ss[1].find(':').unwrap_or(0)..].trim();
 
         Ok(match ai {
             "flex-end" => match jc {
@@ -337,7 +331,7 @@ impl Serde<Alignments, String, Error> for Alignments {
 
 impl Serde<FlexBasis, String, Error> for FlexBasis {
     fn de(s: String) -> Result<FlexBasis, Error> {
-        let kv = s.split(":").collect::<Vec<&str>>();
+        let kv = s.split(':').collect::<Vec<&str>>();
         assert!(kv.len() == 2);
 
         Ok(match kv[1].trim() {
@@ -365,7 +359,7 @@ impl Serde<FlexBasis, String, Error> for FlexBasis {
 
 impl Serde<FlexDirection, String, Error> for FlexDirection {
     fn de(s: String) -> Result<FlexDirection, Error> {
-        let kv = s.split(":").collect::<Vec<&str>>();
+        let kv = s.split(':').collect::<Vec<&str>>();
         assert!(kv.len() == 2);
 
         Ok(match kv[1].trim() {
@@ -392,7 +386,7 @@ impl Serde<FlexDirection, String, Error> for FlexDirection {
 
 impl Serde<GridAuto, String, Error> for GridAuto {
     fn de(s: String) -> Result<GridAuto, Error> {
-        let v = s.split(":").collect::<Vec<&str>>()[1].trim();
+        let v = s.split(':').collect::<Vec<&str>>()[1].trim();
         Ok(match v {
             "auto" => GridAuto::Auto,
             "max-content" => GridAuto::MaxContent,
@@ -401,8 +395,8 @@ impl Serde<GridAuto, String, Error> for GridAuto {
             "initial" => GridAuto::Initial,
             "unset" => GridAuto::Unset,
             m if m.contains("minmax") => {
-                if let Some(i) = m.find("(") {
-                    let cr = m[i..(m.len() - 1)].split(",").collect::<Vec<&str>>();
+                if let Some(i) = m.find('(') {
+                    let cr = m[i..(m.len() - 1)].split(',').collect::<Vec<&str>>();
                     assert!(cr.len() == 2);
 
                     GridAuto::MinMax(
@@ -427,34 +421,31 @@ impl Serde<GridAuto, String, Error> for GridAuto {
     }
 
     fn ser(&self) -> String {
-        format!(
-            "{}",
-            match self {
-                GridAuto::Auto => "auto".to_string(),
-                GridAuto::MaxContent => "max-content".to_string(),
-                GridAuto::MinContent => "min-content".to_string(),
-                GridAuto::MinMax(c, r) => format!("minmax({}, {})", c.ser(), r.ser()),
-                GridAuto::Fixed(u) => u.ser(),
-                GridAuto::Inherit => "inherit".to_string(),
-                GridAuto::Initial => "initial".to_string(),
-                GridAuto::Unset => "unset".to_string(),
-                GridAuto::Plain(x) => {
-                    let mut s = "".to_string();
-                    for i in x {
-                        s += &i.ser();
-                        s += " ";
-                    }
-
-                    s
+        match self {
+            GridAuto::Auto => "auto".to_string(),
+            GridAuto::MaxContent => "max-content".to_string(),
+            GridAuto::MinContent => "min-content".to_string(),
+            GridAuto::MinMax(c, r) => format!("minmax({}, {})", c.ser(), r.ser()),
+            GridAuto::Fixed(u) => u.ser(),
+            GridAuto::Inherit => "inherit".to_string(),
+            GridAuto::Initial => "initial".to_string(),
+            GridAuto::Unset => "unset".to_string(),
+            GridAuto::Plain(x) => {
+                let mut s = "".to_string();
+                for i in x {
+                    s += &i.ser();
+                    s += " ";
                 }
+
+                s
             }
-        )
+        }
     }
 }
 
 impl Serde<GridFlow, String, Error> for GridFlow {
     fn de(s: String) -> Result<GridFlow, Error> {
-        let v = s.split(":").collect::<Vec<&str>>()[1].trim();
+        let v = s.split(':').collect::<Vec<&str>>()[1].trim();
         Ok(match v {
             "column" => GridFlow::Column,
             "column dense" => GridFlow::ColumnDense,
@@ -463,30 +454,28 @@ impl Serde<GridFlow, String, Error> for GridFlow {
             "initial" => GridFlow::Initial,
             "row" => GridFlow::Row,
             "row dense" => GridFlow::RowDense,
-            "unset" | _ => GridFlow::Unset,
+            _ => GridFlow::Unset,
         })
     }
 
     fn ser(&self) -> String {
-        format!(
-            "{}",
-            match self {
-                GridFlow::Column => "column",
-                GridFlow::ColumnDense => "column dense",
-                GridFlow::Dense => "dense",
-                GridFlow::Inherit => "inherit",
-                GridFlow::Initial => "initial",
-                GridFlow::Row => "row",
-                GridFlow::RowDense => "row dense",
-                GridFlow::Unset => "unset",
-            }
-        )
+        match self {
+            GridFlow::Column => "column",
+            GridFlow::ColumnDense => "column dense",
+            GridFlow::Dense => "dense",
+            GridFlow::Inherit => "inherit",
+            GridFlow::Initial => "initial",
+            GridFlow::Row => "row",
+            GridFlow::RowDense => "row dense",
+            GridFlow::Unset => "unset",
+        }
+        .to_string()
     }
 }
 
 impl Serde<GridTemplate, String, Error> for GridTemplate {
     fn de(s: String) -> Result<GridTemplate, Error> {
-        let kv = s.split(":").collect::<Vec<&str>>();
+        let kv = s.split(':').collect::<Vec<&str>>();
         assert!(kv.len() == 2);
 
         Ok(match kv[1].trim() {
@@ -496,15 +485,15 @@ impl Serde<GridTemplate, String, Error> for GridTemplate {
             "unset" => GridTemplate::Unset,
             "none" => GridTemplate::None,
             x if x.contains("fit-content") => {
-                if let Some(i) = x.find("(") {
+                if let Some(i) = x.find('(') {
                     GridTemplate::FitContent(Unit::de(x[i..(x.len() - 1)].trim().to_string())?)
                 } else {
                     GridTemplate::Unset
                 }
             }
             m if m.contains("minmax") => {
-                if let Some(i) = m.find("(") {
-                    let ai = m[i..(m.len() - 1)].split(",").collect::<Vec<&str>>();
+                if let Some(i) = m.find('(') {
+                    let ai = m[i..(m.len() - 1)].split(',').collect::<Vec<&str>>();
                     assert!(ai.len() == 2);
 
                     GridTemplate::MinMax(
@@ -516,9 +505,9 @@ impl Serde<GridTemplate, String, Error> for GridTemplate {
                 }
             }
             _ => {
-                if let Some(b) = kv[1].find("(") {
+                if let Some(b) = kv[1].find('(') {
                     let nv = kv[1][b..(kv[1].len() - 1)]
-                        .split(",")
+                        .split(',')
                         .collect::<Vec<&str>>();
                     assert!(nv.len() == 2);
 
@@ -541,36 +530,31 @@ impl Serde<GridTemplate, String, Error> for GridTemplate {
     }
 
     fn ser(&self) -> String {
-        format!(
-            "{}",
-            match self {
-                GridTemplate::FitContent(u) => format!("fit-content({})", u.ser()),
-                GridTemplate::Inherit => "inherit".to_string(),
-                GridTemplate::Initial => "initial".to_string(),
-                GridTemplate::MinMax(i, a) => format!("minmax({}, {})", i.ser(), a.ser()),
-                GridTemplate::None => "none".to_string(),
-                GridTemplate::Plain(x) => {
-                    let mut s = "".to_string();
-                    for i in x {
-                        s += &i.ser();
-                        s += " ";
-                    }
+        match self {
+            GridTemplate::FitContent(u) => format!("fit-content({})", u.ser()),
+            GridTemplate::Inherit => "inherit".to_string(),
+            GridTemplate::Initial => "initial".to_string(),
+            GridTemplate::MinMax(i, a) => format!("minmax({}, {})", i.ser(), a.ser()),
+            GridTemplate::None => "none".to_string(),
+            GridTemplate::Plain(x) => {
+                let mut s = "".to_string();
+                for i in x {
+                    s += &i.ser();
+                    s += " ";
+                }
 
-                    s
-                }
-                GridTemplate::Repeat(n, u) => {
-                    format!("({}, {})", n, u.ser())
-                }
-                GridTemplate::SubGrid => "subgrid".to_string(),
-                GridTemplate::Unset => "unit".to_string(),
+                s
             }
-        )
+            GridTemplate::Repeat(n, u) => format!("({}, {})", n, u.ser()),
+            GridTemplate::SubGrid => "subgrid".to_string(),
+            GridTemplate::Unset => "unit".to_string(),
+        }
     }
 }
 
 impl Serde<MultiColumnLineStyle, String, Error> for MultiColumnLineStyle {
     fn de(s: String) -> Result<MultiColumnLineStyle, Error> {
-        let kv = s.split(":").collect::<Vec<&str>>();
+        let kv = s.split(':').collect::<Vec<&str>>();
         assert!(kv.len() == 2);
 
         Ok(match kv[1] {

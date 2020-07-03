@@ -1,7 +1,6 @@
 use elvis_backend::Crate;
 
-#[test]
-fn test_build() {
+fn main() {
     let pkg = Crate::new().unwrap();
 
     pkg.build().unwrap();
