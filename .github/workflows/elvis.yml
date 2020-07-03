@@ -22,7 +22,7 @@ jobs:
         with:
           path: ./target
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./Cargo.lock') }}
-      - nanme: Deps
+      - name: Deps
         run: rustup target add wasm32-unknown-unknown
       - name: Build
         run: cargo build --all --verbose
