@@ -12,7 +12,10 @@ use std::{
     env, fs,
     path::PathBuf,
     process::{Command, ExitStatus},
-    sync::mpsc::{channel, Sender},
+    sync::{
+        mpsc::{channel, Receiver, Sender},
+        Arc, Mutex,
+    },
     time::Duration,
 };
 use strsim::levenshtein;
@@ -145,7 +148,7 @@ impl Crate {
     }
 
     /// Watch the file system
-    pub fn watch(&self, _: Sender<bool>) -> Result<(), Error> {
+    pub fn watch(&self, wtx: Sender<bool>) -> Result<(), Error> {
         self.build_and_bindgen()?;
 
         // channels
@@ -160,6 +163,7 @@ impl Crate {
                         if let Some(ext) = event.extension() {
                             if ext == "rs" {
                                 self.build_and_bindgen()?;
+                                wtx.send(true).unwrap_or_default();
                             }
                         }
                     }
@@ -181,22 +185,38 @@ impl Crate {
     }
 
     /// Handle the updater
-    async fn client_connect(ws: WebSocket) {
-        let (mut tx, _) = ws.split();
-        if let Err(e) = tx.send(Message::text("hello")).await {
-            eprintln!("websocket err :{:?}", e);
+    async fn client_connect(ws: WebSocket, rx: Arc<Mutex<Receiver<bool>>>) {
+        let (mut tx, mut crx) = ws.split();
+
+        while let Some(_) = crx.next().await {
+            if rx.lock().unwrap().recv().is_ok() {
+                println!("hello, world");
+                if let Err(e) = tx.send(Message::text("hello")).await {
+                    eprintln!("websocket err :{:?}", e);
+                }
+            }
         }
+        // Need to check this `unwrap`
+        tokio::task::spawn_blocking(move || loop {
+            if rx.lock().unwrap().recv().is_ok() {
+                println!("hello, world");
+                futures::poll(tx.send(Message::text("hello")));
+            }
+        });
     }
 
     /// Serve the backend
     #[tokio::main]
     async fn tokio_serve(self) -> Result<(), Error> {
-        let (tx, _) = channel();
+        let (tx, rx) = channel();
+        let rx = Arc::new(Mutex::new(rx));
+        let rx = warp::any().map(move || rx.clone());
 
         let index = warp::filters::fs::dir(self.wasm.clone());
         let updater = warp::path("updater")
             .and(warp::ws())
-            .map(|ws: Ws| ws.on_upgrade(move |socket| Self::client_connect(socket)));
+            .and(rx)
+            .map(|ws: Ws, rx| ws.on_upgrade(move |socket| Self::client_connect(socket, rx)));
 
         // dev http server
         let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], 3000));
