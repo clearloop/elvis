@@ -25,17 +25,16 @@ pub struct Node {
 impl Node {
     /// drain tree if not the root
     pub fn drain(t: Rc<RefCell<Node>>) {
-        if let Some(pre) = &t.clone().borrow().pre {
+        if let Some(pre) = &t.borrow().pre {
             let u = pre.upgrade().expect("drain child failed");
-            u.borrow_mut().remove(t);
+            u.borrow_mut().remove(t.clone());
             u.borrow_mut().update();
         }
     }
 
     pub fn idx(&mut self, path: &mut Vec<u8>) {
-        self.attrs
-            .entry("id".into())
-            .or_insert(hash(&self.tag, &path));
+        let h = hash(&self.tag, &path);
+        self.attrs.entry("id".into()).or_insert(h);
 
         path.push(0);
         for t in self.children.iter() {

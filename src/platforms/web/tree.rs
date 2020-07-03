@@ -44,7 +44,7 @@ fn rde<'t>(
     if h.is_empty() {
         return Ok((Rc::new(RefCell::new(Node::default())), None));
     } else if h.find("</").is_none() {
-        return Ok((Rc::new(RefCell::new(self::plain(h, pre.clone()))), None));
+        return Ok((Rc::new(RefCell::new(self::plain(h, pre))), None));
     }
 
     // the return-will tree
@@ -64,14 +64,15 @@ fn rde<'t>(
     }
 
     // communite with child parser
-    let mut ext = None;
-    if (pos + 1) != h.len() {
-        ext = Some(Extra {
+    let ext = if (pos + 1) != h.len() {
+        Some(Extra {
             end: false,
-            pos: pos,
+            pos,
             tag: cext.tag,
-        });
-    }
+        })
+    } else {
+        None
+    };
 
     let mut bt = tree.borrow_mut();
     bt.pre = pre;
@@ -141,10 +142,7 @@ fn ch<'t>(
                                 &tag, &cht, &itag
                             )));
                         } else if !cht[c.0..c.1].is_empty() {
-                            children.push(Rc::new(RefCell::new(self::plain(
-                                &cht[c.0..c.1],
-                                pre.clone(),
-                            ))));
+                            children.push(Rc::new(RefCell::new(self::plain(&cht[c.0..c.1], pre))));
                         }
 
                         return Ok(Extra {
@@ -191,94 +189,100 @@ fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Node>>>) -> Node {
     attrs.insert("text".into(), h.into());
 
     Node {
-        pre: pre.clone(),
+        pre,
         tag: "plain".into(),
-        attrs: attrs,
+        attrs,
         children: vec![],
     }
 }
 
 /// parse html tag
 fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<String, String>), Error> {
-    let (mut t, mut k, mut v) = ((0, 0), (0, 0), (0, 0));
+    let (mut tag, mut key, mut value) = ((0, 0), (0, 0), (0, 0));
     let mut attrs = HashMap::<String, String>::new();
     let mut process = TagProcess::None;
     for (p, q) in h.chars().enumerate() {
         match q {
             '<' => {
                 process = TagProcess::Tag;
-                t.0 = p + 1;
-                t.1 = p + 1;
+                tag.0 = p + 1;
+                tag.1 = p + 1;
             }
             '>' => {
                 match process {
-                    TagProcess::Tag => t.1 = p,
+                    TagProcess::Tag => tag.1 = p,
                     TagProcess::Attrs => {
-                        if !&h[k.0..k.1].trim().is_empty() {
-                            attrs.insert(h[k.0..k.1].trim().to_string(), h[v.0..v.1].trim().into());
+                        if !&h[key.0..key.1].trim().is_empty() {
+                            attrs.insert(
+                                h[key.0..key.1].trim().to_string(),
+                                h[value.0..value.1].trim().into(),
+                            );
                         }
                     }
                     _ => {}
                 }
 
                 *pos = *pos + p + 1;
-                return Ok((&h[t.0..t.1].trim(), attrs));
+                return Ok((&h[tag.0..tag.1].trim(), attrs));
             }
             '"' => match process {
                 TagProcess::Quote => {
                     process = TagProcess::Attrs;
-                    v.1 = p;
+                    value.1 = p;
                 }
                 _ => {
-                    v.0 = p + 1;
-                    v.1 = p + 1;
+                    value.0 = p + 1;
+                    value.1 = p + 1;
                     process = TagProcess::Quote;
                 }
             },
             '=' => match process {
-                TagProcess::Attrs => k.1 = p,
+                TagProcess::Attrs => key.1 = p,
                 _ => {
                     return Err(Error::DeserializeHtmlError(format!(
                         "html tag parse failed: {}, html: {}",
-                        &h[t.0..t.1],
+                        &h[tag.0..tag.1],
                         &h
                     )))
                 }
             },
             x if x.is_whitespace() => match process {
                 TagProcess::Tag => {
-                    if h[t.0..t.1].trim().is_empty() {
-                        t.1 = p;
+                    if h[tag.0..tag.1].trim().is_empty() {
+                        tag.1 = p;
                     } else {
                         process = TagProcess::Attrs;
-                        k.0 = p + 1;
-                        k.1 = p + 1;
+                        key.0 = p + 1;
+                        key.1 = p + 1;
                     }
                 }
                 TagProcess::Quote => {
-                    v.1 = p;
+                    value.1 = p;
                 }
                 TagProcess::Attrs => {
-                    if (k.1 - k.0 != 0) && (v.1 - v.0 != 0) {
-                        attrs.insert(h[k.0..k.1].trim().to_string(), h[v.0..v.1].trim().into());
-                        k.0 = p;
-                        k.1 = p;
+                    if (key.1 - key.0 != 0) && (value.1 - value.0 != 0) {
+                        attrs.insert(
+                            h[key.0..key.1].trim().to_string(),
+                            h[value.0..value.1].trim().into(),
+                        );
+                        key.0 = p;
+                        key.1 = p;
                     }
                 }
                 _ => {}
             },
             x if !x.is_whitespace() => match process {
                 TagProcess::Tag => {
-                    t.1 = p + 1;
+                    tag.1 = p + 1;
                 }
                 TagProcess::Quote => {
-                    v.1 = p;
+                    value.1 = p;
                 }
                 TagProcess::Attrs => {
-                    if v.0 == 0 {
-                        k.1 = p;
+                    if value.0 == 0 {
+                        key.1 = p;
                     } else {
-                        v.1 = p;
+                        value.1 = p;
                     }
                 }
                 _ => {}
@@ -286,7 +290,7 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<String, Stri
             _ => {
                 return Err(Error::DeserializeHtmlError(format!(
                     "html tag parse failed: {}, html: {}, char: {}",
-                    &h[t.0..t.1],
+                    &h[tag.0..tag.1],
                     &h,
                     &q
                 )))
@@ -296,7 +300,7 @@ fn tag<'t>(h: &'t str, pos: &mut usize) -> Result<(&'t str, HashMap<String, Stri
 
     Err(Error::DeserializeHtmlError(format!(
         "html tag parse failed: {}, html: {}",
-        &h[t.0..t.1],
+        &h[tag.0..tag.1],
         &h
     )))
 }

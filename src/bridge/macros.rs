@@ -62,7 +62,7 @@ macro_rules! it {
         $(
             impl Into<Node> for $widget {
                 fn into(self) -> Node {
-                    let ref s = self;
+                    let s = &self;
                     s.into()
                 }
             }
