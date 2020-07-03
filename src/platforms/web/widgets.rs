@@ -80,7 +80,7 @@ impl Serde<TextStyle, String, Error> for TextStyle {
                 k if k.contains("font-weight") => {
                     ts.weight = Unit::de(v.into()).unwrap_or(Unit::None(400.0));
                     ts.bold = match ts.weight {
-                        Unit::None(x) => x == 700.0,
+                        Unit::None(x) => (x - 700.0).abs() == 0.0,
                         _ => false,
                     }
                 }
