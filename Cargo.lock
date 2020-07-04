@@ -236,7 +236,7 @@ version = "0.1.0"
 
 [[package]]
 name = "elvis-web"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "elvis",
  "elvis-shared",
