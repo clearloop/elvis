@@ -161,6 +161,14 @@ impl Crate {
                     DebouncedEvent::Write(event) | DebouncedEvent::Remove(event) => {
                         if let Some(ext) = event.extension() {
                             if ext == "rs" {
+                                if let Some(name) = event.file_name() {
+                                    if event.exists() {
+                                        info!("\nwrite {:?}\n", name)
+                                    } else {
+                                        info!("\nremove {:?}\n", name)
+                                    }
+                                }
+
                                 self.build_and_bindgen()?;
                                 wtx.send(true).unwrap_or_default();
                             }
