@@ -186,21 +186,15 @@ impl Crate {
 
     /// Handle the updater
     async fn client_connect(ws: WebSocket, rx: Arc<Mutex<Receiver<bool>>>) {
-        let (mut tx, mut crx) = ws.split();
+        let (mut tx, _) = ws.split();
 
-        while let Some(_) = crx.next().await {
-            if rx.lock().unwrap().recv().is_ok() {
-                println!("hello, world");
-                if let Err(e) = tx.send(Message::text("hello")).await {
-                    eprintln!("websocket err :{:?}", e);
-                }
-            }
-        }
-        // Need to check this `unwrap`
         tokio::task::spawn_blocking(move || loop {
             if rx.lock().unwrap().recv().is_ok() {
-                println!("hello, world");
-                futures::poll(tx.send(Message::text("hello")));
+                if let Err(e) =
+                    tokio::runtime::Handle::current().block_on(tx.send(Message::text("update")))
+                {
+                    eprintln!("websocket err, send message failed :{:?}", e);
+                }
             }
         });
     }

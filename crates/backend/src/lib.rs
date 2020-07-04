@@ -1,5 +1,4 @@
 //! Elvis Backend
-#![feature(async_closure)]
 mod cargo;
 mod err;
 mod html;
