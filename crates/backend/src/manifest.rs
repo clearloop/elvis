@@ -53,7 +53,7 @@ impl Crate {
                 pkg.name == mnk.manifest.package.name
                     && Crate::is_same_path(&pkg.manifest_path, &manifest)
             })
-            .ok_or_else(|| Error::Custom("failed to find package in metadata".to_string()))?;
+            .ok_or_else(|| Error::Custom("Failed to find package in metadata".to_string()))?;
 
         // create dirs
         let pkg = root.join("pkg");

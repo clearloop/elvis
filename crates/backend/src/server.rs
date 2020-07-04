@@ -17,11 +17,13 @@ pub async fn run(mani: Crate) -> Result<(), Error> {
         .map(|ws: Ws, rx| ws.on_upgrade(move |socket| client::connect(socket, rx)));
 
     // dev http server
+    info!("Development server start port 0.0.0.0:3000");
     let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], 3000));
 
     // file watcher
     let watcher = tokio::task::spawn_blocking(move || mani.watch(tx));
     if let Err(e) = join!(watcher, server).0 {
+        error!("Thread error whild starting server: {:?}", e);
         return Err(Error::Custom(e.to_string()));
     }
 

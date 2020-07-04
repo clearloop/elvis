@@ -11,7 +11,7 @@ pub async fn connect(ws: WebSocket, rx: Arc<Mutex<Receiver<bool>>>) {
             if let Err(e) =
                 tokio::runtime::Handle::current().block_on(tx.send(Message::text("update")))
             {
-                eprintln!("websocket err, send message failed :{:?}", e);
+                error!("Subscribe update message failed :{:?}", e);
             }
         }
     });

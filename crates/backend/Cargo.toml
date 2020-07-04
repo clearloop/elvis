@@ -10,6 +10,8 @@ edition = "2018"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+log = "0.4.0"
+env_logger = "0.7.1"
 cargo_metadata = "0.10.0"
 notify = "4.0.15"
 serde = { version = "1.0.114", features = ["derive"] }
