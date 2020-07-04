@@ -35,6 +35,7 @@ extern "C" {
 
 #[wasm_bindgen]
 impl Widget {
+    /// Get widget id
     pub fn id(&self) -> String {
         self.tree
             .attrs
@@ -43,16 +44,19 @@ impl Widget {
             .to_string()
     }
 
+    /// Set widget id
     #[wasm_bindgen(js_name = "setIdx")]
     pub fn set_idx(&mut self, id: String) {
         self.tree.attrs.insert("id".to_string(), id);
     }
 
+    /// Shoud update style
     pub fn style(&mut self) -> Result<bool, JsValue> {
         self.style.borrow_mut().batch(&mut self.tree);
         Ok(self.style.borrow().ser(self.id())?)
     }
 
+    /// Render into body element
     pub fn calling(&mut self) -> Result<(), JsValue> {
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
@@ -67,11 +71,13 @@ impl Widget {
         Ok(())
     }
 
+    /// New widget from Javascript
     #[wasm_bindgen(constructor)]
     pub fn constructor() -> Widget {
         Widget::default()
     }
 
+    /// Update dom tree
     pub fn patch(&mut self) -> Result<bool, JsValue> {
         let mut res = self.style()?;
         let html = self.tree.ser();

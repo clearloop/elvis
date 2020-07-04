@@ -27,7 +27,7 @@ pub struct Node {
 }
 
 impl Node {
-    /// drain tree if not the root
+    /// Drain tree if not the root
     pub fn drain(t: Rc<RefCell<Node>>) {
         if let Some(pre) = &t.borrow().pre {
             let u = pre.upgrade().expect("drain child failed");
@@ -50,7 +50,7 @@ impl Node {
         }
     }
 
-    /// locate tree
+    /// Locate tree
     pub fn locate(&self, mut path: Vec<usize>) -> Vec<usize> {
         if let Some(pre) = &self.pre {
             let u = pre.upgrade().expect("locate widget failed");
@@ -65,7 +65,7 @@ impl Node {
         path
     }
 
-    /// generate a Rc<RefCell<Node>>
+    /// Generate a `Rc<RefCell<Node>>`
     pub fn new(
         attrs: HashMap<String, String>,
         children: Vec<Rc<RefCell<Node>>>,
@@ -82,7 +82,7 @@ impl Node {
         Rc::new(RefCell::new(t))
     }
 
-    /// add second tree to the first one.
+    /// Add second tree to the first one.
     pub fn push(r: Rc<RefCell<Node>>, c: Rc<RefCell<Node>>) {
         let pre = Rc::downgrade(&r);
         c.borrow_mut().pre = Some(pre.clone());
@@ -96,13 +96,13 @@ impl Node {
         r.borrow_mut().update();
     }
 
-    /// delete spefic child using rc
+    /// Delete spefic child using rc
     pub fn remove(&mut self, c: Rc<RefCell<Node>>) {
         self.children.retain(|x| x != &c);
         self.update();
     }
 
-    /// replace current tree
+    /// Replace current tree
     pub fn replace(&mut self, mut t: Node) {
         t.pre = self.pre.clone();
         std::mem::swap(self, &mut t);
@@ -110,7 +110,7 @@ impl Node {
         t.update();
     }
 
-    /// update tree
+    /// Update tree
     pub fn update(&mut self) {}
 }
 
