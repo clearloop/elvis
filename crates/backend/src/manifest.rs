@@ -163,9 +163,9 @@ impl Crate {
                             if ext == "rs" {
                                 if let Some(name) = event.file_name() {
                                     if event.exists() {
-                                        info!("\nwrite {:?}\n", name)
+                                        trace!("write {:?}", name)
                                     } else {
-                                        info!("\nremove {:?}\n", name)
+                                        trace!("remove {:?}", name)
                                     }
                                 }
 
@@ -183,7 +183,6 @@ impl Crate {
 
     /// Serve APP
     pub fn serve(self, port: u16) -> Result<(), Error> {
-        self.build_and_bindgen()?;
         fs::write(
             &self.wasm.join("index.html"),
             DEV_HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
