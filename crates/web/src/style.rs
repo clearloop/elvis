@@ -5,6 +5,7 @@ use wasm_bindgen::prelude::*;
 /// style sheet
 #[derive(Clone, Default, Debug)]
 pub struct StyleSheet {
+    /// Style table
     pub table: HashMap<String, String>,
 }
 
@@ -15,6 +16,7 @@ extern "C" {
 }
 
 impl<'s> StyleSheet {
+    /// Share style to stylesheet tag
     pub fn shared() -> Result<(), JsValue> {
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
@@ -44,6 +46,7 @@ impl<'s> StyleSheet {
         Ok(())
     }
 
+    /// Serialize style into html
     pub fn ser(&self, id: String) -> Result<bool, JsValue> {
         let mut should_append_class_sheet = false;
         let mut should_append_widget_sheet = false;
@@ -118,6 +121,7 @@ impl<'s> StyleSheet {
         Ok(should_reset_class_sheet && should_reset_widget_sheet)
     }
 
+    /// Batch style from node
     pub fn batch(&mut self, t: &mut Node) {
         if let Some(style) = t.attrs.remove("style") {
             let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
@@ -135,6 +139,7 @@ impl<'s> StyleSheet {
             .for_each(|it| self.batch(&mut it.borrow_mut()));
     }
 
+    /// Add-on style class
     pub fn class(&mut self, name: &'s str) {
         if self.table.contains_key(name) && self.table.get(name) != Some(&"".to_string()) {
             return;
@@ -175,6 +180,7 @@ impl<'s> StyleSheet {
         self.table.insert(format!(".{}", name), style);
     }
 
+    /// Set style to tag by id
     pub fn id(&mut self, ti: &'s str, s: &'s str) {
         let mut style = "".to_string();
         s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {

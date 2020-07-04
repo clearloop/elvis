@@ -1,4 +1,5 @@
 //! Elvis Backend
+#![warn(missing_docs)]
 mod logger;
 
 mod cargo;

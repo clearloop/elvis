@@ -4,11 +4,14 @@ use crate::widgets::values::{Colors, Unit};
 /// Does it know the Great Ziggy Stardust?
 #[derive(Debug, Eq, PartialEq)]
 pub struct Text {
+    /// Plain text
     pub text: String,
+    /// Text style
     pub style: TextStyle,
 }
 
 impl Text {
+    /// New Text
     pub fn new(text: String, style: TextStyle) -> Text {
         Text { text, style }
     }
@@ -17,16 +20,24 @@ impl Text {
 /// style of `Text`
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct TextStyle {
+    /// Bold text
     pub bold: bool,
+    /// The color of the text
     pub color: Colors,
+    /// Italic text
     pub italic: bool,
+    /// Text size
     pub size: Unit,
+    /// Text weight
     pub weight: Unit,
+    /// Text height
     pub height: Unit,
+    /// Text stretch
     pub stretch: Unit,
 }
 
 impl TextStyle {
+    /// New text style
     pub fn new(
         bold: bool,
         color: Colors,

@@ -5,9 +5,13 @@ use toml::de::Error as TomlError;
 /// Backend Errors
 #[derive(Debug)]
 pub enum Error {
+    /// Io error
     IoError(IoError),
+    /// Toml error
     TomlError(TomlError),
+    /// Notify error
     NotifyError(NotifyError),
+    /// Custom string error
     Custom(String),
 }
 

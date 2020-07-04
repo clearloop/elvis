@@ -1,4 +1,5 @@
 //! HTML Templates
+/// Production HTML template
 pub const HTML_TEMPLATE: &'static str = r#"
 <script type="module">
  import init, { run } from '${entry}';
@@ -9,6 +10,7 @@ pub const HTML_TEMPLATE: &'static str = r#"
 </script>
 "#;
 
+/// Development HTML template
 pub const DEV_HTML_TEMPLATE: &'static str = r#"
 <script type="module">
  import init, { run } from '${entry}';

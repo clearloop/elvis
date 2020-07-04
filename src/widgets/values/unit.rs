@@ -39,26 +39,47 @@ use std::str::FromStr;
 /// [2]: https://drafts.csswg.org
 #[derive(Clone, Copy, Debug)]
 pub enum Unit {
+    /// auto size
     Auto,
+    /// ch
     Ch(f64),
+    /// cm
     Cm(f64),
+    /// dpi
     Dpi(f64),
+    /// dpcm
     Dpcm(f64),
+    /// dppx
     Dppx(f64),
+    /// em
     Em(f64),
+    /// fr
     Fr(f64),
+    /// in
     In(f64),
+    /// mm
     Mm(f64),
+    /// pc
     Pc(f64),
+    /// pt
     Pt(f64),
+    /// px
     Px(f64),
+    /// q
     Q(f64),
+    /// rem
     Rem(f64),
+    /// vh
     Vh(f64),
+    /// vmax
     Vmax(f64),
+    /// vmin
     Vmin(f64),
+    /// vw
     Vw(f64),
+    /// v%
     Percent(f64),
+    /// none
     None(f64),
 }
 

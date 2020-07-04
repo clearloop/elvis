@@ -1,3 +1,5 @@
+//! The Elvis Package Manager
+#![warn(missing_docs)]
 #[macro_use]
 extern crate log;
 
