@@ -1,6 +1,6 @@
 [package]
 name = "epm"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "The Elvis Package Manager"

@@ -9,7 +9,7 @@ mod new;
 #[derive(StructOpt)]
 #[structopt(setting = AppSettings::InferSubcommands)]
 enum Opt {
-    /// Start develop server
+    /// Start development server
     #[structopt(alias = "dev")]
     Dev {
         /// Use verbose output
