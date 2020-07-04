@@ -1,3 +1,4 @@
+//! EPM Commands
 use crate::template::APP_TEMPLATE;
 use elvis_backend::Crate;
 use std::{env, path::PathBuf};
