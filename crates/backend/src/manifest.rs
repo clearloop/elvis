@@ -3,26 +3,19 @@ use crate::{
     cargo::{CargoManifest, ManifestAndUnsedKeys},
     err::Error,
     html::DEV_HTML_TEMPLATE,
+    server,
 };
 use cargo_metadata::{Metadata, MetadataCommand};
-use futures::{join, sink::SinkExt, StreamExt};
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
 use std::{
     collections::BTreeSet,
     env, fs,
     path::PathBuf,
     process::{Command, ExitStatus},
-    sync::{
-        mpsc::{channel, Receiver, Sender},
-        Arc, Mutex,
-    },
+    sync::mpsc::{channel, Sender},
     time::Duration,
 };
 use strsim::levenshtein;
-use warp::{
-    ws::{Message, WebSocket, Ws},
-    Filter,
-};
 use wasm_bindgen_cli_support::Bindgen;
 
 const ELVIS_METADATA_KEY: &str = "package.metadata.elvis";
@@ -87,6 +80,11 @@ impl Crate {
     pub fn out_dir(&mut self, dir: PathBuf) -> &mut Self {
         self.wasm = dir;
         self
+    }
+
+    /// Port the wasm path
+    pub fn wasm(&self) -> &PathBuf {
+        &self.wasm
     }
 
     /// Reset root dir
@@ -174,61 +172,16 @@ impl Crate {
         }
     }
 
-    /// Pre-serve app
-    fn pre_serve(&self) -> Result<(), Error> {
+    /// Serve APP
+    pub fn serve(self) -> Result<(), Error> {
         self.build_and_bindgen()?;
         fs::write(
             &self.wasm.join("index.html"),
             DEV_HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
         )?;
-        Ok(())
-    }
 
-    /// Handle the updater
-    async fn client_connect(ws: WebSocket, rx: Arc<Mutex<Receiver<bool>>>) {
-        let (mut tx, _) = ws.split();
-
-        tokio::task::spawn_blocking(move || loop {
-            if rx.lock().unwrap().recv().is_ok() {
-                if let Err(e) =
-                    tokio::runtime::Handle::current().block_on(tx.send(Message::text("update")))
-                {
-                    eprintln!("websocket err, send message failed :{:?}", e);
-                }
-            }
-        });
-    }
-
-    /// Serve the backend
-    #[tokio::main]
-    async fn tokio_serve(self) -> Result<(), Error> {
-        let (tx, rx) = channel();
-        let rx = Arc::new(Mutex::new(rx));
-        let rx = warp::any().map(move || rx.clone());
-
-        let index = warp::filters::fs::dir(self.wasm.clone());
-        let updater = warp::path("updater")
-            .and(warp::ws())
-            .and(rx)
-            .map(|ws: Ws, rx| ws.on_upgrade(move |socket| Self::client_connect(socket, rx)));
-
-        // dev http server
-        let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], 3000));
-
-        // file watcher
-        let watcher = tokio::task::spawn_blocking(move || self.watch(tx));
-        if let Err(e) = join!(watcher, server).0 {
-            return Err(Error::Custom(e.to_string()));
-        }
-
-        Ok(())
-    }
-
-    /// Serve APP
-    pub fn serve(self) -> Result<(), Error> {
-        &self.pre_serve()?;
-        if let Err(_) = self.tokio_serve() {
-            return Err(Error::Custom("tokio error".into()));
+        if let Err(e) = server::run(self) {
+            return Err(Error::Custom(format!("tokio error: {:?}", e)));
         }
 
         Ok(())
