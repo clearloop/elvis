@@ -16,9 +16,10 @@ pub const DEV_HTML_TEMPLATE: &'static str = r#"
     // Set Websocket
     const uri = "ws://" + location.host + "/updater";
     const ws = new WebSocket(uri);
-    ws.onmessage = (data) => {
-        console.log(data)
-        data === "update" && location.reload();
+    ws.onmessage = (event) => {
+        console.log(event);
+        console.log(event.data);
+        event.data === "update" && location.reload();
     }
 
     // Run APP

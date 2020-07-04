@@ -2,21 +2,20 @@
 use crate::{
     cargo::{CargoManifest, ManifestAndUnsedKeys},
     err::Error,
-    html::HTML_TEMPLATE,
+    html::DEV_HTML_TEMPLATE,
+    server,
 };
 use cargo_metadata::{Metadata, MetadataCommand};
-use futures::{join, FutureExt, StreamExt};
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
 use std::{
     collections::BTreeSet,
     env, fs,
     path::PathBuf,
     process::{Command, ExitStatus},
-    sync::mpsc::channel,
+    sync::mpsc::{channel, Sender},
     time::Duration,
 };
 use strsim::levenshtein;
-use warp::{ws::Ws, Filter};
 use wasm_bindgen_cli_support::Bindgen;
 
 const ELVIS_METADATA_KEY: &str = "package.metadata.elvis";
@@ -83,6 +82,11 @@ impl Crate {
         self
     }
 
+    /// Port the wasm path
+    pub fn wasm(&self) -> &PathBuf {
+        &self.wasm
+    }
+
     /// Reset root dir
     pub fn root(&mut self, dir: PathBuf) -> &mut Self {
         self.root = dir;
@@ -142,7 +146,7 @@ impl Crate {
     }
 
     /// Watch the file system
-    pub fn watch(&self) -> Result<(), Error> {
+    pub fn watch(&self, wtx: Sender<bool>) -> Result<(), Error> {
         self.build_and_bindgen()?;
 
         // channels
@@ -157,6 +161,7 @@ impl Crate {
                         if let Some(ext) = event.extension() {
                             if ext == "rs" {
                                 self.build_and_bindgen()?;
+                                wtx.send(true).unwrap_or_default();
                             }
                         }
                     }
@@ -167,48 +172,16 @@ impl Crate {
         }
     }
 
-    /// Pre-serve app
-    fn pre_serve(&self) -> Result<(), Error> {
+    /// Serve APP
+    pub fn serve(self) -> Result<(), Error> {
         self.build_and_bindgen()?;
         fs::write(
             &self.wasm.join("index.html"),
-            HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
+            DEV_HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
         )?;
-        Ok(())
-    }
 
-    /// Serve the backend
-    #[tokio::main]
-    async fn tokio_serve(self) -> Result<(), Error> {
-        let index = warp::filters::fs::dir(self.wasm.clone());
-        let updater = warp::path("updater").and(warp::ws()).map(|ws: Ws| {
-            ws.on_upgrade(move |socket| {
-                let (tx, rx) = socket.split();
-                rx.forward(tx).map(|result| {
-                    if let Err(e) = result {
-                        eprintln!("websocket error: {:?}", e);
-                    }
-                })
-            })
-        });
-
-        // dev http server
-        let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], 3000));
-
-        // file watcher
-        let watcher = tokio::task::spawn_blocking(move || self.watch());
-        if let Err(e) = join!(watcher, server).0 {
-            return Err(Error::Custom(e.to_string()));
-        }
-
-        Ok(())
-    }
-
-    /// Serve app
-    pub fn serve(self) -> Result<(), Error> {
-        &self.pre_serve()?;
-        if let Err(_) = self.tokio_serve() {
-            return Err(Error::Custom("tokio error".into()));
+        if let Err(e) = server::run(self) {
+            return Err(Error::Custom(format!("tokio error: {:?}", e)));
         }
 
         Ok(())
