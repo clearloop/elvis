@@ -1,11 +1,11 @@
-use crate::{client, err::Error, manifest::Crate};
+use crate::{client, err::Error, logger::Logger, manifest::Crate};
 use futures::join;
 use std::sync::{mpsc::channel, Arc, Mutex};
 use warp::{ws::Ws, Filter};
 
 /// Serve the backend
 #[tokio::main]
-pub async fn run(mani: Crate) -> Result<(), Error> {
+pub async fn run(mani: Crate, port: u16) -> Result<(), Error> {
     let (tx, rx) = channel();
     let rx = Arc::new(Mutex::new(rx));
     let rx = warp::any().map(move || rx.clone());
@@ -17,7 +17,8 @@ pub async fn run(mani: Crate) -> Result<(), Error> {
         .map(|ws: Ws, rx| ws.on_upgrade(move |socket| client::connect(socket, rx)));
 
     // dev http server
-    let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], 3000));
+    logger!(Logger::ServerStart, port);
+    let server = warp::serve(index.or(updater)).run(([0, 0, 0, 0], port));
 
     // file watcher
     let watcher = tokio::task::spawn_blocking(move || mani.watch(tx));

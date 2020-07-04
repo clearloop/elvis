@@ -3,6 +3,7 @@ use crate::{
     cargo::{CargoManifest, ManifestAndUnsedKeys},
     err::Error,
     html::DEV_HTML_TEMPLATE,
+    logger::Logger,
     server,
 };
 use cargo_metadata::{Metadata, MetadataCommand};
@@ -53,7 +54,7 @@ impl Crate {
                 pkg.name == mnk.manifest.package.name
                     && Crate::is_same_path(&pkg.manifest_path, &manifest)
             })
-            .ok_or_else(|| Error::Custom("failed to find package in metadata".to_string()))?;
+            .ok_or_else(|| Error::Custom("Failed to find package in metadata".to_string()))?;
 
         // create dirs
         let pkg = root.join("pkg");
@@ -160,6 +161,14 @@ impl Crate {
                     DebouncedEvent::Write(event) | DebouncedEvent::Remove(event) => {
                         if let Some(ext) = event.extension() {
                             if ext == "rs" {
+                                if let Some(name) = event.file_name() {
+                                    if event.exists() {
+                                        trace!("write {:?}", name)
+                                    } else {
+                                        trace!("remove {:?}", name)
+                                    }
+                                }
+
                                 self.build_and_bindgen()?;
                                 wtx.send(true).unwrap_or_default();
                             }
@@ -167,21 +176,21 @@ impl Crate {
                     }
                     _ => {}
                 },
-                Err(e) => println!("watcher error: {:?}", e),
+                Err(e) => error!("{:?}", e),
             }
         }
     }
 
     /// Serve APP
-    pub fn serve(self) -> Result<(), Error> {
-        self.build_and_bindgen()?;
+    pub fn serve(self, port: u16) -> Result<(), Error> {
         fs::write(
             &self.wasm.join("index.html"),
             DEV_HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
         )?;
 
-        if let Err(e) = server::run(self) {
-            return Err(Error::Custom(format!("tokio error: {:?}", e)));
+        if let Err(e) = server::run(self, port) {
+            logger!(Logger::ServerStartFailed, e);
+            return Err(Error::Custom(format!("{:?}", e)));
         }
 
         Ok(())
