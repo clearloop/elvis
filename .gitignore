@@ -1,6 +1,3 @@
-**/*lock
-**/*node_modules
-**/*dist
 target
 pkg
 .DS_Store
