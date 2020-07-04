@@ -1,45 +1,85 @@
 /// `Color` system, accroding to material design's color system.
 #[derive(Clone, Copy, Debug)]
 pub enum Colors {
+    /// Colors::Inherit => "0xFFFFFFFF"
     Inherit,
+    /// Colors::Amber => "0xFFFFC107"
     ORGB(f32, i16, i16, i16),
+    /// Colors::Amber => "0xFFFFC107"
     Amber,
+    /// Colors::AmberAccent => "0xFFFFD740"
     AmberAccent,
+    /// Colors::Black => "0xFF000000"
     Black,
+    /// Colors::Blue => "0xFF2196F3"
     Blue,
+    /// Colors::BlueAccent => "0xFF448AFF"
     BlueAccent,
+    /// Colors::BlueGrey => "0xFF607D8B"
     BlueGrey,
+    /// Colors::Brown => "0xFF795548"
     Brown,
+    /// Colors::Cyan => "0xFF00BCD4"
     Cyan,
+    /// Colors::CyanAccent => "0xFF18FFFF"
     CyanAccent,
+    /// Colors::DeepOrange => "0xFFFF5722"
     DeepOrange,
+    /// Colors::DeepOrangeAccent => "0xFFFF6E40"
     DeepOrangeAccent,
+    /// Colors::DeepPurple => "0xFF673AB7"
     DeepPurple,
+    /// Colors::DeepPurpleAccent => "0xFF7C4DFF"
     DeepPurpleAccent,
+    /// Colors::Green => "0xFF4CAF50"
     Green,
+    /// Colors::GreenAccent => "0xFF69F0AE"
     GreenAccent,
+    /// Colors::Grey => "FF9E9E9E"
     Grey,
+    /// Colors::Indigo => "0xFF3F51B5"
     Indigo,
+    /// Colors::IndigoAccent => "0xFF536DFE"
     IndigoAccent,
+    /// Colors::LightBlue => "0xFF03A9FA"
     LightBlue,
+    /// Colors::LightBlueAccent => "0xFF40C4FF"
     LightBlueAccent,
+    /// Colors::LightGreen => "0xFF8BC34A"
     LightGreen,
+    /// Colors::LightGreenAccent => "0xFFB2FF59"
     LightGreenAccent,
+    /// Colors::Lime => "0xFFCDDC39"
     Lime,
+    /// Colors::LimeAccent => "0xFFEEFF41"
     LimeAccent,
+    /// Colors::Orange => "0xFFFF9800"
     Orange,
+    /// Colors::OrangeAccent => "0xFFFFAB40"
     OrangeAccent,
+    /// Colors::Pink => "0xFFE91E63"
     Pink,
+    /// Colors::PinkAccent => "0xFFFF4081"n
     PinkAccent,
+    /// Colors::Purple => "0xFF9C27B0"
     Purple,
+    /// Colors::PurpleAccent => "0xFFE040FB"
     PurpleAccent,
+    /// Colors::Red => "0xFFF44336"
     Red,
+    /// Colors::RedAccent => "0xFFFF5252"
     RedAccent,
+    /// Colors::Teal => "0xFF009688"
     Teal,
+    /// Colors::TealAccent => "0xFF64FFDA"
     TealAccent,
+    /// Colors::Transparent => "0xFFFFFFFF"
     Transparent,
+    /// Colors::White => "0xFFFFFFFF"
     White,
+    /// Colors::Yellow => "0xFFFFEB3B"
     Yellow,
+    /// Colors::YellowAccent => "0xFFFFFF00"
     YellowAccent,
 }
 

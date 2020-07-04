@@ -52,6 +52,7 @@
 //!
 //! [1]: https://clearloop.github.io/elvis
 //! [2]: https://docs.rs/elvis
+#![warn(missing_docs)]
 mod bridge;
 mod err;
 mod tree;
