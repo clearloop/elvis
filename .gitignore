@@ -1,7 +1,3 @@
 target
 pkg
 .DS_Store
-
-
-# build cache
-crates/epm/src/template.rs

@@ -1,10 +1,17 @@
-use etc::{Etc, Tree, Write};
+use etc::{Etc, FileSystem, Tree, Write};
 use std::{env, path::PathBuf};
 
 fn main() {
     let mut example = env::current_dir().unwrap();
     example.push("../../examples/hello-world");
     assert!(example.exists());
+
+    // Remove pkg directory
+    let mut pkg = example.clone();
+    pkg.push("pkg");
+    if pkg.exists() {
+        Etc::from(pkg).drain().unwrap();
+    }
 
     // Batch exmpale
     let mut tree = Tree::batch(Etc::from(example)).unwrap();

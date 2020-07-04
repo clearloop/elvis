@@ -8,16 +8,6 @@ pub struct Image {
     pub child: Node,
 }
 
-impl Image {
-    /// image will auto-fill to the father widget
-    pub fn new(src: String, child: Node) -> Image {
-        Image {
-            src: ImageSrc(src),
-            child,
-        }
-    }
-}
-
 /// Image source
 pub struct ImageSrc(pub String);
 

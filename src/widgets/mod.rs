@@ -1,5 +1,4 @@
 //! Evlis common widgets
-
 mod image;
 pub mod layouts;
 mod text;
