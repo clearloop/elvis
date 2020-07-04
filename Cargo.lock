@@ -198,7 +198,7 @@ checksum = "134951f4028bdadb9b84baf4232681efbf277da25144b9b0ad65df75946c422b"
 
 [[package]]
 name = "elvis"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "elvis-derive",
  "elvis-shared",
