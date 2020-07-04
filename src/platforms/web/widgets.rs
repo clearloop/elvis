@@ -18,10 +18,10 @@ impl Serde<Image, String, Error> for Image {
             Node::default()
         };
 
-        Ok(Image::new(
-            t.attrs.get("src").unwrap_or(&"".into()).to_string(),
+        Ok(Image {
+            src: ImageSrc(t.attrs.get("src").unwrap_or(&"".into()).to_string()),
             child,
-        ))
+        })
     }
 
     fn ser(&self) -> String {

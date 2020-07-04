@@ -36,29 +36,6 @@ pub struct TextStyle {
     pub stretch: Unit,
 }
 
-impl TextStyle {
-    /// New text style
-    pub fn new(
-        bold: bool,
-        color: Colors,
-        italic: bool,
-        size: Unit,
-        weight: Unit,
-        height: Unit,
-        stretch: Unit,
-    ) -> TextStyle {
-        TextStyle {
-            bold,
-            color,
-            italic,
-            size,
-            weight,
-            height,
-            stretch,
-        }
-    }
-}
-
 impl Default for TextStyle {
     fn default() -> TextStyle {
         TextStyle {
