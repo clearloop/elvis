@@ -16,9 +16,13 @@ fn hash(tag: &str, s: &[u8]) -> String {
 /// Virtual UI Node
 #[derive(Clone, Debug, Default)]
 pub struct Node {
+    /// Node attributes
     pub attrs: HashMap<String, String>,
+    /// Node children
     pub children: Vec<Rc<RefCell<Node>>>,
+    /// Node tag
     pub tag: String,
+    /// Node parent
     pub pre: Option<Weak<RefCell<Node>>>,
 }
 
@@ -32,6 +36,7 @@ impl Node {
         }
     }
 
+    /// The path of current node
     pub fn idx(&mut self, path: &mut Vec<u8>) {
         let h = hash(&self.tag, &path);
         self.attrs.entry("id".into()).or_insert(h);
