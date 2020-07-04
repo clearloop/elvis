@@ -272,9 +272,9 @@ dependencies = [
 
 [[package]]
 name = "etc"
-version = "0.1.7"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f3dc7127983ace119d63b9538c5bf9a195ca19d5dae4099fcf7cb468ef4a7e0d"
+checksum = "bb4654bc76a9698b188bd58f983a637c60779029c3c8714137175ffe10b6768d"
 dependencies = [
  "serde",
 ]

@@ -20,8 +20,8 @@ env_logger = "0.7.1"
 toml = "0.5.6"
 structopt = "0.3.14"
 elvis-backend = { path = "../backend" }
-etc = { version = "0.1.7", features = ["serde-tree"] }
+etc = { version = "0.1.8", features = ["serde-tree"] }
 
 [build-dependencies]
 toml = "0.5.6"
-etc = { version = "0.1.7", features = ["serde-tree"] }
+etc = { version = "0.1.8", features = ["serde-tree"] }
