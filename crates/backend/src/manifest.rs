@@ -3,6 +3,7 @@ use crate::{
     cargo::{CargoManifest, ManifestAndUnsedKeys},
     err::Error,
     html::DEV_HTML_TEMPLATE,
+    logger::Logger,
     server,
 };
 use cargo_metadata::{Metadata, MetadataCommand};
@@ -167,21 +168,22 @@ impl Crate {
                     }
                     _ => {}
                 },
-                Err(e) => println!("watcher error: {:?}", e),
+                Err(e) => error!("{:?}", e),
             }
         }
     }
 
     /// Serve APP
-    pub fn serve(self) -> Result<(), Error> {
+    pub fn serve(self, port: u16) -> Result<(), Error> {
         self.build_and_bindgen()?;
         fs::write(
             &self.wasm.join("index.html"),
             DEV_HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
         )?;
 
-        if let Err(e) = server::run(self) {
-            return Err(Error::Custom(format!("tokio error: {:?}", e)));
+        if let Err(e) = server::run(self, port) {
+            logger!(Logger::ServerStartFailed, e);
+            return Err(Error::Custom(format!("{:?}", e)));
         }
 
         Ok(())

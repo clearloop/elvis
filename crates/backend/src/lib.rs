@@ -1,4 +1,6 @@
 //! Elvis Backend
+mod logger;
+
 mod cargo;
 mod client;
 mod err;

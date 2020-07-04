@@ -27,12 +27,20 @@ enum Opt {
 pub fn exec() {
     let opt = Opt::from_args();
     match opt {
-        Opt::Init => {
-            new::run(env::current_dir().unwrap(), APP_TEMPLATE);
-        }
-        Opt::New { path } => {
-            new::run(path, APP_TEMPLATE);
-        }
-        Opt::Dev => Crate::new().unwrap().serve().unwrap(),
+        Opt::Init => match env::current_dir() {
+            Ok(p) => new::run(p, APP_TEMPLATE),
+            Err(e) => error!("Exec epm init failed: {:?}", e),
+        },
+        Opt::New { path } => new::run(path, APP_TEMPLATE),
+        Opt::Dev => match Crate::new() {
+            Ok(c) => {
+                if let Err(e) = c.serve(3000) {
+                    error!("Exec epm dev failed: {:?}", e);
+                }
+            }
+            Err(e) => {
+                error!("Could not find elvis crate in current dir: {:?}", e);
+            }
+        },
     }
 }

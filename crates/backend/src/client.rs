@@ -1,3 +1,4 @@
+use crate::logger::Logger;
 use futures::{sink::SinkExt, StreamExt};
 use std::sync::{mpsc::Receiver, Arc, Mutex};
 use warp::ws::{Message, WebSocket};
@@ -11,7 +12,7 @@ pub async fn connect(ws: WebSocket, rx: Arc<Mutex<Receiver<bool>>>) {
             if let Err(e) =
                 tokio::runtime::Handle::current().block_on(tx.send(Message::text("update")))
             {
-                error!("Subscribe update message failed :{:?}", e);
+                logger!(Logger::WebsocketSubscribeFailed, e);
             }
         }
     });

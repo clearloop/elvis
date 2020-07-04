@@ -263,7 +263,9 @@ name = "epm"
 version = "0.0.1"
 dependencies = [
  "elvis-backend",
+ "env_logger",
  "etc",
+ "log 0.4.8",
  "structopt",
  "toml",
 ]
