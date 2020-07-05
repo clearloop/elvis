@@ -1,5 +1,5 @@
 [package]
-name = "hello-world"
+name = "elvis-app"
 version = "0.1.0"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
@@ -11,5 +11,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 elvis = { version = "0.2.4", path = "../.."}
-elvis-web = { path = "../../crates/web" }
 wasm-bindgen = "0.2.63"

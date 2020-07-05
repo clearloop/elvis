@@ -206,6 +206,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "elvis-app"
+version = "0.1.0"
+dependencies = [
+ "elvis",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "elvis-backend"
 version = "0.1.0"
 dependencies = [
@@ -225,7 +233,7 @@ dependencies = [
 
 [[package]]
 name = "elvis-derive"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "quote",
  "syn",
@@ -233,11 +241,11 @@ dependencies = [
 
 [[package]]
 name = "elvis-shared"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "elvis-web"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "elvis-shared",
  "js-sys",
@@ -260,7 +268,7 @@ dependencies = [
 
 [[package]]
 name = "epm"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "elvis-backend",
  "env_logger",
@@ -523,15 +531,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20564e78d53d2bb135c343b3f47714a56af2061f1c928fdb541dc7b9fdd94205"
 dependencies = [
  "unicode-segmentation",
-]
-
-[[package]]
-name = "hello-world"
-version = "0.1.0"
-dependencies = [
- "elvis",
- "elvis-web",
- "wasm-bindgen",
 ]
 
 [[package]]
