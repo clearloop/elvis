@@ -12,14 +12,6 @@ include = ["src/**/*", "Cargo.toml", "./README.md"]
 keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
-[features]
-web = []
-default = ["web", "elvis-shared/web"]
-
-[dependencies]
-elvis-derive = { path = "crates/derive", version = "0.1.0" }
-elvis-shared = { path = "crates/shared", version = "0.1.0" }
-
 [workspace]
 members = [
   "crates/web",
@@ -29,6 +21,15 @@ members = [
   "crates/shared",
   "examples/hello-world",
 ]
+
+[dependencies]
+elvis-derive = { path = "crates/derive", version = "0.1.0" }
+elvis-shared = { path = "crates/shared", version = "0.1.0" }
+elvis-web = { path = "crates/web", version = "0.1.0", optional = true }
+
+[features]
+web = [ "elvis-web", "elvis-shared/web" ]
+default = [ "web" ]
 
 [profile.release]
 lto = true

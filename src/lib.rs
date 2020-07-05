@@ -74,6 +74,9 @@ pub use elvis_shared::LifeCycle;
 /// ```
 pub mod prelude {
     pub use elvis_derive::elvis;
+    pub use elvis_shared::{LifeCycle, Node};
+    #[cfg(feature = "web")]
+    pub use elvis_web::{wasm_bindgen_re_exports::*, Widget};
 }
 
 // elvis platform features

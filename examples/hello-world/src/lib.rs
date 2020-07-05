@@ -1,10 +1,7 @@
 use elvis::{
-    prelude::elvis,
+    prelude::*,
     widgets::{layouts::Center, Text, TextStyle},
-    LifeCycle,
 };
-use elvis_web::Widget;
-use wasm_bindgen::prelude::*;
 
 #[elvis]
 struct Index;

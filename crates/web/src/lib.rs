@@ -9,3 +9,8 @@ mod widget;
 
 pub use self::widget::Widget;
 use style::StyleSheet;
+
+/// Re-exports wasm-bindgen
+pub mod wasm_bindgen_re_exports {
+    pub use wasm_bindgen::prelude::*;
+}
