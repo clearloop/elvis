@@ -5,9 +5,6 @@ use elvis::{
 use elvis_web::Widget;
 use wasm_bindgen::prelude::*;
 
-#[elvis]
-pub struct Index;
-
 #[wasm_bindgen(start)]
 pub fn run() {
     let mut center = Widget::new(Center {

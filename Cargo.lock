@@ -299,7 +299,7 @@ dependencies = [
 
 [[package]]
 name = "epm"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "elvis-backend",
  "env_logger",
