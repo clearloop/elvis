@@ -198,20 +198,10 @@ checksum = "134951f4028bdadb9b84baf4232681efbf277da25144b9b0ad65df75946c422b"
 
 [[package]]
 name = "elvis"
-version = "0.2.3"
+version = "0.2.4"
 dependencies = [
- "elvis-derive 0.1.0",
- "elvis-shared 0.1.0",
-]
-
-[[package]]
-name = "elvis"
-version = "0.2.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77d6278e21759525d9a378570704dbeba4de3a9987489ae6117aa96fb01c2018"
-dependencies = [
- "elvis-derive 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "elvis-shared 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "elvis-derive",
+ "elvis-shared",
 ]
 
 [[package]]
@@ -241,43 +231,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "elvis-derive"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c7f07f7c7d0db9ed6607487c1bb711a09c2acbc5c8a7fa7725863ed4c27632b"
-dependencies = [
- "quote",
- "syn",
-]
-
-[[package]]
 name = "elvis-shared"
 version = "0.1.0"
-
-[[package]]
-name = "elvis-shared"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d78cfb5bf2a9366d4c924ee3560f4deba51048642f266841b0bad821aab4809b"
 
 [[package]]
 name = "elvis-web"
 version = "0.1.3"
 dependencies = [
- "elvis-shared 0.1.0",
- "js-sys",
- "wasm-bindgen",
- "web-sys",
-]
-
-[[package]]
-name = "elvis-web"
-version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8e58152fffa70e26d13441391b53be016b807455d29ac819bad1d6c0bee238dc"
-dependencies = [
- "elvis 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "elvis-shared 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "elvis-shared",
  "js-sys",
  "wasm-bindgen",
  "web-sys",
@@ -567,8 +528,8 @@ dependencies = [
 name = "hello-world"
 version = "0.1.0"
 dependencies = [
- "elvis 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "elvis-web 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "elvis",
+ "elvis-web",
  "wasm-bindgen",
 ]
 

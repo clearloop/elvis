@@ -60,10 +60,12 @@ pub mod widgets;
 /// Imports structs from elvis_shared
 use elvis_shared::{Node, Serde};
 
+// Exports
 pub use crate::{
     err::Error,
     widgets::{Image, ImageSrc, Text, TextStyle},
 };
+pub use elvis_shared::LifeCycle;
 
 /// A module which is typically glob imported from:
 ///
