@@ -15,7 +15,6 @@ readme = './README.md'
 [dependencies]
 wasm-bindgen = "0.2.63"
 js-sys = "0.3.40"
-elvis = { path = "../..", version = "0.2.3" }
 elvis-shared = { path = "../shared" , version = "0.1.0" }
 
 

@@ -1,4 +1,5 @@
 mod node;
+mod serde;
 mod state;
 
 pub use {

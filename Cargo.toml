@@ -14,7 +14,7 @@ readme = './README.md'
 
 [features]
 web = []
-default = ["web"]
+default = ["web", "elvis-shared/web"]
 
 [dependencies]
 elvis-derive = { path = "crates/derive", version = "0.1.0" }

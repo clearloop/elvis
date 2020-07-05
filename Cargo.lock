@@ -264,7 +264,6 @@ checksum = "d78cfb5bf2a9366d4c924ee3560f4deba51048642f266841b0bad821aab4809b"
 name = "elvis-web"
 version = "0.1.3"
 dependencies = [
- "elvis 0.2.3",
  "elvis-shared 0.1.0",
  "js-sys",
  "wasm-bindgen",

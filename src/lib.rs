@@ -55,14 +55,13 @@
 #![warn(missing_docs)]
 mod bridge;
 mod err;
-mod tree;
 pub mod widgets;
 
-use elvis_shared::Serde;
+/// Imports structs from elvis_shared
+use elvis_shared::{Node, Serde};
 
 pub use crate::{
     err::Error,
-    tree::{FnBox, Node, State},
     widgets::{Image, ImageSrc, Text, TextStyle},
 };
 
