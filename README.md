@@ -7,7 +7,9 @@
 [![crate](https://img.shields.io/crates/v/elvis.svg)](https://crates.io/crates/elvis)
 [![doc](https://img.shields.io/badge/current-docs-brightgreen.svg)](https://docs.rs/elvis/)
 [![downloads](https://img.shields.io/crates/d/elvis.svg)](https://crates.io/crates/elvis)
+[![gitter](https://img.shields.io/gitter/room/elvisjs/community)](https://gitter.im/elvisjs/community)
 [![LICENSE](https://img.shields.io/crates/l/elvis.svg)](https://choosealicense.com/licenses/mit/)
+
 
 Is anybody home?
 
