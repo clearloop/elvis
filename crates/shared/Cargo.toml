@@ -1,6 +1,6 @@
 [package]
 name = "elvis-shared"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "Evlis shared library"
@@ -12,6 +12,8 @@ include = ["src/**/*", "Cargo.toml", "./README.md"]
 keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
+[features]
+web = []
+default = ["web"]
+

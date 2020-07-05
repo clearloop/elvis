@@ -1,9 +1,11 @@
 //! EPM Commands
 use crate::template::APP_TEMPLATE;
-use elvis_backend::Crate;
-use std::{env, path::PathBuf};
+use std::{path::PathBuf};
 use structopt::{clap::AppSettings, StructOpt};
 
+mod build;
+mod dev;
+mod init;
 mod new;
 
 #[derive(StructOpt)]
@@ -12,6 +14,9 @@ enum Opt {
     /// Start development server
     #[structopt(alias = "dev")]
     Dev {
+        /// Http server port
+        #[structopt(short, long, default_value = "3000")]
+        port: u16,
         /// Use verbose output
         #[structopt(short, long)]
         verbose: bool,
@@ -26,35 +31,20 @@ enum Opt {
         #[structopt(name = "PATH")]
         path: PathBuf,
     },
+    Build {
+        /// Output path
+        #[structopt(name = "PATH")]
+        output: PathBuf,
+    }
 }
 
 /// Exec commands
 pub fn exec() {
     let opt = Opt::from_args();
     match opt {
-        Opt::Init => match env::current_dir() {
-            Ok(p) => new::run(p, APP_TEMPLATE),
-            Err(e) => error!("Exec epm init failed: {:?}", e),
-        },
+        Opt::Init => init::run(),
         Opt::New { path } => new::run(path, APP_TEMPLATE),
-        Opt::Dev { verbose } => {
-            if verbose {
-                env_logger::from_env(env_logger::Env::default().default_filter_or("elvis")).init();
-            } else {
-                env_logger::from_env(env_logger::Env::new().default_filter_or("info"))
-                    .format_timestamp(None)
-                    .init();
-            }
-            match Crate::new() {
-                Ok(c) => {
-                    if let Err(e) = c.serve(3000) {
-                        error!("Exec epm dev failed: {:?}", e);
-                    }
-                }
-                Err(e) => {
-                    error!("Could not find elvis crate in current dir: {:?}", e);
-                }
-            }
-        }
+        Opt::Dev { port, verbose } => dev::run(port, verbose),
+        Opt::Build { output } => build::run(output),
     }
 }

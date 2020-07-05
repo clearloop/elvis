@@ -2,7 +2,7 @@
 use crate::{
     cargo::{CargoManifest, ManifestAndUnsedKeys},
     err::Error,
-    html::DEV_HTML_TEMPLATE,
+    html::{DEV_HTML_TEMPLATE, HTML_TEMPLATE},
     logger::Logger,
     server,
 };
@@ -94,8 +94,8 @@ impl Crate {
         self
     }
 
-    /// Build the crate
-    pub fn build(&self) -> Result<ExitStatus, Error> {
+    /// Compile the crate
+    pub fn compile(&self) -> Result<ExitStatus, Error> {
         let mut cmd = Command::new("cargo");
         cmd.current_dir(&self.root);
         cmd.arg("build")
@@ -140,15 +140,15 @@ impl Crate {
         Ok(())
     }
 
-    /// Build crate and bindgen
-    pub fn build_and_bindgen(&self) -> Result<(), Error> {
-        self.build()?;
+    /// Compile crate and bindgen
+    pub fn compile_and_bindgen(&self) -> Result<(), Error> {
+        self.compile()?;
         self.bindgen()
     }
 
     /// Watch the file system
     pub fn watch(&self, wtx: Sender<bool>) -> Result<(), Error> {
-        self.build_and_bindgen()?;
+        self.compile_and_bindgen()?;
 
         // channels
         let (tx, rx) = channel();
@@ -169,7 +169,7 @@ impl Crate {
                                     }
                                 }
 
-                                self.build_and_bindgen()?;
+                                self.compile_and_bindgen()?;
                                 wtx.send(true).unwrap_or_default();
                             }
                         }
@@ -179,6 +179,17 @@ impl Crate {
                 Err(e) => error!("{:?}", e),
             }
         }
+    }
+
+    /// Compile APP
+    pub fn build(&self) -> Result<(), Error> {
+        fs::write(
+            &self.wasm.join("index.html"),
+            HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
+        )?;
+
+        self.compile()?;
+        self.bindgen()
     }
 
     /// Serve APP

@@ -5,6 +5,13 @@
 //! [1]: https://clearloop.github.io/elvis
 #![warn(missing_docs)]
 mod style;
-mod widgets;
+mod widget;
 
-pub use crate::{style::StyleSheet, widgets::Widget};
+pub use self::widget::Widget;
+use style::StyleSheet;
+
+/// Re-exports wasm-bindgen
+pub mod wasm_bindgen_re_exports {
+    pub use wasm_bindgen;
+    pub use wasm_bindgen::prelude::*;
+}

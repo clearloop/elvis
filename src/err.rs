@@ -1,3 +1,6 @@
+//! Elvis errors
+use elvis_shared::Error as SharedError;
+
 /// Error sets
 #[derive(Debug)]
 pub enum Error {
@@ -9,4 +12,13 @@ pub enum Error {
     SerializeHtmlError,
     /// Unwrap a none value
     NoneError,
+}
+
+impl From<SharedError> for Error {
+    fn from(e: SharedError) -> Error {
+        match e {
+            SharedError::FunctionError(s) => Error::FunctionError(s),
+            SharedError::DeserializeHtmlError(s) => Error::DeserializeHtmlError(s),
+        }
+    }
 }

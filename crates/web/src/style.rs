@@ -1,4 +1,4 @@
-use elvis::Node;
+use elvis_shared::Node;
 use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
 

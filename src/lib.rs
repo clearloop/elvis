@@ -55,16 +55,17 @@
 #![warn(missing_docs)]
 mod bridge;
 mod err;
-mod tree;
 pub mod widgets;
 
-use elvis_shared::Serde;
+/// Imports structs from elvis_shared
+use elvis_shared::{Node, Serde};
 
+// Exports
 pub use crate::{
     err::Error,
-    tree::{FnBox, Node, State},
     widgets::{Image, ImageSrc, Text, TextStyle},
 };
+pub use elvis_shared::LifeCycle;
 
 /// A module which is typically glob imported from:
 ///
@@ -73,6 +74,9 @@ pub use crate::{
 /// ```
 pub mod prelude {
     pub use elvis_derive::elvis;
+    pub use elvis_shared::{LifeCycle, Node};
+    #[cfg(feature = "web")]
+    pub use elvis_web::{wasm_bindgen_re_exports::*, Widget};
 }
 
 // elvis platform features

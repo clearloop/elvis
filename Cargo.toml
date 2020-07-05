@@ -1,6 +1,6 @@
 [package]
 name = "elvis"
-version = "0.2.3"
+version = "0.2.5"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "Calling Elvis, is anybody home?"
@@ -12,14 +12,6 @@ include = ["src/**/*", "Cargo.toml", "./README.md"]
 keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
-[features]
-web = []
-default = ["web"]
-
-[dependencies]
-elvis-derive = { path = "crates/derive", version = "0.1.0" }
-elvis-shared = { path = "crates/shared", version = "0.1.0" }
-
 [workspace]
 members = [
   "crates/web",
@@ -29,6 +21,15 @@ members = [
   "crates/shared",
   "examples/hello-world",
 ]
+
+[dependencies]
+elvis-derive = { path = "crates/derive", version = "0.1.1" }
+elvis-shared = { path = "crates/shared", version = "0.1.1" }
+elvis-web = { path = "crates/web", version = "0.1.5", optional = true }
+
+[features]
+web = [ "elvis-web", "elvis-shared/web" ]
+default = [ "web" ]
 
 [profile.release]
 lto = true

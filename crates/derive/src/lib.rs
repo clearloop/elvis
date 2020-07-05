@@ -15,10 +15,11 @@ pub fn elvis(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let expanded = quote! {
         #item
 
-        impl #ident {
-            pub fn hello() {
-                println!("world");
-            }
+        /// Run APP
+        #[wasm_bindgen(start)]
+        pub fn run() {
+            let mut widget = Widget::new(#ident.create());
+            widget.calling().unwrap();
         }
     };
 
