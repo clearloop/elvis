@@ -1,5 +1,4 @@
-use elvis::Node;
-use elvis_shared::Serde;
+use elvis_shared::{Node, Serde};
 use std::collections::HashMap;
 
 #[test]

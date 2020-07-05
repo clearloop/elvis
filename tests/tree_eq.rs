@@ -1,4 +1,4 @@
-use elvis::Node;
+use elvis_shared::Node;
 
 #[test]
 fn eq() {
