@@ -23,7 +23,10 @@ impl<'t> Into<Node> for &'t Text {
     }
 }
 
-impl<'i> Into<Node> for &'i Image {
+impl<'i, T> Into<Node> for &'i Image<T>
+where
+    T: Into<Node> + Sized + Clone,
+{
     fn into(self) -> Node {
         let mut m = HashMap::<String, String>::new();
         m.insert("class".into(), "elvis-image".into());
@@ -31,7 +34,7 @@ impl<'i> Into<Node> for &'i Image {
 
         Node::new(
             m,
-            vec![Rc::new(RefCell::new(self.child.to_owned()))],
+            vec![Rc::new(RefCell::new(self.child.to_owned().into()))],
             None,
             "div".into(),
         )

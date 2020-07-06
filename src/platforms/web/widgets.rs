@@ -3,8 +3,8 @@ use crate::{
     Error, Image, ImageSrc, Node, Serde, Text, TextStyle,
 };
 
-impl Serde<Image, String, Error> for Image {
-    fn de(s: String) -> Result<Image, Error> {
+impl Serde<Image<Node>, String, Error> for Image<Node> {
+    fn de(s: String) -> Result<Image<Node>, Error> {
         let t = Node::de(s)?;
         if t.children.len() != 1 {
             return Err(Error::DeserializeHtmlError(

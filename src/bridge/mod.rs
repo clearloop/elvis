@@ -2,10 +2,7 @@ mod layouts;
 mod macros;
 mod widgets;
 
-use crate::{
-    widgets::{layouts::*, *},
-    Node, Serde,
-};
+use crate::{widgets::layouts::*, Node, Serde};
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
 sw! {
@@ -26,11 +23,11 @@ mcws! {
     MultiColumn,
 }
 
-it! {
-    Center,
-    Col,
-    Row,
-    Image,
-    Text,
-    List,
-}
+// it! {
+//     Center,
+//     Col,
+//     Row,
+//     Image,
+//     Text,
+//     List,
+// }

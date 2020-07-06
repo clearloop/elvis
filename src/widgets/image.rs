@@ -1,11 +1,14 @@
 use crate::Node;
 
 /// If you don't want Image playing in background anonymously, just remove its child.
-pub struct Image {
+pub struct Image<T>
+where
+    T: Into<Node>,
+{
     /// Image source
     pub src: ImageSrc,
     /// Image child
-    pub child: Node,
+    pub child: T,
 }
 
 /// Image source

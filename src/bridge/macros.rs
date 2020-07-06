@@ -49,26 +49,26 @@ macro_rules! mcws {
                 }
             }
 
-            it! {
-                $widget,
-            }
+            // it! {
+            //     $widget,
+            // }
         )*
     }
 }
 
 /// owned widget into tree
-macro_rules! it {
-    {$($widget:ident,)*} => {
-        $(
-            impl Into<Node> for $widget {
-                fn into(self) -> Node {
-                    let s = &self;
-                    s.into()
-                }
-            }
-        )*
-    };
-}
+// macro_rules! it {
+//     {$($widget:ident,)*} => {
+//         $(
+//             impl Into<Node> for $widget {
+//                 fn into(self) -> Node {
+//                     let s = &self;
+//                     s.into()
+//                 }
+//             }
+//         )*
+//     };
+// }
 
 /// single child widgets
 macro_rules! sw {
@@ -90,9 +90,9 @@ macro_rules! sw {
                 }
             }
 
-            it! {
-                $widget,
-            }
+            // it! {
+            //     $widget,
+            // }
         )*
     };
 }
