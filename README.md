@@ -37,17 +37,16 @@ use elvis::{
     widgets::{layouts::Center, Text, TextStyle},
 };
 
-#[elvis]
+#[elvis(route = "index")]
 struct Index;
 
 impl LifeCycle<Center> for Index {
-    fn create(&self) -> Center {
+    fn new() -> Center {
         Center {
             child: Text {
                 text: "Pink is the Pig!!!".into(),
                 style: TextStyle::default(),
             }
-            .into(),
         }
     }
 }
