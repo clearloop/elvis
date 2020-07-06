@@ -1,6 +1,6 @@
 //! EPM Commands
 use crate::template::APP_TEMPLATE;
-use std::{path::PathBuf};
+use std::path::PathBuf;
 use structopt::{clap::AppSettings, StructOpt};
 
 mod build;
@@ -31,11 +31,13 @@ enum Opt {
         #[structopt(name = "PATH")]
         path: PathBuf,
     },
+    /// Build elvis app to the output dir
+    #[structopt(alias = "build")]
     Build {
         /// Output path
         #[structopt(name = "PATH")]
         output: PathBuf,
-    }
+    },
 }
 
 /// Exec commands
