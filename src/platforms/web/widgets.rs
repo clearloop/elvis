@@ -1,6 +1,7 @@
 use crate::{
-    widgets::values::{Colors, Unit},
-    Error, Image, ImageSrc, Node, Serde, Text, TextStyle,
+    values::{Colors, Unit},
+    widgets::{Image, ImageSrc, Text, TextStyle},
+    Error, Node, Serde,
 };
 
 impl Serde<Image, String, Error> for Image {

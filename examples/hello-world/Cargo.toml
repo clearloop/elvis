@@ -10,5 +10,5 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-elvis = { version = "0.2.5" }
+elvis = { version = "0.2.5", path = "../.." }
 
