@@ -6,10 +6,10 @@ use crate::{
 
 /// serde single child widgets with match style
 macro_rules! ss {
-    {$(($widget:ident, $style:ident),)*} => {
+    {$(($widget:ident<$t:ty>, $style:ident),)*} => {
         $(
-            impl Serde<$widget, String, Error> for $widget {
-                fn de(s: String) -> Result<$widget, Error> {
+            impl Serde<$widget<$t>, String, Error> for $widget<$t> {
+                fn de(s: String) -> Result<$widget<$t>, Error> {
                     let t = Node::de(s)?;
                     assert!(t.children.len() == 1);
 
@@ -34,10 +34,10 @@ macro_rules! ss {
 
 /// serde single child widgets with match style
 macro_rules! sm {
-    {$(($widget:ident, $style:ident),)*} => {
+    {$(($widget:ident<$t:ty>, $style:ident),)*} => {
         $(
-            impl Serde<$widget, String, Error> for $widget {
-                fn de(s: String) -> Result<$widget, Error> {
+            impl Serde<$widget<$t>, String, Error> for $widget<$t> {
+                fn de(s: String) -> Result<$widget<$t>, Error> {
                     let t = Node::de(s)?;
 
                     let children = t.children.iter().map(
@@ -62,14 +62,14 @@ macro_rules! sm {
 }
 
 ss! {
-    (Align, AlignStyle),
-    (Container, ContainerStyle),
-    (SizedBox, SizedBoxStyle),
+    (Align<Node>, AlignStyle),
+    (Container<Node>, ContainerStyle),
+    (SizedBox<Node>, SizedBoxStyle),
 }
 
 sm! {
-    (Grid, GridStyle),
-    (MultiColumn, MultiColumnStyle),
+    (Grid<Node>, GridStyle),
+    (MultiColumn<Node>, MultiColumnStyle),
 }
 
 fn parse<'p>(s: &'p str) -> Vec<(&'p str, &'p str)> {

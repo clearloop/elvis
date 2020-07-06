@@ -5,9 +5,12 @@ use crate::{
 };
 
 /// **Homework**: code a New York Times.
-pub struct MultiColumn {
+pub struct MultiColumn<T>
+where
+    T: Into<Node>,
+{
     /// Column children
-    pub children: Vec<Node>,
+    pub children: Vec<T>,
     /// Column style
     pub style: MultiColumnStyle,
 }

@@ -5,9 +5,12 @@ use crate::{
 };
 
 /// To be honest, `Container` is a part of Flex family, but he is too brilliant to stay in Flex family, Layout calls him.
-pub struct Container {
+pub struct Container<T>
+where
+    T: Into<Node>,
+{
     /// Container child
-    pub child: Node,
+    pub child: T,
     /// Container style
     pub style: ContainerStyle,
 }
@@ -30,15 +33,21 @@ pub struct ContainerStyle {
 }
 
 /// `List` is a set of poor orphan children, they don't have any style, just blowing in the wind.
-pub struct List {
+pub struct List<T>
+where
+    T: Into<Node>,
+{
     /// List children
-    pub children: Vec<Node>,
+    pub children: Vec<T>,
 }
 
 /// `SizedBox` just has width and height two arguments, we use this component to take some white space usually.
-pub struct SizedBox {
+pub struct SizedBox<T>
+where
+    T: Into<Node>,
+{
     /// SizedBox child
-    pub child: Node,
+    pub child: T,
     /// SizedBox style
     pub style: SizedBoxStyle,
 }

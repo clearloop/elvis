@@ -8,9 +8,12 @@ use crate::{
 };
 
 /// `Grid` is quite complex in some way, usually, we just `Grid` our contains.
-pub struct Grid {
+pub struct Grid<T>
+where
+    T: Into<Node>,
+{
     /// Grid children
-    pub children: Vec<Node>,
+    pub children: Vec<T>,
     /// Grid style
     pub style: GridStyle,
 }

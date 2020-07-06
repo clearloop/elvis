@@ -4,7 +4,10 @@
 macro_rules! mcw {
     {$($widget:ident,)*} => {
         $(
-            impl<'i> Into<Node> for &'i $widget {
+            impl<'i, T> Into<Node> for &'i $widget<T>
+            where
+                T: Into<Node> + Sized + Clone
+            {
                 fn into(self) -> Node {
                     let mut m = HashMap::<String, String>::new();
                     if stringify!($widget) != "List" {
@@ -16,7 +19,7 @@ macro_rules! mcw {
 
                     let mut cs = vec![];
                     self.children.iter().for_each(|x| {
-                        cs.push(Rc::new(RefCell::new(x.to_owned())));
+                        cs.push(Rc::new(RefCell::new(x.to_owned().into())));
                     });
 
                     Node::new(m, cs, None, "div".into())
@@ -32,7 +35,10 @@ macro_rules! mcw {
 macro_rules! mcws {
     {$($widget:ident,)*} => {
         $(
-            impl<'i> Into<Node> for &'i $widget {
+            impl<'i, T> Into<Node> for &'i $widget<T>
+            where
+                T: Into<Node> + Clone + Sized
+            {
                 fn into(self) -> Node {
                     let ss = self.style.ser();
                     let mut m = HashMap::<String, String>::new();
@@ -40,7 +46,7 @@ macro_rules! mcws {
 
                     let mut cs = vec![];
                     self.children.iter().for_each(|x| {
-                        cs.push(Rc::new(RefCell::new(x.to_owned())));
+                        cs.push(Rc::new(RefCell::new(x.to_owned().into())));
                     });
 
                     Node::new(m, cs, None, "div".into())
@@ -74,7 +80,10 @@ macro_rules! mcws {
 macro_rules! sw {
     {$($widget:ident,)*} => {
         $(
-            impl<'s> Into<Node> for &'s $widget {
+            impl<'s, T> Into<Node> for &'s $widget<T>
+            where
+                T: Into<Node> + Sized + Clone
+            {
                 fn into(self) -> Node {
                     let ss = self.style.ser();
                     let mut m = HashMap::<String, String>::new();
@@ -83,7 +92,7 @@ macro_rules! sw {
 
                     Node::new(
                         m,
-                        vec![Rc::new(RefCell::new(self.child.to_owned()))],
+                        vec![Rc::new(RefCell::new(self.child.to_owned().into()))],
                         None,
                         "div".into(),
                     ).borrow().to_owned()
