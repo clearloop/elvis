@@ -1,5 +1,5 @@
 + Preparing to merge `elvis.js` and `elvis-web` into this one repo.
-+ Rewriting the web client of [rust.cc][rust.cc]...
++ Trying to Rewrite the web client of [rust.cc][rust.cc]...
 
 # Calling Elvis 🦀 🕸  🎸 📡 🚀 🪐 🛰
 
