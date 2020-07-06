@@ -58,21 +58,41 @@ impl LifeCycle<Center> for Index {
 #### Install epm
 
 ```
-cargo install epm
+$ cargo install epm
+$ epm
+epm 0.1.4
+
+USAGE:
+    epm <SUBCOMMAND>
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+SUBCOMMANDS:
+    build    
+    dev      Start development server
+    help     Prints this message or the help of the given subcommand(s)
+    init     Create a new elvis package in an existing directory
+    new      Create a new elvis package
 ```
 
 #### New elvis app
 
 ```
-epm new my-awesome-app
+$ epm new my-awesome-app
 ```
 
 #### Start development server
 
 ```
-cd my-awesome-app && epm dev
+$ cd my-awesome-app && epm dev
 [INFO  warp::server] listening on http://0.0.0.0:3000
 ```
+
+## Community
+
+Welcome to join us! Check our community channels [here][community].
 
 
 ## LICENSE
@@ -83,3 +103,4 @@ Heartbreak Hotel.
 [2]: https://github.com/elvisjs/calling-elvis
 [3]: https://docs.rs/elvis
 [rust.cc]: https://rustcc.cn
+[community]: https://elvisjs.github.io/the-elvis-book/community
