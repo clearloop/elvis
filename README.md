@@ -1,5 +1,5 @@
 + Preparing to merge `elvis.js` and `elvis-web` into this one repo.
-+ Rewriting the web client of [rust.cc][rust.cc]...
++ Trying to Rewrite the web client of [rust.cc][rust.cc]...
 
 # Calling Elvis 🦀 🕸  🎸 📡 🚀 🪐 🛰
 
@@ -7,7 +7,9 @@
 [![crate](https://img.shields.io/crates/v/elvis.svg)](https://crates.io/crates/elvis)
 [![doc](https://img.shields.io/badge/current-docs-brightgreen.svg)](https://docs.rs/elvis/)
 [![downloads](https://img.shields.io/crates/d/elvis.svg)](https://crates.io/crates/elvis)
+[![gitter](https://img.shields.io/gitter/room/elvisjs/community)](https://gitter.im/elvisjs/community)
 [![LICENSE](https://img.shields.io/crates/l/elvis.svg)](https://choosealicense.com/licenses/mit/)
+
 
 Is anybody home?
 
@@ -25,60 +27,39 @@ Writing web pages in **pure rust or javascript** using wasm bindings, **without*
 
 🧙‍♂️ 🤹‍♂️ Here we go! Roll up, roll up for the mystery tour, the magical mystery tour is waiting to take you away! Hoping to take you away! Coming to take you away! Dying to take you away, take you today! 🛸
 
-🎻 Let me take you down, cause I'm going to,
+🎻 Let me take you down, cause I'm going to, **Strawberry Fields** 🧑‍🚀
 
-
-
-### Rust
 
 ```rust
-use elvis::widgets::{layouts::Center, Text, TextStyle},
-use elvis_web::Widget;
-use wasm_bindgen::prelude::*;
+//! src/lib.rs
+use elvis::{
+    prelude::*,
+    widgets::{layouts::Center, Text, TextStyle},
+};
 
-#[wasm_bindgen(start)]
-pub fn run() {
-    let mut center = Widget::new(Center {
-        child: Text {
-            text: "Pink is the Pig!".into(),
-            style: TextStyle::default(),
+#[elvis(route = "index")]
+struct Index;
+
+impl LifeCycle<Center> for Index {
+    fn new() -> Center {
+        Center {
+            child: Text {
+                text: "Pink is the Pig!!!".into(),
+                style: TextStyle::default(),
+            }
         }
-        .into(),
-    });
-
-    center.calling().unwrap();
+    }
 }
-
 ```
-
-
-
-### Javascript
-
-```js
-import { Colors, Elvis, Text } from "calling-elvis";
-
-const Home = Text("Pink is the Pig!", {
-  bold: true,
-  italic: true,
-  size: 10,
-  color: Colors.PinkAccent(),
-});
-
-new Elvis({
-  home: Home,
-}).calling();
-```
- **Strawberry Fields** 🧑‍🚀
 
 ## 21st Century Schizoid Magic 🍩
 
-### Rust
+#### Install epm
 
-```text
+```
 $ cargo install epm
 $ epm
-epm 0.0.2
+epm 0.1.4
 
 USAGE:
     epm <SUBCOMMAND>
@@ -88,48 +69,30 @@ FLAGS:
     -V, --version    Prints version information
 
 SUBCOMMANDS:
-    dev     Start develop server
-    help    Prints this message or the help of the given subcommand(s)
-    init    Create a new elvis package in an existing directory
-    new     Create a new elvis package
-
-$ epm new my-awesome-project
-$ cd my-awesome-project && epm dev
-
+    build    Build elvis app to the output dir
+    dev      Start development server
+    help     Prints this message or the help of the given subcommand(s)
+    init     Create a new elvis package in an existing directory
+    new      Create a new elvis package
 ```
 
+#### New elvis app
 
-
-### Javascript
-
-```text
-$ yarn create elvis-app
-✔ What is your project named? … my-awesome-app
-[ info ] Generating elvis files ...
-[ wait ] Installing elvis dependencies ...
-[ done ] Let's Roll up for the Magical Mystery Tour!
-
-   ┌─────────────────────────────────────────────────────────────┐
-   │                                                             │
-   │   Success! Created my-awesome-app at:                       │
-   │                                                             │
-   │     /path/to/my-awesome-app                                 │
-   │                                                             │
-   │   Inside that directory, you can run several commands:      │
-   │                                                             │
-   │     - yarn dev:    Starts the development server.           │
-   │     - yarn docs:   Open The Elvis Book.                     │
-   │     - yarn build:  Builds my-awesome-app for production.    │
-   │     - yarn start:  Runs my-awesome-app production mode.     │
-   │                                                             │
-   │   We suggest that you begin by typing:                      │
-   │                                                             │
-   │     - cd my-awesome-app                                     │
-   │     - yarn dev                                              │
-   │                                                             │
-   │                                                             │
-   └─────────────────────────────────────────────────────────────┘
 ```
+$ epm new my-awesome-app
+```
+
+#### Start development server
+
+```
+$ cd my-awesome-app && epm dev
+[INFO  warp::server] listening on http://0.0.0.0:3000
+```
+
+## Community
+
+Welcome to join us! Check our community channels [here][community].
+
 
 ## LICENSE
 
@@ -139,3 +102,4 @@ Heartbreak Hotel.
 [2]: https://github.com/elvisjs/calling-elvis
 [3]: https://docs.rs/elvis
 [rust.cc]: https://rustcc.cn
+[community]: https://elvisjs.github.io/the-elvis-book/community
