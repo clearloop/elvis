@@ -63,7 +63,7 @@ use elvis_shared::{Node, Serde};
 // Exports
 pub use crate::{
     err::Error,
-    widgets::{Image, ImageSrc, Text, TextStyle},
+    widgets::{layouts, values},
 };
 pub use elvis_shared::LifeCycle;
 
