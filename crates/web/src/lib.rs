@@ -4,6 +4,7 @@
 //!
 //! [1]: https://clearloop.github.io/elvis
 #![warn(missing_docs)]
+// mod router;
 mod style;
 mod widget;
 
