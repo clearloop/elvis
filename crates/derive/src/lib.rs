@@ -8,7 +8,7 @@ use syn::{parse_macro_input, DeriveInput};
 
 /// Basic elvis attr macro
 #[proc_macro_attribute]
-pub fn elvis(_attr: TokenStream, item: TokenStream) -> TokenStream {
+pub fn page(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let item = parse_macro_input!(item as DeriveInput);
     let ident = item.ident.clone();
 
@@ -18,8 +18,8 @@ pub fn elvis(_attr: TokenStream, item: TokenStream) -> TokenStream {
         /// Run APP
         #[wasm_bindgen(start)]
         pub fn run() {
-            let mut widget = Widget::new(#ident.create());
-            widget.calling().unwrap();
+            let mut page = Page::new(#ident.create());
+            page.calling().unwrap();
         }
     };
 

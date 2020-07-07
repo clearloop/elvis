@@ -4,7 +4,7 @@ use elvis::{
     widgets::{Text, TextStyle},
 };
 
-#[elvis]
+#[page]
 struct Index;
 
 impl LifeCycle<Center> for Index {

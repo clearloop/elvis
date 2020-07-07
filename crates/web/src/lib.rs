@@ -4,11 +4,11 @@
 //!
 //! [1]: https://clearloop.github.io/elvis
 #![warn(missing_docs)]
-// mod router;
+mod page;
+mod router;
 mod style;
-mod widget;
 
-pub use self::widget::Widget;
+pub use self::page::Page;
 use style::StyleSheet;
 
 /// Re-exports wasm-bindgen
