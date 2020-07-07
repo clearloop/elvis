@@ -71,10 +71,11 @@ $ cd my-awesome-app && epm dev
 //! src/lib.rs
 use elvis::{
     prelude::*,
-    widgets::{layouts::Center, Text, TextStyle},
+    layouts::Center,
+    widgets::{Text, TextStyle},
 };
 
-#[elvis(route = "index")]
+#[elvis(page)]
 struct Index;
 
 impl LifeCycle<Center> for Index {
@@ -83,7 +84,7 @@ impl LifeCycle<Center> for Index {
             child: Text {
                 text: "Pink is the Pig!!!".into(),
                 style: TextStyle::default(),
-            }
+            }.into()
         }
     }
 }
