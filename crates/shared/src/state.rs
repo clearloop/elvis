@@ -1,38 +1,28 @@
-use crate::Error;
+//! State machine
 use std::collections::HashMap;
 
-/// store closures
-pub trait FnBox<P> {
-    /// Call function
-    fn call(&mut self, props: &P) -> Result<(), Error>;
-}
-
-/// Func hook
-type Hook<P> = Box<dyn FnBox<P>>;
-
 /// state for tree
-pub struct State<W, P> {
+pub struct State<W> {
     /// Host widget
     pub widget: W,
-    /// Function Hook
-    pub trigger: Hook<P>,
+    // Function Hook
+    // pub trigger: Hook<P>,
     state: HashMap<String, String>,
 }
 
-impl<W, P> State<W, P> {
+impl<W> State<W> {
     /// New state
-    pub fn new(widget: W, trigger: Hook<P>) -> State<W, P> {
+    pub fn new(widget: W) -> State<W> {
         State {
             state: HashMap::new(),
             widget,
-            trigger,
         }
     }
 
-    /// Trigger function
-    pub fn process(&mut self, p: &P) -> Result<(), Error> {
-        self.trigger.call(p)
-    }
+    // Trigger function
+    // pub fn process(&mut self, p: &P) -> Result<(), Error> {
+    //     self.trigger.call(p)
+    // }
 
     /// Get state
     pub fn get(&self, k: String) -> String {
