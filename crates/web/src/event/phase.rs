@@ -1,16 +1,4 @@
 /// Specifies whether the event listener is run during the capture or bubble phase.
-///
-/// The official specification has [a good explanation](https://www.w3.org/TR/DOM-Level-3-Events/#event-flow)
-/// of capturing vs bubbling.
-///
-/// # Default
-///
-/// ```rust
-/// # use gloo_events::EventListenerPhase;
-/// #
-/// EventListenerPhase::Bubble
-/// # ;
-/// ```
 #[derive(Debug, Clone, Copy)]
 pub enum EventListenerPhase {
     #[allow(missing_docs)]
