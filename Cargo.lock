@@ -250,6 +250,7 @@ dependencies = [
  "futures",
  "gloo",
  "js-sys",
+ "thread_local",
  "wasm-bindgen",
  "web-sys",
 ]

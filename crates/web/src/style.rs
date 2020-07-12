@@ -23,7 +23,6 @@ impl<'s> StyleSheet {
         if document.query_selector("#elvis-style-shared")?.is_none() {
             let sheet = document.create_element("style").unwrap();
             sheet.set_id("elvis-style-shared");
-
             sheet.set_inner_html(
                 &vec![
                     "html, body {",
