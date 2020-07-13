@@ -2,17 +2,16 @@
 #![warn(missing_docs)]
 mod bridge;
 mod err;
-pub mod gestures;
-pub mod widgets;
 
 /// Imports structs from elvis_shared
 use elvis_shared::{Node, Serde};
 
-// Exports
-pub use crate::{
-    err::Error,
-    widgets::{layouts, values},
-};
+// Exports modules
+pub mod gestures;
+pub mod widgets;
+
+// Exports idents
+pub use crate::err::Error;
 pub use elvis_shared::LifeCycle;
 
 /// A module which is typically glob imported from:

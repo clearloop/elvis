@@ -1,2 +1,9 @@
 //! The Elvis gesture recognizers
-mod detector;
+
+/// Evlis Gestures
+///
+/// Current lots of enums...
+pub enum Gestures {
+    /// Tap the current widget
+    Tap,
+}

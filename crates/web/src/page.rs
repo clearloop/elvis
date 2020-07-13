@@ -13,10 +13,7 @@ pub struct Page {
 
 impl Page {
     /// new widget from tree
-    pub fn new<W>(tree: W) -> Page
-    where
-        W: Into<Node>,
-    {
+    pub fn new(tree: impl Into<Node>) -> Page {
         let mut t = tree.into();
         t.idx(&mut vec![]);
         Page {
@@ -24,12 +21,6 @@ impl Page {
             style: Rc::new(RefCell::new(StyleSheet::default())),
         }
     }
-}
-
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
 }
 
 #[wasm_bindgen]

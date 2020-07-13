@@ -1,11 +1,11 @@
-//! Gestrue Trait
-use super::{Closure, Node};
+//! Gesture Detector
+use crate::{Closure, Node};
 use std::{collections::HashMap, hash::Hash};
 
 /// Gestrue Trait
 ///
 /// This is a bridge for elvis gesture widgets and pure UI widgets
-pub trait Gestrue<N, P> {
+pub trait Gesture<N, P> {
     /// Gesture Name
     fn name(&self) -> N;
     /// Gesture callback function
@@ -34,7 +34,7 @@ where
     /// Register method
     pub fn register<G>(&mut self, gesture: G)
     where
-        G: Gestrue<N, P> + Sized,
+        G: Gesture<N, P> + Sized,
     {
         self.map
             .entry(Box::new(gesture.name()))

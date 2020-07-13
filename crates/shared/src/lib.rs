@@ -1,8 +1,10 @@
 //! Elvis shared library
 #![warn(missing_docs)]
 mod closure;
+mod derive;
+mod driver;
 mod err;
-mod gestrue;
+mod gesture;
 mod life;
 mod node;
 mod serde;
@@ -11,8 +13,9 @@ mod widget;
 
 pub use self::{
     closure::Closure,
+    driver::Driver,
     err::Error,
-    gestrue::{Gestrue, GestureDetector},
+    gesture::{gestures, Gesture, GestureDetector},
     life::LifeCycle,
     node::Node,
     serde::Serde,

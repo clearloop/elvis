@@ -1,6 +1,8 @@
 use crate::{
-    values::{Colors, Unit},
-    widgets::{Image, ImageSrc, Text, TextStyle},
+    widgets::{
+        values::{Colors, Unit},
+        Image, ImageSrc, Text, TextStyle,
+    },
     Error, Node, Serde,
 };
 
