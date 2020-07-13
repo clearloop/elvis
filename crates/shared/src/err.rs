@@ -6,4 +6,6 @@ pub enum Error {
     FunctionError(String),
     /// Deserialize Error
     DeserializeHtmlError(String),
+    /// Router Error
+    RouterError(String),
 }

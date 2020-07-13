@@ -11,4 +11,3 @@ crate-type = ["cdylib"]
 
 [dependencies]
 elvis = { path = "../.." }
-

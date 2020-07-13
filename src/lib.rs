@@ -7,7 +7,6 @@ mod err;
 use elvis_shared::{Node, Serde};
 
 // Exports modules
-pub mod gestures;
 pub mod widgets;
 
 // Exports idents

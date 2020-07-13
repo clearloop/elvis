@@ -8,7 +8,7 @@ use syn::{parse_macro_input, DeriveInput};
 
 /// Basic elvis attr macro
 #[proc_macro_attribute]
-pub fn page(_attr: TokenStream, item: TokenStream) -> TokenStream {
+pub fn Page(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let item = parse_macro_input!(item as DeriveInput);
     let ident = item.ident.clone();
 

@@ -7,6 +7,7 @@ mod err;
 mod gesture;
 mod life;
 mod node;
+mod router;
 mod serde;
 mod state;
 mod widget;
@@ -18,6 +19,7 @@ pub use self::{
     gesture::{gestures, Gesture, GestureDetector},
     life::LifeCycle,
     node::Node,
+    router::Router,
     serde::Serde,
     state::State,
 };
