@@ -1,6 +1,6 @@
 [package]
 name = "elvis-web"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "Calling Elvis, is anybody home?"
@@ -15,6 +15,7 @@ readme = './README.md'
 [dependencies]
 gloo = "0.2.1"
 futures = "0.3.5"
+thread_local = "1.0.1"
 wasm-bindgen = "0.2.63"
 js-sys = "0.3.40"
 elvis-shared = { path = "../shared" , version = "0.1.1" }
@@ -27,10 +28,12 @@ features = [
   "CssStyleDeclaration",
   "Document",
   "Element",
+  "EventTarget",
   "HtmlElement",
   "Location",
   "Node",
-  "Window"
+  "Window",
+  "History"
 ]
 
 [lib]

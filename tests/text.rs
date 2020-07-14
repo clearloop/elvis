@@ -1,5 +1,5 @@
 use elvis::{
-    values::{Colors, Unit},
+    widgets::values::{Colors, Unit},
     widgets::TextStyle,
 };
 use elvis_shared::Serde;

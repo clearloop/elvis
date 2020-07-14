@@ -6,20 +6,17 @@ use wasm_bindgen::prelude::*;
 /// basic widget without lifecycle nor state
 #[wasm_bindgen]
 #[derive(Clone, Debug, Default)]
-pub struct Widget {
+pub struct Page {
     tree: Node,
     style: Rc<RefCell<StyleSheet>>,
 }
 
-impl Widget {
+impl Page {
     /// new widget from tree
-    pub fn new<W>(tree: W) -> Widget
-    where
-        W: Into<Node>,
-    {
+    pub fn new(tree: impl Into<Node>) -> Page {
         let mut t = tree.into();
         t.idx(&mut vec![]);
-        Widget {
+        Page {
             tree: t,
             style: Rc::new(RefCell::new(StyleSheet::default())),
         }
@@ -27,13 +24,7 @@ impl Widget {
 }
 
 #[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
-}
-
-#[wasm_bindgen]
-impl Widget {
+impl Page {
     /// Get widget id
     pub fn id(&self) -> String {
         self.tree
@@ -72,8 +63,8 @@ impl Widget {
 
     /// New widget from Javascript
     #[wasm_bindgen(constructor)]
-    pub fn constructor() -> Widget {
-        Widget::default()
+    pub fn constructor() -> Page {
+        Page::default()
     }
 
     /// Update dom tree
@@ -91,7 +82,7 @@ impl Widget {
     }
 }
 
-impl std::convert::Into<Node> for Widget {
+impl std::convert::Into<Node> for Page {
     fn into(self) -> Node {
         self.tree
     }

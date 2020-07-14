@@ -1,8 +1,8 @@
 //! Evlis layouts
-pub mod basic;
-pub mod column;
-pub mod flex;
-pub mod grid;
+mod basic;
+mod column;
+mod flex;
+mod grid;
 
 pub use basic::{Container, ContainerStyle, List, SizedBox, SizedBoxStyle};
 pub use column::{MultiColumn, MultiColumnStyle};

@@ -1,6 +1,6 @@
 [package]
 name = "elvis"
-version = "0.2.5"
+version = "0.2.6"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "Calling Elvis, is anybody home?"
@@ -23,9 +23,9 @@ members = [
 ]
 
 [dependencies]
-elvis-derive = { path = "crates/derive", version = "0.1.1" }
-elvis-shared = { path = "crates/shared", version = "0.1.1" }
-elvis-web = { path = "crates/web", version = "0.1.5", optional = true }
+elvis-derive = { path = "crates/derive" }
+elvis-shared = { path = "crates/shared"  }
+elvis-web = { path = "crates/web", optional = true }
 
 [features]
 web = [ "elvis-web", "elvis-shared/web" ]

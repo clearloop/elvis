@@ -1,10 +1,10 @@
 use elvis::{
-    layouts::Center,
     prelude::*,
+    widgets::layouts::Center,
     widgets::{Text, TextStyle},
 };
 
-#[elvis]
+#[page]
 struct Index;
 
 impl LifeCycle<Center> for Index {
