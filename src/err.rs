@@ -19,6 +19,7 @@ impl From<SharedError> for Error {
         match e {
             SharedError::FunctionError(s) => Error::FunctionError(s),
             SharedError::DeserializeHtmlError(s) => Error::DeserializeHtmlError(s),
+            _ => Error::NoneError,
         }
     }
 }

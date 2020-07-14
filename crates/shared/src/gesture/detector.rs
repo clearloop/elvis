@@ -38,12 +38,16 @@ where
     {
         self.map
             .entry(Box::new(gesture.name()))
-            .or_insert(gesture.callback());
+            .or_insert_with(|| gesture.callback());
     }
 
     /// Get method
-    pub fn get(&mut self, name: N) -> Option<&Box<Closure<P>>> {
-        self.map.get(&Box::new(name))
+    pub fn get(&mut self, name: N) -> Option<&Closure<P>> {
+        if let Some(f) = self.map.get(&Box::new(name)) {
+            Some(f.as_ref())
+        } else {
+            None
+        }
     }
 
     /// Remove and return method
@@ -52,10 +56,10 @@ where
     }
 
     /// List methods and closures
-    pub fn list(&self) -> Vec<(&Box<N>, &Box<Closure<P>>)> {
+    pub fn list(&self) -> Vec<(&N, &Closure<P>)> {
         self.map
             .iter()
-            .map(|(m, c)| (m, c))
-            .collect::<Vec<(&Box<N>, &Box<Closure<P>>)>>()
+            .map(|(m, c)| (m.as_ref(), c.as_ref()))
+            .collect::<Vec<(&N, &Closure<P>)>>()
     }
 }

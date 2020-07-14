@@ -23,9 +23,9 @@ members = [
 ]
 
 [dependencies]
-elvis-derive = { path = "crates/derive", version = "0.1.2" }
-elvis-shared = { path = "crates/shared", version = "0.1.2" }
-elvis-web = { path = "crates/web", version = "0.1.6", optional = true }
+elvis-derive = { path = "crates/derive" }
+elvis-shared = { path = "crates/shared"  }
+elvis-web = { path = "crates/web", optional = true }
 
 [features]
 web = [ "elvis-web", "elvis-shared/web" ]
