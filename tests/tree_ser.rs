@@ -10,6 +10,8 @@ fn ser_tree_pure_tag() {
         tag: "div".into(),
         attrs: HashMap::new(),
         children: vec![],
+        state: None,
+        gesture: None,
     };
 
     assert_eq!(t.ser(), "<div></div>".to_string());
@@ -24,6 +26,8 @@ fn ser_tree_attrs_tag() {
         tag: "div".into(),
         attrs: m.clone(),
         children: vec![],
+        state: None,
+        gesture: None,
     };
 
     assert_eq!(t.ser(), "<div name=\"elvis\"></div>".to_string());
@@ -42,7 +46,11 @@ fn ser_tree_plain_content() {
             tag: "plain".into(),
             attrs: m,
             children: vec![],
+            state: None,
+            gesture: None,
         }))],
+        state: None,
+        gesture: None,
     };
 
     assert_eq!(t.ser(), "<div>hello, world!</div>".to_string());
@@ -60,7 +68,11 @@ fn ser_tree_inner_tag() {
             tag: "div".into(),
             attrs: m,
             children: vec![],
+            state: None,
+            gesture: None,
         }))],
+        state: None,
+        gesture: None,
     };
 
     assert_eq!(t.ser(), "<div><div></div></div>".to_string());
