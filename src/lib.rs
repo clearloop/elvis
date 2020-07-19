@@ -11,7 +11,6 @@ pub mod widgets;
 
 // Exports idents
 pub use crate::err::Error;
-pub use elvis_shared::LifeCycle;
 
 /// A module which is typically glob imported from:
 ///

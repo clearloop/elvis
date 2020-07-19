@@ -9,8 +9,8 @@ impl<'t> Into<Node> for &'t Text {
         let mut m = HashMap::<String, String>::new();
         let mut cm = HashMap::<String, String>::new();
 
-        m.insert("style".into(), self.style.ser());
-        cm.insert("text".into(), self.text.to_string());
+        m.insert("style".into(), (&self.style).ser());
+        cm.insert("text".into(), (&self.text).to_string());
 
         Node::new(
             m,

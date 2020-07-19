@@ -193,6 +193,8 @@ fn plain<'t>(h: &'t str, pre: Option<Weak<RefCell<Node>>>) -> Node {
         tag: "plain".into(),
         attrs,
         children: vec![],
+        state: None,
+        gesture: None,
     }
 }
 

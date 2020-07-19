@@ -1,7 +1,6 @@
 use elvis::{
     prelude::*,
-    widgets::layouts::Center,
-    widgets::{Text, TextStyle},
+    widgets::{layouts::Center, Text, TextStyle},
 };
 
 #[page]

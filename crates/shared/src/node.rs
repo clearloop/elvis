@@ -1,8 +1,10 @@
-use std::cell::RefCell;
-use std::rc::{Rc, Weak};
+use crate::{GestureKV, StateKV};
 use std::{
+    cell::RefCell,
     collections::{hash_map::DefaultHasher, HashMap},
+    fmt,
     hash::Hasher,
+    rc::{Rc, Weak},
 };
 
 fn hash(tag: &str, s: &[u8]) -> String {
@@ -14,7 +16,7 @@ fn hash(tag: &str, s: &[u8]) -> String {
 }
 
 /// Virtual UI Node
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Default)]
 pub struct Node {
     /// Node attributes
     pub attrs: HashMap<String, String>,
@@ -24,6 +26,21 @@ pub struct Node {
     pub tag: String,
     /// Node parent
     pub pre: Option<Weak<RefCell<Node>>>,
+    /// Node state
+    pub state: Option<StateKV>,
+    /// Node Gestures
+    pub gesture: Option<GestureKV>,
+}
+
+impl fmt::Debug for Node {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Node")
+            .field("attrs", &self.attrs)
+            .field("children", &self.children)
+            .field("tag", &self.tag)
+            .field("pre", &self.pre)
+            .finish()
+    }
 }
 
 impl Node {
@@ -77,6 +94,8 @@ impl Node {
             children,
             pre,
             tag,
+            state: None,
+            gesture: None,
         };
 
         Rc::new(RefCell::new(t))
