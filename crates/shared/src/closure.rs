@@ -2,4 +2,4 @@
 use std::sync::Arc;
 
 /// store closures
-pub type Closure<T> = Arc<Box<dyn FnMut(T) -> u8 + Send + Sync>>;
+pub type Closure<T> = Arc<dyn FnMut(T) -> u8 + Send + Sync>;

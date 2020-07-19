@@ -1,4 +1,4 @@
-use crate::StyleSheet;
+use crate::{gesture, StyleSheet};
 use elvis_shared::{Node, Serde};
 use std::{cell::RefCell, convert::Into, rc::Rc};
 use wasm_bindgen::prelude::*;
@@ -23,7 +23,6 @@ impl Page {
     }
 }
 
-#[wasm_bindgen]
 impl Page {
     /// Get widget id
     pub fn id(&self) -> String {
@@ -32,12 +31,6 @@ impl Page {
             .get("id")
             .unwrap_or(&"".to_string())
             .to_string()
-    }
-
-    /// Set widget id
-    #[wasm_bindgen(js_name = "setIdx")]
-    pub fn set_idx(&mut self, id: String) {
-        self.tree.attrs.insert("id".to_string(), id);
     }
 
     /// Shoud update style
@@ -58,13 +51,8 @@ impl Page {
         // set body
         let body = document.query_selector("body")?.unwrap();
         body.set_inner_html(&self.tree.ser());
+        gesture::bind(&self.tree);
         Ok(())
-    }
-
-    /// New widget from Javascript
-    #[wasm_bindgen(constructor)]
-    pub fn constructor() -> Page {
-        Page::default()
     }
 
     /// Update dom tree
@@ -79,11 +67,5 @@ impl Page {
             }
         }
         Ok(res)
-    }
-}
-
-impl std::convert::Into<Node> for Page {
-    fn into(self) -> Node {
-        self.tree
     }
 }

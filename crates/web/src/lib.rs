@@ -6,12 +6,13 @@
 #![warn(missing_docs)]
 mod driver;
 pub mod event;
+mod gesture;
 mod page;
 mod router;
 mod style;
 
+use self::style::StyleSheet;
 pub use self::{driver::WebDriver, page::Page, router::Router};
-use style::StyleSheet;
 
 /// Re-exports wasm-bindgen
 pub mod wasm_bindgen_re_exports {

@@ -18,8 +18,8 @@ macro_rules! construct_gesture {
 }
 
 construct_gesture! {
-    (Tap, "hello"),
-    (LongTap, "hello"),
+    (Tap, "Trigger when tap widget"),
+    (LongTap, "Trigger when long tap widget"),
 }
 
 /// Gesture HashMap
@@ -29,7 +29,7 @@ pub type GestureKV = HashMap<Gesture, Closure<StateKV>>;
 #[derive(Clone)]
 pub struct GestureDetector<W> {
     child: W,
-    gestures: GestureKV,
+    gesture: GestureKV,
 }
 
 impl<W> GestureDetector<W>
@@ -40,18 +40,18 @@ where
     pub fn new(n: W) -> GestureDetector<W> {
         GestureDetector {
             child: n,
-            gestures: HashMap::new(),
+            gesture: HashMap::new(),
         }
     }
 
     /// Register method
     pub fn register(&mut self, gesture: Gesture, callback: Closure<HashMap<Vec<u8>, Vec<u8>>>) {
-        self.gestures.entry(gesture).or_insert_with(|| callback);
+        self.gesture.entry(gesture).or_insert_with(|| callback);
     }
 
     /// Get method
     pub fn get(&mut self, name: Gesture) -> Option<&Closure<StateKV>> {
-        if let Some(f) = self.gestures.get(&Box::new(name)) {
+        if let Some(f) = self.gesture.get(&Box::new(name)) {
             Some(f)
         } else {
             None
@@ -60,14 +60,25 @@ where
 
     /// Remove and return method
     pub fn remove(&mut self, name: Gesture) -> Option<Closure<StateKV>> {
-        self.gestures.remove(&Box::new(name))
+        self.gesture.remove(&Box::new(name))
     }
 
     /// List methods and closures
     pub fn list(&self) -> Vec<(&Gesture, &Closure<StateKV>)> {
-        self.gestures
+        self.gesture
             .iter()
             .map(|(m, c)| (m, c))
             .collect::<Vec<(&Gesture, &Closure<StateKV>)>>()
+    }
+}
+
+impl<W> Into<Node> for GestureDetector<W>
+where
+    W: Into<Node>,
+{
+    fn into(self) -> Node {
+        let mut n = self.child.into();
+        n.gesture = Some(self.gesture);
+        n
     }
 }
