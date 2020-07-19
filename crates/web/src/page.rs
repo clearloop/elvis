@@ -37,7 +37,7 @@ impl Page {
 
         // set body
         let body = dom.query_selector("body")?.unwrap();
-        // body.set_inner_html(&self.tree.ser());
+        body.set_inner_html("");
         body.append_child(
             &node::to_element(&Rc::new(RefCell::new(self.tree.clone())), &dom)?.into(),
         )?;
