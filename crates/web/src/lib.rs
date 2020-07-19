@@ -7,6 +7,7 @@
 mod driver;
 pub mod event;
 mod gesture;
+mod node;
 mod page;
 mod router;
 mod style;

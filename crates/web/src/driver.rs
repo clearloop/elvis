@@ -16,4 +16,8 @@ impl Driver for WebDriver {
     fn alert(msg: &str) {
         alert(&msg);
     }
+
+    fn log(msg: &str) {
+        log(&msg);
+    }
 }

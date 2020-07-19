@@ -2,7 +2,7 @@ use crate::{driver::WebDriver, event::EventListener};
 use elvis_shared::{Driver, Node};
 
 /// Bind gesture to node
-pub fn bind(node: &Node) {
+pub fn bind(_node: &Node) {
     // Use `web_sys`'s global `window` function to get a handle on the global
     // window object.
     let window = web_sys::window().expect("no global `window` exists");

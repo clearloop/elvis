@@ -9,12 +9,6 @@ pub struct StyleSheet {
     pub table: HashMap<String, String>,
 }
 
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
-}
-
 impl<'s> StyleSheet {
     /// Share style to stylesheet tag
     pub fn shared() -> Result<(), JsValue> {
@@ -124,12 +118,16 @@ impl<'s> StyleSheet {
     pub fn batch(&mut self, t: &mut Node) {
         if let Some(style) = t.attrs.remove("style") {
             let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
+
+            // Generate id-style into table
             self.id(&id, &style);
         }
 
         let class = t.attrs.get("class").unwrap_or(&"".to_string()).to_string();
         class.split(|x: char| x.is_whitespace()).for_each(|c| {
             let ct = c.trim();
+
+            // Generate class-style into table
             self.class(ct);
         });
 
@@ -138,8 +136,25 @@ impl<'s> StyleSheet {
             .for_each(|it| self.batch(&mut it.borrow_mut()));
     }
 
-    /// Add-on style class
-    pub fn class(&mut self, name: &'s str) {
+    /// Set style to element with id
+    fn id(&mut self, ti: &'s str, s: &'s str) {
+        let mut style = "".to_string();
+        s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
+            if !x.is_empty() {
+                style.push_str("  ");
+                style.push_str(x.trim());
+                style.push_str(";\n");
+            }
+        });
+
+        let v = self.table.entry(format!("#{}", ti)).or_default();
+        if v != &style {
+            *v = style[..(style.len() - 1)].to_string();
+        }
+    }
+
+    /// Set style to element with class
+    fn class(&mut self, name: &'s str) {
         if self.table.contains_key(name) && self.table.get(name) != Some(&"".to_string()) {
             return;
         }
@@ -177,22 +192,5 @@ impl<'s> StyleSheet {
         }
 
         self.table.insert(format!(".{}", name), style);
-    }
-
-    /// Set style to tag by id
-    pub fn id(&mut self, ti: &'s str, s: &'s str) {
-        let mut style = "".to_string();
-        s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
-            if !x.is_empty() {
-                style.push_str("  ");
-                style.push_str(x.trim());
-                style.push_str(";\n");
-            }
-        });
-
-        let v = self.table.entry(format!("#{}", ti)).or_default();
-        if v != &style {
-            *v = style[..(style.len() - 1)].to_string();
-        }
     }
 }

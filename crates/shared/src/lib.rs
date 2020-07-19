@@ -10,7 +10,6 @@ mod node;
 mod router;
 mod serde;
 mod state;
-mod widget;
 
 pub use self::{
     closure::Closure,
