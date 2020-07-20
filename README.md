@@ -99,7 +99,7 @@ Welcome to join us! Check our community channels [here][community].
 
 Heartbreak Hotel.
 
-[1]: https://elvisjs.github.io/the-elvis-book
+[1]: https://elvisjs.github.io/book
 [2]: https://github.com/elvisjs/calling-elvis
 [3]: https://docs.rs/elvis
 [rust.cc]: https://rustcc.cn

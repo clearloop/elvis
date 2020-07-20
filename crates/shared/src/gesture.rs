@@ -1,6 +1,6 @@
 //! Gestrue Trait
 use crate::{Closure, Node, StateKV};
-use std::collections::HashMap;
+use std::{collections::HashMap, sync::Arc};
 
 /// Gestures
 /// Construct gestures
@@ -45,8 +45,10 @@ where
     }
 
     /// Register method
-    pub fn register(&mut self, gesture: Gesture, callback: Closure<HashMap<Vec<u8>, Vec<u8>>>) {
-        self.gesture.entry(gesture).or_insert_with(|| callback);
+    pub fn register(&mut self, gesture: Gesture, callback: fn(StateKV) -> ()) {
+        self.gesture
+            .entry(gesture)
+            .or_insert_with(|| Arc::new(callback));
     }
 
     /// Get method
