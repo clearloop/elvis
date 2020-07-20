@@ -35,9 +35,4 @@ impl Router {
     pub fn register(&mut self, path: String, page: Page) {
         self.pages.insert(path, page);
     }
-
-    // Init router
-    // pub fn init(&self) {
-    //     let we: EventTarget = window().unwrap().into();
-    // }
 }

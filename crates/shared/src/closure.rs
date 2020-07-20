@@ -1,5 +1,5 @@
 //! Closure
-// use crate::err::Error;
+use std::sync::Arc;
 
 /// store closures
-pub type Closure<T> = dyn FnMut(T) -> Option<()>;
+pub type Closure<T> = Arc<dyn Fn(T)>;

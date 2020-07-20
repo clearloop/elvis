@@ -18,6 +18,8 @@ fn de_tree_pure_tag() {
             tag: "div".into(),
             attrs: HashMap::new(),
             children: vec![],
+            state: None,
+            gesture: None,
         }
     );
 }
@@ -32,6 +34,8 @@ fn de_tree_has_plain_content() {
         tag: "div".into(),
         attrs: HashMap::new(),
         children: vec![],
+        state: None,
+        gesture: None,
     }));
 
     let pc = Rc::new(RefCell::new(Node {
@@ -39,6 +43,8 @@ fn de_tree_has_plain_content() {
         tag: "plain".into(),
         attrs: attrs,
         children: vec![],
+        state: None,
+        gesture: None,
     }));
 
     pr.borrow_mut().children.push(pc);
@@ -62,6 +68,8 @@ fn de_tree_tag_and_style() {
             tag: "div".into(),
             attrs: attrs,
             children: vec![],
+            state: None,
+            gesture: None,
         }
     );
 }
@@ -79,6 +87,8 @@ fn de_tree_tag_and_multi_attr() {
             tag: "div".into(),
             attrs: attrs,
             children: vec![],
+            state: None,
+            gesture: None,
         }
     );
 }
@@ -96,7 +106,11 @@ fn de_tree_has_single_tag_child() {
                 tag: "div".into(),
                 attrs: HashMap::new(),
                 children: vec![],
+                state: None,
+                gesture: None,
             }))],
+            state: None,
+            gesture: None,
         }
     );
 }
@@ -118,8 +132,14 @@ fn de_tree_has_deep_single_tag_child() {
                     tag: "div".into(),
                     attrs: HashMap::new(),
                     children: vec![],
+                    state: None,
+                    gesture: None,
                 }))],
+                state: None,
+                gesture: None,
             }))],
+            state: None,
+            gesture: None,
         }
     );
 }
@@ -145,9 +165,17 @@ fn de_tree_has_deep_multi_tag_child() {
                         tag: "p".into(),
                         attrs: HashMap::new(),
                         children: vec![],
+                        state: None,
+                        gesture: None,
                     }))],
+                    state: None,
+                    gesture: None,
                 }))],
+                state: None,
+                gesture: None,
             }))],
+            state: None,
+            gesture: None,
         }
     );
 }
@@ -165,15 +193,21 @@ fn de_tree_has_parallel_tag_children() {
                     pre: None,
                     tag: "div".into(),
                     attrs: HashMap::new(),
-                    children: vec![]
+                    children: vec![],
+                    state: None,
+                    gesture: None,
                 })),
                 Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "div".into(),
                     attrs: HashMap::new(),
-                    children: vec![]
+                    children: vec![],
+                    state: None,
+                    gesture: None,
                 }))
             ],
+            state: None,
+            gesture: None,
         }
     );
 }
@@ -191,21 +225,29 @@ fn de_tree_has_parallel_multi_tag_children() {
                     pre: None,
                     tag: "a".into(),
                     attrs: HashMap::new(),
-                    children: vec![]
+                    children: vec![],
+                    state: None,
+                    gesture: None,
                 })),
                 Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "b".into(),
                     attrs: HashMap::new(),
-                    children: vec![]
+                    children: vec![],
+                    state: None,
+                    gesture: None,
                 })),
                 Rc::new(RefCell::new(Node {
                     pre: None,
                     tag: "p".into(),
                     attrs: HashMap::new(),
-                    children: vec![]
+                    children: vec![],
+                    state: None,
+                    gesture: None,
                 }))
             ],
+            state: None,
+            gesture: None,
         }
     );
 }

@@ -18,7 +18,7 @@ pub fn page(_attr: TokenStream, item: TokenStream) -> TokenStream {
         /// Run APP
         #[wasm_bindgen(start)]
         pub fn run() {
-            let mut page = Page::new(#ident.create());
+            let mut page = Page::from(#ident.create());
             page.calling().unwrap();
         }
     };

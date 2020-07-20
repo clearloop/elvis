@@ -6,4 +6,6 @@
 pub trait Driver {
     /// Alert message
     fn alert(msg: &str);
+    /// Common logger
+    fn log(msg: &str);
 }

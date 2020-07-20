@@ -9,9 +9,19 @@ use elvis_shared::{Node, Serde};
 // Exports modules
 pub mod widgets;
 
-// Exports idents
+// Export idents
 pub use crate::err::Error;
-pub use elvis_shared::LifeCycle;
+/// Gesture module
+pub mod gesture {
+    pub use elvis_shared::{Gesture, GestureDetector};
+}
+
+/// Elvis drivers
+pub mod driver {
+    pub use elvis_shared::Driver;
+    #[cfg(feature = "web")]
+    pub use elvis_web::WebDriver;
+}
 
 /// A module which is typically glob imported from:
 ///
