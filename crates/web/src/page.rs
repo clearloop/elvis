@@ -1,5 +1,5 @@
 use crate::{node, StyleSheet};
-use elvis_shared::Node;
+use elvis_core::Node;
 use std::{cell::RefCell, convert::Into, rc::Rc};
 use wasm_bindgen::prelude::*;
 

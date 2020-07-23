@@ -18,17 +18,17 @@ members = [
   "crates/backend",
   "crates/derive",
   "crates/epm",
-  "crates/shared",
+  "crates/core",
   "examples/hello-world",
 ]
 
 [dependencies]
 elvis-derive = { path = "crates/derive" }
-elvis-shared = { path = "crates/shared"  }
+elvis-core = { path = "crates/core"  }
 elvis-web = { path = "crates/web", optional = true }
 
 [features]
-web = [ "elvis-web", "elvis-shared/web" ]
+web = [ "elvis-web", "elvis-core/web" ]
 default = [ "web" ]
 
 [profile.release]
