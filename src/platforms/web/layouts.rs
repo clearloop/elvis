@@ -1,45 +1,4 @@
-use crate::{widgets::layouts::*, widgets::values::layouts::*, Error, Node, Serde};
-
-/// serde single child widgets with match style
-macro_rules! ss {
-    {$(($widget:ident, $style:ident),)*} => {
-        $(
-            impl Serde<$widget, String, Error> for $widget {
-                fn ser(&self) -> String {
-                    let t: Node = self.into();
-                    t.ser()
-                }
-            }
-
-        )*
-    };
-}
-
-/// serde single child widgets with match style
-macro_rules! sm {
-    {$(($widget:ident, $style:ident),)*} => {
-        $(
-            impl Serde<$widget, String, Error> for $widget {
-                fn ser(&self) -> String {
-                    let t: Node = self.into();
-                    t.ser()
-                }
-            }
-
-        )*
-    };
-}
-
-ss! {
-    (Align, AlignStyle),
-    (Container, ContainerStyle),
-    (SizedBox, SizedBoxStyle),
-}
-
-sm! {
-    (Grid, GridStyle),
-    (MultiColumn, MultiColumnStyle),
-}
+use crate::{widgets::layouts::*, widgets::values::layouts::*, Error, Serde};
 
 // styles
 impl Serde<AlignStyle, String, Error> for AlignStyle {

@@ -1,6 +1,4 @@
-//! Serde node to target platforms
-#[cfg(feature = "web")]
-mod web;
+//! Serde trait
 
 /// data format transfer
 pub trait Serde<S, T, E> {

@@ -1,14 +1,14 @@
 use crate::{
-    widgets::{Image, ImageSrc, Text, TextStyle},
-    Error, Node, Serde,
+    widgets::{ImageSrc, TextStyle},
+    Error, Serde,
 };
 
-impl Serde<Image, String, Error> for Image {
-    fn ser(&self) -> String {
-        let t: Node = self.into();
-        t.ser()
-    }
-}
+// impl Serde<Image, String, Error> for Image {
+//     fn ser(&self) -> String {
+//         let t: Node = self.into();
+//         t.ser()
+//     }
+// }
 
 impl Serde<ImageSrc, String, Error> for ImageSrc {
     fn ser(&self) -> String {
@@ -16,12 +16,12 @@ impl Serde<ImageSrc, String, Error> for ImageSrc {
     }
 }
 
-impl Serde<Text, String, Error> for Text {
-    fn ser(&self) -> String {
-        let t: Node = self.into();
-        t.ser()
-    }
-}
+// impl Serde<Text, String, Error> for Text {
+//     fn ser(&self) -> String {
+//         let t: Node = self.into();
+//         t.ser()
+//     }
+// }
 
 impl Serde<TextStyle, String, Error> for TextStyle {
     fn ser(&self) -> String {
