@@ -1,4 +1,4 @@
-use crate::widgets::values::{Colors, Unit};
+use elvis_core::value::{Colors, Unit};
 
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
@@ -47,5 +47,27 @@ impl Default for TextStyle {
             height: Unit::Rem(1.0),
             stretch: Unit::Percent(100.0),
         }
+    }
+}
+
+impl ToString for TextStyle {
+    fn to_string(&self) -> String {
+        format!(
+            "color: {}; font-weight: {}; font-style: {}; font-size: {}; font-stretch: {}; line-height: {};",
+            self.color.to_string(),
+            if self.bold {
+                "700".into()
+            } else {
+                self.weight.to_string()
+            },
+            if self.italic {
+                "italic"
+            } else {
+                "normal"
+            },
+            self.size.to_string(),
+            self.stretch.to_string(),
+            self.height.to_string(),
+        )
     }
 }

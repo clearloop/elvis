@@ -4,7 +4,7 @@ mod widgets;
 
 use crate::{
     widgets::{layouts::*, *},
-    Node, Serde,
+    Node,
 };
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 

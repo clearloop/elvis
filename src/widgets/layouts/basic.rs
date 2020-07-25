@@ -1,8 +1,6 @@
 //! Basic layout widgets
-use crate::{
-    widgets::values::{layouts::Alignments, Colors, Unit},
-    Node,
-};
+use crate::Node;
+use elvis_core::value::{layouts::Alignments, Colors, Unit};
 
 /// To be honest, `Container` is a part of Flex family, but he is too brilliant to stay in Flex family, Layout calls him.
 pub struct Container {
@@ -29,6 +27,19 @@ pub struct ContainerStyle {
     pub background_color: Colors,
 }
 
+impl ToString for ContainerStyle {
+    fn to_string(&self) -> String {
+        let mut s = "".to_string();
+        s += &self.align.to_string();
+        s += &format!("height: {};", self.height.to_string());
+        s += &format!("width: {};", self.width.to_string());
+        s += &format!("padding: {};", self.padding.to_string());
+        s += &format!("margin: {};", self.margin.to_string());
+        s += &format!("background-color: {};", self.background_color.to_string());
+        s
+    }
+}
+
 /// `List` is a set of poor orphan children, they don't have any style, just blowing in the wind.
 pub struct List {
     /// List children
@@ -49,4 +60,14 @@ pub struct SizedBoxStyle {
     pub height: Unit,
     /// SizedBox width
     pub width: Unit,
+}
+
+impl ToString for SizedBoxStyle {
+    fn to_string(&self) -> String {
+        format!(
+            "height: {}; width: {};",
+            self.height.to_string(),
+            self.width.to_string()
+        )
+    }
 }

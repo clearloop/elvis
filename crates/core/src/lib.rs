@@ -13,6 +13,9 @@ mod state;
 mod class;
 mod style;
 
+// Export module
+pub mod value;
+
 pub use self::{
     closure::Closure,
     driver::Driver,

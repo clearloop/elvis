@@ -17,3 +17,9 @@ impl ImageSrc {
         self.0.as_bytes()
     }
 }
+
+impl ToString for ImageSrc {
+    fn to_string(&self) -> String {
+        format!("background-image: url({})", self.0)
+    }
+}

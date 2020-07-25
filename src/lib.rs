@@ -4,7 +4,7 @@ mod bridge;
 mod err;
 
 /// Imports structs from elvis_core
-use elvis_core::{Node, Serde};
+use elvis_core::Node;
 
 // Exports modules
 pub mod widgets;
@@ -34,9 +34,3 @@ pub mod prelude {
     #[cfg(feature = "web")]
     pub use elvis_web::{wasm_bindgen_re_exports::*, Page};
 }
-
-// elvis platform features
-/// Browser data bridge, as default feature.
-#[cfg(feature = "web")]
-#[path = "platforms/web/mod.rs"]
-mod web;
