@@ -8,6 +8,8 @@ use crate::{
 };
 use cargo_metadata::{Metadata, MetadataCommand};
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
+use std::fs::File;
+use std::io::prelude::*;
 use std::{
     collections::BTreeSet,
     env, fs,
@@ -133,8 +135,29 @@ impl Crate {
             b.debug(false);
         }
 
+        // Generate .wasm file
         if let Err(err) = b.generate(&self.wasm) {
             return Err(Error::Custom(err.to_string()));
+        }
+
+        // Optimate wasm file size
+        let mut wasm_path = self.wasm().to_path_buf();
+        wasm_path.push(format!("{}{}", self.name().as_str(), "_bg.wasm"));
+        if let Some(wp) = wasm_path.to_str() {
+            match Crate::read_module(&wp) {
+                Ok(mut module) => {
+                    module.optimize(&binaryen::CodegenConfig {
+                        optimization_level: 2,
+                        shrink_level: 2,
+                        debug_info: true,
+                    });
+                    let optimized_wasm = module.write();
+                    Crate::write_module(&wp, &optimized_wasm)?
+                }
+                Err(err) => {
+                    return Err(err);
+                }
+            }
         }
 
         Ok(())
@@ -253,5 +276,19 @@ impl Crate {
         })?;
 
         Ok(ManifestAndUnsedKeys { manifest })
+    }
+
+    fn read_module(filename: &str) -> Result<binaryen::Module, Error> {
+        let mut f = File::open(filename)?;
+        let mut contents = Vec::new();
+        f.read_to_end(&mut contents)?;
+
+        binaryen::Module::read(&contents).map_err(|_| Error::Custom("Empty result".to_string()))
+    }
+
+    fn write_module(filename: &str, wasm: &[u8]) -> Result<(), Error> {
+        let mut f = File::create(filename)?;
+        f.write_all(wasm).expect("failed to write file");
+        Ok(())
     }
 }
