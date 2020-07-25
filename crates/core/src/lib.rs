@@ -9,7 +9,6 @@ mod gesture;
 mod life;
 mod node;
 mod router;
-mod serde;
 mod state;
 
 // Export module
@@ -25,7 +24,6 @@ pub use self::{
     life::LifeCycle,
     node::Node,
     router::Router,
-    serde::Serde,
     state::{State, StateKV},
     style::Style,
 };
