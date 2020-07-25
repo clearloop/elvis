@@ -70,6 +70,27 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3441f0f7b02788e948e47f457ca01f1d7e6d92c693bc132c22b087d3141c03ff"
 
 [[package]]
+name = "binaryen"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a51ad23b3c7ab468d9daa948201921879ef0052e561c250fd0b326e6f000f2dd"
+dependencies = [
+ "binaryen-sys",
+]
+
+[[package]]
+name = "binaryen-sys"
+version = "0.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df5829a7c89f7827e58866704e4dfdf48a635d73c6e5449c1a8a0ba5a319d28a"
+dependencies = [
+ "cc",
+ "cmake",
+ "heck",
+ "regex",
+]
+
+[[package]]
 name = "bitflags"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -182,6 +203,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "cmake"
+version = "0.1.44"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0e56268c17a6248366d66d4a47a3381369d068cce8409bb1716ed77ea32163bb"
+dependencies = [
+ "cc",
+]
+
+[[package]]
 name = "digest"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -216,6 +246,7 @@ dependencies = [
 name = "elvis-backend"
 version = "0.1.0"
 dependencies = [
+ "binaryen",
  "cargo_metadata",
  "env_logger",
  "futures",
