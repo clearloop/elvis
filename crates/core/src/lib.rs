@@ -10,6 +10,8 @@ mod node;
 mod router;
 mod serde;
 mod state;
+mod class;
+mod style;
 
 pub use self::{
     closure::Closure,
@@ -21,4 +23,6 @@ pub use self::{
     router::Router,
     serde::Serde,
     state::{State, StateKV},
+    style::Style,
+    class::Class,
 };

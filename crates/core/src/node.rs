@@ -1,4 +1,4 @@
-use crate::{GestureKV, StateKV};
+use crate::{Class, GestureKV, StateKV, Style};
 use std::{
     cell::RefCell,
     collections::{hash_map::DefaultHasher, HashMap},
@@ -20,6 +20,10 @@ fn hash(tag: &str, s: &[u8]) -> String {
 pub struct Node {
     /// Node attributes
     pub attrs: HashMap<String, String>,
+    /// Node Class
+    pub class: Vec<Class>,
+    /// Node Class
+    pub style: Vec<Style>,
     /// Node children
     pub children: Vec<Rc<RefCell<Node>>>,
     /// Node tag
@@ -94,6 +98,8 @@ impl Node {
             children,
             pre,
             tag,
+            class: vec![],
+            style: vec![],
             state: None,
             gesture: None,
         };
