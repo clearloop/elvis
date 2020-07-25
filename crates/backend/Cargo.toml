@@ -25,3 +25,4 @@ tokio = { version = "0.2", features = ["macros"] }
 warp = "0.2.3"
 wasm-bindgen-cli-support = "0.2.63"
 futures = "0.3.5"
+binaryen = "0.10.0"
