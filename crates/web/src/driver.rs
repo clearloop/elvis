@@ -1,5 +1,5 @@
 //! WebDriver Implementation
-use elvis_shared::Driver;
+use elvis_core::Driver;
 use wasm_bindgen::prelude::*;
 
 /// Elvis web driver

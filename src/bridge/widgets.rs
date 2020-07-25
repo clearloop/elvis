@@ -1,6 +1,6 @@
 use crate::{
     widgets::{Image, Text},
-    Node, Serde,
+    Node,
 };
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
@@ -9,7 +9,7 @@ impl<'t> Into<Node> for &'t Text {
         let mut m = HashMap::<String, String>::new();
         let mut cm = HashMap::<String, String>::new();
 
-        m.insert("style".into(), (&self.style).ser());
+        m.insert("style".into(), (&self.style).to_string());
         cm.insert("text".into(), (&self.text).to_string());
 
         Node::new(
@@ -27,7 +27,7 @@ impl<'i> Into<Node> for &'i Image {
     fn into(self) -> Node {
         let mut m = HashMap::<String, String>::new();
         m.insert("class".into(), "elvis-image".into());
-        m.insert("style".into(), self.src.ser());
+        m.insert("style".into(), self.src.to_string());
 
         Node::new(
             m,

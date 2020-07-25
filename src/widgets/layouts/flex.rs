@@ -1,9 +1,6 @@
 //! Flex Layout
-use crate::{
-    widgets::values::{
-        layouts::{Alignments, FlexBasis, FlexDirection},
-        Unit,
-    },
+use elvis_core::{
+    style::{AlignStyle, FlexStyle},
     Node,
 };
 
@@ -13,12 +10,6 @@ pub struct Align {
     pub child: Node,
     /// Align style
     pub style: AlignStyle,
-}
-
-/// `Align` style
-pub struct AlignStyle {
-    /// Align value
-    pub align: Alignments,
 }
 
 /// `Center` is a very nice widget, if your website only have a line of chars, use it!
@@ -39,22 +30,6 @@ pub struct Flex {
     pub child: Node,
     /// Flex style
     pub style: FlexStyle,
-}
-
-/// `Flex` Style
-pub struct FlexStyle {
-    /// Flex align
-    pub align: Alignments,
-    /// Flex basis
-    pub basis: FlexBasis,
-    /// Flex direction
-    pub direction: FlexDirection,
-    /// Flex grow
-    pub grow: Unit,
-    /// Flex order
-    pub order: Unit,
-    /// Flex wrap
-    pub wrap: bool,
 }
 
 /// Both `Col` and `Row` are using flex-start, if you want to reverse the children of them, better to work on the list order.

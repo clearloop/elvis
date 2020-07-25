@@ -1,5 +1,5 @@
 //! Elvis errors
-use elvis_shared::Error as SharedError;
+use elvis_core::Error as SharedError;
 
 /// Error sets
 #[derive(Debug)]

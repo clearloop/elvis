@@ -1,8 +1,6 @@
 //! Basic layout widgets
-use crate::{
-    widgets::values::{layouts::Alignments, Colors, Unit},
-    Node,
-};
+use crate::Node;
+use elvis_core::style::{ContainerStyle, SizedBoxStyle};
 
 /// To be honest, `Container` is a part of Flex family, but he is too brilliant to stay in Flex family, Layout calls him.
 pub struct Container {
@@ -10,23 +8,6 @@ pub struct Container {
     pub child: Node,
     /// Container style
     pub style: ContainerStyle,
-}
-
-/// `Container` style
-#[derive(Default)]
-pub struct ContainerStyle {
-    /// Container align
-    pub align: Alignments,
-    /// Container height
-    pub height: Unit,
-    /// Container width
-    pub width: Unit,
-    /// Container padding
-    pub padding: Unit,
-    /// Container margin
-    pub margin: Unit,
-    /// Container background
-    pub background_color: Colors,
 }
 
 /// `List` is a set of poor orphan children, they don't have any style, just blowing in the wind.
@@ -41,12 +22,4 @@ pub struct SizedBox {
     pub child: Node,
     /// SizedBox style
     pub style: SizedBoxStyle,
-}
-
-/// `SizedBox` style
-pub struct SizedBoxStyle {
-    /// SizedBox height
-    pub height: Unit,
-    /// SizedBox width
-    pub width: Unit,
 }

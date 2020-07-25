@@ -34,7 +34,7 @@ macro_rules! mcws {
         $(
             impl<'i> Into<Node> for &'i $widget {
                 fn into(self) -> Node {
-                    let ss = self.style.ser();
+                    let ss = self.style.to_string();
                     let mut m = HashMap::<String, String>::new();
                     m.insert("style".into(), ss);
 
@@ -76,7 +76,7 @@ macro_rules! sw {
         $(
             impl<'s> Into<Node> for &'s $widget {
                 fn into(self) -> Node {
-                    let ss = self.style.ser();
+                    let ss = self.style.to_string();
                     let mut m = HashMap::<String, String>::new();
                     m.insert("style".into(), ss);
                     m.insert("class".into(), "elvis-flex".into());

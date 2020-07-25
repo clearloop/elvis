@@ -230,8 +230,8 @@ checksum = "134951f4028bdadb9b84baf4232681efbf277da25144b9b0ad65df75946c422b"
 name = "elvis"
 version = "0.2.6"
 dependencies = [
+ "elvis-core",
  "elvis-derive",
- "elvis-shared",
  "elvis-web",
 ]
 
@@ -262,6 +262,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "elvis-core"
+version = "0.1.2"
+
+[[package]]
 name = "elvis-derive"
 version = "0.1.2"
 dependencies = [
@@ -270,14 +274,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "elvis-shared"
-version = "0.1.2"
-
-[[package]]
 name = "elvis-web"
 version = "0.1.6"
 dependencies = [
- "elvis-shared",
+ "elvis-core",
  "futures",
  "gloo",
  "js-sys",

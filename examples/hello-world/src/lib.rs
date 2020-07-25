@@ -2,7 +2,8 @@ use elvis::{
     driver::{Driver, WebDriver},
     gesture::{Gesture, GestureDetector},
     prelude::*,
-    widgets::{layouts::Center, Text, TextStyle},
+    style::TextStyle,
+    widgets::{layouts::Center, Text},
 };
 
 #[page]

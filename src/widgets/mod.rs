@@ -2,9 +2,5 @@
 mod image;
 pub mod layouts;
 mod text;
-pub mod values;
 
-pub use {
-    image::{Image, ImageSrc},
-    text::{Text, TextStyle},
-};
+pub use {image::Image, text::Text};

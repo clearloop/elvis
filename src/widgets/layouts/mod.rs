@@ -4,7 +4,7 @@ mod column;
 mod flex;
 mod grid;
 
-pub use basic::{Container, ContainerStyle, List, SizedBox, SizedBoxStyle};
-pub use column::{MultiColumn, MultiColumnStyle};
-pub use flex::{Align, AlignStyle, Center, Col, Flex, FlexStyle, Row};
-pub use grid::{Grid, GridStyle};
+pub use basic::{Container, List, SizedBox};
+pub use column::MultiColumn;
+pub use flex::{Align, Center, Col, Flex, Row};
+pub use grid::Grid;

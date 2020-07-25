@@ -1,9 +1,9 @@
 //! node opt
-use elvis_shared::Node;
+use crate::gesture;
+use elvis_core::Node;
 use std::{cell::RefCell, rc::Rc};
 use wasm_bindgen::JsValue;
 use web_sys::{Document, Element};
-use crate::gesture;
 
 /// Converts node to element
 pub fn to_element(node: &Rc<RefCell<Node>>, dom: &Document) -> Result<Element, JsValue> {
@@ -15,7 +15,6 @@ pub fn to_element(node: &Rc<RefCell<Node>>, dom: &Document) -> Result<Element, J
         p.set_inner_html(node.borrow().attrs.get("text").unwrap_or(&"".into()));
         return Ok(p);
     }
-
 
     for child in node.borrow().children.iter() {
         this.append_child(&to_element(child, dom)?.into())?;

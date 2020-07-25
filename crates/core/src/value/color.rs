@@ -227,3 +227,19 @@ impl Default for Colors {
         Colors::Pink
     }
 }
+
+impl ToString for Colors {
+    fn to_string(&self) -> String {
+        match self {
+            Colors::ORGB(o, r, g, b) => format!("rgba({}, {}, {}, {:.1})", r, g, b, o),
+            Colors::Inherit => "inherit".into(),
+            _ => {
+                if let Colors::ORGB(o, r, g, b) = self.to_orgb() {
+                    format!("rgba({}, {}, {}, {:.1})", r, g, b, o)
+                } else {
+                    "rgba(255, 255, 255, 255)".into()
+                }
+            }
+        }
+    }
+}
