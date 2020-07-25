@@ -16,6 +16,8 @@ pub mod gesture {
     pub use elvis_core::{Gesture, GestureDetector};
 }
 
+pub use elvis_core::{style, value};
+
 /// Elvis drivers
 pub mod driver {
     pub use elvis_core::Driver;

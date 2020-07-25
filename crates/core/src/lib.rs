@@ -1,5 +1,6 @@
 //! Elvis shared library
 #![warn(missing_docs)]
+mod class;
 mod closure;
 mod derive;
 mod driver;
@@ -10,13 +11,13 @@ mod node;
 mod router;
 mod serde;
 mod state;
-mod class;
-mod style;
 
 // Export module
+pub mod style;
 pub mod value;
 
 pub use self::{
+    class::Class,
     closure::Closure,
     driver::Driver,
     err::Error,
@@ -27,5 +28,4 @@ pub use self::{
     serde::Serde,
     state::{State, StateKV},
     style::Style,
-    class::Class,
 };
