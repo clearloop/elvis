@@ -6,22 +6,21 @@ macro_rules! mcw {
         $(
             impl<'i> Into<Node> for &'i $widget {
                 fn into(self) -> Node {
-                    let mut m = HashMap::<String, String>::new();
-                    if stringify!($widget) != "List" {
-                        m.insert(
-                            "class".into(),
-                            format!("elvis-{} elvis-flex", stringify!($widget).to_lowercase())
-                        );
-                    }
-
                     let mut cs = vec![];
                     self.children.iter().for_each(|x| {
                         cs.push(Rc::new(RefCell::new(x.to_owned())));
                     });
 
-                    Node::new(m, cs, None, "div".into())
+                    let mut node = Node::new(HashMap::new(), cs, None, "div".into())
                         .borrow()
-                        .to_owned()
+                        .to_owned();
+
+                    node.class.append(
+                        &mut vec![
+                            Class::Flex,
+                            Class::from(stringify!($widget).to_lowercase().as_str()),
+                        ]);
+                    node
                 }
             }
         )*
@@ -79,14 +78,15 @@ macro_rules! sw {
                     let ss = self.style.to_string();
                     let mut m = HashMap::<String, String>::new();
                     m.insert("style".into(), ss);
-                    m.insert("class".into(), "elvis-flex".into());
 
-                    Node::new(
+                    let mut node = Node::new(
                         m,
                         vec![Rc::new(RefCell::new(self.child.to_owned()))],
                         None,
                         "div".into(),
-                    ).borrow().to_owned()
+                    ).borrow().to_owned();
+                    node.class = vec![Class::Flex];
+                    node
                 }
             }
 

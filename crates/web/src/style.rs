@@ -47,14 +47,12 @@ impl<'s> StyleSheet {
         let mut should_reset_widget_sheet = false;
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        let class_ss = document
-            .query_selector("#elvis-style-classes")?
-            .unwrap_or_else(|| {
-                should_append_class_sheet = true;
-                let sheet = document.create_element("style").unwrap();
-                sheet.set_id("elvis-style-classes");
-                sheet
-            });
+        let class_ss = document.query_selector("#classes")?.unwrap_or_else(|| {
+            should_append_class_sheet = true;
+            let sheet = document.create_element("style").unwrap();
+            sheet.set_id("classes");
+            sheet
+        });
 
         let widget_ss = document
             .query_selector(&format!("#elvis-style-{}", &id))?
@@ -123,13 +121,9 @@ impl<'s> StyleSheet {
             self.id(&id, &style);
         }
 
-        let class = t.attrs.get("class").unwrap_or(&"".to_string()).to_string();
-        class.split(|x: char| x.is_whitespace()).for_each(|c| {
-            let ct = c.trim();
-
-            // Generate class-style into table
-            self.class(ct);
-        });
+        for c in t.class.iter() {
+            self.class(c.as_ref());
+        }
 
         t.children
             .iter()
@@ -160,22 +154,22 @@ impl<'s> StyleSheet {
         }
 
         let style = match name {
-            "elvis-center" => vec![
+            "center" => vec![
                 "  align-items: center;",
                 "  height: 100%;",
                 "  justify-content: center;",
                 "  width: 100%;",
             ]
             .join("\n"),
-            "elvis-col" => vec!["  flex-direction: column;"].join("\n"),
-            "elvis-flex" => vec![
+            "col" => vec!["  flex-direction: column;"].join("\n"),
+            "flex" => vec![
                 "  display: flex;",
                 "  height: 100%;",
                 "  flex: 1;",
                 "  width: 100%;",
             ]
             .join("\n"),
-            "elvis-image" => vec![
+            "image" => vec![
                 "  background-position: center;",
                 "  background-repeat: no-repeat;",
                 "  background-size: cover;",
@@ -183,7 +177,7 @@ impl<'s> StyleSheet {
                 "  width: 100%;",
             ]
             .join("\n"),
-            "elvis-row" => vec!["  flex-direction: row;"].join("\n"),
+            "row" => vec!["  flex-direction: row;"].join("\n"),
             _ => "".to_string(),
         };
 
