@@ -5,11 +5,22 @@ use std::{cell::RefCell, rc::Rc};
 use wasm_bindgen::JsValue;
 use web_sys::{Document, Element};
 
+/// Parse class to web string
+pub fn parse_class(class: &Class) -> &'static str {
+    match class {
+        Class::Center => "center",
+        Class::Flex => "flex",
+        Class::Col => "col",
+        Class::Row => "row",
+        Class::Empty => "",
+    }
+}
+
 fn class(classes: &Vec<Class>) -> String {
     let mut r = "".to_string();
     classes.iter().for_each(|c| {
         r.push_str(" ");
-        r.push_str(c.as_ref());
+        r.push_str(parse_class(c));
     });
     r.trim().into()
 }

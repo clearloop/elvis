@@ -1,3 +1,4 @@
+use crate::node;
 use elvis_core::Node;
 use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
@@ -122,7 +123,7 @@ impl<'s> StyleSheet {
         }
 
         for c in t.class.iter() {
-            self.class(c.as_ref());
+            self.class(node::parse_class(c));
         }
 
         t.children
