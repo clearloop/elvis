@@ -336,20 +336,18 @@ impl Default for MultiColumnLineStyle {
 
 impl ToString for MultiColumnLineStyle {
     fn to_string(&self) -> String {
-        format!(
-            "style: {};",
-            match self {
-                MultiColumnLineStyle::Dashed => "dashed",
-                MultiColumnLineStyle::Dotted => "dotted",
-                MultiColumnLineStyle::Double => "double",
-                MultiColumnLineStyle::Groove => "groove",
-                MultiColumnLineStyle::Hidden => "hidden",
-                MultiColumnLineStyle::Inset => "inset",
-                MultiColumnLineStyle::None => "none",
-                MultiColumnLineStyle::OutSet => "outset",
-                MultiColumnLineStyle::Ridge => "ridge",
-                MultiColumnLineStyle::Solid => "solid",
-            }
-        )
+        match self {
+            MultiColumnLineStyle::Dashed => "dashed",
+            MultiColumnLineStyle::Dotted => "dotted",
+            MultiColumnLineStyle::Double => "double",
+            MultiColumnLineStyle::Groove => "groove",
+            MultiColumnLineStyle::Hidden => "hidden",
+            MultiColumnLineStyle::Inset => "inset",
+            MultiColumnLineStyle::None => "none",
+            MultiColumnLineStyle::OutSet => "outset",
+            MultiColumnLineStyle::Ridge => "ridge",
+            MultiColumnLineStyle::Solid => "solid",
+        }
+        .into()
     }
 }

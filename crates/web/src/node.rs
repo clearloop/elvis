@@ -5,7 +5,7 @@ use std::{cell::RefCell, rc::Rc};
 use wasm_bindgen::JsValue;
 use web_sys::{Document, Element};
 
-fn class(classes: &Vec<Class>) -> String {
+fn class(classes: &[Class]) -> String {
     let mut r = "".to_string();
     classes.iter().for_each(|c| {
         r.push_str(" ");

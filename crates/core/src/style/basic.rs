@@ -1,5 +1,8 @@
 //! Basic style
-use crate::value::{layouts::Alignments, Colors, Unit};
+use crate::{
+    style::Style,
+    value::{layouts::Alignments, Colors, Unit},
+};
 
 /// `Container` style
 #[derive(Clone, Default)]
@@ -31,6 +34,21 @@ impl ToString for ContainerStyle {
     }
 }
 
+impl Into<[Style; 7]> for ContainerStyle {
+    fn into(self) -> [Style; 7] {
+        let [items, content]: [Style; 2] = self.align.into();
+        [
+            items,
+            content,
+            Style::Height(self.height),
+            Style::Width(self.width),
+            Style::Padding(self.padding.into()),
+            Style::Margin(self.margin.into()),
+            Style::BackgroundColor(self.background_color),
+        ]
+    }
+}
+
 /// `SizedBox` style
 #[derive(Clone, Default)]
 pub struct SizedBoxStyle {
@@ -47,5 +65,11 @@ impl ToString for SizedBoxStyle {
             self.height.to_string(),
             self.width.to_string()
         )
+    }
+}
+
+impl Into<[Style; 2]> for SizedBoxStyle {
+    fn into(self) -> [Style; 2] {
+        [Style::Height(self.height), Style::Width(self.width)]
     }
 }

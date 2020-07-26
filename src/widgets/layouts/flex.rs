@@ -1,15 +1,12 @@
 //! Flex Layout
-use elvis_core::{
-    style::{AlignStyle, FlexStyle},
-    Node,
-};
+use elvis_core::{style::FlexStyle, value::layouts::Alignments, Node};
 
 /// `Align` inherits the core usage of Alignments, it's quite simple, just one property.
 pub struct Align {
     /// Align child
     pub child: Node,
     /// Align style
-    pub style: AlignStyle,
+    pub style: Alignments,
 }
 
 /// `Center` is a very nice widget, if your website only have a line of chars, use it!

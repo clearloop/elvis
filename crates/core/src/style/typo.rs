@@ -1,5 +1,8 @@
 //! Widget Styles
-use crate::value::{Colors, Unit};
+use crate::{
+    style::Style,
+    value::{Colors, Unit},
+};
 
 /// style of `Text`
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -53,6 +56,18 @@ impl ToString for TextStyle {
             self.stretch.to_string(),
             self.height.to_string(),
         )
+    }
+}
+
+impl Into<[Style; 5]> for TextStyle {
+    fn into(self) -> [Style; 5] {
+        [
+            Style::Color(self.color),
+            Style::FontWeight(self.weight),
+            Style::FontSize(self.size),
+            Style::FontStretch(self.stretch),
+            Style::LineHeight(self.height),
+        ]
     }
 }
 

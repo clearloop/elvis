@@ -1,21 +1,11 @@
 //! Flex Style
-use crate::value::{
-    layouts::{Alignments, FlexBasis, FlexDirection},
-    Unit,
+use crate::{
+    style::Style,
+    value::{
+        layouts::{Alignments, FlexBasis, FlexDirection},
+        Unit,
+    },
 };
-
-/// `Align` style
-#[derive(Clone)]
-pub struct AlignStyle {
-    /// Align value
-    pub align: Alignments,
-}
-
-impl ToString for AlignStyle {
-    fn to_string(&self) -> String {
-        self.align.to_string()
-    }
-}
 
 /// `Flex` Style
 #[derive(Clone)]
@@ -44,5 +34,20 @@ impl ToString for FlexStyle {
         s += &format!("flex-order: {};", self.order.to_string());
         s += &format!("wrap: {};", if self.wrap { "wrap" } else { "no-wrap" });
         s
+    }
+}
+
+impl Into<[Style; 7]> for FlexStyle {
+    fn into(self) -> [Style; 7] {
+        let [items, content]: [Style; 2] = self.align.into();
+        [
+            items,
+            content,
+            self.basis.into(),
+            self.direction.into(),
+            Style::FlexGrow(self.grow),
+            Style::FlexOrder(self.order),
+            Style::Wrap(self.wrap),
+        ]
     }
 }
