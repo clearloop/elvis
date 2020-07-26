@@ -5,6 +5,7 @@ use crate::value::{
 };
 
 /// `Align` style
+#[derive(Clone)]
 pub struct AlignStyle {
     /// Align value
     pub align: Alignments,
@@ -17,6 +18,7 @@ impl ToString for AlignStyle {
 }
 
 /// `Flex` Style
+#[derive(Clone)]
 pub struct FlexStyle {
     /// Flex align
     pub align: Alignments,

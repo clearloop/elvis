@@ -1,3 +1,5 @@
+use crate::style::Style;
+
 /// `Color` system, accroding to material design's color system.
 #[derive(Clone, Copy, Debug)]
 pub enum Colors {
@@ -241,5 +243,11 @@ impl ToString for Colors {
                 }
             }
         }
+    }
+}
+
+impl Into<Style> for Colors {
+    fn into(self) -> Style {
+        Style::Color(self)
     }
 }

@@ -2,7 +2,7 @@
 use crate::value::{layouts::Alignments, Colors, Unit};
 
 /// `Container` style
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub struct ContainerStyle {
     /// Container align
     pub align: Alignments,
@@ -32,6 +32,7 @@ impl ToString for ContainerStyle {
 }
 
 /// `SizedBox` style
+#[derive(Clone, Default)]
 pub struct SizedBoxStyle {
     /// SizedBox height
     pub height: Unit,

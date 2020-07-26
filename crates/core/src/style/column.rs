@@ -2,6 +2,7 @@
 use crate::value::{layouts::MultiColumnLineStyle, Colors, Unit};
 
 /// `Multicolumn` Style
+#[derive(Clone, Default)]
 pub struct MultiColumnStyle {
     /// Column color
     pub color: Colors,
