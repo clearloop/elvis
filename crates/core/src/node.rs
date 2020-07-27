@@ -26,8 +26,6 @@ pub struct Node {
     pub style: Vec<Style>,
     /// Node children
     pub children: Vec<Rc<RefCell<Node>>>,
-    /// Node tag
-    pub tag: String,
     /// Node parent
     pub pre: Option<Weak<RefCell<Node>>>,
     /// Node state
@@ -40,7 +38,6 @@ impl fmt::Debug for Node {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Node")
             .field("children", &self.children)
-            .field("tag", &self.tag)
             .field("pre", &self.pre)
             .finish()
     }
@@ -74,7 +71,7 @@ impl Node {
 
     /// The path of current node
     pub fn idx(&mut self, path: &mut Vec<u8>) {
-        self.attr.id = hash(&self.tag, &path);
+        self.attr.id = hash(&self.attr.tag, &path);
 
         path.push(0);
         for t in self.children.iter() {
@@ -106,10 +103,9 @@ impl Node {
         pre: Option<Weak<RefCell<Node>>>,
         tag: String,
     ) -> Rc<RefCell<Node>> {
-        let t = Node {
+        let mut t = Node {
             children,
             pre,
-            tag,
             attr: Attribute::default(),
             class: vec![],
             style: vec![],
@@ -117,6 +113,7 @@ impl Node {
             gesture: None,
         };
 
+        t.attr.tag = tag;
         Rc::new(RefCell::new(t))
     }
 

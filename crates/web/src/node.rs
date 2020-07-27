@@ -28,7 +28,7 @@ pub fn to_element(node: &Rc<RefCell<Node>>, dom: &Document) -> Result<Element, J
         this.set_class_name(&class);
     }
 
-    if node.borrow().tag == "plain" {
+    if node.borrow().attr.tag == "plain" {
         let p = dom.create_element("p")?;
         p.set_inner_html(&node.borrow().attr.text);
         return Ok(p);
