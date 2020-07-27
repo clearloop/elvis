@@ -1,6 +1,9 @@
 //! Web style
 
-mod class;
+mod parser;
 mod sheet;
 
-pub use self::{class::parse_class, sheet::StyleSheet};
+pub use self::{
+    parser::{parse_class, parse_style},
+    sheet::StyleSheet,
+};

@@ -54,14 +54,12 @@ impl<'s> StyleSheet {
             sheet
         });
 
-        let widget_ss = document
-            .query_selector(&format!("#{}", &id))?
-            .unwrap_or_else(|| {
-                should_append_widget_sheet = true;
-                let sheet = document.create_element("style").unwrap();
-                sheet.set_id(&format!("{}", &id));
-                sheet
-            });
+        let widget_ss = document.query_selector(&id)?.unwrap_or_else(|| {
+            should_append_widget_sheet = true;
+            let sheet = document.create_element("style").unwrap();
+            sheet.set_id(&id);
+            sheet
+        });
 
         let class_ss_inner = class_ss.inner_html();
         let widget_ss_inner = widget_ss.inner_html();
@@ -122,7 +120,7 @@ impl<'s> StyleSheet {
                 &id,
                 &t.style
                     .iter()
-                    .map(|s| s.to_string())
+                    .map(|s| super::parse_style(s))
                     .collect::<Vec<String>>()
                     .join(";"),
             );

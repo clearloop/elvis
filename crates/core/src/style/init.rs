@@ -6,18 +6,6 @@ use crate::value::{
     Colors, FontStyle, Unit,
 };
 
-fn camel_snake(camel: &str) -> String {
-    let mut res = "".to_string();
-    camel.trim().chars().enumerate().for_each(|(n, c)| {
-        if n > 0 && c.is_ascii_uppercase() {
-            res.push_str("-");
-        }
-        res.push(c);
-    });
-
-    res.to_lowercase()
-}
-
 macro_rules! construct_style {
     (
         [$(($style:ident, $ty:ty, $doc:expr),)*],
@@ -34,27 +22,6 @@ macro_rules! construct_style {
                 #[doc=$sdoc]
                 $ss($ss),
             )*
-        }
-
-        impl ToString for Style {
-            fn to_string(&self) -> String {
-                match self {
-                    $(
-                        Style::$style(v) => format!(
-                            "{}: {}",
-                            camel_snake(stringify!($style)),
-                            v.to_string()
-                        ),
-                    )*
-                    $(
-                        Style::$ss(v) => format!(
-                            "{}: {}",
-                            camel_snake(stringify!($ss)),
-                            v.to_string()
-                        ),
-                    )*
-                }
-            }
         }
     };
     (

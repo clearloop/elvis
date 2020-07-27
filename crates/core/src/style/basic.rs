@@ -29,8 +29,8 @@ impl Into<[Style; 7]> for ContainerStyle {
             content,
             Style::Height(self.height),
             Style::Width(self.width),
-            Style::Padding(self.padding.into()),
-            Style::Margin(self.margin.into()),
+            Style::Padding(self.padding),
+            Style::Margin(self.margin),
             Style::BackgroundColor(self.background_color),
         ]
     }
