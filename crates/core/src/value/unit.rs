@@ -1,6 +1,6 @@
 //! unit system
 use crate::Error;
-use std::str::FromStr;
+use std::{cmp::Ordering, str::FromStr};
 
 /// Follows [CSS Values 3][1] drafted in [csswg.org][2].
 ///
@@ -88,6 +88,18 @@ impl Eq for Unit {}
 impl PartialEq for Unit {
     fn eq(&self, o: &Self) -> bool {
         self.to_string().eq(&o.to_string())
+    }
+}
+
+impl Ord for Unit {
+    fn cmp(&self, _: &Self) -> Ordering {
+        Ordering::Equal
+    }
+}
+
+impl PartialOrd for Unit {
+    fn partial_cmp(&self, _: &Self) -> Option<Ordering> {
+        None
     }
 }
 

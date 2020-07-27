@@ -1,8 +1,11 @@
 //! Widget Styles
-use crate::value::{Colors, Unit};
+use crate::{
+    style::Style,
+    value::{Colors, FontStyle, Unit},
+};
 
 /// style of `Text`
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct TextStyle {
     /// Bold text
     pub bold: bool,
@@ -34,25 +37,24 @@ impl Default for TextStyle {
     }
 }
 
-impl ToString for TextStyle {
-    fn to_string(&self) -> String {
-        format!(
-            "color: {}; font-weight: {}; font-style: {}; font-size: {}; font-stretch: {}; line-height: {};",
-            self.color.to_string(),
+impl Into<Vec<Style>> for TextStyle {
+    fn into(self) -> Vec<Style> {
+        vec![
+            Style::Color(self.color),
             if self.bold {
-                "700".into()
+                Style::FontWeight(Unit::None(700.0))
             } else {
-                self.weight.to_string()
+                Style::FontWeight(self.weight)
             },
             if self.italic {
-                "italic"
+                Style::FontStyle(FontStyle::Italic)
             } else {
-                "normal"
+                Style::FontStyle(FontStyle::Normal)
             },
-            self.size.to_string(),
-            self.stretch.to_string(),
-            self.height.to_string(),
-        )
+            Style::FontSize(self.size),
+            Style::FontStretch(self.stretch),
+            Style::LineHeight(self.height),
+        ]
     }
 }
 
@@ -63,11 +65,5 @@ impl ImageSrc {
     /// Serialize source value as bytes
     pub fn as_bytes(&self) -> &[u8] {
         self.0.as_bytes()
-    }
-}
-
-impl ToString for ImageSrc {
-    fn to_string(&self) -> String {
-        format!("background-image: url({})", self.0)
     }
 }

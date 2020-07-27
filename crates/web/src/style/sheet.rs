@@ -14,9 +14,9 @@ impl<'s> StyleSheet {
     pub fn shared() -> Result<(), JsValue> {
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        if document.query_selector("#elvis-style-shared")?.is_none() {
+        if document.query_selector("#shared")?.is_none() {
             let sheet = document.create_element("style").unwrap();
-            sheet.set_id("elvis-style-shared");
+            sheet.set_id("shared");
             sheet.set_inner_html(
                 &vec![
                     "html, body {",
@@ -47,23 +47,19 @@ impl<'s> StyleSheet {
         let mut should_reset_widget_sheet = false;
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        let class_ss = document
-            .query_selector("#elvis-style-classes")?
-            .unwrap_or_else(|| {
-                should_append_class_sheet = true;
-                let sheet = document.create_element("style").unwrap();
-                sheet.set_id("elvis-style-classes");
-                sheet
-            });
+        let class_ss = document.query_selector("#elvis")?.unwrap_or_else(|| {
+            should_append_class_sheet = true;
+            let sheet = document.create_element("style").unwrap();
+            sheet.set_id("elvis");
+            sheet
+        });
 
-        let widget_ss = document
-            .query_selector(&format!("#elvis-style-{}", &id))?
-            .unwrap_or_else(|| {
-                should_append_widget_sheet = true;
-                let sheet = document.create_element("style").unwrap();
-                sheet.set_id(&format!("elvis-style-{}", &id));
-                sheet
-            });
+        let widget_ss = document.query_selector(&id)?.unwrap_or_else(|| {
+            should_append_widget_sheet = true;
+            let sheet = document.create_element("style").unwrap();
+            sheet.set_id(&id);
+            sheet
+        });
 
         let class_ss_inner = class_ss.inner_html();
         let widget_ss_inner = widget_ss.inner_html();
@@ -116,20 +112,23 @@ impl<'s> StyleSheet {
 
     /// Batch style from node
     pub fn batch(&mut self, t: &mut Node) {
-        if let Some(style) = t.attrs.remove("style") {
-            let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
+        let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
 
-            // Generate id-style into table
-            self.id(&id, &style);
+        // Generate id-style into table
+        if t.style.len() > 0 {
+            self.id(
+                &id,
+                &t.style
+                    .iter()
+                    .map(|s| super::parse_style(s))
+                    .collect::<Vec<String>>()
+                    .join(";"),
+            );
         }
 
-        let class = t.attrs.get("class").unwrap_or(&"".to_string()).to_string();
-        class.split(|x: char| x.is_whitespace()).for_each(|c| {
-            let ct = c.trim();
-
-            // Generate class-style into table
-            self.class(ct);
-        });
+        for c in t.class.iter() {
+            self.class(super::parse_class(c));
+        }
 
         t.children
             .iter()
@@ -160,22 +159,22 @@ impl<'s> StyleSheet {
         }
 
         let style = match name {
-            "elvis-center" => vec![
+            "center" => vec![
                 "  align-items: center;",
                 "  height: 100%;",
                 "  justify-content: center;",
                 "  width: 100%;",
             ]
             .join("\n"),
-            "elvis-col" => vec!["  flex-direction: column;"].join("\n"),
-            "elvis-flex" => vec![
+            "col" => vec!["  flex-direction: column;"].join("\n"),
+            "flex" => vec![
                 "  display: flex;",
                 "  height: 100%;",
                 "  flex: 1;",
                 "  width: 100%;",
             ]
             .join("\n"),
-            "elvis-image" => vec![
+            "image" => vec![
                 "  background-position: center;",
                 "  background-repeat: no-repeat;",
                 "  background-size: cover;",
@@ -183,7 +182,7 @@ impl<'s> StyleSheet {
                 "  width: 100%;",
             ]
             .join("\n"),
-            "elvis-row" => vec!["  flex-direction: row;"].join("\n"),
+            "row" => vec!["  flex-direction: row;"].join("\n"),
             _ => "".to_string(),
         };
 

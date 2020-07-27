@@ -1,14 +1,23 @@
 //! node opt
-use crate::gesture;
-use elvis_core::Node;
+use crate::{gesture, style};
+use elvis_core::{Class, Node};
 use std::{cell::RefCell, rc::Rc};
 use wasm_bindgen::JsValue;
 use web_sys::{Document, Element};
 
+fn class(classes: &[Class]) -> String {
+    let mut r = "".to_string();
+    classes.iter().for_each(|c| {
+        r.push_str(" ");
+        r.push_str(style::parse_class(c));
+    });
+    r.trim().into()
+}
+
 /// Converts node to element
 pub fn to_element(node: &Rc<RefCell<Node>>, dom: &Document) -> Result<Element, JsValue> {
     let this = gesture::bind(node, dom)?;
-    this.set_class_name(node.borrow().attrs.get("class").unwrap_or(&"".into()));
+    this.set_class_name(&class(&node.borrow().class));
     this.set_id(node.borrow().attrs.get("id").unwrap_or(&"".into()));
     if node.borrow().tag == "plain" {
         let p = dom.create_element("p")?;
