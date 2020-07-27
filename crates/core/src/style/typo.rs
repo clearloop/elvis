@@ -37,28 +37,6 @@ impl Default for TextStyle {
     }
 }
 
-impl ToString for TextStyle {
-    fn to_string(&self) -> String {
-        format!(
-            "color: {}; font-weight: {}; font-style: {}; font-size: {}; font-stretch: {}; line-height: {};",
-            self.color.to_string(),
-            if self.bold {
-                "700".into()
-            } else {
-                self.weight.to_string()
-            },
-            if self.italic {
-                "italic"
-            } else {
-                "normal"
-            },
-            self.size.to_string(),
-            self.stretch.to_string(),
-            self.height.to_string(),
-        )
-    }
-}
-
 impl Into<Vec<Style>> for TextStyle {
     fn into(self) -> Vec<Style> {
         vec![
@@ -87,11 +65,5 @@ impl ImageSrc {
     /// Serialize source value as bytes
     pub fn as_bytes(&self) -> &[u8] {
         self.0.as_bytes()
-    }
-}
-
-impl ToString for ImageSrc {
-    fn to_string(&self) -> String {
-        format!("background-image: url({})", self.0)
     }
 }

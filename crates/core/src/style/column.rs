@@ -17,17 +17,6 @@ pub struct MultiColumnStyle {
     pub style: MultiColumnLineStyle,
 }
 
-impl ToString for MultiColumnStyle {
-    fn to_string(&self) -> String {
-        let mut ss = "".to_string();
-        ss.push_str(&format!("column-count: {}", self.count.to_string()));
-        ss.push_str(&format!("column-gap: {}", self.gap.to_string()));
-        ss.push_str(&format!("column-rule-color: {}", self.color.to_string()));
-        ss.push_str(&format!("column-rule-style: {}", self.style.to_string()));
-        ss
-    }
-}
-
 impl Into<[Style; 4]> for MultiColumnStyle {
     fn into(self) -> [Style; 4] {
         [

@@ -21,19 +21,6 @@ pub struct ContainerStyle {
     pub background_color: Colors,
 }
 
-impl ToString for ContainerStyle {
-    fn to_string(&self) -> String {
-        let mut s = "".to_string();
-        s += &self.align.to_string();
-        s += &format!("height: {};", self.height.to_string());
-        s += &format!("width: {};", self.width.to_string());
-        s += &format!("padding: {};", self.padding.to_string());
-        s += &format!("margin: {};", self.margin.to_string());
-        s += &format!("background-color: {};", self.background_color.to_string());
-        s
-    }
-}
-
 impl Into<[Style; 7]> for ContainerStyle {
     fn into(self) -> [Style; 7] {
         let [items, content]: [Style; 2] = self.align.into();
@@ -56,16 +43,6 @@ pub struct SizedBoxStyle {
     pub height: Unit,
     /// SizedBox width
     pub width: Unit,
-}
-
-impl ToString for SizedBoxStyle {
-    fn to_string(&self) -> String {
-        format!(
-            "height: {}; width: {};",
-            self.height.to_string(),
-            self.width.to_string()
-        )
-    }
 }
 
 impl Into<[Style; 2]> for SizedBoxStyle {
