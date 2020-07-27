@@ -19,9 +19,7 @@ toml = "0.5.6"
 structopt = "0.3.14"
 elvis-backend = { path = "../backend", version = "0.1.0" }
 etc = { version = "0.1.8", features = ["serde-tree"] }
-serde = { version = "1.0.114", features = ["derive"] }
 
 [build-dependencies]
 toml = "0.5.6"
 etc = { version = "0.1.8", features = ["serde-tree"] }
-serde = { version = "1.0.114", features = ["derive"] }

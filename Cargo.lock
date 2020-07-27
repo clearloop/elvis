@@ -307,7 +307,6 @@ dependencies = [
  "env_logger",
  "etc",
  "log 0.4.8",
- "serde",
  "structopt",
  "toml",
 ]
