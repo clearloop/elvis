@@ -5,7 +5,7 @@ use crate::{
 };
 
 /// style of `Text`
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct TextStyle {
     /// Bold text
     pub bold: bool,
@@ -59,9 +59,9 @@ impl ToString for TextStyle {
     }
 }
 
-impl Into<[Style; 5]> for TextStyle {
-    fn into(self) -> [Style; 5] {
-        [
+impl Into<Vec<Style>> for TextStyle {
+    fn into(self) -> Vec<Style> {
+        vec![
             Style::Color(self.color),
             Style::FontWeight(self.weight),
             Style::FontSize(self.size),

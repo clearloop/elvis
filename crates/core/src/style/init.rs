@@ -7,10 +7,15 @@ use crate::value::{
 };
 
 fn camel_snake(camel: &str) -> String {
-    camel
-        .split(|c: char| c.is_ascii_uppercase())
-        .collect::<Vec<&str>>()
-        .join("_")
+    let mut res = "".to_string();
+    camel.trim().chars().enumerate().for_each(|(n, c)| {
+        if n > 0 && c.is_ascii_uppercase() {
+            res.push_str("-");
+        }
+        res.push(c);
+    });
+
+    res.to_lowercase()
 }
 
 macro_rules! construct_style {

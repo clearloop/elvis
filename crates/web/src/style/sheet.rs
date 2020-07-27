@@ -114,11 +114,18 @@ impl<'s> StyleSheet {
 
     /// Batch style from node
     pub fn batch(&mut self, t: &mut Node) {
-        if let Some(style) = t.attrs.remove("style") {
-            let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
+        let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
 
-            // Generate id-style into table
-            self.id(&id, &style);
+        // Generate id-style into table
+        if t.style.len() > 0 {
+            self.id(
+                &id,
+                &t.style
+                    .iter()
+                    .map(|s| s.to_string())
+                    .collect::<Vec<String>>()
+                    .join(";"),
+            );
         }
 
         for c in t.class.iter() {

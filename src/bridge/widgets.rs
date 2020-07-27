@@ -20,6 +20,7 @@ impl<'t> Into<Node> for &'t Text {
         )
         .borrow()
         .to_owned()
+        .append_style(self.style)
     }
 }
 

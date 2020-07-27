@@ -56,6 +56,14 @@ impl Node {
         self
     }
 
+    /// Append style
+    pub fn append_style(mut self, styles: impl Into<Vec<Style>>) -> Node {
+        self.style = styles.into();
+        self.style.sort();
+        self.style.dedup();
+        self
+    }
+
     /// Drain tree if not the root
     pub fn drain(t: Rc<RefCell<Node>>) {
         if let Some(pre) = &t.borrow().pre {
