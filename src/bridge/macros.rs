@@ -14,7 +14,7 @@ macro_rules! mcw {
                     Node::new(HashMap::new(), cs, None, "div".into())
                         .borrow()
                         .to_owned()
-                        .append_class(vec![
+                        .class(&mut vec![
                             Class::Flex,
                             Class::from(stringify!($widget).to_lowercase().as_str()),
                         ])
@@ -73,7 +73,7 @@ macro_rules! sw {
                         vec![Rc::new(RefCell::new(self.child.to_owned()))],
                         None,
                         "div".into(),
-                    ).borrow().to_owned().append_class(vec![Class::Flex])
+                    ).borrow().to_owned().class(&mut vec![Class::Flex])
                 }
             }
 

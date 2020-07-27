@@ -11,6 +11,6 @@ impl<'i> Into<Node> for &'i Center {
         Node::new(HashMap::new(), cs, None, "div".into())
             .borrow_mut()
             .to_owned()
-            .append_class(vec![Class::Flex, Class::Center])
+            .class(&mut vec![Class::Flex, Class::Center])
     }
 }

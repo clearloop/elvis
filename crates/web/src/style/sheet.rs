@@ -14,9 +14,9 @@ impl<'s> StyleSheet {
     pub fn shared() -> Result<(), JsValue> {
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        if document.query_selector("#shared")?.is_none() {
+        if document.query_selector("#calling-elvis")?.is_none() {
             let sheet = document.create_element("style").unwrap();
-            sheet.set_id("shared");
+            sheet.set_id("calling-elvis");
             sheet.set_inner_html(
                 &vec![
                     "html, body {",
@@ -47,40 +47,40 @@ impl<'s> StyleSheet {
         let mut should_reset_widget_sheet = false;
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        let class_ss = document.query_selector("#elvis")?.unwrap_or_else(|| {
-            should_append_class_sheet = true;
-            let sheet = document.create_element("style").unwrap();
-            sheet.set_id("elvis");
-            sheet
-        });
+        let class_ss = document
+            .query_selector("#elvis-shared")?
+            .unwrap_or_else(|| {
+                should_append_class_sheet = true;
+                let sheet = document.create_element("style").unwrap();
+                sheet.set_id("elvis-shared");
+                sheet
+            });
 
-        let widget_ss = document.query_selector(&id)?.unwrap_or_else(|| {
-            should_append_widget_sheet = true;
-            let sheet = document.create_element("style").unwrap();
-            sheet.set_id(&id);
-            sheet
-        });
+        let widget_ss = document
+            .query_selector(&format!("#{}", id))?
+            .unwrap_or_else(|| {
+                should_append_widget_sheet = true;
+                let sheet = document.create_element("style").unwrap();
+                sheet.set_id(&id);
+                sheet
+            });
 
         let class_ss_inner = class_ss.inner_html();
         let widget_ss_inner = widget_ss.inner_html();
 
-        let mut class = class_ss_inner.clone();
+        let mut class = class_ss_inner;
         let mut widget = widget_ss_inner.clone();
         self.table.iter().for_each(|(k, v)| {
             let css_text = format!("\n\n{} {{\n{}\n}}", k, v);
-            if k.starts_with(".") {
-                if !class.contains(&k[..]) {
-                    class.push_str(&css_text);
-                    if !should_reset_class_sheet {
-                        should_reset_class_sheet = true;
-                    }
+            if k.starts_with(".elvis") && !widget.contains(&css_text.trim()) {
+                widget.push_str(&css_text);
+                if !should_reset_widget_sheet {
+                    should_reset_widget_sheet = true;
                 }
-            } else if k.starts_with("#") {
-                if !widget.contains(&css_text.trim()) {
-                    widget.push_str(&css_text);
-                    if !should_reset_widget_sheet {
-                        should_reset_widget_sheet = true;
-                    }
+            } else if !k.starts_with(".elvis") && k.starts_with('.') && !class.contains(&k[..]) {
+                class.push_str(&css_text);
+                if !should_reset_class_sheet {
+                    should_reset_class_sheet = true;
                 }
             }
         });
@@ -112,12 +112,10 @@ impl<'s> StyleSheet {
 
     /// Batch style from node
     pub fn batch(&mut self, t: &mut Node) {
-        let id = t.attrs.get("id").unwrap_or(&"".to_string()).to_string();
-
         // Generate id-style into table
-        if t.style.len() > 0 {
-            self.id(
-                &id,
+        if !t.style.is_empty() {
+            self.widget(
+                &t.attr.id,
                 &t.style
                     .iter()
                     .map(|s| super::parse_style(s))
@@ -136,9 +134,9 @@ impl<'s> StyleSheet {
     }
 
     /// Set style to element with id
-    fn id(&mut self, ti: &'s str, s: &'s str) {
+    fn widget(&mut self, ti: &'s str, s: &'s str) {
         let mut style = "".to_string();
-        s.split(";").collect::<Vec<&str>>().iter().for_each(|x| {
+        s.split(';').collect::<Vec<&str>>().iter().for_each(|x| {
             if !x.is_empty() {
                 style.push_str("  ");
                 style.push_str(x.trim());
@@ -146,7 +144,7 @@ impl<'s> StyleSheet {
             }
         });
 
-        let v = self.table.entry(format!("#{}", ti)).or_default();
+        let v = self.table.entry(format!(".{}", ti)).or_default();
         if v != &style {
             *v = style[..(style.len() - 1)].to_string();
         }
@@ -186,7 +184,7 @@ impl<'s> StyleSheet {
             _ => "".to_string(),
         };
 
-        if style == "".to_string() {
+        if style.is_empty() {
             return;
         }
 

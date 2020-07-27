@@ -46,18 +46,9 @@ impl Page {
         Ok(())
     }
 
-    /// Get widget id
-    fn id(&self) -> String {
-        self.tree
-            .attrs
-            .get("id")
-            .unwrap_or(&"".to_string())
-            .to_string()
-    }
-
     /// Shoud update style
     fn style(&mut self) -> Result<bool, JsValue> {
         self.style.borrow_mut().batch(&mut self.tree);
-        Ok(self.style.borrow().ser(self.id())?)
+        Ok(self.style.borrow().ser(self.tree.attr.id.to_string())?)
     }
 }

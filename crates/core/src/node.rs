@@ -1,4 +1,4 @@
-use crate::{Class, GestureKV, StateKV, Style};
+use crate::{Attribute, Class, GestureKV, StateKV, Style};
 use std::{
     cell::RefCell,
     collections::{hash_map::DefaultHasher, HashMap},
@@ -12,7 +12,7 @@ fn hash(tag: &str, s: &[u8]) -> String {
     hasher.write(s);
 
     let res = format!("{:x}", hasher.finish());
-    format!("{}-{}", &tag, &res[(res.len() - 6)..])
+    format!("elvis-{}-{}", &tag, &res[(res.len() - 6)..])
 }
 
 /// Virtual UI Node
@@ -20,6 +20,8 @@ fn hash(tag: &str, s: &[u8]) -> String {
 pub struct Node {
     /// Node attributes
     pub attrs: HashMap<String, String>,
+    /// Node attribute
+    pub attr: Attribute,
     /// Node Class
     pub class: Vec<Class>,
     /// Node Class
@@ -49,16 +51,16 @@ impl fmt::Debug for Node {
 
 impl Node {
     /// Append class
-    pub fn append_class(mut self, classes: Vec<Class>) -> Node {
-        self.class = classes;
+    pub fn class(mut self, classes: &mut Vec<Class>) -> Node {
+        self.class.append(classes);
         self.class.sort();
         self.class.dedup();
         self
     }
 
     /// Append style
-    pub fn append_style(mut self, styles: impl Into<Vec<Style>>) -> Node {
-        self.style = styles.into();
+    pub fn style(mut self, styles: impl Into<Vec<Style>>) -> Node {
+        self.style.append(&mut styles.into());
         self.style.sort();
         self.style.dedup();
         self
@@ -75,8 +77,7 @@ impl Node {
 
     /// The path of current node
     pub fn idx(&mut self, path: &mut Vec<u8>) {
-        let h = hash(&self.tag, &path);
-        self.attrs.entry("id".into()).or_insert(h);
+        self.attr.id = hash(&self.tag, &path);
 
         path.push(0);
         for t in self.children.iter() {
@@ -114,6 +115,7 @@ impl Node {
             children,
             pre,
             tag,
+            attr: Attribute::default(),
             class: vec![],
             style: vec![],
             state: None,
