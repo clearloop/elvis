@@ -1,5 +1,6 @@
 //! Elvis shared library
 #![warn(missing_docs)]
+mod attr;
 mod class;
 mod closure;
 mod derive;
@@ -16,6 +17,7 @@ pub mod style;
 pub mod value;
 
 pub use self::{
+    attr::Attribute,
     class::Class,
     closure::Closure,
     driver::Driver,
