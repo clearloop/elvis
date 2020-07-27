@@ -4,7 +4,7 @@ mod widgets;
 
 use crate::widgets::{layouts::*, *};
 use elvis_core::{Class, Node};
-use std::{cell::RefCell, collections::HashMap, rc::Rc};
+use std::{cell::RefCell, rc::Rc};
 
 sw! {
     Align,

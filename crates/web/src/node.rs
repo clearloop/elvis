@@ -30,7 +30,7 @@ pub fn to_element(node: &Rc<RefCell<Node>>, dom: &Document) -> Result<Element, J
 
     if node.borrow().tag == "plain" {
         let p = dom.create_element("p")?;
-        p.set_inner_html(node.borrow().attrs.get("text").unwrap_or(&"".into()));
+        p.set_inner_html(&node.borrow().attr.text);
         return Ok(p);
     }
 

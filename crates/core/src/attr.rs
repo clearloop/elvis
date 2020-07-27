@@ -7,4 +7,6 @@ pub struct Attribute {
     pub tag: String,
     /// Source
     pub src: String,
+    /// Text
+    pub text: String,
 }
