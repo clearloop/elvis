@@ -48,6 +48,14 @@ impl fmt::Debug for Node {
 }
 
 impl Node {
+    /// Append class
+    pub fn append_class(mut self, classes: Vec<Class>) -> Node {
+        self.class = classes;
+        self.class.sort();
+        self.class.dedup();
+        self
+    }
+
     /// Drain tree if not the root
     pub fn drain(t: Rc<RefCell<Node>>) {
         if let Some(pre) = &t.borrow().pre {

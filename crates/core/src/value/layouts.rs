@@ -2,7 +2,7 @@
 use crate::value::Unit;
 
 /// `Flex` position
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum FlexPosition {
     /// Flex center
     Center,
@@ -23,8 +23,14 @@ impl ToString for FlexPosition {
     }
 }
 
+impl Default for FlexPosition {
+    fn default() -> FlexPosition {
+        FlexPosition::Center
+    }
+}
+
 /// `Flex` Alignments
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum Alignments {
     /// Align bottom-center
     BottomCenter,
@@ -71,7 +77,7 @@ impl ToString for Alignments {
 }
 
 /// `flex-basis` property
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum FlexBasis {
     /// Fill the flex box
     Fill,
@@ -107,7 +113,7 @@ impl ToString for FlexBasis {
 }
 
 /// `flex-direction` property
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum FlexDirection {
     /// The direction in which lines of text are stacked
     Column,
@@ -140,7 +146,7 @@ impl ToString for FlexDirection {
 }
 
 /// config columns and rows in `Grid`
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum GridAuto {
     /// Auto Grid
     Auto,
@@ -208,7 +214,7 @@ impl ToString for GridAuto {
 /// dense" packing algorithm attempts to fill in holes earlier in the grid, if smaller items come up later. This may cause items to appear out-of-order, when doing so would fill in holes left by larger items.
 ///
 /// If it is omitted, a "sparse" algorithm is used, where the placement algorithm only ever moves "forward" in the grid when placing items, never backtracking to fill holes. This ensures that all of the auto-placed items appear "in order", even if this leaves holes that could have been filled by later items.
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum GridFlow {
     /// Grid Column
     Column,
@@ -251,7 +257,7 @@ impl ToString for GridFlow {
 }
 
 /// template rule in `Grid` columns an rows
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum GridTemplate {
     /// Fit content
     FitContent(Unit),
@@ -304,7 +310,7 @@ impl ToString for GridTemplate {
 }
 
 /// line-style in `MultiColumn`
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum MultiColumnLineStyle {
     /// None style
     None,

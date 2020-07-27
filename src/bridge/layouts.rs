@@ -8,10 +8,9 @@ impl<'i> Into<Node> for &'i Center {
         let mut cs = vec![];
         cs.push(Rc::new(RefCell::new(self.child.to_owned())));
 
-        let mut node = Node::new(HashMap::new(), cs, None, "div".into())
-            .borrow()
-            .to_owned();
-        node.class.append(&mut vec![Class::Flex, Class::Center]);
-        node
+        Node::new(HashMap::new(), cs, None, "div".into())
+            .borrow_mut()
+            .to_owned()
+            .append_class(vec![Class::Flex, Class::Center])
     }
 }

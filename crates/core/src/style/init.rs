@@ -16,7 +16,7 @@ fn camel_snake(camel: &str) -> String {
 macro_rules! construct_style {
     ($(($style:ident, $ty:ty, $doc:expr),)*) => {
         /// Evlis Style
-        #[derive(Clone)]
+        #[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
         pub enum Style {
             $(
                 #[doc=$doc]

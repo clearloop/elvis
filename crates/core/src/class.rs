@@ -1,7 +1,7 @@
 //! Elvis Class
 
 /// Evlis classes
-#[derive(Clone)]
+#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
 pub enum Class {
     /// Center Class
     Center,

@@ -11,16 +11,13 @@ macro_rules! mcw {
                         cs.push(Rc::new(RefCell::new(x.to_owned())));
                     });
 
-                    let mut node = Node::new(HashMap::new(), cs, None, "div".into())
+                    Node::new(HashMap::new(), cs, None, "div".into())
                         .borrow()
-                        .to_owned();
-
-                    node.class.append(
-                        &mut vec![
+                        .to_owned()
+                        .append_class(vec![
                             Class::Flex,
                             Class::from(stringify!($widget).to_lowercase().as_str()),
-                        ]);
-                    node
+                        ])
                 }
             }
         )*
@@ -79,14 +76,12 @@ macro_rules! sw {
                     let mut m = HashMap::<String, String>::new();
                     m.insert("style".into(), ss);
 
-                    let mut node = Node::new(
+                    Node::new(
                         m,
                         vec![Rc::new(RefCell::new(self.child.to_owned()))],
                         None,
                         "div".into(),
-                    ).borrow().to_owned();
-                    node.class = vec![Class::Flex];
-                    node
+                    ).borrow().to_owned().append_class(vec![Class::Flex])
                 }
             }
 
