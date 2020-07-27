@@ -3,7 +3,7 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    Colors, Unit,
+    Colors, FontStyle, Unit,
 };
 
 fn camel_snake(camel: &str) -> String {
@@ -19,13 +19,20 @@ fn camel_snake(camel: &str) -> String {
 }
 
 macro_rules! construct_style {
-    ($(($style:ident, $ty:ty, $doc:expr),)*) => {
+    (
+        [$(($style:ident, $ty:ty, $doc:expr),)*],
+        [$(($ss:ident, $sdoc:expr),)*]
+    ) => {
         /// Evlis Style
         #[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
         pub enum Style {
             $(
                 #[doc=$doc]
                 $style($ty),
+            )*
+            $(
+                #[doc=$sdoc]
+                $ss($ss),
             )*
         }
 
@@ -38,19 +45,29 @@ macro_rules! construct_style {
                             camel_snake(stringify!($style)),
                             v.to_string()
                         ),
-                     )*
+                    )*
+                    $(
+                        Style::$ss(v) => format!(
+                            "{}: {}",
+                            camel_snake(stringify!($ss)),
+                            v.to_string()
+                        ),
+                    )*
                 }
             }
         }
     };
     (
         [$(($ns:ident, $nty:ty, $ndoc:expr),)*],
-        [$(($ds:ident, $dty:ty, $ddoc:expr),)*]
+        [$(($ds:ident, $dty:ty, $ddoc:expr),)*],
+        [$(($ss:ident, $sdoc:expr),)*]
     ) => {
-        construct_style!{
+        construct_style!{[
             $(($ns, $nty, $ndoc),)*
             $(($ds, $dty, $ddoc),)*
-        }
+        ],[
+            $(($ss, $sdoc),)*
+        ]}
 
         $(
             impl From<$dty> for Style {
@@ -110,4 +127,6 @@ construct_style! {[
     (GridAuto, GridAuto, "Grid Auto Style"),
     (GridFlow, GridFlow, "Grid Flow Style"),
     (GridTemplate, GridTemplate, "Grid Template Style"),
+], [
+    (FontStyle, "Font Style"),
 ]}

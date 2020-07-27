@@ -14,9 +14,9 @@ impl<'s> StyleSheet {
     pub fn shared() -> Result<(), JsValue> {
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        if document.query_selector("#elvis-style-shared")?.is_none() {
+        if document.query_selector("#shared")?.is_none() {
             let sheet = document.create_element("style").unwrap();
-            sheet.set_id("elvis-style-shared");
+            sheet.set_id("shared");
             sheet.set_inner_html(
                 &vec![
                     "html, body {",
@@ -47,19 +47,19 @@ impl<'s> StyleSheet {
         let mut should_reset_widget_sheet = false;
         let window = web_sys::window().unwrap();
         let document = window.document().unwrap();
-        let class_ss = document.query_selector("#classes")?.unwrap_or_else(|| {
+        let class_ss = document.query_selector("#elvis")?.unwrap_or_else(|| {
             should_append_class_sheet = true;
             let sheet = document.create_element("style").unwrap();
-            sheet.set_id("classes");
+            sheet.set_id("elvis");
             sheet
         });
 
         let widget_ss = document
-            .query_selector(&format!("#elvis-style-{}", &id))?
+            .query_selector(&format!("#{}", &id))?
             .unwrap_or_else(|| {
                 should_append_widget_sheet = true;
                 let sheet = document.create_element("style").unwrap();
-                sheet.set_id(&format!("elvis-style-{}", &id));
+                sheet.set_id(&format!("{}", &id));
                 sheet
             });
 

@@ -1,7 +1,7 @@
 //! Widget Styles
 use crate::{
     style::Style,
-    value::{Colors, Unit},
+    value::{Colors, FontStyle, Unit},
 };
 
 /// style of `Text`
@@ -63,7 +63,16 @@ impl Into<Vec<Style>> for TextStyle {
     fn into(self) -> Vec<Style> {
         vec![
             Style::Color(self.color),
-            Style::FontWeight(self.weight),
+            if self.bold {
+                Style::FontWeight(Unit::None(700.0))
+            } else {
+                Style::FontWeight(self.weight)
+            },
+            if self.italic {
+                Style::FontStyle(FontStyle::Italic)
+            } else {
+                Style::FontStyle(FontStyle::Normal)
+            },
             Style::FontSize(self.size),
             Style::FontStretch(self.stretch),
             Style::LineHeight(self.height),
