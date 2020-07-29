@@ -45,10 +45,12 @@ where
     }
 
     /// Register method
-    pub fn register(&mut self, gesture: Gesture, callback: fn(StateKV) -> ()) {
+    pub fn register(mut self, gesture: Gesture, callback: fn(StateKV) -> ()) -> Self {
         self.gesture
             .entry(gesture)
             .or_insert_with(|| Arc::new(callback));
+
+        self
     }
 
     /// Get method

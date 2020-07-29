@@ -19,8 +19,7 @@ impl LifeCycle<GestureDetector<Center>> for Index {
             .into(),
         };
 
-        let mut detector = GestureDetector::new(center);
-        detector.register(Gesture::Tap, |_| WebDriver::alert("Hello from rust!"));
-        detector
+        GestureDetector::new(center)
+            .register(Gesture::Tap, |_| WebDriver::alert("Hello from rust!"))
     }
 }
