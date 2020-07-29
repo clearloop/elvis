@@ -249,6 +249,7 @@ dependencies = [
  "binaryen",
  "cargo_metadata",
  "env_logger",
+ "etc",
  "futures",
  "log 0.4.8",
  "notify",

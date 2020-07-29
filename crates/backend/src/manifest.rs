@@ -7,6 +7,7 @@ use crate::{
     server,
 };
 use cargo_metadata::{Metadata, MetadataCommand};
+use etc::{Etc, FileSystem};
 use notify::{DebouncedEvent, RecommendedWatcher, RecursiveMode, Watcher};
 use std::fs::File;
 use std::io::prelude::*;
@@ -206,25 +207,33 @@ impl Crate {
 
     /// Compile APP
     pub fn build(&self) -> Result<(), Error> {
-        fs::write(
-            &self.wasm.join("index.html"),
-            HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
-        )?;
-
+        self.write_pages(HTML_TEMPLATE)?;
         self.compile()?;
         self.bindgen()
     }
 
     /// Serve APP
     pub fn serve(self, port: u16) -> Result<(), Error> {
-        fs::write(
-            &self.wasm.join("index.html"),
-            DEV_HTML_TEMPLATE.replace("${entry}", &["/", &self.name(), ".js"].join("")),
-        )?;
-
+        self.write_pages(DEV_HTML_TEMPLATE)?;
         if let Err(e) = server::run(self, port) {
             logger!(Logger::ServerStartFailed, e);
             return Err(Error::Custom(format!("{:?}", e)));
+        }
+
+        Ok(())
+    }
+
+    fn write_pages(&self, template: &str) -> Result<(), Error> {
+        for f in Etc::new(&self.root.join("pages"))?.ls()? {
+            if f.ends_with(".rs") && f != "mod.rs" {
+                let page = f[..f.len() - 3].to_string();
+                fs::write(
+                    &self.wasm.join(format!("{}.html", page)),
+                    template
+                        .replace("${entry}", &["/", &self.name(), ".js"].join(""))
+                        .replace("${run}", &page),
+                )?;
+            }
         }
 
         Ok(())
