@@ -1,9 +1,10 @@
 use elvis::{
-    driver::{Driver, WebDriver},
     gesture::{Gesture, GestureDetector},
     prelude::*,
     style::TextStyle,
+    traits::DriverTrait,
     widgets::{layouts::Center, Text},
+    Driver,
 };
 
 #[page]
@@ -19,7 +20,6 @@ impl LifeCycle<GestureDetector<Center>> for Index {
             .into(),
         };
 
-        GestureDetector::new(center)
-            .register(Gesture::Tap, |_| WebDriver::alert("Hello from rust!"))
+        GestureDetector::new(center).register(Gesture::Tap, |_| Driver::alert("Hello from rust!"))
     }
 }

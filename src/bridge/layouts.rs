@@ -1,5 +1,5 @@
-use crate::{widgets::layouts::Center, Node};
-use elvis_core::Class;
+use crate::widgets::layouts::Center;
+use elvis_core::{Class, Node};
 use std::{cell::RefCell, convert::Into, rc::Rc};
 
 // layouts
