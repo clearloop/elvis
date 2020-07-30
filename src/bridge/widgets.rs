@@ -1,7 +1,5 @@
-use crate::{
-    widgets::{Image, Text},
-    Node,
-};
+use crate::widgets::{Image, Text};
+use elvis_core::Node;
 use std::{cell::RefCell, rc::Rc};
 
 impl<'t> Into<Node> for &'t Text {

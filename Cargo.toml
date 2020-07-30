@@ -19,7 +19,11 @@ members = [
   "crates/derive",
   "crates/epm",
   "crates/core",
+  
+  # Examples
   "examples/hello-world",
+  "examples/click",
+  "examples/router",
 ]
 
 [dependencies]

@@ -3,14 +3,12 @@
 mod bridge;
 mod err;
 
-/// Imports structs from elvis_core
-use elvis_core::Node;
-
-// Exports modules
+// Exports widgets
 pub mod widgets;
 
-// Export idents
+// Exports idents
 pub use crate::err::Error;
+
 /// Gesture module
 pub mod gesture {
     pub use elvis_core::{Gesture, GestureDetector};
@@ -18,12 +16,14 @@ pub mod gesture {
 
 pub use elvis_core::{style, value};
 
-/// Elvis drivers
-pub mod driver {
-    pub use elvis_core::Driver;
-    #[cfg(feature = "web")]
-    pub use elvis_web::WebDriver;
+/// Evlis Traits
+pub mod traits {
+    pub use elvis_core::{Driver as DriverTrait, Router as RouterTrait};
 }
+
+// Driver
+#[cfg(feature = "web")]
+pub use elvis_web::{Driver, Router};
 
 /// A module which is typically glob imported from:
 ///

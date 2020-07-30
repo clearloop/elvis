@@ -224,16 +224,24 @@ impl Crate {
     }
 
     fn write_pages(&self, template: &str) -> Result<(), Error> {
-        for f in Etc::new(&self.root.join("pages"))?.ls()? {
-            if f.ends_with(".rs") && f != "mod.rs" {
-                let page = f[..f.len() - 3].to_string();
-                fs::write(
-                    &self.wasm.join(format!("{}.html", page)),
-                    template
-                        .replace("${entry}", &["/", &self.name(), ".js"].join(""))
-                        .replace("${run}", &page),
-                )?;
+        let codegen = |p: &str| {
+            fs::write(
+                &self.wasm.join(format!("{}.html", &p)),
+                template
+                    .replace("${entry}", &["/", &self.name(), ".js"].join(""))
+                    .replace("${run}", &p),
+            )
+        };
+
+        let pages = self.root.join("pages");
+        if pages.exists() {
+            for f in Etc::new(&self.root.join("pages"))?.ls()? {
+                if f.ends_with(".rs") && f != "mod.rs" {
+                    codegen(&f[..f.len() - 3])?;
+                }
             }
+        } else {
+            codegen("index")?;
         }
 
         Ok(())

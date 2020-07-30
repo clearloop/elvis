@@ -1,6 +1,8 @@
 //! Basic layout widgets
-use crate::Node;
-use elvis_core::style::{ContainerStyle, SizedBoxStyle};
+use elvis_core::{
+    style::{ContainerStyle, SizedBoxStyle},
+    Node,
+};
 
 /// To be honest, `Container` is a part of Flex family, but he is too brilliant to stay in Flex family, Layout calls him.
 pub struct Container {

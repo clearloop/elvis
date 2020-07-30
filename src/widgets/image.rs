@@ -1,5 +1,4 @@
-use crate::Node;
-use elvis_core::style::ImageSrc;
+use elvis_core::{style::ImageSrc, Node};
 
 /// If you don't want Image playing in background anonymously, just remove its child.
 pub struct Image {
