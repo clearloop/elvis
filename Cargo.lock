@@ -271,7 +271,7 @@ dependencies = [
 
 [[package]]
 name = "elvis-core"
-version = "0.1.2"
+version = "0.1.0"
 
 [[package]]
 name = "elvis-derive"

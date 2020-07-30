@@ -25,37 +25,14 @@ Writing web pages in **pure rust or javascript** using wasm bindings, **without*
 
 ## 21st Century Schizoid Magic 🍩
 
-#### Install epm
-
 ```
+# Install elvis package manager
 $ cargo install epm
-$ epm
-epm 0.1.4
 
-USAGE:
-    epm <SUBCOMMAND>
-
-FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
-
-SUBCOMMANDS:
-    build    Build elvis app to the output dir
-    dev      Start development server
-    help     Prints this message or the help of the given subcommand(s)
-    init     Create a new elvis package in an existing directory
-    new      Create a new elvis package
-```
-
-#### New elvis app
-
-```
+# New your awesome-app
 $ epm new my-awesome-app
-```
 
-#### Start development server
-
-```
+# Start development server
 $ cd my-awesome-app && epm dev
 [INFO  warp::server] listening on http://0.0.0.0:3000
 ```
@@ -90,6 +67,12 @@ impl LifeCycle<Center> for Index {
 }
 ```
 
+## Examples
+
++ [hello-world][hello-world-example]
++ [click][click-example]
++ [router][router-example]
+
 ## Community
 
 Welcome to join us! Check our community channels [here][community].
@@ -104,3 +87,6 @@ Heartbreak Hotel.
 [3]: https://docs.rs/elvis
 [rust.cc]: https://rustcc.cn
 [community]: https://elvisjs.github.io/the-elvis-book/community
+[hello-world-example]: https://github.com/elvisjs/elvis/tree/master/examples/hello-world
+[click-example]: https://github.com/elvisjs/elvis/tree/master/examples/click
+[router-example]: https://github.com/elvisjs/elvis/tree/master/examples/router
