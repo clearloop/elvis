@@ -263,6 +263,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "elvis-click-example"
+version = "0.1.0"
+dependencies = [
+ "elvis",
+]
+
+[[package]]
 name = "elvis-core"
 version = "0.1.2"
 
@@ -273,6 +280,13 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "elvis-router-example"
+version = "0.1.0"
+dependencies = [
+ "elvis",
 ]
 
 [[package]]
