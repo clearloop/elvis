@@ -5,6 +5,7 @@
 //! [1]: https://clearloop.github.io/elvis
 #![warn(missing_docs)]
 mod driver;
+mod err;
 pub mod event;
 mod gesture;
 mod node;
@@ -13,7 +14,7 @@ mod router;
 mod style;
 
 use self::style::StyleSheet;
-pub use self::{driver::WebDriver, page::Page, router::Router};
+pub use self::{driver::WebDriver, err::Error, page::Page, router::Router};
 
 /// Re-exports wasm-bindgen
 pub mod wasm_bindgen_re_exports {
