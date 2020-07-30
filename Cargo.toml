@@ -19,17 +19,15 @@ members = [
   "crates/derive",
   "crates/epm",
   "crates/core",
-  
-  # Examples
   "examples/hello-world",
   "examples/click",
   "examples/router",
 ]
 
 [dependencies]
-elvis-derive = { path = "crates/derive" }
-elvis-core = { path = "crates/core"  }
-elvis-web = { path = "crates/web", optional = true }
+elvis-derive = { path = "crates/derive", version = "0.1.2" }
+elvis-core = { path = "crates/core", version = "0.1.0"  }
+elvis-web = { path = "crates/web", version = "0.1.6", optional = true }
 
 [features]
 web = [ "elvis-web", "elvis-core/web" ]

@@ -244,7 +244,7 @@ dependencies = [
 
 [[package]]
 name = "elvis-backend"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "binaryen",
  "cargo_metadata",
@@ -271,7 +271,7 @@ dependencies = [
 
 [[package]]
 name = "elvis-core"
-version = "0.1.2"
+version = "0.1.0"
 
 [[package]]
 name = "elvis-derive"
@@ -316,7 +316,7 @@ dependencies = [
 
 [[package]]
 name = "epm"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "elvis-backend",
  "env_logger",
