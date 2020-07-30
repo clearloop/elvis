@@ -18,12 +18,12 @@ pub use elvis_core::{style, value};
 
 /// Evlis Traits
 pub mod traits {
-    pub use elvis_core::Driver as DriverTrait;
+    pub use elvis_core::{Driver as DriverTrait, Router as RouterTrait};
 }
 
 // Driver
 #[cfg(feature = "web")]
-pub use elvis_web::WebDriver as Driver;
+pub use elvis_web::{Driver, Router};
 
 /// A module which is typically glob imported from:
 ///

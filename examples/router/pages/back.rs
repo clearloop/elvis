@@ -8,19 +8,19 @@ use elvis::{
 };
 
 #[page]
-struct Index;
+struct Back;
 
-impl LifeCycle<Center> for Index {
+impl LifeCycle<Center> for Back {
     fn create(&self) -> Center {
         Center {
             child: GestureDetector::<Text>::new(
                 Text {
-                    text: "Let's roll up for the magical mystery tour!!!".into(),
+                    text: "Back to the Future!!!".into(),
                     style: TextStyle::default(),
                 }
                 .into(),
             )
-            .register(Gesture::Tap, |_| Router::push("back").unwrap())
+            .register(Gesture::Tap, |_| Router::push("index").unwrap())
             .into(),
         }
     }

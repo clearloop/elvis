@@ -14,7 +14,7 @@ mod router;
 mod style;
 
 use self::style::StyleSheet;
-pub use self::{driver::WebDriver, err::Error, page::Page, router::Router};
+pub use self::{driver::Driver, err::Error, page::Page, router::Router};
 
 /// Re-exports wasm-bindgen
 pub mod wasm_bindgen_re_exports {

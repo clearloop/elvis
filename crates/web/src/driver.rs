@@ -1,9 +1,9 @@
 //! WebDriver Implementation
-use elvis_core::Driver;
+use elvis_core::Driver as DriverTrait;
 use wasm_bindgen::prelude::*;
 
 /// Elvis web driver
-pub struct WebDriver;
+pub struct Driver;
 
 #[wasm_bindgen]
 extern "C" {
@@ -12,7 +12,7 @@ extern "C" {
     fn alert(s: &str);
 }
 
-impl Driver for WebDriver {
+impl DriverTrait for Driver {
     fn alert(msg: &str) {
         alert(&msg);
     }
