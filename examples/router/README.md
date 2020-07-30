@@ -2,6 +2,10 @@
 
 This project is bootstrapped by [epm][1].
 
+```
+cargo install epm
+```
+
 Find the most recent version of this guide at [here][2]. And check out [elvis][3] for the most up-to-date info.
 
 
@@ -25,5 +29,5 @@ It correctly bundles Elvis in production mode and optimizes the build for the be
 Don\`t Think Twice, it\`s Alright.
 
 [1]: https://github.com/elvisjs/elvis/tree/master/crates/epm
-[2]: https://elvisjs.github.io/the-elvis-book
+[2]: https://elvisjs.github.io/book
 [3]: https://github.com/elvisjs/elvis
