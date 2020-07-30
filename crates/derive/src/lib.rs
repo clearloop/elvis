@@ -3,6 +3,7 @@
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
+use proc_macro2::{Ident, Span};
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput};
 
@@ -11,13 +12,14 @@ use syn::{parse_macro_input, DeriveInput};
 pub fn page(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let item = parse_macro_input!(item as DeriveInput);
     let ident = item.ident.clone();
+    let fnn = Ident::new(&ident.to_string().to_lowercase(), Span::mixed_site());
 
     let expanded = quote! {
         #item
 
         /// Run APP
-        #[wasm_bindgen(start)]
-        pub fn run() {
+        #[wasm_bindgen]
+        pub fn #fnn() {
             let mut page = Page::from(#ident.create());
             page.calling().unwrap();
         }

@@ -2,10 +2,10 @@
 /// Production HTML template
 pub const HTML_TEMPLATE: &'static str = r#"
 <script type="module">
- import init, { run } from '${entry}';
+ import init, { ${run} } from '${entry}';
  (async () => {
      await init();
-     run()
+     ${run}()
  })();
 </script>
 "#;
@@ -13,7 +13,7 @@ pub const HTML_TEMPLATE: &'static str = r#"
 /// Development HTML template
 pub const DEV_HTML_TEMPLATE: &'static str = r#"
 <script type="module">
- import init, { run } from '${entry}';
+ import init, { ${run} } from '${entry}';
  (async () => {
     // Set Websocket
     const uri = "ws://" + location.host + "/updater";
@@ -26,7 +26,7 @@ pub const DEV_HTML_TEMPLATE: &'static str = r#"
 
     // Run APP
     await init();
-    run()
+    ${run}();
  })();
 </script>
 "#;
