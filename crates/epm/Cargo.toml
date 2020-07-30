@@ -1,6 +1,6 @@
 [package]
 name = "epm"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "The Elvis Package Manager"
@@ -13,7 +13,7 @@ keywords = ["elvis", "web"]
 readme = './README.md'
 
 [dependencies]
-elvis-backend = { path = "../backend", version = "0.1.0" }
+elvis-backend = { path = "../backend", version = "0.1.1" }
 env_logger = "0.7.1"
 etc = { version = "0.1.8", features = ["serde-tree"] }
 log = "0.4.0"
