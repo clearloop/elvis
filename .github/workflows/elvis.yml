@@ -13,8 +13,7 @@ jobs:
       matrix:
         os: [macOS-latest, ubuntu-latest]
     steps:
-      - name: Checkout the source code
-        uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - name: Cache Crates
         uses: actions/cache@v1
         env:
@@ -22,6 +21,9 @@ jobs:
         with:
           path: ./target
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./Cargo.lock') }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable, nightly
       - name: Deps
         run: rustup target add wasm32-unknown-unknown
       - name: Build
