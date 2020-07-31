@@ -3,9 +3,10 @@ use crate::{
     style::Style,
     value::{layouts::Alignments, Colors, Unit},
 };
+use elvis_core_support::Setter;
 
 /// `Container` style
-#[derive(Clone, Default)]
+#[derive(Clone, Default, Setter)]
 pub struct ContainerStyle {
     /// Container align
     pub align: Alignments,
@@ -37,7 +38,7 @@ impl Into<[Style; 7]> for ContainerStyle {
 }
 
 /// `SizedBox` style
-#[derive(Clone, Default)]
+#[derive(Clone, Default, Setter)]
 pub struct SizedBoxStyle {
     /// SizedBox height
     pub height: Unit,

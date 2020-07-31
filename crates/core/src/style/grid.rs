@@ -6,8 +6,10 @@ use crate::{
         Unit,
     },
 };
+use elvis_core_support::Setter;
 
 /// `Grid` Style
+#[derive(Default, Clone, Setter)]
 pub struct GridStyle {
     /// Grid column
     pub col: GridAuto,

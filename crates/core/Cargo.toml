@@ -12,6 +12,8 @@ include = ["src/**/*", "Cargo.toml", "./README.md"]
 keywords = ["js", "wasm", "spa", "web"]
 readme = './README.md'
 
+[dependencies]
+elvis-core-support = { path = "../core-support" }
 
 [features]
 web = []

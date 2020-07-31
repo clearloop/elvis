@@ -6,9 +6,10 @@ use crate::{
         Unit,
     },
 };
+use elvis_core_support::Setter;
 
 /// `Flex` Style
-#[derive(Clone)]
+#[derive(Clone, Default, Setter)]
 pub struct FlexStyle {
     /// Flex align
     pub align: Alignments,

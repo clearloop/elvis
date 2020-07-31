@@ -3,9 +3,10 @@ use crate::{
     style::Style,
     value::{Colors, FontStyle, Unit},
 };
+use elvis_core_support::Setter;
 
 /// style of `Text`
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Setter)]
 pub struct TextStyle {
     /// Bold text
     pub bold: bool,

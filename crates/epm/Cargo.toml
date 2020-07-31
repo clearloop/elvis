@@ -12,14 +12,14 @@ include = ["src/**/*", "Cargo.toml", "./README.md"]
 keywords = ["elvis", "web"]
 readme = './README.md'
 
+[build-dependencies]
+etc = { version = "0.1.8", features = ["serde-tree" ] }
+toml = "0.5.6"
+
 [dependencies]
 elvis-backend = { path = "../backend", version = "0.1.1" }
 env_logger = "0.7.1"
 etc = { version = "0.1.8", features = ["serde-tree"] }
 log = "0.4.0"
 structopt = "0.3.14"
-toml = "0.5.6"
-
-[build-dependencies]
-etc = { version = "0.1.8", features = ["serde-tree" ] }
 toml = "0.5.6"

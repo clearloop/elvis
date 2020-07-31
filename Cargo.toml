@@ -19,9 +19,11 @@ members = [
   "crates/derive",
   "crates/epm",
   "crates/core",
+  "crates/core-support",
   "examples/hello-world",
   "examples/click",
   "examples/router",
+  "examples/todo-mvc",
 ]
 
 [dependencies]
