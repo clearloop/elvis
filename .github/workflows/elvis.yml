@@ -15,15 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Cache Crates
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         env:
           cache-name: elvis-cache
         with:
           path: ./target
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./Cargo.lock') }}
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable, nightly
+          key: ${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
       - name: Deps
         run: rustup target add wasm32-unknown-unknown
       - name: Build
