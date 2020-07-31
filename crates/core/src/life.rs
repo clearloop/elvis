@@ -8,6 +8,4 @@ where
 {
     /// Create widget
     fn create(&self) -> T;
-    // Render node to target platform
-    // fn render(&mut self) -> T;
 }

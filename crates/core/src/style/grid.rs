@@ -27,9 +27,9 @@ pub struct GridStyle {
     pub template_row: GridTemplate,
 }
 
-impl Into<[Style; 7]> for GridStyle {
-    fn into(self) -> [Style; 7] {
-        [
+impl Into<Vec<Style>> for GridStyle {
+    fn into(self) -> Vec<Style> {
+        vec![
             Style::GridAutoColumns(self.col),
             Style::GridAutoRows(self.row),
             Style::GridAutoFlow(self.flow),
