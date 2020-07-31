@@ -15,7 +15,7 @@ macro_rules! it {
 }
 
 macro_rules! into_node {
-    {[$($sw:ident,)*], [$($mcw:ident,)*], [$($mcws:ident,)*],} => {
+    {[$($sw:ident,)*], [$($sws:ident,)*], [$($mcw:ident,)*], [$($mcws:ident,)*]} => {
         // Single child widgets
         $(
             impl<'s> Into<Node> for &'s $sw {
@@ -25,6 +25,20 @@ macro_rules! into_node {
                         None,
                         "div".into(),
                     ).borrow().to_owned().class(&mut vec![Class::Flex])
+                }
+            }
+        )*
+
+        // Single child widgets with styles
+        $(
+            impl<'s> Into<Node> for &'s $sws {
+                fn into(self) -> Node {
+                    Node::new(
+                        vec![Rc::new(RefCell::new(self.child.to_owned()))],
+                        None,
+                        "div".into(),
+                    ).borrow().to_owned().class(&mut vec![Class::Flex])
+                        .style(self.style.clone())
                 }
             }
         )*
@@ -69,6 +83,7 @@ macro_rules! into_node {
 
         it! {
             $($sw,)*
+            $($sws,)*
             $($mcw,)*
             $($mcws,)*
         }

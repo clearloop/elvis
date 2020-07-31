@@ -12,20 +12,17 @@ it! {
     Text,
 }
 
-into_node! {
-    [
-        Align,
-        Container,
-        Flex,
-        SizedBox,
-    ],
-    [
-        Col,
-        List,
-        Row,
-    ],
-    [
-        Grid,
-        MultiColumn,
-    ],
-}
+into_node! {[
+    Align,
+    Container,
+    SizedBox,
+],[
+    Flex,
+],[
+    Col,
+    List,
+    Row,
+],[
+    Grid,
+    MultiColumn,
+]}
