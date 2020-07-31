@@ -10,7 +10,10 @@ pub enum Error {
 
 impl From<JsValue> for Error {
     fn from(e: JsValue) -> Error {
-        Error::JavascriptError(e.as_string().unwrap_or("unknown javascript error".into()))
+        Error::JavascriptError(
+            e.as_string()
+                .unwrap_or_else(|| "unknown javascript error".into()),
+        )
     }
 }
 

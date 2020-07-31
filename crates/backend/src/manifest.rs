@@ -41,7 +41,7 @@ pub struct Crate {
 impl Crate {
     /// New crate data
     pub fn new() -> Result<Crate, Error> {
-        let root = env::current_dir().unwrap_or(PathBuf::from("."));
+        let root = env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
         let manifest = root.join("Cargo.toml");
         let data = MetadataCommand::new()
             .manifest_path(&manifest)
@@ -69,7 +69,7 @@ impl Crate {
             idx,
             data,
             debug: true,
-            root: root.to_path_buf(),
+            root: root.clone(),
             wasm: root.join("pkg"),
         })
     }

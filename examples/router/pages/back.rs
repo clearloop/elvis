@@ -13,13 +13,10 @@ struct Back;
 impl LifeCycle<Center> for Back {
     fn create(&self) -> Center {
         Center {
-            child: GestureDetector::<Text>::new(
-                Text {
-                    text: "Back to the Future!!!".into(),
-                    style: TextStyle::default(),
-                }
-                .into(),
-            )
+            child: GestureDetector::<Text>::new(Text {
+                text: "Back to the Future!!!".into(),
+                style: TextStyle::default(),
+            })
             .register(Gesture::Tap, |_| Router::push("index").unwrap())
             .into(),
         }

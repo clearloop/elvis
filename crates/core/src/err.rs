@@ -20,7 +20,7 @@ impl Error {
         IE: Clone,
     {
         if let Err(e) = r {
-            return Err(Error::from(E::from(e.clone()).into()));
+            Err(E::from(e.clone()).into())
         } else {
             Ok(())
         }
