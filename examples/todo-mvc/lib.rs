@@ -1,7 +1,7 @@
 use elvis::{
     prelude::*,
     style::TextStyle,
-    value::{Colors, Unit},
+    value::Colors,
     widgets::{layouts::Center, Text},
 };
 
