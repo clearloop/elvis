@@ -13,13 +13,10 @@ struct Index;
 impl LifeCycle<Center> for Index {
     fn create(&self) -> Center {
         Center {
-            child: GestureDetector::<Text>::new(
-                Text {
-                    text: "Pink is the Pig!!!".into(),
-                    style: TextStyle::default(),
-                }
-                .into(),
-            )
+            child: GestureDetector::<Text>::new(Text {
+                text: "Pink is the Pig!!!".into(),
+                style: TextStyle::default(),
+            })
             .register(Gesture::Tap, |_| Driver::alert("Hello from rust!"))
             .into(),
         }

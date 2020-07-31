@@ -1,6 +1,6 @@
 //! HTML Templates
 /// Production HTML template
-pub const HTML_TEMPLATE: &'static str = r#"
+pub const HTML_TEMPLATE: &str = r#"
 <script type="module">
  import init, { ${run} } from '${entry}';
  (async () => {
@@ -11,7 +11,7 @@ pub const HTML_TEMPLATE: &'static str = r#"
 "#;
 
 /// Development HTML template
-pub const DEV_HTML_TEMPLATE: &'static str = r#"
+pub const DEV_HTML_TEMPLATE: &str = r#"
 <script type="module">
  import init, { ${run} } from '${entry}';
  (async () => {
