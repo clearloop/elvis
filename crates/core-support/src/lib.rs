@@ -23,9 +23,15 @@ pub fn setter(input: TokenStream) -> TokenStream {
         .iter()
         .map(|field| format!("Set {}", field.ident.clone().unwrap().to_string()));
     let struct_name = &input.ident;
+    let struct_new_doc = format!("new {}", struct_name);
 
     TokenStream::from(quote! {
         impl #struct_name {
+            #[doc = #struct_new_doc]
+            pub fn new() -> #struct_name {
+                #struct_name::default()
+            }
+
             #(
                 #[doc = #field_doc]
                 pub fn #field_name(mut self, v: #field_type) -> Self {

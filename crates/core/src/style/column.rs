@@ -3,9 +3,10 @@ use crate::{
     style::Style,
     value::{layouts::MultiColumnLineStyle, Colors, Unit},
 };
+use elvis_core_support::Setter;
 
 /// `Multicolumn` Style
-#[derive(Clone, Default)]
+#[derive(Clone, Default, Setter)]
 pub struct MultiColumnStyle {
     /// Column color
     pub color: Colors,
