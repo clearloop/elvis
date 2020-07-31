@@ -280,12 +280,24 @@ dependencies = [
 [[package]]
 name = "elvis-core"
 version = "0.1.0"
+dependencies = [
+ "elvis-core-support",
+]
 
 [[package]]
 name = "elvis-core"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c4b6734140b17823641950455ae91872a137985ebe32cc28bca5826f5bdef98b"
+
+[[package]]
+name = "elvis-core-support"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "elvis-derive"
@@ -309,6 +321,13 @@ dependencies = [
 
 [[package]]
 name = "elvis-router-example"
+version = "0.1.0"
+dependencies = [
+ "elvis 0.2.6",
+]
+
+[[package]]
+name = "elvis-todo-mvc"
 version = "0.1.0"
 dependencies = [
  "elvis 0.2.6",
