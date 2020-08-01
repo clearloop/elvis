@@ -1,12 +1,12 @@
 //! Widget Styles
 use crate::{
     style::Style,
-    value::{Colors, FontStyle, Unit},
+    value::{Colors, FontFamily, FontStyle, Unit},
 };
 use elvis_core_support::Setter;
 
 /// style of `Text`
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Setter)]
+#[derive(Clone, Debug, Eq, PartialEq, Setter)]
 pub struct TextStyle {
     /// Bold text
     pub bold: bool,
@@ -22,18 +22,21 @@ pub struct TextStyle {
     pub height: Unit,
     /// Text stretch
     pub stretch: Unit,
+    /// Font Family
+    pub family: Vec<FontFamily>,
 }
 
 impl Default for TextStyle {
     fn default() -> TextStyle {
         TextStyle {
-            bold: true,
+            bold: false,
             color: Colors::Pink,
-            italic: true,
+            italic: false,
             size: Unit::Rem(2.0),
             weight: Unit::None(400.0),
             height: Unit::Rem(1.0),
             stretch: Unit::Percent(100.0),
+            family: vec![FontFamily::Helvetica, FontFamily::Neue, FontFamily::Arial],
         }
     }
 }
@@ -55,6 +58,7 @@ impl Into<Vec<Style>> for TextStyle {
             Style::FontSize(self.size),
             Style::FontStretch(self.stretch),
             Style::LineHeight(self.height),
+            Style::FontFamily(self.family),
         ]
     }
 }

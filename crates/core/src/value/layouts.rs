@@ -2,7 +2,7 @@
 use crate::value::Unit;
 
 /// `Flex` position
-#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
 pub enum FlexPosition {
     /// Flex center
     Center,
@@ -30,7 +30,7 @@ impl Default for FlexPosition {
 }
 
 /// `Flex` Alignments
-#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
 pub enum Alignments {
     /// Align bottom-center
     BottomCenter,
@@ -77,7 +77,7 @@ impl ToString for Alignments {
 }
 
 /// `flex-basis` property
-#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
 pub enum FlexBasis {
     /// Fill the flex box
     Fill,
@@ -113,7 +113,7 @@ impl ToString for FlexBasis {
 }
 
 /// `flex-direction` property
-#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
 pub enum FlexDirection {
     /// The direction in which lines of text are stacked
     Column,
@@ -214,7 +214,7 @@ impl ToString for GridAuto {
 /// dense" packing algorithm attempts to fill in holes earlier in the grid, if smaller items come up later. This may cause items to appear out-of-order, when doing so would fill in holes left by larger items.
 ///
 /// If it is omitted, a "sparse" algorithm is used, where the placement algorithm only ever moves "forward" in the grid when placing items, never backtracking to fill holes. This ensures that all of the auto-placed items appear "in order", even if this leaves holes that could have been filled by later items.
-#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
 pub enum GridFlow {
     /// Grid Column
     Column,
@@ -310,7 +310,7 @@ impl ToString for GridTemplate {
 }
 
 /// line-style in `MultiColumn`
-#[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
 pub enum MultiColumnLineStyle {
     /// None style
     None,

@@ -25,10 +25,10 @@ pub struct FlexStyle {
     pub wrap: bool,
 }
 
-impl Into<[Style; 7]> for FlexStyle {
-    fn into(self) -> [Style; 7] {
+impl Into<Vec<Style>> for FlexStyle {
+    fn into(self) -> Vec<Style> {
         let [items, content]: [Style; 2] = self.align.into();
-        [
+        vec![
             items,
             content,
             self.basis.into(),

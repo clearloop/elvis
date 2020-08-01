@@ -6,7 +6,7 @@ use crate::{
 use elvis_core_support::Setter;
 
 /// `Multicolumn` Style
-#[derive(Clone, Default, Setter)]
+#[derive(Clone, Copy, Default, Setter)]
 pub struct MultiColumnStyle {
     /// Column color
     pub color: Colors,
@@ -18,9 +18,9 @@ pub struct MultiColumnStyle {
     pub style: MultiColumnLineStyle,
 }
 
-impl Into<[Style; 4]> for MultiColumnStyle {
-    fn into(self) -> [Style; 4] {
-        [
+impl Into<Vec<Style>> for MultiColumnStyle {
+    fn into(self) -> Vec<Style> {
+        vec![
             Style::ColumnCount(self.count),
             Style::ColumnGap(self.gap),
             Style::ColumnRuleColor(self.color),
