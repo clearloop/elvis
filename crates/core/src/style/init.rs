@@ -3,7 +3,7 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    Colors, FontFamily, FontStyle, Unit,
+    BorderStyle, Colors, FontFamily, FontStyle, Unit,
 };
 
 macro_rules! construct_style {
@@ -58,6 +58,7 @@ construct_style! {[
     (FontSize, Unit, "Font Size Style"),
     (FontStretch, Unit, "Font Stretch Style"),
     (FontFamily, Vec<FontFamily>, "Font Family"),
+    (BorderStyle, Vec<BorderStyle>, "Border Style"),
     (LineHeight, Unit, "Line Height Style"),
 
     // Color

@@ -12,12 +12,6 @@ pub struct Container {
     pub style: ContainerStyle,
 }
 
-/// `List` is a set of poor orphan children, they don't have any style, just blowing in the wind.
-pub struct List {
-    /// List children
-    pub children: Vec<Node>,
-}
-
 /// `SizedBox` just has width and height two arguments, we use this component to take some white space usually.
 pub struct SizedBox {
     /// SizedBox child
