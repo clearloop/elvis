@@ -17,7 +17,7 @@ impl LifeCycle<Flex> for Index {
                     .color(Colors::ORGB(0.15, 175, 47, 47))
                     .size(Unit::Px(100.0))
                     .weight(Unit::None(100.0))
-                    .family(vec![
+                    .family(FontFamily::Derive(vec![
                         FontFamily::Mix(
                             Box::new(FontFamily::Helvetica),
                             Box::new(FontFamily::Neue),
@@ -25,7 +25,7 @@ impl LifeCycle<Flex> for Index {
                         FontFamily::Helvetica,
                         FontFamily::Neue,
                         FontFamily::Arial,
-                    ]),
+                    ])),
             }
             .into(),
             style: FlexStyle::new().align(Alignments::TopCenter),

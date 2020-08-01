@@ -23,7 +23,7 @@ pub struct TextStyle {
     /// Text stretch
     pub stretch: Unit,
     /// Font Family
-    pub family: Vec<FontFamily>,
+    pub family: FontFamily,
 }
 
 impl Default for TextStyle {
@@ -36,7 +36,7 @@ impl Default for TextStyle {
             weight: Unit::None(400.0),
             height: Unit::Rem(1.0),
             stretch: Unit::Percent(100.0),
-            family: vec![FontFamily::Helvetica, FontFamily::Neue, FontFamily::Arial],
+            family: FontFamily::Helvetica,
         }
     }
 }

@@ -26,9 +26,7 @@ fn camel_snake(camel: &str) -> String {
 macro_rules! parse_style {
     (
         $s:expr,
-        [$($ns:ident,)*],
-        [$($ss:ident,)*],
-        [$(($nsv:ident, $pat:expr),)*]
+        [$($ns:ident,)*]
     ) => {{
         match $s {
             $(
@@ -36,20 +34,6 @@ macro_rules! parse_style {
                     "{}: {}",
                     camel_snake(stringify!($ns)),
                     v.to_string()
-                ),
-            )*
-            $(
-                Style::$ss(v) => format!(
-                    "{}: {}",
-                    camel_snake(stringify!($ss)),
-                    v.to_string()
-                ),
-            )*
-            $(
-                Style::$nsv(v) => format!(
-                    "{}: {}",
-                    camel_snake(stringify!($nsv)),
-                    v.iter().map(|i| i.to_string()).collect::<Vec<String>>().join($pat),
                 ),
             )*
         }
@@ -65,10 +49,15 @@ pub fn parse_style(s: &Style) -> String {
         Padding,
         Margin,
 
+        // Border
+        BorderStyle,
+
         // Typo
-        FontWeight,
+        FontFamily,
         FontSize,
+        FontStyle,
         FontStretch,
+        FontWeight,
         LineHeight,
 
         // Color
@@ -106,10 +95,5 @@ pub fn parse_style(s: &Style) -> String {
         GridAuto,
         GridFlow,
         GridTemplate,
-    ], [
-        FontStyle,
-    ], [
-        (FontFamily, ", "),
-        (BorderStyle, " "),
     ]}
 }

@@ -23,27 +23,15 @@ macro_rules! construct_style {
                 $ss($ss),
             )*
         }
-    };
-    (
-        [$(($ns:ident, $nty:ty, $ndoc:expr),)*],
-        [$(($ds:ident, $dty:ty, $ddoc:expr),)*],
-        [$(($ss:ident, $sdoc:expr),)*]
-    ) => {
-        construct_style!{[
-            $(($ns, $nty, $ndoc),)*
-            $(($ds, $dty, $ddoc),)*
-        ],[
-            $(($ss, $sdoc),)*
-        ]}
 
         $(
-            impl From<$dty> for Style {
-                fn from(s: $dty) -> Style {
-                    Style::$ds(s)
+            impl From<$ss> for Style {
+                fn from(s: $ss) -> Style {
+                    Style::$ss(s)
                 }
             }
         )*
-    }
+    };
 }
 
 construct_style! {[
@@ -57,8 +45,6 @@ construct_style! {[
     (FontWeight, Unit, "Font Weight Style"),
     (FontSize, Unit, "Font Size Style"),
     (FontStretch, Unit, "Font Stretch Style"),
-    (FontFamily, Vec<FontFamily>, "Font Family"),
-    (BorderStyle, Vec<BorderStyle>, "Border Style"),
     (LineHeight, Unit, "Line Height Style"),
 
     // Color
@@ -88,14 +74,17 @@ construct_style! {[
     (ColumnRuleStyle, MultiColumnLineStyle, "ColumnRuleStyle Style"),
 ], [
     // Flex
-    (FlexBasis, FlexBasis, "FlexBasis style"),
-    (FlexDirection, FlexDirection, "FlexDirection style"),
-    (FlexPosition, FlexPosition, "FlexPosition style"),
+    (FlexBasis, "FlexBasis style"),
+    (FlexDirection, "FlexDirection style"),
+    (FlexPosition, "FlexPosition style"),
+    (BorderStyle, "Border Style"),
 
     // Grid
-    (GridAuto, GridAuto, "Grid Auto Style"),
-    (GridFlow, GridFlow, "Grid Flow Style"),
-    (GridTemplate, GridTemplate, "Grid Template Style"),
-], [
+    (GridAuto, "Grid Auto Style"),
+    (GridFlow, "Grid Flow Style"),
+
+    // Font
+    (GridTemplate, "Grid Template Style"),
     (FontStyle, "Font Style"),
+    (FontFamily, "Font Family"),
 ]}
