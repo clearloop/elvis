@@ -27,9 +27,9 @@ pub struct TextStyle {
 impl Default for TextStyle {
     fn default() -> TextStyle {
         TextStyle {
-            bold: true,
+            bold: false,
             color: Colors::Pink,
-            italic: true,
+            italic: false,
             size: Unit::Rem(2.0),
             weight: Unit::None(400.0),
             height: Unit::Rem(1.0),

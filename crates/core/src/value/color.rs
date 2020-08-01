@@ -1,40 +1,40 @@
 use crate::style::Style;
 use std::cmp::Ordering;
 
-/// ORGB
-#[derive(Clone, Copy, Debug)]
-pub struct ORGB(f32, i16, i16, i16);
-
-impl PartialEq for ORGB {
-    fn eq(&self, o: &Self) -> bool {
-        format!("{:.1}", self.0) == format!("{:.1}", o.0)
-            && self.1 == o.1
-            && self.2 == o.2
-            && self.3 == o.3
-    }
-}
-
-impl Eq for ORGB {}
-
-impl PartialOrd for ORGB {
-    fn partial_cmp(&self, o: &Self) -> Option<Ordering> {
-        Some(self.1.cmp(&o.1))
-    }
-}
-
-impl Ord for ORGB {
-    fn cmp(&self, o: &Self) -> Ordering {
-        self.1.cmp(&o.1)
-    }
-}
+// /// ORGB
+// #[derive(Clone, Copy, Debug)]
+// pub struct ORGB(pub f32, pub i16, pub i16, pub i16);
+//
+// impl PartialEq for ORGB {
+//     fn eq(&self, o: &Self) -> bool {
+//         format!("{:.2}", self.0) == format!("{:.2}", o.0)
+//             && self.1 == o.1
+//             && self.2 == o.2
+//             && self.3 == o.3
+//     }
+// }
+//
+// impl Eq for ORGB {}
+//
+// impl PartialOrd for ORGB {
+//     fn partial_cmp(&self, o: &Self) -> Option<Ordering> {
+//         Some(self.1.cmp(&o.1))
+//     }
+// }
+//
+// impl Ord for ORGB {
+//     fn cmp(&self, o: &Self) -> Ordering {
+//         self.1.cmp(&o.1)
+//     }
+// }
 
 /// `Color` system, accroding to material design's color system.
-#[derive(Clone, Copy, Debug, Ord, PartialOrd)]
+#[derive(Clone, Copy, Debug)]
 pub enum Colors {
     /// Colors::Inherit => "0xFFFFFFFF"
     Inherit,
-    /// Colors::Amber => "0xFFFFC107"
-    ORGB(ORGB),
+    /// Colors::ORGB => "0xOORRGGBB"
+    ORGB(f32, i16, i16, i16),
     /// Colors::Amber => "0xFFFFC107"
     Amber,
     /// Colors::AmberAccent => "0xFFFFD740"
@@ -180,24 +180,54 @@ impl Colors {
         Self::from_hex_to_orgb(h)
     }
 
+    /// Set red
+    pub fn red(self, red: i16) -> Self {
+        match self {
+            Colors::ORGB(o, _, g, b) => Colors::ORGB(o, red, g, b),
+            _ => Colors::from_hex_to_orgb(self.to_hex()).red(red),
+        }
+    }
+
+    /// Set green
+    pub fn green(self, green: i16) -> Self {
+        match self {
+            Colors::ORGB(o, r, _, b) => Colors::ORGB(o, r, green, b),
+            _ => Colors::from_hex_to_orgb(self.to_hex()).green(green),
+        }
+    }
+
+    /// Set blue
+    pub fn blue(self, blue: i16) -> Self {
+        match self {
+            Colors::ORGB(o, r, g, blue) => Colors::ORGB(o, r, g, blue),
+            _ => Colors::from_hex_to_orgb(self.to_hex()).blue(blue),
+        }
+    }
+
+    /// Set transparency
+    pub fn transparent(self, transparency: f32) -> Self {
+        match self {
+            Colors::ORGB(_, r, g, b) => Colors::ORGB(transparency, r, g, b),
+            _ => Colors::from_hex_to_orgb(self.to_hex()).transparent(transparency),
+        }
+    }
+
     /// convert hex to `Colors::ORGB`
     pub fn from_hex_to_orgb(mut h: String) -> Colors {
         h.truncate(10);
-        Colors::ORGB(ORGB(
+        Colors::ORGB(
             ((Self::dec(&h[2..3]) * 16 + Self::dec(&h[3..4])) as f32 / 255.0) as f32,
             Self::dec(&h[4..5]) * 16 + Self::dec(&h[5..6]),
             Self::dec(&h[6..7]) * 16 + Self::dec(&h[7..8]),
             Self::dec(&h[8..9]) * 16 + Self::dec(&h[9..10]),
-        ))
+        )
     }
 
     /// convert `Colors` to hex string
     pub fn to_hex(&self) -> String {
         match *self {
             Colors::Inherit => "0xFFFFFFFF".into(),
-            Colors::ORGB(ORGB(o, r, g, b)) => {
-                format!("{:#X}{:X}{:X}{:X}", (o * 255.0) as i32, r, g, b)
-            }
+            Colors::ORGB(o, r, g, b) => format!("{:#X}{:X}{:X}{:X}", (o * 255.0) as i32, r, g, b),
             Colors::Amber => "0xFFFFC107".into(),
             Colors::AmberAccent => "0xFFFFD740".into(),
             Colors::Black => "0xFF000000".into(),
@@ -246,10 +276,21 @@ impl Colors {
 }
 
 impl Eq for Colors {}
+impl Ord for Colors {
+    fn cmp(&self, o: &Self) -> Ordering {
+        self.to_hex().cmp(&o.to_hex())
+    }
+}
 
 impl PartialEq for Colors {
     fn eq(&self, o: &Self) -> bool {
         self.to_hex().eq(&o.to_hex())
+    }
+}
+
+impl PartialOrd for Colors {
+    fn partial_cmp(&self, o: &Self) -> Option<Ordering> {
+        self.to_hex().partial_cmp(&o.to_hex())
     }
 }
 
@@ -263,10 +304,10 @@ impl Default for Colors {
 impl ToString for Colors {
     fn to_string(&self) -> String {
         match self {
-            Colors::ORGB(ORGB(o, r, g, b)) => format!("rgba({}, {}, {}, {:.1})", r, g, b, o),
+            Colors::ORGB(o, r, g, b) => format!("rgba({}, {}, {}, {:.2})", r, g, b, o),
             Colors::Inherit => "inherit".into(),
             _ => {
-                if let Colors::ORGB(ORGB(o, r, g, b)) = self.to_orgb() {
+                if let Colors::ORGB(o, r, g, b) = self.to_orgb() {
                     format!("rgba({}, {}, {}, {:.1})", r, g, b, o)
                 } else {
                     "rgba(255, 255, 255, 255)".into()
