@@ -10,7 +10,7 @@ impl<'t> Into<Node> for &'t Text {
         Node::new(vec![child], None, "p".into())
             .borrow()
             .to_owned()
-            .style(self.style)
+            .style(self.style.clone())
     }
 }
 

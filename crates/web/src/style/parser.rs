@@ -27,7 +27,8 @@ macro_rules! parse_style {
     (
         $s:expr,
         [$($ns:ident,)*],
-        [$($ss:ident,)*]
+        [$($ss:ident,)*],
+        [$($nsv:ident,)*]
     ) => {{
         match $s {
             $(
@@ -43,6 +44,13 @@ macro_rules! parse_style {
                     camel_snake(stringify!($ss)),
                     v.to_string()
                 ),
+            )*
+            $(
+                Style::$nsv(v) => format!(
+                    "{}: {}",
+                    camel_snake(stringify!($nsv)),
+                    v.iter().map(|i| i.to_string()).collect::<Vec<String>>().join(", "),
+                )
             )*
         }
     }}
@@ -100,5 +108,7 @@ pub fn parse_style(s: &Style) -> String {
         GridTemplate,
     ], [
         FontStyle,
+    ], [
+        FontFamily,
     ]}
 }
