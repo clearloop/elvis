@@ -41,6 +41,27 @@ construct_style! {[
     (Padding, Unit, "Box Padding"),
     (Margin, Unit, "Box Margin"),
 
+    // Border
+    (BorderTopRadius, Unit, "Border Top Color"),
+    (BorderTopWidth, Unit, "Border Top Color"),
+    (BorderTopStyle, BorderStyle, "Border Top Color"),
+    (BorderTopColor, Colors, "Border Top Color"),
+
+    (BorderRightRadius, Unit, "Border Right Color"),
+    (BorderRightWidth, Unit, "Border Right Color"),
+    (BorderRightStyle, BorderStyle, "Border Right Color"),
+    (BorderRightColor, Colors, "Border Right Color"),
+
+    (BorderBottomRadius, Unit, "Border Bottom Color"),
+    (BorderBottomWidth, Unit, "Border Bottom Color"),
+    (BorderBottomStyle, BorderStyle, "Border Bottom Color"),
+    (BorderBottomColor, Colors, "Border Bottom Color"),
+
+    (BorderLeftRadius, Unit, "Border Left Color"),
+    (BorderLeftWidth, Unit, "Border Left Color"),
+    (BorderLeftStyle, BorderStyle, "Border Left Color"),
+    (BorderLeftColor, Colors, "Border Left Color"),
+
     // Typo
     (FontWeight, Unit, "Font Weight Style"),
     (FontSize, Unit, "Font Size Style"),

@@ -27,10 +27,10 @@ pub struct FlexStyle {
 
 impl Into<Vec<Style>> for FlexStyle {
     fn into(self) -> Vec<Style> {
-        let [items, content]: [Style; 2] = self.align.into();
+        let align_style: Vec<Style> = self.align.into();
         vec![
-            items,
-            content,
+            align_style[0].clone(),
+            align_style[1].clone(),
             self.basis.into(),
             self.direction.into(),
             Style::FlexGrow(self.grow),

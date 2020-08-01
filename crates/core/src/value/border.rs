@@ -1,7 +1,6 @@
 use elvis_core_support::EnumStyle;
 
-/// The border-style shorthand CSS property sets the line style for
-/// all four sides of an element's border.
+/// Border Style
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Debug, EnumStyle)]
 pub enum BorderStyle {
     /// No Style
@@ -24,4 +23,10 @@ pub enum BorderStyle {
     Inset,
     /// Outset
     Outset,
+}
+
+impl Default for BorderStyle {
+    fn default() -> BorderStyle {
+        BorderStyle::None
+    }
 }

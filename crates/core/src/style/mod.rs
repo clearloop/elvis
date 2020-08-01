@@ -1,6 +1,6 @@
 //! Evlis styles
-mod basic;
 mod border;
+mod r#box;
 mod bridge;
 mod column;
 mod flex;
@@ -9,11 +9,11 @@ mod init;
 mod typo;
 
 pub use self::{
-    basic::{ContainerStyle, SizedBoxStyle},
     border::Border,
     column::MultiColumnStyle,
     flex::FlexStyle,
     grid::GridStyle,
     init::Style,
+    r#box::{ContainerStyle, SizedBoxStyle},
     typo::{ImageSrc, TextStyle},
 };

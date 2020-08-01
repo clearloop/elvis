@@ -51,6 +51,22 @@ pub fn parse_style(s: &Style) -> String {
 
         // Border
         BorderStyle,
+        BorderTopRadius,
+        BorderTopWidth,
+        BorderTopStyle,
+        BorderTopColor,
+        BorderRightRadius,
+        BorderRightWidth,
+        BorderRightStyle,
+        BorderRightColor,
+        BorderBottomRadius,
+        BorderBottomWidth,
+        BorderBottomStyle,
+        BorderBottomColor,
+        BorderLeftRadius,
+        BorderLeftWidth,
+        BorderLeftStyle,
+        BorderLeftColor,
 
         // Typo
         FontFamily,
