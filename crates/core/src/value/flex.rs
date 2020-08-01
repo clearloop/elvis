@@ -28,9 +28,9 @@ impl Default for FlexPosition {
     }
 }
 
-/// `Flex` Alignments
+/// `Flex` Alignment
 #[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
-pub enum Alignments {
+pub enum Alignment {
     /// Align bottom-center
     BottomCenter,
     /// Align bottom-left
@@ -51,24 +51,24 @@ pub enum Alignments {
     TopRight,
 }
 
-impl Default for Alignments {
-    fn default() -> Alignments {
-        Alignments::Center
+impl Default for Alignment {
+    fn default() -> Alignment {
+        Alignment::Center
     }
 }
 
-impl ToString for Alignments {
+impl ToString for Alignment {
     fn to_string(&self) -> String {
         let (ai, jc) = match self {
-            Alignments::BottomCenter => ("flex-end", "center"),
-            Alignments::BottomLeft => ("flex-end", "flex-start"),
-            Alignments::BottomRight => ("flex-end", "flex-end"),
-            Alignments::Center => ("center", "center"),
-            Alignments::CenterLeft => ("center", "flex-start"),
-            Alignments::CenterRight => ("center", "flex-end"),
-            Alignments::TopCenter => ("flex-start", "center"),
-            Alignments::TopLeft => ("flex-start", "flex-start"),
-            Alignments::TopRight => ("flex-start", "flex-end"),
+            Alignment::BottomCenter => ("flex-end", "center"),
+            Alignment::BottomLeft => ("flex-end", "flex-start"),
+            Alignment::BottomRight => ("flex-end", "flex-end"),
+            Alignment::Center => ("center", "center"),
+            Alignment::CenterLeft => ("center", "flex-start"),
+            Alignment::CenterRight => ("center", "flex-end"),
+            Alignment::TopCenter => ("flex-start", "center"),
+            Alignment::TopLeft => ("flex-start", "flex-start"),
+            Alignment::TopRight => ("flex-start", "flex-end"),
         };
 
         format!("align-items: {}; justify-content: {};", ai, jc)

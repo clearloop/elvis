@@ -1,44 +1,44 @@
 use crate::{
     style::Style,
-    value::layouts::{Alignments, FlexPosition},
+    value::layouts::{Alignment, FlexPosition},
 };
 
-impl From<Alignments> for Vec<Style> {
-    fn from(align: Alignments) -> Vec<Style> {
+impl From<Alignment> for Vec<Style> {
+    fn from(align: Alignment) -> Vec<Style> {
         match align {
-            Alignments::BottomCenter => vec![
+            Alignment::BottomCenter => vec![
                 Style::AlignItems(FlexPosition::End),
                 Style::JustifyContent(FlexPosition::Center),
             ],
-            Alignments::BottomLeft => vec![
+            Alignment::BottomLeft => vec![
                 Style::AlignItems(FlexPosition::End),
                 Style::JustifyContent(FlexPosition::Start),
             ],
-            Alignments::BottomRight => vec![
+            Alignment::BottomRight => vec![
                 Style::AlignItems(FlexPosition::End),
                 Style::JustifyContent(FlexPosition::End),
             ],
-            Alignments::Center => vec![
+            Alignment::Center => vec![
                 Style::AlignItems(FlexPosition::Center),
                 Style::JustifyContent(FlexPosition::Center),
             ],
-            Alignments::CenterLeft => vec![
+            Alignment::CenterLeft => vec![
                 Style::AlignItems(FlexPosition::Center),
                 Style::JustifyContent(FlexPosition::Start),
             ],
-            Alignments::CenterRight => vec![
+            Alignment::CenterRight => vec![
                 Style::AlignItems(FlexPosition::Center),
                 Style::JustifyContent(FlexPosition::End),
             ],
-            Alignments::TopCenter => vec![
+            Alignment::TopCenter => vec![
                 Style::AlignItems(FlexPosition::Start),
                 Style::JustifyContent(FlexPosition::Center),
             ],
-            Alignments::TopLeft => vec![
+            Alignment::TopLeft => vec![
                 Style::AlignItems(FlexPosition::Start),
                 Style::JustifyContent(FlexPosition::Start),
             ],
-            Alignments::TopRight => vec![
+            Alignment::TopRight => vec![
                 Style::AlignItems(FlexPosition::Start),
                 Style::JustifyContent(FlexPosition::End),
             ],

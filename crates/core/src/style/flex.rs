@@ -2,7 +2,7 @@
 use crate::{
     style::Style,
     value::{
-        layouts::{Alignments, FlexBasis, FlexDirection},
+        layouts::{Alignment, FlexBasis, FlexDirection},
         Unit,
     },
 };
@@ -12,7 +12,7 @@ use elvis_core_support::Setter;
 #[derive(Clone, Default, Setter)]
 pub struct FlexStyle {
     /// Flex align
-    pub align: Alignments,
+    pub align: Alignment,
     /// Flex basis
     pub basis: FlexBasis,
     /// Flex direction

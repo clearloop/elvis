@@ -1,7 +1,7 @@
 use elvis::{
     prelude::*,
     style::{FlexStyle, TextStyle},
-    value::{layouts::Alignments, Colors, FontFamily, Unit},
+    value::{layouts::Alignment, Colors, FontFamily, Unit},
     widgets::{layouts::Flex, Text},
 };
 
@@ -28,7 +28,7 @@ impl LifeCycle<Flex> for Index {
                     ])),
             }
             .into(),
-            style: FlexStyle::new().align(Alignments::TopCenter),
+            style: FlexStyle::new().align(Alignment::TopCenter),
         }
     }
 }

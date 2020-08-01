@@ -1,7 +1,7 @@
 //! Basic style
 use crate::{
     style::Style,
-    value::{layouts::Alignments, Colors, Unit},
+    value::{layouts::Alignment, Colors, Unit},
 };
 use elvis_core_support::Setter;
 
@@ -9,7 +9,7 @@ use elvis_core_support::Setter;
 #[derive(Clone, Default, Setter)]
 pub struct ContainerStyle {
     /// Container align
-    pub align: Alignments,
+    pub align: Alignment,
     /// Container height
     pub height: Unit,
     /// Container width
