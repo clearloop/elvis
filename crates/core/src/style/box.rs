@@ -1,7 +1,7 @@
 //! Basic style
 use crate::{
     style::Style,
-    value::{layouts::Alignments, Colors, Unit},
+    value::{layouts::Alignment, Color, Unit},
 };
 use elvis_core_support::Setter;
 
@@ -9,7 +9,7 @@ use elvis_core_support::Setter;
 #[derive(Clone, Default, Setter)]
 pub struct ContainerStyle {
     /// Container align
-    pub align: Alignments,
+    pub align: Alignment,
     /// Container height
     pub height: Unit,
     /// Container width
@@ -19,15 +19,15 @@ pub struct ContainerStyle {
     /// Container margin
     pub margin: Unit,
     /// Container background
-    pub background_color: Colors,
+    pub background_color: Color,
 }
 
-impl Into<[Style; 7]> for ContainerStyle {
-    fn into(self) -> [Style; 7] {
-        let [items, content]: [Style; 2] = self.align.into();
-        [
-            items,
-            content,
+impl Into<Vec<Style>> for ContainerStyle {
+    fn into(self) -> Vec<Style> {
+        let align_style: Vec<Style> = self.align.into();
+        vec![
+            align_style[0].clone(),
+            align_style[1].clone(),
             Style::Height(self.height),
             Style::Width(self.width),
             Style::Padding(self.padding),
@@ -46,8 +46,8 @@ pub struct SizedBoxStyle {
     pub width: Unit,
 }
 
-impl Into<[Style; 2]> for SizedBoxStyle {
-    fn into(self) -> [Style; 2] {
-        [Style::Height(self.height), Style::Width(self.width)]
+impl Into<Vec<Style>> for SizedBoxStyle {
+    fn into(self) -> Vec<Style> {
+        vec![Style::Height(self.height), Style::Width(self.width)]
     }
 }

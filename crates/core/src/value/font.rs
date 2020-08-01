@@ -37,6 +37,8 @@ pub enum FontFamily {
     Neue,
     /// Arial Font
     Arial,
+    /// Derive Font Families
+    Derive(Vec<FontFamily>),
 }
 
 impl ToString for FontFamily {
@@ -46,6 +48,11 @@ impl ToString for FontFamily {
             FontFamily::Helvetica => "Helvetica".to_string(),
             FontFamily::Neue => "Neue".to_string(),
             FontFamily::Arial => "Arial".to_string(),
+            FontFamily::Derive(v) => v
+                .iter()
+                .map(|f| f.to_string())
+                .collect::<Vec<String>>()
+                .join(" "),
         }
     }
 }

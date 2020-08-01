@@ -3,7 +3,7 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    Colors, FontFamily, FontStyle, Unit,
+    BorderStyle, Color, FontFamily, FontStyle, Unit,
 };
 
 macro_rules! construct_style {
@@ -23,27 +23,15 @@ macro_rules! construct_style {
                 $ss($ss),
             )*
         }
-    };
-    (
-        [$(($ns:ident, $nty:ty, $ndoc:expr),)*],
-        [$(($ds:ident, $dty:ty, $ddoc:expr),)*],
-        [$(($ss:ident, $sdoc:expr),)*]
-    ) => {
-        construct_style!{[
-            $(($ns, $nty, $ndoc),)*
-            $(($ds, $dty, $ddoc),)*
-        ],[
-            $(($ss, $sdoc),)*
-        ]}
 
         $(
-            impl From<$dty> for Style {
-                fn from(s: $dty) -> Style {
-                    Style::$ds(s)
+            impl From<$ss> for Style {
+                fn from(s: $ss) -> Style {
+                    Style::$ss(s)
                 }
             }
         )*
-    }
+    };
 }
 
 construct_style! {[
@@ -53,16 +41,36 @@ construct_style! {[
     (Padding, Unit, "Box Padding"),
     (Margin, Unit, "Box Margin"),
 
+    // Border
+    (BorderTopRadius, Unit, "Border Top Color"),
+    (BorderTopWidth, Unit, "Border Top Color"),
+    (BorderTopStyle, BorderStyle, "Border Top Color"),
+    (BorderTopColor, Color, "Border Top Color"),
+
+    (BorderRightRadius, Unit, "Border Right Color"),
+    (BorderRightWidth, Unit, "Border Right Color"),
+    (BorderRightStyle, BorderStyle, "Border Right Color"),
+    (BorderRightColor, Color, "Border Right Color"),
+
+    (BorderBottomRadius, Unit, "Border Bottom Color"),
+    (BorderBottomWidth, Unit, "Border Bottom Color"),
+    (BorderBottomStyle, BorderStyle, "Border Bottom Color"),
+    (BorderBottomColor, Color, "Border Bottom Color"),
+
+    (BorderLeftRadius, Unit, "Border Left Color"),
+    (BorderLeftWidth, Unit, "Border Left Color"),
+    (BorderLeftStyle, BorderStyle, "Border Left Color"),
+    (BorderLeftColor, Color, "Border Left Color"),
+
     // Typo
     (FontWeight, Unit, "Font Weight Style"),
     (FontSize, Unit, "Font Size Style"),
     (FontStretch, Unit, "Font Stretch Style"),
-    (FontFamily, Vec<FontFamily>, "Font Family"),
     (LineHeight, Unit, "Line Height Style"),
 
     // Color
-    (Color, Colors, "Custom Color"),
-    (BackgroundColor, Colors, "Custom Color"),
+    (Color, Color, "Custom Color"),
+    (BackgroundColor, Color, "Custom Color"),
 
     // Flex
     (AlignItems, FlexPosition, "AlignItem Style"),
@@ -83,18 +91,21 @@ construct_style! {[
     // Column
     (ColumnCount, Unit, "ColumnCount Style"),
     (ColumnGap, Unit, "ColumnGap Style"),
-    (ColumnRuleColor, Colors, "ColumnRuleColor Style"),
+    (ColumnRuleColor, Color, "ColumnRuleColor Style"),
     (ColumnRuleStyle, MultiColumnLineStyle, "ColumnRuleStyle Style"),
 ], [
     // Flex
-    (FlexBasis, FlexBasis, "FlexBasis style"),
-    (FlexDirection, FlexDirection, "FlexDirection style"),
-    (FlexPosition, FlexPosition, "FlexPosition style"),
+    (FlexBasis, "FlexBasis style"),
+    (FlexDirection, "FlexDirection style"),
+    (FlexPosition, "FlexPosition style"),
+    (BorderStyle, "Border Style"),
 
     // Grid
-    (GridAuto, GridAuto, "Grid Auto Style"),
-    (GridFlow, GridFlow, "Grid Flow Style"),
-    (GridTemplate, GridTemplate, "Grid Template Style"),
-], [
+    (GridAuto, "Grid Auto Style"),
+    (GridFlow, "Grid Flow Style"),
+
+    // Font
+    (GridTemplate, "Grid Template Style"),
     (FontStyle, "Font Style"),
+    (FontFamily, "Font Family"),
 ]}

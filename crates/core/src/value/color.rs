@@ -30,90 +30,90 @@ use std::cmp::Ordering;
 
 /// `Color` system, accroding to material design's color system.
 #[derive(Clone, Copy, Debug)]
-pub enum Colors {
-    /// Colors::Inherit => "0xFFFFFFFF"
+pub enum Color {
+    /// Color::Inherit => "0xFFFFFFFF"
     Inherit,
-    /// Colors::ORGB => "0xOORRGGBB"
+    /// Color::ORGB => "0xOORRGGBB"
     ORGB(f32, i16, i16, i16),
-    /// Colors::Amber => "0xFFFFC107"
+    /// Color::Amber => "0xFFFFC107"
     Amber,
-    /// Colors::AmberAccent => "0xFFFFD740"
+    /// Color::AmberAccent => "0xFFFFD740"
     AmberAccent,
-    /// Colors::Black => "0xFF000000"
+    /// Color::Black => "0xFF000000"
     Black,
-    /// Colors::Blue => "0xFF2196F3"
+    /// Color::Blue => "0xFF2196F3"
     Blue,
-    /// Colors::BlueAccent => "0xFF448AFF"
+    /// Color::BlueAccent => "0xFF448AFF"
     BlueAccent,
-    /// Colors::BlueGrey => "0xFF607D8B"
+    /// Color::BlueGrey => "0xFF607D8B"
     BlueGrey,
-    /// Colors::Brown => "0xFF795548"
+    /// Color::Brown => "0xFF795548"
     Brown,
-    /// Colors::Cyan => "0xFF00BCD4"
+    /// Color::Cyan => "0xFF00BCD4"
     Cyan,
-    /// Colors::CyanAccent => "0xFF18FFFF"
+    /// Color::CyanAccent => "0xFF18FFFF"
     CyanAccent,
-    /// Colors::DeepOrange => "0xFFFF5722"
+    /// Color::DeepOrange => "0xFFFF5722"
     DeepOrange,
-    /// Colors::DeepOrangeAccent => "0xFFFF6E40"
+    /// Color::DeepOrangeAccent => "0xFFFF6E40"
     DeepOrangeAccent,
-    /// Colors::DeepPurple => "0xFF673AB7"
+    /// Color::DeepPurple => "0xFF673AB7"
     DeepPurple,
-    /// Colors::DeepPurpleAccent => "0xFF7C4DFF"
+    /// Color::DeepPurpleAccent => "0xFF7C4DFF"
     DeepPurpleAccent,
-    /// Colors::Green => "0xFF4CAF50"
+    /// Color::Green => "0xFF4CAF50"
     Green,
-    /// Colors::GreenAccent => "0xFF69F0AE"
+    /// Color::GreenAccent => "0xFF69F0AE"
     GreenAccent,
-    /// Colors::Grey => "FF9E9E9E"
+    /// Color::Grey => "FF9E9E9E"
     Grey,
-    /// Colors::Indigo => "0xFF3F51B5"
+    /// Color::Indigo => "0xFF3F51B5"
     Indigo,
-    /// Colors::IndigoAccent => "0xFF536DFE"
+    /// Color::IndigoAccent => "0xFF536DFE"
     IndigoAccent,
-    /// Colors::LightBlue => "0xFF03A9FA"
+    /// Color::LightBlue => "0xFF03A9FA"
     LightBlue,
-    /// Colors::LightBlueAccent => "0xFF40C4FF"
+    /// Color::LightBlueAccent => "0xFF40C4FF"
     LightBlueAccent,
-    /// Colors::LightGreen => "0xFF8BC34A"
+    /// Color::LightGreen => "0xFF8BC34A"
     LightGreen,
-    /// Colors::LightGreenAccent => "0xFFB2FF59"
+    /// Color::LightGreenAccent => "0xFFB2FF59"
     LightGreenAccent,
-    /// Colors::Lime => "0xFFCDDC39"
+    /// Color::Lime => "0xFFCDDC39"
     Lime,
-    /// Colors::LimeAccent => "0xFFEEFF41"
+    /// Color::LimeAccent => "0xFFEEFF41"
     LimeAccent,
-    /// Colors::Orange => "0xFFFF9800"
+    /// Color::Orange => "0xFFFF9800"
     Orange,
-    /// Colors::OrangeAccent => "0xFFFFAB40"
+    /// Color::OrangeAccent => "0xFFFFAB40"
     OrangeAccent,
-    /// Colors::Pink => "0xFFE91E63"
+    /// Color::Pink => "0xFFE91E63"
     Pink,
-    /// Colors::PinkAccent => "0xFFFF4081"n
+    /// Color::PinkAccent => "0xFFFF4081"n
     PinkAccent,
-    /// Colors::Purple => "0xFF9C27B0"
+    /// Color::Purple => "0xFF9C27B0"
     Purple,
-    /// Colors::PurpleAccent => "0xFFE040FB"
+    /// Color::PurpleAccent => "0xFFE040FB"
     PurpleAccent,
-    /// Colors::Red => "0xFFF44336"
+    /// Color::Red => "0xFFF44336"
     Red,
-    /// Colors::RedAccent => "0xFFFF5252"
+    /// Color::RedAccent => "0xFFFF5252"
     RedAccent,
-    /// Colors::Teal => "0xFF009688"
+    /// Color::Teal => "0xFF009688"
     Teal,
-    /// Colors::TealAccent => "0xFF64FFDA"
+    /// Color::TealAccent => "0xFF64FFDA"
     TealAccent,
-    /// Colors::Transparent => "0xFFFFFFFF"
+    /// Color::Transparent => "0xFFFFFFFF"
     Transparent,
-    /// Colors::White => "0xFFFFFFFF"
+    /// Color::White => "0xFFFFFFFF"
     White,
-    /// Colors::Yellow => "0xFFFFEB3B"
+    /// Color::Yellow => "0xFFFFEB3B"
     Yellow,
-    /// Colors::YellowAccent => "0xFFFFFF00"
+    /// Color::YellowAccent => "0xFFFFFF00"
     YellowAccent,
 }
 
-impl Colors {
+impl Color {
     /// deserialize hex str(char) number to decimal
     fn dec(c: &str) -> i16 {
         match &c.trim()[0..1] {
@@ -127,8 +127,8 @@ impl Colors {
         }
     }
 
-    /// convert `Colors` from hex, to specfic color if the hex is in `Colors`
-    pub fn from_hex(mut h: String) -> Colors {
+    /// convert `Color` from hex, to specfic color if the hex is in `Color`
+    pub fn from_hex(mut h: String) -> Color {
         h.truncate(10);
         for c in [
             Self::Amber,
@@ -183,39 +183,39 @@ impl Colors {
     /// Set red
     pub fn red(self, red: i16) -> Self {
         match self {
-            Colors::ORGB(o, _, g, b) => Colors::ORGB(o, red, g, b),
-            _ => Colors::from_hex_to_orgb(self.to_hex()).red(red),
+            Color::ORGB(o, _, g, b) => Color::ORGB(o, red, g, b),
+            _ => Color::from_hex_to_orgb(self.to_hex()).red(red),
         }
     }
 
     /// Set green
     pub fn green(self, green: i16) -> Self {
         match self {
-            Colors::ORGB(o, r, _, b) => Colors::ORGB(o, r, green, b),
-            _ => Colors::from_hex_to_orgb(self.to_hex()).green(green),
+            Color::ORGB(o, r, _, b) => Color::ORGB(o, r, green, b),
+            _ => Color::from_hex_to_orgb(self.to_hex()).green(green),
         }
     }
 
     /// Set blue
     pub fn blue(self, blue: i16) -> Self {
         match self {
-            Colors::ORGB(o, r, g, blue) => Colors::ORGB(o, r, g, blue),
-            _ => Colors::from_hex_to_orgb(self.to_hex()).blue(blue),
+            Color::ORGB(o, r, g, blue) => Color::ORGB(o, r, g, blue),
+            _ => Color::from_hex_to_orgb(self.to_hex()).blue(blue),
         }
     }
 
     /// Set transparency
     pub fn transparent(self, transparency: f32) -> Self {
         match self {
-            Colors::ORGB(_, r, g, b) => Colors::ORGB(transparency, r, g, b),
-            _ => Colors::from_hex_to_orgb(self.to_hex()).transparent(transparency),
+            Color::ORGB(_, r, g, b) => Color::ORGB(transparency, r, g, b),
+            _ => Color::from_hex_to_orgb(self.to_hex()).transparent(transparency),
         }
     }
 
-    /// convert hex to `Colors::ORGB`
-    pub fn from_hex_to_orgb(mut h: String) -> Colors {
+    /// convert hex to `Color::ORGB`
+    pub fn from_hex_to_orgb(mut h: String) -> Color {
         h.truncate(10);
-        Colors::ORGB(
+        Color::ORGB(
             ((Self::dec(&h[2..3]) * 16 + Self::dec(&h[3..4])) as f32 / 255.0) as f32,
             Self::dec(&h[4..5]) * 16 + Self::dec(&h[5..6]),
             Self::dec(&h[6..7]) * 16 + Self::dec(&h[7..8]),
@@ -223,91 +223,91 @@ impl Colors {
         )
     }
 
-    /// convert `Colors` to hex string
+    /// convert `Color` to hex string
     pub fn to_hex(&self) -> String {
         match *self {
-            Colors::Inherit => "0xFFFFFFFF".into(),
-            Colors::ORGB(o, r, g, b) => format!("{:#X}{:X}{:X}{:X}", (o * 255.0) as i32, r, g, b),
-            Colors::Amber => "0xFFFFC107".into(),
-            Colors::AmberAccent => "0xFFFFD740".into(),
-            Colors::Black => "0xFF000000".into(),
-            Colors::Blue => "0xFF2196F3".into(),
-            Colors::BlueAccent => "0xFF448AFF".into(),
-            Colors::BlueGrey => "0xFF607D8B".into(),
-            Colors::Brown => "0xFF795548".into(),
-            Colors::Cyan => "0xFF00BCD4".into(),
-            Colors::CyanAccent => "0xFF18FFFF".into(),
-            Colors::DeepOrange => "0xFFFF5722".into(),
-            Colors::DeepOrangeAccent => "0xFFFF6E40".into(),
-            Colors::DeepPurple => "0xFF673AB7".into(),
-            Colors::DeepPurpleAccent => "0xFF7C4DFF".into(),
-            Colors::Green => "0xFF4CAF50".into(),
-            Colors::GreenAccent => "0xFF69F0AE".into(),
-            Colors::Grey => "FF9E9E9E".into(),
-            Colors::Indigo => "0xFF3F51B5".into(),
-            Colors::IndigoAccent => "0xFF536DFE".into(),
-            Colors::LightBlue => "0xFF03A9FA".into(),
-            Colors::LightBlueAccent => "0xFF40C4FF".into(),
-            Colors::LightGreen => "0xFF8BC34A".into(),
-            Colors::LightGreenAccent => "0xFFB2FF59".into(),
-            Colors::Lime => "0xFFCDDC39".into(),
-            Colors::LimeAccent => "0xFFEEFF41".into(),
-            Colors::Orange => "0xFFFF9800".into(),
-            Colors::OrangeAccent => "0xFFFFAB40".into(),
-            Colors::Pink => "0xFFE91E63".into(),
-            Colors::PinkAccent => "0xFFFF4081".into(),
-            Colors::Purple => "0xFF9C27B0".into(),
-            Colors::PurpleAccent => "0xFFE040FB".into(),
-            Colors::Red => "0xFFF44336".into(),
-            Colors::RedAccent => "0xFFFF5252".into(),
-            Colors::Teal => "0xFF009688".into(),
-            Colors::TealAccent => "0xFF64FFDA".into(),
-            Colors::Transparent => "0xFFFFFFFF".into(),
-            Colors::White => "0xFFFFFFFF".into(),
-            Colors::Yellow => "0xFFFFEB3B".into(),
-            Colors::YellowAccent => "0xFFFFFF00".into(),
+            Color::Inherit => "0xFFFFFFFF".into(),
+            Color::ORGB(o, r, g, b) => format!("{:#X}{:X}{:X}{:X}", (o * 255.0) as i32, r, g, b),
+            Color::Amber => "0xFFFFC107".into(),
+            Color::AmberAccent => "0xFFFFD740".into(),
+            Color::Black => "0xFF000000".into(),
+            Color::Blue => "0xFF2196F3".into(),
+            Color::BlueAccent => "0xFF448AFF".into(),
+            Color::BlueGrey => "0xFF607D8B".into(),
+            Color::Brown => "0xFF795548".into(),
+            Color::Cyan => "0xFF00BCD4".into(),
+            Color::CyanAccent => "0xFF18FFFF".into(),
+            Color::DeepOrange => "0xFFFF5722".into(),
+            Color::DeepOrangeAccent => "0xFFFF6E40".into(),
+            Color::DeepPurple => "0xFF673AB7".into(),
+            Color::DeepPurpleAccent => "0xFF7C4DFF".into(),
+            Color::Green => "0xFF4CAF50".into(),
+            Color::GreenAccent => "0xFF69F0AE".into(),
+            Color::Grey => "FF9E9E9E".into(),
+            Color::Indigo => "0xFF3F51B5".into(),
+            Color::IndigoAccent => "0xFF536DFE".into(),
+            Color::LightBlue => "0xFF03A9FA".into(),
+            Color::LightBlueAccent => "0xFF40C4FF".into(),
+            Color::LightGreen => "0xFF8BC34A".into(),
+            Color::LightGreenAccent => "0xFFB2FF59".into(),
+            Color::Lime => "0xFFCDDC39".into(),
+            Color::LimeAccent => "0xFFEEFF41".into(),
+            Color::Orange => "0xFFFF9800".into(),
+            Color::OrangeAccent => "0xFFFFAB40".into(),
+            Color::Pink => "0xFFE91E63".into(),
+            Color::PinkAccent => "0xFFFF4081".into(),
+            Color::Purple => "0xFF9C27B0".into(),
+            Color::PurpleAccent => "0xFFE040FB".into(),
+            Color::Red => "0xFFF44336".into(),
+            Color::RedAccent => "0xFFFF5252".into(),
+            Color::Teal => "0xFF009688".into(),
+            Color::TealAccent => "0xFF64FFDA".into(),
+            Color::Transparent => "0xFFFFFFFF".into(),
+            Color::White => "0xFFFFFFFF".into(),
+            Color::Yellow => "0xFFFFEB3B".into(),
+            Color::YellowAccent => "0xFFFFFF00".into(),
         }
     }
 
-    /// convert `Colors` to `Colors::ORGB`
-    pub fn to_orgb(&self) -> Colors {
-        Colors::from_hex_to_orgb(self.to_hex())
+    /// convert `Color` to `Color::ORGB`
+    pub fn to_orgb(&self) -> Color {
+        Color::from_hex_to_orgb(self.to_hex())
     }
 }
 
-impl Eq for Colors {}
-impl Ord for Colors {
+impl Eq for Color {}
+impl Ord for Color {
     fn cmp(&self, o: &Self) -> Ordering {
         self.to_hex().cmp(&o.to_hex())
     }
 }
 
-impl PartialEq for Colors {
+impl PartialEq for Color {
     fn eq(&self, o: &Self) -> bool {
         self.to_hex().eq(&o.to_hex())
     }
 }
 
-impl PartialOrd for Colors {
+impl PartialOrd for Color {
     fn partial_cmp(&self, o: &Self) -> Option<Ordering> {
         self.to_hex().partial_cmp(&o.to_hex())
     }
 }
 
 /// Pink is the Pig
-impl Default for Colors {
-    fn default() -> Colors {
-        Colors::Pink
+impl Default for Color {
+    fn default() -> Color {
+        Color::Pink
     }
 }
 
-impl ToString for Colors {
+impl ToString for Color {
     fn to_string(&self) -> String {
         match self {
-            Colors::ORGB(o, r, g, b) => format!("rgba({}, {}, {}, {:.2})", r, g, b, o),
-            Colors::Inherit => "inherit".into(),
+            Color::ORGB(o, r, g, b) => format!("rgba({}, {}, {}, {:.2})", r, g, b, o),
+            Color::Inherit => "inherit".into(),
             _ => {
-                if let Colors::ORGB(o, r, g, b) = self.to_orgb() {
+                if let Color::ORGB(o, r, g, b) = self.to_orgb() {
                     format!("rgba({}, {}, {}, {:.1})", r, g, b, o)
                 } else {
                     "rgba(255, 255, 255, 255)".into()
@@ -317,7 +317,7 @@ impl ToString for Colors {
     }
 }
 
-impl Into<Style> for Colors {
+impl Into<Style> for Color {
     fn into(self) -> Style {
         Style::Color(self)
     }

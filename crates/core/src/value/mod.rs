@@ -1,11 +1,24 @@
 //! Elvis values
+mod border;
+mod r#box;
 mod color;
-pub mod layouts;
-mod typo;
+mod column;
+mod flex;
+mod font;
+mod grid;
 mod unit;
 
+/// Elvis layout values
+pub mod layouts {
+    pub use super::column::MultiColumnLineStyle;
+    pub use super::flex::{Alignment, FlexBasis, FlexDirection, FlexPosition};
+    pub use super::grid::{GridAuto, GridFlow, GridTemplate};
+    pub use super::r#box::BoxShadow;
+}
+
 pub use {
-    color::Colors,
-    typo::{FontFamily, FontStyle},
+    border::BorderStyle,
+    color::Color,
+    font::{FontFamily, FontStyle},
     unit::Unit,
 };

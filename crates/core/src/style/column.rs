@@ -1,7 +1,7 @@
 //! Column Styles
 use crate::{
     style::Style,
-    value::{layouts::MultiColumnLineStyle, Colors, Unit},
+    value::{layouts::MultiColumnLineStyle, Color, Unit},
 };
 use elvis_core_support::Setter;
 
@@ -9,7 +9,7 @@ use elvis_core_support::Setter;
 #[derive(Clone, Copy, Default, Setter)]
 pub struct MultiColumnStyle {
     /// Column color
-    pub color: Colors,
+    pub color: Color,
     /// Column counts
     pub count: Unit,
     /// Column gap
