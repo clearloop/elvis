@@ -1,7 +1,7 @@
 use elvis::{
     prelude::*,
     style::{FlexStyle, TextStyle},
-    value::{layouts::Alignment, Colors, FontFamily, Unit},
+    value::{layouts::Alignment, Color, FontFamily, Unit},
     widgets::{layouts::Flex, Text},
 };
 
@@ -14,7 +14,7 @@ impl LifeCycle<Flex> for Index {
             child: Text {
                 text: "todos".into(),
                 style: TextStyle::new()
-                    .color(Colors::ORGB(0.15, 175, 47, 47))
+                    .color(Color::ORGB(0.15, 175, 47, 47))
                     .size(Unit::Px(100.0))
                     .weight(Unit::None(100.0))
                     .family(FontFamily::Derive(vec![

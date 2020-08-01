@@ -3,7 +3,7 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    BorderStyle, Colors, FontFamily, FontStyle, Unit,
+    BorderStyle, Color, FontFamily, FontStyle, Unit,
 };
 
 macro_rules! construct_style {
@@ -45,22 +45,22 @@ construct_style! {[
     (BorderTopRadius, Unit, "Border Top Color"),
     (BorderTopWidth, Unit, "Border Top Color"),
     (BorderTopStyle, BorderStyle, "Border Top Color"),
-    (BorderTopColor, Colors, "Border Top Color"),
+    (BorderTopColor, Color, "Border Top Color"),
 
     (BorderRightRadius, Unit, "Border Right Color"),
     (BorderRightWidth, Unit, "Border Right Color"),
     (BorderRightStyle, BorderStyle, "Border Right Color"),
-    (BorderRightColor, Colors, "Border Right Color"),
+    (BorderRightColor, Color, "Border Right Color"),
 
     (BorderBottomRadius, Unit, "Border Bottom Color"),
     (BorderBottomWidth, Unit, "Border Bottom Color"),
     (BorderBottomStyle, BorderStyle, "Border Bottom Color"),
-    (BorderBottomColor, Colors, "Border Bottom Color"),
+    (BorderBottomColor, Color, "Border Bottom Color"),
 
     (BorderLeftRadius, Unit, "Border Left Color"),
     (BorderLeftWidth, Unit, "Border Left Color"),
     (BorderLeftStyle, BorderStyle, "Border Left Color"),
-    (BorderLeftColor, Colors, "Border Left Color"),
+    (BorderLeftColor, Color, "Border Left Color"),
 
     // Typo
     (FontWeight, Unit, "Font Weight Style"),
@@ -69,8 +69,8 @@ construct_style! {[
     (LineHeight, Unit, "Line Height Style"),
 
     // Color
-    (Color, Colors, "Custom Color"),
-    (BackgroundColor, Colors, "Custom Color"),
+    (Color, Color, "Custom Color"),
+    (BackgroundColor, Color, "Custom Color"),
 
     // Flex
     (AlignItems, FlexPosition, "AlignItem Style"),
@@ -91,7 +91,7 @@ construct_style! {[
     // Column
     (ColumnCount, Unit, "ColumnCount Style"),
     (ColumnGap, Unit, "ColumnGap Style"),
-    (ColumnRuleColor, Colors, "ColumnRuleColor Style"),
+    (ColumnRuleColor, Color, "ColumnRuleColor Style"),
     (ColumnRuleStyle, MultiColumnLineStyle, "ColumnRuleStyle Style"),
 ], [
     // Flex

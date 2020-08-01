@@ -18,7 +18,7 @@ pub mod layouts {
 
 pub use {
     border::BorderStyle,
-    color::Colors,
+    color::Color,
     font::{FontFamily, FontStyle},
     unit::Unit,
 };

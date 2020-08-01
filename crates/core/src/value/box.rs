@@ -1,4 +1,4 @@
-use super::{Colors, Unit};
+use super::{Color, Unit};
 
 /// Box Shadow
 pub enum BoxShadow {
@@ -11,7 +11,7 @@ pub enum BoxShadow {
     /// Unset Style
     Unset,
     /// offset-x | offset-y | blur-radius | spread-radius | color
-    Customize(Unit, Unit, Unit, Unit, Colors),
+    Customize(Unit, Unit, Unit, Unit, Color),
     /// Derive BoxShadows
     Derive(Vec<BoxShadow>),
 }

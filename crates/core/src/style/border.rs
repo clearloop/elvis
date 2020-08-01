@@ -1,28 +1,28 @@
 use crate::{
     style::Style,
-    value::{BorderStyle, Colors, Unit},
+    value::{BorderStyle, Color, Unit},
 };
 use elvis_core_support::Setter;
 
 /// Border Style
 #[derive(Default, Clone, Setter)]
 pub struct Border {
-    top_color: Colors,
+    top_color: Color,
     top_radius: Unit,
     top_style: BorderStyle,
     top_width: Unit,
 
-    right_color: Colors,
+    right_color: Color,
     right_radius: Unit,
     right_style: BorderStyle,
     right_width: Unit,
 
-    bottom_color: Colors,
+    bottom_color: Color,
     bottom_radius: Unit,
     bottom_style: BorderStyle,
     bottom_width: Unit,
 
-    left_color: Colors,
+    left_color: Color,
     left_radius: Unit,
     left_style: BorderStyle,
     left_width: Unit,
@@ -30,7 +30,7 @@ pub struct Border {
 
 impl Border {
     /// Set color for all borders
-    pub fn color(mut self, color: Colors) -> Self {
+    pub fn color(mut self, color: Color) -> Self {
         self.top_color = color;
         self.right_color = color;
         self.bottom_color = color;

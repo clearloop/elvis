@@ -1,7 +1,7 @@
 //! Basic style
 use crate::{
     style::Style,
-    value::{layouts::Alignment, Colors, Unit},
+    value::{layouts::Alignment, Color, Unit},
 };
 use elvis_core_support::Setter;
 
@@ -19,7 +19,7 @@ pub struct ContainerStyle {
     /// Container margin
     pub margin: Unit,
     /// Container background
-    pub background_color: Colors,
+    pub background_color: Color,
 }
 
 impl Into<Vec<Style>> for ContainerStyle {
