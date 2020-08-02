@@ -14,6 +14,6 @@ impl Into<Node> for ListTile {
                 Node::default().children(vec![self.leading, self.text]),
                 self.trailing,
             ])
-            .class(vec![Class::Row])
+            .class(vec![Class::Flex, Class::Row])
     }
 }

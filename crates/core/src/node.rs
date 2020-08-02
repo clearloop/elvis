@@ -70,7 +70,7 @@ impl Node {
         self
     }
 
-    /// Append class
+    /// Set class
     pub fn class(mut self, class: Vec<Class>) -> Node {
         self.class = class;
         self
@@ -84,7 +84,7 @@ impl Node {
         self
     }
 
-    /// Append class
+    /// Set style
     pub fn style(mut self, style: impl Into<Vec<Style>>) -> Node {
         self.style = style.into();
         self
