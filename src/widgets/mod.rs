@@ -1,7 +1,7 @@
 //! Evlis common widgets
 mod image;
-mod input;
 pub mod layouts;
 mod text;
+mod tile;
 
-pub use {image::Image, input::Input, text::Text};
+pub use {image::Image, text::Text};

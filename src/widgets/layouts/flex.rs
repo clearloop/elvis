@@ -1,6 +1,6 @@
 //! Flex Layout
 use elvis_core::{style::FlexStyle, value::layouts::Alignment, Class, Node};
-use elvis_support::{IntoNode, RefIntoNode};
+use elvis_support::IntoNode;
 
 /// `Align` inherits the core usage of Alignment, it's quite simple, just one property.
 #[derive(IntoNode)]
@@ -12,13 +12,12 @@ pub struct Align {
 }
 
 /// `Center` is a very nice widget, if your website only have a line of chars, use it!
-#[derive(RefIntoNode)]
 pub struct Center {
     /// Center child
     pub child: Node,
 }
 
-impl Into<Node> for &Center {
+impl Into<Node> for Center {
     fn into(self) -> Node {
         Node::default()
             .children(vec![self.child.clone()])
