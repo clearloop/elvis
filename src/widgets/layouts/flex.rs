@@ -26,10 +26,17 @@ impl Into<Node> for Center {
 }
 
 /// `Col` is the typical flow in html, with flexible enhance.
-#[derive(IntoNode)]
 pub struct Col {
     /// Column children
     pub children: Vec<Node>,
+}
+
+impl Into<Node> for Col {
+    fn into(self) -> Node {
+        Node::default()
+            .children(self.children)
+            .class(vec![Class::Flex, Class::Col])
+    }
 }
 
 /// This is the Lunatic Widget to Ground Control, 'I`m stepping throw the Window.'
@@ -42,8 +49,15 @@ pub struct Flex {
 }
 
 /// Both `Col` and `Row` are using flex-start, if you want to reverse the children of them, better to work on the list order.
-#[derive(IntoNode)]
 pub struct Row {
     /// Row children
     pub children: Vec<Node>,
+}
+
+impl Into<Node> for Row {
+    fn into(self) -> Node {
+        Node::default()
+            .children(self.children)
+            .class(vec![Class::Flex, Class::Row])
+    }
 }

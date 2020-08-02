@@ -7,12 +7,12 @@ use std::{
     rc::{Rc, Weak},
 };
 
-fn hash(tag: &str, s: &[u8]) -> String {
+fn hash(s: &[u8]) -> String {
     let mut hasher = DefaultHasher::new();
     hasher.write(s);
 
     let res = format!("{:x}", hasher.finish());
-    format!("elvis-{}-{}", &tag, &res[(res.len() - 6)..])
+    format!("elvis-{}", &res[0..6])
 }
 
 /// Virtual UI Node
@@ -109,7 +109,7 @@ impl Node {
 
     /// The path of current node
     pub fn idx(&mut self, path: &mut Vec<u8>) {
-        self.attr.id = hash(&self.attr.tag, &path);
+        self.attr.id = hash(&path);
 
         path.push(0);
         for t in self.children.iter() {
