@@ -1,6 +1,6 @@
 use crate::value::{
     layouts::{
-        FlexBasis, FlexDirection, FlexPosition, GridAuto, GridFlow, GridTemplate,
+        FlexBasis, FlexDirection, FlexPosition, FlexWrap, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
     BorderStyle, Color, FontFamily, FontStyle, TextAlign, Unit,
@@ -76,25 +76,26 @@ construct_style! {[
     (Margin, Unit, "Box Margin"),
 
     // Border
-    (BorderTopRadius, Unit, "Border Top Color"),
     (BorderTopWidth, Unit, "Border Top Color"),
     (BorderTopStyle, BorderStyle, "Border Top Color"),
     (BorderTopColor, Color, "Border Top Color"),
 
-    (BorderRightRadius, Unit, "Border Right Color"),
     (BorderRightWidth, Unit, "Border Right Color"),
     (BorderRightStyle, BorderStyle, "Border Right Color"),
     (BorderRightColor, Color, "Border Right Color"),
 
-    (BorderBottomRadius, Unit, "Border Bottom Color"),
     (BorderBottomWidth, Unit, "Border Bottom Color"),
     (BorderBottomStyle, BorderStyle, "Border Bottom Color"),
     (BorderBottomColor, Color, "Border Bottom Color"),
 
-    (BorderLeftRadius, Unit, "Border Left Color"),
     (BorderLeftWidth, Unit, "Border Left Color"),
     (BorderLeftStyle, BorderStyle, "Border Left Color"),
     (BorderLeftColor, Color, "Border Left Color"),
+
+    (BorderTopLeftRadius, Unit, "Border Top Left Radius"),
+    (BorderTopRightRadius, Unit, "Border Top Right Radius"),
+    (BorderBottomRightRadius, Unit, "Border Bottom Right Radius"),
+    (BorderBottomLeftRadius, Unit, "Border Bottom Left Radius"),
 
     // Typo
     (FontWeight, Unit, "Font Weight Style"),
@@ -110,8 +111,7 @@ construct_style! {[
     (AlignItems, FlexPosition, "AlignItem Style"),
     (JustifyContent, FlexPosition, "AlignItem Style"),
     (FlexGrow, Unit, "FlexGrow Style"),
-    (FlexOrder, Unit, "FlexOrder Style"),
-    (Wrap, bool, "Flex Wrap"),
+    (Order, Unit, "FlexOrder Style"),
 
     // Grid
     (GridAutoColumns, GridAuto, "GridAutoColumn Style"),
@@ -132,6 +132,7 @@ construct_style! {[
     (FlexBasis, "FlexBasis style"),
     (FlexDirection, "FlexDirection style"),
     (FlexPosition, "FlexPosition style"),
+    (FlexWrap, "Flex Wrap Style"),
     (BorderStyle, "Border Style"),
 
     // Grid

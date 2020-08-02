@@ -2,14 +2,14 @@
 use crate::{
     style::Style,
     value::{
-        layouts::{Alignment, FlexBasis, FlexDirection},
+        layouts::{Alignment, FlexBasis, FlexDirection, FlexWrap},
         Unit,
     },
 };
 use elvis_core_support::Setter;
 
 /// `Flex` Style
-#[derive(Clone, Default, Setter)]
+#[derive(Clone, Setter)]
 pub struct FlexStyle {
     /// Flex align
     pub align: Alignment,
@@ -22,7 +22,20 @@ pub struct FlexStyle {
     /// Flex order
     pub order: Unit,
     /// Flex wrap
-    pub wrap: bool,
+    pub wrap: FlexWrap,
+}
+
+impl Default for FlexStyle {
+    fn default() -> FlexStyle {
+        FlexStyle {
+            align: Alignment::Center,
+            basis: FlexBasis::Inherit,
+            direction: FlexDirection::Row,
+            grow: Unit::None(1.0),
+            order: Unit::None(0.0),
+            wrap: FlexWrap::Wrap,
+        }
+    }
 }
 
 impl Into<Vec<Style>> for FlexStyle {
@@ -34,8 +47,8 @@ impl Into<Vec<Style>> for FlexStyle {
             self.basis.into(),
             self.direction.into(),
             Style::FlexGrow(self.grow),
-            Style::FlexOrder(self.order),
-            Style::Wrap(self.wrap),
+            Style::Order(self.order),
+            Style::FlexWrap(self.wrap),
         ]
     }
 }

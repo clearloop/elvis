@@ -4,7 +4,7 @@ use elvis::{
     value::{layouts::Alignment, Color, FontFamily, Unit},
     widgets::{
         layouts::{Col, Flex},
-        Text,
+        Text, TextField,
     },
 };
 
@@ -31,10 +31,14 @@ fn title() -> Flex {
     }
 }
 
+fn input() -> TextField {
+    TextField::new().text(Text::new().text("hello".to_string()))
+}
+
 impl LifeCycle<Col> for Index {
     fn create(&self) -> Col {
         Col {
-            children: vec![title().into()],
+            children: vec![title().into(), input().into()],
         }
     }
 }
