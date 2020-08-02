@@ -23,13 +23,13 @@ impl ToString for BoxShadow {
             BoxShadow::Inherit => "inherit".to_string(),
             BoxShadow::Initial => "initial".to_string(),
             BoxShadow::Unset => "unset".to_string(),
-            BoxShadow::Customize(x, y, b, s, c) => format!(
+            BoxShadow::Customize(x, y, blur, spread, color) => format!(
                 "{} {} {} {} {}",
                 x.to_string(),
                 y.to_string(),
-                b.to_string(),
-                s.to_string(),
-                c.to_string()
+                blur.to_string(),
+                spread.to_string(),
+                color.to_string()
             ),
             BoxShadow::Derive(v) => v
                 .iter()

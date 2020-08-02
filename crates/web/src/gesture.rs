@@ -7,6 +7,10 @@ use web_sys::{Document, Element};
 
 /// Bind gesture to node
 pub fn bind(node: &Rc<RefCell<Node>>, dom: &Document) -> Result<Element, JsValue> {
+    if node.borrow().attr.tag.is_empty() {
+        node.borrow_mut().attr.tag = "div".to_string();
+    }
+
     let this = dom.create_element(&node.borrow().attr.tag)?;
     if let Some(gestures) = &node.borrow().gesture {
         for (m, f) in gestures.clone() {

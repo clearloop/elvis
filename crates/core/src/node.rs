@@ -44,6 +44,14 @@ impl fmt::Debug for Node {
 }
 
 impl Node {
+    /// Set Children
+    pub fn children(mut self, children: Vec<Node>) -> Node {
+        self.children = children
+            .iter()
+            .map(|n| Rc::new(RefCell::new(n.clone())))
+            .collect::<Vec<Rc<RefCell<Node>>>>();
+        self
+    }
     /// Append class
     pub fn class(mut self, classes: &mut Vec<Class>) -> Node {
         self.class.append(classes);
@@ -98,23 +106,8 @@ impl Node {
     }
 
     /// Generate a `Rc<RefCell<Node>>`
-    pub fn new(
-        children: Vec<Rc<RefCell<Node>>>,
-        pre: Option<Weak<RefCell<Node>>>,
-        tag: String,
-    ) -> Rc<RefCell<Node>> {
-        let mut t = Node {
-            children,
-            pre,
-            attr: Attribute::default(),
-            class: vec![],
-            style: vec![],
-            state: None,
-            gesture: None,
-        };
-
-        t.attr.tag = tag;
-        Rc::new(RefCell::new(t))
+    pub fn new() -> Rc<RefCell<Node>> {
+        Rc::new(RefCell::new(Node::default()))
     }
 
     /// Add second tree to the first one.
