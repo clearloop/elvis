@@ -21,7 +21,7 @@ impl Into<Node> for Center {
     fn into(self) -> Node {
         Node::default()
             .children(vec![self.child.clone()])
-            .class(&mut vec![Class::Flex, Class::Center])
+            .class(vec![Class::Flex, Class::Center])
     }
 }
 

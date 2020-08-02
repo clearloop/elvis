@@ -11,6 +11,6 @@ impl Into<Node> for ListTile {
     fn into(self) -> Node {
         Node::default()
             .children(vec![self.leading, self.text, self.trailing])
-            .class(&mut vec![Class::Row])
+            .class(vec![Class::Row])
     }
 }

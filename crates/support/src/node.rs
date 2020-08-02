@@ -24,7 +24,7 @@ pub fn parse(input: TokenStream) -> TokenStream {
                     fn into(self) -> Node {
                         Node::default()
                             .children(vec![self.child])
-                            .class(&mut vec![Class::Flex])
+                            .class(vec![Class::Flex])
                             .style(self.style.clone())
                     }
                 }
@@ -35,7 +35,7 @@ pub fn parse(input: TokenStream) -> TokenStream {
                     fn into(self) -> Node {
                         Node::default()
                             .children(vec![self.child])
-                            .class(&mut vec![Class::Flex])
+                            .class(vec![Class::Flex])
                     }
                 }
             }
@@ -45,7 +45,7 @@ pub fn parse(input: TokenStream) -> TokenStream {
                     fn into(self) -> Node {
                         Node::default()
                             .children(self.children)
-                            .class(&mut vec![
+                            .class(vec![
                                 Class::Flex,
                                 Class::from(stringify!($widget).to_lowercase().as_str()),
                             ])
@@ -59,7 +59,7 @@ pub fn parse(input: TokenStream) -> TokenStream {
                     fn into(self) -> Node {
                         Node::default()
                             .children(self.children)
-                            .class(&mut vec![
+                            .class(vec![
                                 Class::Flex,
                                 Class::from(stringify!($widget).to_lowercase().as_str()),
                             ])

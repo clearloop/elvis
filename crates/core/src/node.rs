@@ -52,16 +52,46 @@ impl Node {
             .collect::<Vec<Rc<RefCell<Node>>>>();
         self
     }
+
+    /// append child
+    pub fn append_child(mut self, child: Node) -> Node {
+        self.children.push(Rc::new(RefCell::new(child)));
+        self
+    }
+
+    /// append children
+    pub fn append_children(mut self, children: Vec<Node>) -> Node {
+        self.children.append(
+            &mut children
+                .iter()
+                .map(|n| Rc::new(RefCell::new(n.clone())))
+                .collect::<Vec<Rc<RefCell<Node>>>>(),
+        );
+        self
+    }
+
     /// Append class
-    pub fn class(mut self, classes: &mut Vec<Class>) -> Node {
-        self.class.append(classes);
+    pub fn class(mut self, class: Vec<Class>) -> Node {
+        self.class = class;
+        self
+    }
+
+    /// Append class
+    pub fn append_class(mut self, class: &mut Vec<Class>) -> Node {
+        self.class.append(class);
         self.class.sort();
         self.class.dedup();
         self
     }
 
+    /// Append class
+    pub fn style(mut self, style: impl Into<Vec<Style>>) -> Node {
+        self.style = style.into();
+        self
+    }
+
     /// Append style
-    pub fn style(mut self, styles: impl Into<Vec<Style>>) -> Node {
+    pub fn append_style(mut self, styles: impl Into<Vec<Style>>) -> Node {
         self.style.append(&mut styles.into());
         self.style.sort();
         self.style.dedup();
