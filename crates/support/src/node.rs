@@ -41,8 +41,8 @@ pub fn parse(input: TokenStream) -> TokenStream {
         }
     };
 
-    TokenStream::from(if fields.contains(&"child".to_string()) {
-        if fields.contains(&"style".to_string()) {
+    TokenStream::from(
+        if fields.contains(&"child".to_string()) && fields.contains(&"style".to_string()) {
             quote! {
                 impl Into<Node> for &#struct_name {
                     fn into(self) -> Node {
@@ -55,7 +55,7 @@ pub fn parse(input: TokenStream) -> TokenStream {
 
                 #ref_into
             }
-        } else {
+        } else if fields.contains(&"child".to_string()) && !fields.contains(&"style".to_string()) {
             quote! {
                 impl Into<Node> for &#struct_name {
                     fn into(self) -> Node {
@@ -67,9 +67,7 @@ pub fn parse(input: TokenStream) -> TokenStream {
 
                 #ref_into
             }
-        }
-    } else {
-        if fields.contains(&"style".to_string()) {
+        } else if fields.contains(&"style".to_string()) {
             quote! {
                 impl Into<Node> for &#struct_name {
                     fn into(self) -> Node {
@@ -79,6 +77,7 @@ pub fn parse(input: TokenStream) -> TokenStream {
                                 Class::Flex,
                                 Class::from(stringify!($widget).to_lowercase().as_str()),
                             ])
+                            .style(self.style.clone())
                     }
                 }
 
@@ -99,6 +98,6 @@ pub fn parse(input: TokenStream) -> TokenStream {
 
                 #ref_into
             }
-        }
-    })
+        },
+    )
 }
