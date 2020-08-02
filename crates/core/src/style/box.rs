@@ -7,7 +7,7 @@ use crate::{
 use elvis_core_support::Setter;
 
 /// `Container` style
-#[derive(Clone, Default, Setter)]
+#[derive(Clone, Default, Setter, Eq, PartialEq, Ord, PartialOrd)]
 pub struct ContainerStyle {
     /// Container align
     pub align: Alignment,

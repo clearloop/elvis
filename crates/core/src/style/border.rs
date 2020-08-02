@@ -5,7 +5,7 @@ use crate::{
 use elvis_core_support::Setter;
 
 /// Border Style
-#[derive(Default, Clone, Setter)]
+#[derive(Default, Clone, Setter, Eq, PartialEq, Ord, PartialOrd)]
 pub struct Border {
     top_color: Color,
     top_radius: Unit,

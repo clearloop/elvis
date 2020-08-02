@@ -1,8 +1,13 @@
-use elvis_core::{derive::Setter, style::TextStyle, Node};
+use crate::widgets::{layouts::Container, ListTile};
+use elvis_core::{
+    derive::Setter,
+    style::{ContainerStyle, TextStyle},
+    Attribute, Node,
+};
 
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
-#[derive(Debug, Default, Eq, PartialEq, Setter)]
+#[derive(Default, Setter)]
 pub struct Text {
     /// Plain text
     pub text: String,
@@ -23,5 +28,32 @@ impl Into<Node> for Text {
         // Set Tag
         node.attr.tag = "p".into();
         node
+    }
+}
+
+#[derive(Default, Setter)]
+pub struct TextField {
+    /// Leading widget
+    pub leading: Node,
+    /// Trailing widget
+    pub trailing: Node,
+    /// Plain text
+    pub text: Text,
+    /// Text style
+    pub style: ContainerStyle,
+}
+
+impl Into<Node> for TextField {
+    fn into(self) -> Node {
+        Container::new()
+            .style(self.style)
+            .child(
+                ListTile::new()
+                    .leading(self.leading)
+                    .text(Into::<Node>::into(self.text).attr(Attribute::new().tag("input".into())))
+                    .trailing(self.trailing)
+                    .into(),
+            )
+            .into()
     }
 }
