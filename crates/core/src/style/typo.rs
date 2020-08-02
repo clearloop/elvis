@@ -67,6 +67,7 @@ impl Into<Vec<Style>> for TextStyle {
 }
 
 /// Image source
+#[derive(Default)]
 pub struct ImageSrc(pub String);
 
 impl ImageSrc {

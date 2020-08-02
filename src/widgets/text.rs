@@ -1,20 +1,13 @@
-use elvis_core::{style::TextStyle, Node};
+use elvis_core::{derive::Setter, style::TextStyle, Node};
 
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Default, Eq, PartialEq, Setter)]
 pub struct Text {
     /// Plain text
     pub text: String,
     /// Text style
     pub style: TextStyle,
-}
-
-impl Text {
-    /// New Text
-    pub fn new(text: String, style: TextStyle) -> Text {
-        Text { text, style }
-    }
 }
 
 impl Into<Node> for Text {

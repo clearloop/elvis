@@ -1,6 +1,7 @@
-use elvis_core::{Class, Node};
+use elvis_core::{derive::Setter, Class, Node};
 
 /// Tile component, usually used in in list
+#[derive(Default, Setter)]
 pub struct ListTile {
     leading: Node,
     text: Node,
