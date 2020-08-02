@@ -6,6 +6,7 @@ mod column;
 mod flex;
 mod font;
 mod grid;
+mod typo;
 mod unit;
 
 /// Elvis layout values
@@ -20,5 +21,6 @@ pub use {
     border::BorderStyle,
     color::Color,
     font::{FontFamily, FontStyle},
+    typo::TextAlign,
     unit::Unit,
 };

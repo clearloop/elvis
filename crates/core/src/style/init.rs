@@ -3,25 +3,59 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    BorderStyle, Color, FontFamily, FontStyle, Unit,
+    BorderStyle, Color, FontFamily, FontStyle, TextAlign, Unit,
 };
+
+fn camel_snake(camel: &str) -> String {
+    let mut res = "".to_string();
+    camel.trim().chars().enumerate().for_each(|(n, c)| {
+        if n > 0 && c.is_ascii_uppercase() {
+            res.push_str("-");
+        }
+        res.push(c);
+    });
+
+    res.to_lowercase()
+}
 
 macro_rules! construct_style {
     (
-        [$(($style:ident, $ty:ty, $doc:expr),)*],
+        [$(($ns:ident, $ty:ty, $ndoc:expr),)*],
         [$(($ss:ident, $sdoc:expr),)*]
     ) => {
         /// Evlis Style
         #[derive(Clone, Eq, Ord, PartialEq, PartialOrd)]
         pub enum Style {
             $(
-                #[doc=$doc]
-                $style($ty),
+                #[doc=$ndoc]
+                $ns($ty),
             )*
             $(
                 #[doc=$sdoc]
                 $ss($ss),
             )*
+        }
+
+        impl Style {
+            /// Convert `Style` to css string
+            pub fn to_css(&self) -> String {
+                match self {
+                    $(
+                        Style::$ns(v) => format!(
+                            "{}: {}",
+                            camel_snake(stringify!($ns)),
+                            v.to_string()
+                        ),
+                    )*
+                    $(
+                        Style::$ss(v) => format!(
+                            "{}: {}",
+                            camel_snake(stringify!($ss)),
+                            v.to_string()
+                        ),
+                    )*
+                }
+            }
         }
 
         $(
@@ -103,9 +137,12 @@ construct_style! {[
     // Grid
     (GridAuto, "Grid Auto Style"),
     (GridFlow, "Grid Flow Style"),
+    (GridTemplate, "Grid Template Style"),
 
     // Font
-    (GridTemplate, "Grid Template Style"),
     (FontStyle, "Font Style"),
     (FontFamily, "Font Family"),
+
+    // Typo
+    (TextAlign, "Text Align"),
 ]}

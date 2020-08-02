@@ -7,12 +7,12 @@ use std::{
     rc::{Rc, Weak},
 };
 
-fn hash(tag: &str, s: &[u8]) -> String {
+fn hash(s: &[u8]) -> String {
     let mut hasher = DefaultHasher::new();
     hasher.write(s);
 
     let res = format!("{:x}", hasher.finish());
-    format!("elvis-{}-{}", &tag, &res[(res.len() - 6)..])
+    format!("elvis-{}", &res[0..6])
 }
 
 /// Virtual UI Node
@@ -52,16 +52,46 @@ impl Node {
             .collect::<Vec<Rc<RefCell<Node>>>>();
         self
     }
+
+    /// append child
+    pub fn append_child(mut self, child: Node) -> Node {
+        self.children.push(Rc::new(RefCell::new(child)));
+        self
+    }
+
+    /// append children
+    pub fn append_children(mut self, children: Vec<Node>) -> Node {
+        self.children.append(
+            &mut children
+                .iter()
+                .map(|n| Rc::new(RefCell::new(n.clone())))
+                .collect::<Vec<Rc<RefCell<Node>>>>(),
+        );
+        self
+    }
+
+    /// Set class
+    pub fn class(mut self, class: Vec<Class>) -> Node {
+        self.class = class;
+        self
+    }
+
     /// Append class
-    pub fn class(mut self, classes: &mut Vec<Class>) -> Node {
-        self.class.append(classes);
+    pub fn append_class(mut self, class: &mut Vec<Class>) -> Node {
+        self.class.append(class);
         self.class.sort();
         self.class.dedup();
         self
     }
 
+    /// Set style
+    pub fn style(mut self, style: impl Into<Vec<Style>>) -> Node {
+        self.style = style.into();
+        self
+    }
+
     /// Append style
-    pub fn style(mut self, styles: impl Into<Vec<Style>>) -> Node {
+    pub fn append_style(mut self, styles: impl Into<Vec<Style>>) -> Node {
         self.style.append(&mut styles.into());
         self.style.sort();
         self.style.dedup();
@@ -79,7 +109,7 @@ impl Node {
 
     /// The path of current node
     pub fn idx(&mut self, path: &mut Vec<u8>) {
-        self.attr.id = hash(&self.attr.tag, &path);
+        self.attr.id = hash(&path);
 
         path.push(0);
         for t in self.children.iter() {

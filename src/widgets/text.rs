@@ -1,9 +1,8 @@
 use elvis_core::{style::TextStyle, Node};
-use elvis_support::RefIntoNode;
 
 /// `Text` might be the most popular spider from Mars,
 /// Does it know the Great Ziggy Stardust?
-#[derive(Debug, Eq, PartialEq, RefIntoNode)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct Text {
     /// Plain text
     pub text: String,
@@ -18,7 +17,7 @@ impl Text {
     }
 }
 
-impl Into<Node> for &Text {
+impl Into<Node> for Text {
     fn into(self) -> Node {
         let mut child = Node::default();
         child.attr.tag = "plain".into();

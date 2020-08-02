@@ -1,7 +1,7 @@
 //! Widget Styles
 use crate::{
     style::Style,
-    value::{Color, FontFamily, FontStyle, Unit},
+    value::{Color, FontFamily, FontStyle, TextAlign, Unit},
 };
 use elvis_core_support::Setter;
 
@@ -24,6 +24,8 @@ pub struct TextStyle {
     pub stretch: Unit,
     /// Font Family
     pub family: FontFamily,
+    /// Text Align
+    pub align: TextAlign,
 }
 
 impl Default for TextStyle {
@@ -32,11 +34,12 @@ impl Default for TextStyle {
             bold: false,
             color: Color::Pink,
             italic: false,
-            size: Unit::Rem(2.0),
+            size: Unit::Rem(1.0),
             weight: Unit::None(400.0),
             height: Unit::Rem(1.0),
             stretch: Unit::Percent(100.0),
             family: FontFamily::Helvetica,
+            align: Default::default(),
         }
     }
 }

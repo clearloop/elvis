@@ -1,6 +1,6 @@
 //! Flex Layout
 use elvis_core::{style::FlexStyle, value::layouts::Alignment, Class, Node};
-use elvis_support::{IntoNode, RefIntoNode};
+use elvis_support::IntoNode;
 
 /// `Align` inherits the core usage of Alignment, it's quite simple, just one property.
 #[derive(IntoNode)]
@@ -12,25 +12,31 @@ pub struct Align {
 }
 
 /// `Center` is a very nice widget, if your website only have a line of chars, use it!
-#[derive(RefIntoNode)]
 pub struct Center {
     /// Center child
     pub child: Node,
 }
 
-impl Into<Node> for &Center {
+impl Into<Node> for Center {
     fn into(self) -> Node {
         Node::default()
             .children(vec![self.child.clone()])
-            .class(&mut vec![Class::Flex, Class::Center])
+            .class(vec![Class::Flex, Class::Center])
     }
 }
 
 /// `Col` is the typical flow in html, with flexible enhance.
-#[derive(IntoNode)]
 pub struct Col {
     /// Column children
     pub children: Vec<Node>,
+}
+
+impl Into<Node> for Col {
+    fn into(self) -> Node {
+        Node::default()
+            .children(self.children)
+            .class(vec![Class::Flex, Class::Col])
+    }
 }
 
 /// This is the Lunatic Widget to Ground Control, 'I`m stepping throw the Window.'
@@ -43,8 +49,15 @@ pub struct Flex {
 }
 
 /// Both `Col` and `Row` are using flex-start, if you want to reverse the children of them, better to work on the list order.
-#[derive(IntoNode)]
 pub struct Row {
     /// Row children
     pub children: Vec<Node>,
+}
+
+impl Into<Node> for Row {
+    fn into(self) -> Node {
+        Node::default()
+            .children(self.children)
+            .class(vec![Class::Flex, Class::Row])
+    }
 }
