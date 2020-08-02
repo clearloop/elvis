@@ -1,38 +1,19 @@
 //! Elvisjs
 #![warn(missing_docs)]
-mod bridge;
+// mod bridge;
 mod err;
 
-// Exports widgets
+pub mod gesture;
+pub mod prelude;
+pub mod traits;
 pub mod widgets;
 
-// Exports idents
-pub use crate::err::Error;
-
-/// Gesture module
-pub mod gesture {
-    pub use elvis_core::{Gesture, GestureDetector};
-}
-
+// re-exports
 pub use elvis_core::{style, value};
 
-/// Evlis Traits
-pub mod traits {
-    pub use elvis_core::{Driver as DriverTrait, Router as RouterTrait};
-}
+// self exports
+pub use crate::err::Error;
 
-// Driver
+// web features
 #[cfg(feature = "web")]
 pub use elvis_web::{Driver, Router};
-
-/// A module which is typically glob imported from:
-///
-/// ```
-/// use elvis::prelude::*;
-/// ```
-pub mod prelude {
-    pub use elvis_core::{LifeCycle, Node};
-    pub use elvis_derive::page;
-    #[cfg(feature = "web")]
-    pub use elvis_web::{wasm_bindgen_re_exports::*, Page};
-}

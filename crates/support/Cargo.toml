@@ -1,14 +1,14 @@
 [package]
-name = "elvis-core-support"
+name = "elvis-support"
 version = "0.1.0"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 license = "MIT/Apache-2.0"
-repository = "https://github.com/elvisjs/elvis/tree/master/crates/core-support"
+repository = "https://github.com/elvisjs/elvis/tree/master/crates/support"
 homepage = "https://github.com/elvisjs"
-documentation = "https://docs.rs/elvis-core-support"
+documentation = "https://docs.rs/elvis-support"
 description = """
-Definition of the `#[elvis]` attribute, an internal dependency
+An internal dependency of elvis
 """
 
 [lib]

@@ -229,6 +229,7 @@ version = "0.2.6"
 dependencies = [
  "elvis-core 0.1.0",
  "elvis-derive 0.1.2",
+ "elvis-support",
  "elvis-web 0.1.6",
 ]
 
@@ -324,6 +325,15 @@ name = "elvis-router-example"
 version = "0.1.0"
 dependencies = [
  "elvis 0.2.6",
+]
+
+[[package]]
+name = "elvis-support"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
