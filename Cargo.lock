@@ -295,7 +295,6 @@ checksum = "c4b6734140b17823641950455ae91872a137985ebe32cc28bca5826f5bdef98b"
 name = "elvis-core-support"
 version = "0.1.0"
 dependencies = [
- "proc-macro2",
  "quote",
  "syn",
 ]
@@ -331,7 +330,6 @@ dependencies = [
 name = "elvis-support"
 version = "0.1.0"
 dependencies = [
- "proc-macro2",
  "quote",
  "syn",
 ]

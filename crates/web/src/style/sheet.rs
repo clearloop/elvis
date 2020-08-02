@@ -118,7 +118,7 @@ impl<'s> StyleSheet {
                 &t.attr.id,
                 &t.style
                     .iter()
-                    .map(|s| super::parse_style(s))
+                    .map(|s| s.to_css())
                     .collect::<Vec<String>>()
                     .join(";"),
             );
