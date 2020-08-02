@@ -3,7 +3,7 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    BorderStyle, Color, FontFamily, FontStyle, Unit,
+    BorderStyle, Color, FontFamily, FontStyle, TextAlign, Unit,
 };
 
 macro_rules! construct_style {
@@ -103,9 +103,12 @@ construct_style! {[
     // Grid
     (GridAuto, "Grid Auto Style"),
     (GridFlow, "Grid Flow Style"),
+    (GridTemplate, "Grid Template Style"),
 
     // Font
-    (GridTemplate, "Grid Template Style"),
     (FontStyle, "Font Style"),
     (FontFamily, "Font Family"),
+
+    // Typo
+    (TextAlign, "Text Align"),
 ]}

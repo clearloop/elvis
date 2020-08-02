@@ -10,7 +10,10 @@ pub struct ListTile {
 impl Into<Node> for ListTile {
     fn into(self) -> Node {
         Node::default()
-            .children(vec![self.leading, self.text, self.trailing])
+            .children(vec![
+                Node::default().children(vec![self.leading, self.text]),
+                self.trailing,
+            ])
             .class(vec![Class::Row])
     }
 }

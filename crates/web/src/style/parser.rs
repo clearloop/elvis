@@ -75,6 +75,7 @@ pub fn parse_style(s: &Style) -> String {
         FontStretch,
         FontWeight,
         LineHeight,
+        TextAlign,
 
         // Color
         Color,
