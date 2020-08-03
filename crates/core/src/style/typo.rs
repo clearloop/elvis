@@ -32,14 +32,14 @@ impl Default for TextStyle {
     fn default() -> TextStyle {
         TextStyle {
             bold: false,
-            color: Color::Pink,
+            color: Color::Black,
             italic: false,
             size: Unit::Rem(1.0),
             weight: Unit::None(400.0),
             height: Unit::Rem(1.0),
             stretch: Unit::Percent(100.0),
             family: FontFamily::Helvetica,
-            align: Default::default(),
+            align: TextAlign::Center,
         }
     }
 }
@@ -62,6 +62,7 @@ impl Into<Vec<Style>> for TextStyle {
             Style::FontStretch(self.stretch),
             Style::LineHeight(self.height),
             Style::FontFamily(self.family),
+            Style::TextAlign(self.align),
         ]
     }
 }

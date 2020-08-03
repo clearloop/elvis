@@ -1,6 +1,8 @@
 use super::{Color, Unit};
+use std::cmp::Ordering;
 
 /// Box Shadow
+#[derive(Clone, PartialEq, Eq)]
 pub enum BoxShadow {
     /// None Style
     None,
@@ -14,6 +16,24 @@ pub enum BoxShadow {
     Customize(Unit, Unit, Unit, Unit, Color),
     /// Derive BoxShadows
     Derive(Vec<BoxShadow>),
+}
+
+impl Default for BoxShadow {
+    fn default() -> BoxShadow {
+        BoxShadow::None
+    }
+}
+
+impl PartialOrd for BoxShadow {
+    fn partial_cmp(&self, o: &Self) -> Option<Ordering> {
+        self.to_string().partial_cmp(&o.to_string())
+    }
+}
+
+impl Ord for BoxShadow {
+    fn cmp(&self, o: &Self) -> Ordering {
+        self.to_string().cmp(&o.to_string())
+    }
 }
 
 impl ToString for BoxShadow {

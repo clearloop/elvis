@@ -70,8 +70,10 @@ macro_rules! construct_style {
 
 construct_style! {[
     // Box
-    (Height, Unit, "Box Height"),
     (Width, Unit, "Box Width"),
+    (MaxWidth, Unit, "Box Max Width"),
+    (Height, Unit, "Box Height"),
+    (MaxHeight, Unit, "Box Max Height"),
     (Padding, Unit, "Box Padding"),
     (Margin, Unit, "Box Margin"),
 

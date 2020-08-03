@@ -5,7 +5,7 @@ use crate::{
 use elvis_core_support::Setter;
 
 /// Border Style
-#[derive(Default, Clone, Setter, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(Clone, Setter, Eq, PartialEq, Ord, PartialOrd)]
 pub struct Border {
     top_color: Color,
     top_style: BorderStyle,
@@ -27,6 +27,33 @@ pub struct Border {
     top_right_radius: Unit,
     bottom_right_radius: Unit,
     bottom_left_radius: Unit,
+}
+
+impl Default for Border {
+    fn default() -> Border {
+        Border {
+            top_color: Color::Black,
+            top_style: BorderStyle::default(),
+            top_width: Unit::Px(1.0),
+
+            right_color: Color::Black,
+            right_style: BorderStyle::default(),
+            right_width: Unit::Px(1.0),
+
+            bottom_color: Color::Black,
+            bottom_style: BorderStyle::default(),
+            bottom_width: Unit::Px(1.0),
+
+            left_color: Color::Black,
+            left_style: BorderStyle::default(),
+            left_width: Unit::Px(1.0),
+
+            top_left_radius: Unit::Percent(1.0),
+            top_right_radius: Unit::Percent(1.0),
+            bottom_right_radius: Unit::Percent(1.0),
+            bottom_left_radius: Unit::Percent(1.0),
+        }
+    }
 }
 
 impl Border {

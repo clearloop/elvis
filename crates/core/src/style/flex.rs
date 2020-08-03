@@ -33,7 +33,7 @@ impl Default for FlexStyle {
             align: Alignment::Center,
             basis: FlexBasis::Inherit,
             direction: FlexDirection::Row,
-            grow: Unit::None(1.0),
+            grow: Unit::None(0.0),
             order: Unit::None(0.0),
             wrap: FlexWrap::Wrap,
         }

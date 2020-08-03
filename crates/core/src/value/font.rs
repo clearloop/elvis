@@ -44,7 +44,7 @@ pub enum FontFamily {
 impl ToString for FontFamily {
     fn to_string(&self) -> String {
         match self {
-            FontFamily::Mix(a, b) => format!("\"{} {}\"", a.to_string(), b.to_string()),
+            FontFamily::Mix(a, b) => format!("\"{} {}\",", a.to_string(), b.to_string()),
             FontFamily::Helvetica => "Helvetica".to_string(),
             FontFamily::Neue => "Neue".to_string(),
             FontFamily::Arial => "Arial".to_string(),

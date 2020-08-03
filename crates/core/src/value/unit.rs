@@ -105,7 +105,7 @@ impl PartialOrd for Unit {
 
 impl Default for Unit {
     fn default() -> Unit {
-        Unit::Em(1.0)
+        Unit::Auto
     }
 }
 
