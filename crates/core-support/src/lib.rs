@@ -7,7 +7,7 @@ mod enum_style;
 mod setter;
 
 /// Basic elvis attr macro
-#[proc_macro_derive(Setter)]
+#[proc_macro_derive(Setter, attributes(skip))]
 pub fn setter(input: TokenStream) -> TokenStream {
     setter::parse(input)
 }

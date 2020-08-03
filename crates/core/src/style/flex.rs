@@ -18,8 +18,10 @@ pub struct FlexStyle {
     /// Flex direction
     pub direction: FlexDirection,
     /// Flex grow
+    #[skip]
     pub grow: Unit,
     /// Flex order
+    #[skip]
     pub order: Unit,
     /// Flex wrap
     pub wrap: FlexWrap,
@@ -35,6 +37,20 @@ impl Default for FlexStyle {
             order: Unit::None(0.0),
             wrap: FlexWrap::Wrap,
         }
+    }
+}
+
+impl FlexStyle {
+    /// Set FlexGrow
+    pub fn grow(mut self, grow: i64) -> FlexStyle {
+        self.grow = Unit::None(grow as f64);
+        self
+    }
+
+    /// Set FlexOrder
+    pub fn order(mut self, order: i64) -> FlexStyle {
+        self.order = Unit::None(order as f64);
+        self
     }
 }
 
