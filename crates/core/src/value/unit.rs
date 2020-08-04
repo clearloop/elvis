@@ -105,7 +105,7 @@ impl PartialOrd for Unit {
 
 impl Default for Unit {
     fn default() -> Unit {
-        Unit::Em(1.0)
+        Unit::Auto
     }
 }
 
@@ -124,7 +124,7 @@ impl FromStr for Unit {
             .unwrap_or_else(|_| t[u..].trim().parse().unwrap_or(1.0));
 
         Ok(match t[u..].trim().to_ascii_lowercase().as_str() {
-            "inherit" => Unit::Auto,
+            "auto" | "inherit" => Unit::Auto,
             "ch" => Unit::Ch(v),
             "cm" => Unit::Cm(v),
             "dpcm" => Unit::Dpcm(v),
@@ -152,7 +152,7 @@ impl FromStr for Unit {
 impl ToString for Unit {
     fn to_string(&self) -> String {
         match self {
-            Unit::Auto => "inherit".into(),
+            Unit::Auto => "auto".into(),
             Unit::Ch(n) => format!("{:.1}ch", n),
             Unit::Cm(n) => format!("{:.1}cm", n),
             Unit::Dpcm(n) => format!("{:.1}dpcm", n),
@@ -174,5 +174,25 @@ impl ToString for Unit {
             Unit::Percent(n) => format!("{:.1}%", n),
             Unit::None(n) => format!("{:.0}", n),
         }
+    }
+}
+
+/// Vec Unit
+#[derive(Clone, Default, Eq, PartialEq, Ord, PartialOrd)]
+pub struct VecUnit(pub Vec<Unit>);
+
+impl ToString for VecUnit {
+    fn to_string(&self) -> String {
+        self.0
+            .iter()
+            .map(|u| u.to_string())
+            .collect::<Vec<String>>()
+            .join(" ")
+    }
+}
+
+impl From<Vec<Unit>> for VecUnit {
+    fn from(vu: Vec<Unit>) -> VecUnit {
+        VecUnit(vu)
     }
 }

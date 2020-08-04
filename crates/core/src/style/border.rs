@@ -5,27 +5,55 @@ use crate::{
 use elvis_core_support::Setter;
 
 /// Border Style
-#[derive(Default, Clone, Setter)]
+#[derive(Clone, Setter, Eq, PartialEq, Ord, PartialOrd)]
 pub struct Border {
     top_color: Color,
-    top_radius: Unit,
     top_style: BorderStyle,
     top_width: Unit,
 
     right_color: Color,
-    right_radius: Unit,
     right_style: BorderStyle,
     right_width: Unit,
 
     bottom_color: Color,
-    bottom_radius: Unit,
     bottom_style: BorderStyle,
     bottom_width: Unit,
 
     left_color: Color,
-    left_radius: Unit,
     left_style: BorderStyle,
     left_width: Unit,
+
+    top_left_radius: Unit,
+    top_right_radius: Unit,
+    bottom_right_radius: Unit,
+    bottom_left_radius: Unit,
+}
+
+impl Default for Border {
+    fn default() -> Border {
+        Border {
+            top_color: Color::Black,
+            top_style: BorderStyle::default(),
+            top_width: Unit::Px(1.0),
+
+            right_color: Color::Black,
+            right_style: BorderStyle::default(),
+            right_width: Unit::Px(1.0),
+
+            bottom_color: Color::Black,
+            bottom_style: BorderStyle::default(),
+            bottom_width: Unit::Px(1.0),
+
+            left_color: Color::Black,
+            left_style: BorderStyle::default(),
+            left_width: Unit::Px(1.0),
+
+            top_left_radius: Unit::Percent(1.0),
+            top_right_radius: Unit::Percent(1.0),
+            bottom_right_radius: Unit::Percent(1.0),
+            bottom_left_radius: Unit::Percent(1.0),
+        }
+    }
 }
 
 impl Border {
@@ -40,10 +68,10 @@ impl Border {
 
     /// Set radius for all borders
     pub fn radius(mut self, radius: Unit) -> Self {
-        self.top_radius = radius;
-        self.right_radius = radius;
-        self.bottom_radius = radius;
-        self.left_radius = radius;
+        self.top_left_radius = radius;
+        self.top_right_radius = radius;
+        self.bottom_right_radius = radius;
+        self.bottom_left_radius = radius;
         self
     }
 
@@ -69,22 +97,22 @@ impl Border {
 impl Into<Vec<Style>> for Border {
     fn into(self) -> Vec<Style> {
         vec![
-            Style::BorderTopRadius(self.top_radius),
             Style::BorderTopWidth(self.top_width),
             Style::BorderTopStyle(self.top_style),
             Style::BorderTopColor(self.top_color),
-            Style::BorderRightRadius(self.right_radius),
             Style::BorderRightWidth(self.right_width),
             Style::BorderRightStyle(self.right_style),
             Style::BorderRightColor(self.right_color),
-            Style::BorderBottomRadius(self.bottom_radius),
             Style::BorderBottomWidth(self.bottom_width),
             Style::BorderBottomStyle(self.bottom_style),
             Style::BorderBottomColor(self.bottom_color),
-            Style::BorderLeftRadius(self.left_radius),
             Style::BorderLeftWidth(self.left_width),
             Style::BorderLeftStyle(self.left_style),
             Style::BorderLeftColor(self.left_color),
+            Style::BorderTopLeftRadius(self.top_left_radius),
+            Style::BorderTopRightRadius(self.top_right_radius),
+            Style::BorderBottomRightRadius(self.bottom_right_radius),
+            Style::BorderBottomLeftRadius(self.bottom_right_radius),
         ]
     }
 }

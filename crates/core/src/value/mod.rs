@@ -12,15 +12,15 @@ mod unit;
 /// Elvis layout values
 pub mod layouts {
     pub use super::column::MultiColumnLineStyle;
-    pub use super::flex::{Alignment, FlexBasis, FlexDirection, FlexPosition};
+    pub use super::flex::{Alignment, FlexBasis, FlexDirection, FlexPosition, FlexWrap};
     pub use super::grid::{GridAuto, GridFlow, GridTemplate};
-    pub use super::r#box::BoxShadow;
 }
 
 pub use {
     border::BorderStyle,
     color::Color,
     font::{FontFamily, FontStyle},
+    r#box::BoxShadow,
     typo::TextAlign,
-    unit::Unit,
+    unit::{Unit, VecUnit},
 };

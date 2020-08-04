@@ -44,6 +44,12 @@ impl fmt::Debug for Node {
 }
 
 impl Node {
+    /// Set attribute
+    pub fn attr(mut self, attr: Attribute) -> Node {
+        self.attr = attr;
+        self
+    }
+
     /// Set Children
     pub fn children(mut self, children: Vec<Node>) -> Node {
         self.children = children
@@ -135,10 +141,10 @@ impl Node {
         path
     }
 
-    /// Generate a `Rc<RefCell<Node>>`
-    pub fn new() -> Rc<RefCell<Node>> {
-        Rc::new(RefCell::new(Node::default()))
-    }
+    // /// Generate a `Rc<RefCell<Node>>`
+    // pub fn new() -> Rc<RefCell<Node>> {
+    //     Rc::new(RefCell::new(Node::default()))
+    // }
 
     /// Add second tree to the first one.
     pub fn push(r: Rc<RefCell<Node>>, c: Rc<RefCell<Node>>) {

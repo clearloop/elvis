@@ -9,3 +9,5 @@ macro_rules! doc_comment {
         $($tt)*
     };
 }
+
+pub use elvis_core_support::Setter;

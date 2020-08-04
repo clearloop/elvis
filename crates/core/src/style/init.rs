@@ -1,9 +1,9 @@
 use crate::value::{
     layouts::{
-        FlexBasis, FlexDirection, FlexPosition, GridAuto, GridFlow, GridTemplate,
+        FlexBasis, FlexDirection, FlexPosition, FlexWrap, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    BorderStyle, Color, FontFamily, FontStyle, TextAlign, Unit,
+    BorderStyle, BoxShadow, Color, FontFamily, FontStyle, TextAlign, Unit, VecUnit,
 };
 
 fn camel_snake(camel: &str) -> String {
@@ -70,31 +70,36 @@ macro_rules! construct_style {
 
 construct_style! {[
     // Box
-    (Height, Unit, "Box Height"),
     (Width, Unit, "Box Width"),
-    (Padding, Unit, "Box Padding"),
-    (Margin, Unit, "Box Margin"),
+    (Height, Unit, "Box Height"),
+    (MaxWidth, Unit, "Box Max Width"),
+    (MaxHeight, Unit, "Box Max Height"),
+    (OutlineWidth, Unit, "Box Outline Width"),
+    (Padding, VecUnit, "Box Padding"),
+    (Margin, VecUnit, "Box Margin"),
+
 
     // Border
-    (BorderTopRadius, Unit, "Border Top Color"),
     (BorderTopWidth, Unit, "Border Top Color"),
     (BorderTopStyle, BorderStyle, "Border Top Color"),
     (BorderTopColor, Color, "Border Top Color"),
 
-    (BorderRightRadius, Unit, "Border Right Color"),
     (BorderRightWidth, Unit, "Border Right Color"),
     (BorderRightStyle, BorderStyle, "Border Right Color"),
     (BorderRightColor, Color, "Border Right Color"),
 
-    (BorderBottomRadius, Unit, "Border Bottom Color"),
     (BorderBottomWidth, Unit, "Border Bottom Color"),
     (BorderBottomStyle, BorderStyle, "Border Bottom Color"),
     (BorderBottomColor, Color, "Border Bottom Color"),
 
-    (BorderLeftRadius, Unit, "Border Left Color"),
     (BorderLeftWidth, Unit, "Border Left Color"),
     (BorderLeftStyle, BorderStyle, "Border Left Color"),
     (BorderLeftColor, Color, "Border Left Color"),
+
+    (BorderTopLeftRadius, Unit, "Border Top Left Radius"),
+    (BorderTopRightRadius, Unit, "Border Top Right Radius"),
+    (BorderBottomRightRadius, Unit, "Border Bottom Right Radius"),
+    (BorderBottomLeftRadius, Unit, "Border Bottom Left Radius"),
 
     // Typo
     (FontWeight, Unit, "Font Weight Style"),
@@ -110,8 +115,7 @@ construct_style! {[
     (AlignItems, FlexPosition, "AlignItem Style"),
     (JustifyContent, FlexPosition, "AlignItem Style"),
     (FlexGrow, Unit, "FlexGrow Style"),
-    (FlexOrder, Unit, "FlexOrder Style"),
-    (Wrap, bool, "Flex Wrap"),
+    (Order, Unit, "FlexOrder Style"),
 
     // Grid
     (GridAutoColumns, GridAuto, "GridAutoColumn Style"),
@@ -132,6 +136,7 @@ construct_style! {[
     (FlexBasis, "FlexBasis style"),
     (FlexDirection, "FlexDirection style"),
     (FlexPosition, "FlexPosition style"),
+    (FlexWrap, "Flex Wrap Style"),
     (BorderStyle, "Border Style"),
 
     // Grid
@@ -145,4 +150,7 @@ construct_style! {[
 
     // Typo
     (TextAlign, "Text Align"),
+
+    // Box
+    (BoxShadow, "Box Shadow"),
 ]}

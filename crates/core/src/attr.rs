@@ -1,5 +1,7 @@
+use elvis_core_support::Setter;
+
 /// Node Attributes
-#[derive(Clone, Default, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Default, PartialEq, PartialOrd, Eq, Ord, Setter)]
 pub struct Attribute {
     /// Node Id
     pub id: String,
@@ -9,4 +11,6 @@ pub struct Attribute {
     pub src: String,
     /// Text
     pub text: String,
+    /// Type
+    pub r#type: String,
 }

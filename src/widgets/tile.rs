@@ -1,6 +1,7 @@
-use elvis_core::{Class, Node};
+use elvis_core::{derive::Setter, value::Unit, Class, Node, Style};
 
 /// Tile component, usually used in in list
+#[derive(Default, Setter)]
 pub struct ListTile {
     leading: Node,
     text: Node,
@@ -11,9 +12,12 @@ impl Into<Node> for ListTile {
     fn into(self) -> Node {
         Node::default()
             .children(vec![
-                Node::default().children(vec![self.leading, self.text]),
+                Node::default()
+                    .children(vec![self.leading, self.text])
+                    .style(vec![Style::Width(Unit::Percent(100.0))]),
                 self.trailing,
             ])
             .class(vec![Class::Flex, Class::Row])
+            .style(vec![Style::Width(Unit::Percent(100.0))])
     }
 }

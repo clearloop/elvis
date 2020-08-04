@@ -3,7 +3,6 @@
 mod attr;
 mod class;
 mod closure;
-mod derive;
 mod driver;
 mod err;
 mod gesture;
@@ -13,6 +12,7 @@ mod router;
 mod state;
 
 // Export module
+pub mod derive;
 pub mod style;
 pub mod value;
 

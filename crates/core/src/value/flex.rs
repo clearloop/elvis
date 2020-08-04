@@ -78,6 +78,10 @@ impl ToString for Alignment {
 /// `flex-basis` property
 #[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
 pub enum FlexBasis {
+    /// Auto
+    Auto,
+    /// Fill the flex box
+    Inherit,
     /// Fill the flex box
     Fill,
     /// Sizing max content
@@ -92,22 +96,21 @@ pub enum FlexBasis {
 
 impl Default for FlexBasis {
     fn default() -> FlexBasis {
-        FlexBasis::Fill
+        FlexBasis::Inherit
     }
 }
 
 impl ToString for FlexBasis {
     fn to_string(&self) -> String {
-        format!(
-            "flex-basis: {};",
-            match self {
-                FlexBasis::Fill => "fill".into(),
-                FlexBasis::FitContent => "fit-content".into(),
-                FlexBasis::MaxContent => "max-content".into(),
-                FlexBasis::MinContent => "min-content".into(),
-                FlexBasis::Number(u) => u.to_string(),
-            }
-        )
+        match self {
+            FlexBasis::Auto => "auto".into(),
+            FlexBasis::Inherit => "inherit".into(),
+            FlexBasis::Fill => "fill".into(),
+            FlexBasis::FitContent => "fit-content".into(),
+            FlexBasis::MaxContent => "max-content".into(),
+            FlexBasis::MinContent => "min-content".into(),
+            FlexBasis::Number(u) => u.to_string(),
+        }
     }
 }
 
@@ -126,20 +129,46 @@ pub enum FlexDirection {
 
 impl Default for FlexDirection {
     fn default() -> FlexDirection {
-        FlexDirection::Column
+        FlexDirection::Row
     }
 }
 
 impl ToString for FlexDirection {
     fn to_string(&self) -> String {
-        format!(
-            "flex-direction: {};",
-            match self {
-                FlexDirection::Column => "column",
-                FlexDirection::ColumnReverse => "column-reverse",
-                FlexDirection::Row => "row",
-                FlexDirection::RowReverse => "row-reverse",
-            }
-        )
+        match self {
+            FlexDirection::Column => "column",
+            FlexDirection::ColumnReverse => "column-reverse",
+            FlexDirection::Row => "row",
+            FlexDirection::RowReverse => "row-reverse",
+        }
+        .to_string()
+    }
+}
+
+/// `flex-direction` property
+#[derive(Clone, Copy, Eq, Ord, PartialEq, PartialOrd)]
+pub enum FlexWrap {
+    /// Flex Wrap
+    Wrap,
+    /// Flex No Wrap
+    NoWrap,
+    /// Flex Wrap Reverse
+    WrapReverse,
+}
+
+impl Default for FlexWrap {
+    fn default() -> FlexWrap {
+        FlexWrap::Wrap
+    }
+}
+
+impl ToString for FlexWrap {
+    fn to_string(&self) -> String {
+        match self {
+            FlexWrap::Wrap => "wrap",
+            FlexWrap::NoWrap => "no-wrap",
+            FlexWrap::WrapReverse => "wrap-reverse",
+        }
+        .to_string()
     }
 }
