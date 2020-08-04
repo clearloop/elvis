@@ -50,27 +50,3 @@ impl Into<Vec<Style>> for ContainerStyle {
         styles
     }
 }
-
-/// `SizedBox` style
-#[derive(Clone, Default, Setter)]
-pub struct SizedBoxStyle {
-    /// SizedBox height
-    pub height: Unit,
-    /// SizedBox width
-    pub width: Unit,
-    /// SizedBox Max Height
-    pub max_height: Unit,
-    /// SizedBox Max Width
-    pub max_width: Unit,
-}
-
-impl Into<Vec<Style>> for SizedBoxStyle {
-    fn into(self) -> Vec<Style> {
-        vec![
-            Style::Height(self.height),
-            Style::Width(self.width),
-            Style::MaxHeight(self.max_height),
-            Style::MaxWidth(self.max_width),
-        ]
-    }
-}

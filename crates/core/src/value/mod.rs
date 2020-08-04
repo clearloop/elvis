@@ -20,7 +20,7 @@ pub use {
     border::BorderStyle,
     color::Color,
     font::{FontFamily, FontStyle},
-    r#box::BoxShadow,
+    r#box::{BoxShadow, Position},
     typo::TextAlign,
     unit::{Unit, VecUnit},
 };

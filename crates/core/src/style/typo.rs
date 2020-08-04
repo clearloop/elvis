@@ -66,14 +66,3 @@ impl Into<Vec<Style>> for TextStyle {
         ]
     }
 }
-
-/// Image source
-#[derive(Default)]
-pub struct ImageSrc(pub String);
-
-impl ImageSrc {
-    /// Serialize source value as bytes
-    pub fn as_bytes(&self) -> &[u8] {
-        self.0.as_bytes()
-    }
-}
