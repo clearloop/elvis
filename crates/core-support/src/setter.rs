@@ -39,8 +39,8 @@ pub fn parse(input: TokenStream) -> TokenStream {
 
             #(
                 #[doc = #field_doc]
-                pub fn #field_name(mut self, v: #field_type) -> Self {
-                    self.#field_name = v;
+                pub fn #field_name(mut self, v: impl Into<#field_type>) -> Self {
+                    self.#field_name = v.into();
                     self
                 }
             )*

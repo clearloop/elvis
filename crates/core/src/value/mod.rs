@@ -22,5 +22,5 @@ pub use {
     font::{FontFamily, FontStyle},
     r#box::BoxShadow,
     typo::TextAlign,
-    unit::Unit,
+    unit::{Unit, VecUnit},
 };

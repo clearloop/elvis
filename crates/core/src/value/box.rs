@@ -10,10 +10,16 @@ pub enum BoxShadow {
     Inherit,
     /// Initial Style
     Initial,
+    /// Inset Style
+    Inset,
     /// Unset Style
     Unset,
+    /// Unit
+    Unit(Unit),
+    /// Color
+    Color(Color),
     /// offset-x | offset-y | blur-radius | spread-radius | color
-    Customize(Unit, Unit, Unit, Unit, Color),
+    Customize(Vec<BoxShadow>),
     /// Derive BoxShadows
     Derive(Vec<BoxShadow>),
 }
@@ -40,17 +46,17 @@ impl ToString for BoxShadow {
     fn to_string(&self) -> String {
         match self {
             BoxShadow::None => "none".to_string(),
+            BoxShadow::Inset => "inset".to_string(),
             BoxShadow::Inherit => "inherit".to_string(),
             BoxShadow::Initial => "initial".to_string(),
             BoxShadow::Unset => "unset".to_string(),
-            BoxShadow::Customize(x, y, blur, spread, color) => format!(
-                "{} {} {} {} {}",
-                x.to_string(),
-                y.to_string(),
-                blur.to_string(),
-                spread.to_string(),
-                color.to_string()
-            ),
+            BoxShadow::Unit(v) => v.to_string(),
+            BoxShadow::Color(v) => v.to_string(),
+            BoxShadow::Customize(v) => v
+                .iter()
+                .map(|s| s.to_string())
+                .collect::<Vec<String>>()
+                .join(" "),
             BoxShadow::Derive(v) => v
                 .iter()
                 .map(|bs| bs.to_string())

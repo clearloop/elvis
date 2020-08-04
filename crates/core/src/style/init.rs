@@ -3,7 +3,7 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, FlexWrap, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    BorderStyle, Color, FontFamily, FontStyle, TextAlign, Unit,
+    BorderStyle, BoxShadow, Color, FontFamily, FontStyle, TextAlign, Unit, VecUnit,
 };
 
 fn camel_snake(camel: &str) -> String {
@@ -71,11 +71,13 @@ macro_rules! construct_style {
 construct_style! {[
     // Box
     (Width, Unit, "Box Width"),
-    (MaxWidth, Unit, "Box Max Width"),
     (Height, Unit, "Box Height"),
+    (MaxWidth, Unit, "Box Max Width"),
     (MaxHeight, Unit, "Box Max Height"),
-    (Padding, Unit, "Box Padding"),
-    (Margin, Unit, "Box Margin"),
+    (OutlineWidth, Unit, "Box Outline Width"),
+    (Padding, VecUnit, "Box Padding"),
+    (Margin, VecUnit, "Box Margin"),
+
 
     // Border
     (BorderTopWidth, Unit, "Border Top Color"),
@@ -148,4 +150,7 @@ construct_style! {[
 
     // Typo
     (TextAlign, "Text Align"),
+
+    // Box
+    (BoxShadow, "Box Shadow"),
 ]}

@@ -21,7 +21,16 @@ impl Into<Node> for Align {
 #[derive(Default, Setter)]
 pub struct Center {
     /// Center child
+    #[skip]
     pub child: Node,
+}
+
+impl Center {
+    /// Set Child
+    pub fn child(mut self, n: impl Into<Node>) -> Self {
+        self.child = n.into();
+        self
+    }
 }
 
 impl Into<Node> for Center {

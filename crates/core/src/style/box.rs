@@ -2,7 +2,7 @@
 use crate::{
     style::Border,
     style::Style,
-    value::{layouts::Alignment, BoxShadow, Color, Unit},
+    value::{layouts::Alignment, BoxShadow, Color, Unit, VecUnit},
 };
 use elvis_core_support::Setter;
 
@@ -20,9 +20,9 @@ pub struct ContainerStyle {
     /// Container width
     pub width: Unit,
     /// Container padding
-    pub padding: Unit,
+    pub padding: VecUnit,
     /// Container margin
-    pub margin: Unit,
+    pub margin: VecUnit,
     /// Container background
     pub background_color: Color,
     /// Container Border
@@ -44,6 +44,7 @@ impl Into<Vec<Style>> for ContainerStyle {
             Style::Padding(self.padding),
             Style::Margin(self.margin),
             Style::BackgroundColor(self.background_color),
+            Style::BoxShadow(self.shadow),
         ];
         styles.append(&mut self.border.into());
         styles

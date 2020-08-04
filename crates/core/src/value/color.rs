@@ -297,7 +297,7 @@ impl PartialOrd for Color {
 /// Pink is the Pig
 impl Default for Color {
     fn default() -> Color {
-        Color::Black
+        Color::White
     }
 }
 

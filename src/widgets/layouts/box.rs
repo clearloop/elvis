@@ -10,9 +10,18 @@ use elvis_support::IntoNode;
 #[derive(Default, IntoNode, Setter)]
 pub struct Container {
     /// Container child
+    #[skip]
     pub child: Node,
     /// Container style
     pub style: ContainerStyle,
+}
+
+impl Container {
+    /// Set Child
+    pub fn child(mut self, c: impl Into<Node>) -> Self {
+        self.child = c.into();
+        self
+    }
 }
 
 /// `SizedBox` just has width and height two arguments, we use this component to take some white space usually.
