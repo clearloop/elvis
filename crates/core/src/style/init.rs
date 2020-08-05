@@ -3,7 +3,8 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, FlexWrap, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    BorderStyle, BoxShadow, Color, FontFamily, FontStyle, TextAlign, Unit, VecUnit,
+    BorderRadius, BorderStyle, BoxBorder, BoxShadow, Color, FontFamily, FontStyle, Position,
+    TextAlign, Unit, VecUnit,
 };
 
 fn camel_snake(camel: &str) -> String {
@@ -77,29 +78,17 @@ construct_style! {[
     (OutlineWidth, Unit, "Box Outline Width"),
     (Padding, VecUnit, "Box Padding"),
     (Margin, VecUnit, "Box Margin"),
-
+    (Top, Unit, "Box Top"),
+    (Right, Unit, "Box Right"),
+    (Bottom, Unit, "Box Bottom"),
+    (Left, Unit, "Box Left"),
 
     // Border
-    (BorderTopWidth, Unit, "Border Top Color"),
-    (BorderTopStyle, BorderStyle, "Border Top Color"),
-    (BorderTopColor, Color, "Border Top Color"),
-
-    (BorderRightWidth, Unit, "Border Right Color"),
-    (BorderRightStyle, BorderStyle, "Border Right Color"),
-    (BorderRightColor, Color, "Border Right Color"),
-
-    (BorderBottomWidth, Unit, "Border Bottom Color"),
-    (BorderBottomStyle, BorderStyle, "Border Bottom Color"),
-    (BorderBottomColor, Color, "Border Bottom Color"),
-
-    (BorderLeftWidth, Unit, "Border Left Color"),
-    (BorderLeftStyle, BorderStyle, "Border Left Color"),
-    (BorderLeftColor, Color, "Border Left Color"),
-
-    (BorderTopLeftRadius, Unit, "Border Top Left Radius"),
-    (BorderTopRightRadius, Unit, "Border Top Right Radius"),
-    (BorderBottomRightRadius, Unit, "Border Bottom Right Radius"),
-    (BorderBottomLeftRadius, Unit, "Border Bottom Left Radius"),
+    (BorderTop, BoxBorder, "Border Top"),
+    (BorderRight, BoxBorder, "Border Right"),
+    (BorderBottom, BoxBorder, "Border Bottom"),
+    (BorderLeft, BoxBorder, "Border Left"),
+    (Border, BoxBorder, "Border Border"),
 
     // Typo
     (FontWeight, Unit, "Font Weight Style"),
@@ -153,4 +142,8 @@ construct_style! {[
 
     // Box
     (BoxShadow, "Box Shadow"),
+    (Position, "Box Position"),
+
+    // border radius
+    (BorderRadius, "Border Radius"),
 ]}

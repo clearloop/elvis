@@ -9,11 +9,6 @@ mod init;
 mod typo;
 
 pub use self::{
-    border::Border,
-    column::MultiColumnStyle,
-    flex::FlexStyle,
-    grid::GridStyle,
-    init::Style,
-    r#box::{ContainerStyle, SizedBoxStyle},
-    typo::{ImageSrc, TextStyle},
+    border::Border, column::MultiColumnStyle, flex::FlexStyle, grid::GridStyle, init::Style,
+    r#box::ContainerStyle, typo::TextStyle,
 };

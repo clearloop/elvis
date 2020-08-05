@@ -79,7 +79,7 @@ pub enum Unit {
     Vw(f64),
     /// v%
     Percent(f64),
-    /// none
+    /// no unit
     None(f64),
 }
 

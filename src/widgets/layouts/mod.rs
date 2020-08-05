@@ -9,4 +9,4 @@ pub use column::MultiColumn;
 pub use flex::{Align, Center, Col, Flex, Row};
 pub use grid::Grid;
 pub use list::List;
-pub use r#box::{Container, SizedBox};
+pub use r#box::{Container, Positioned, SizedBox};

@@ -1,6 +1,6 @@
 use crate::{
     style::Style,
-    value::{BorderStyle, Color, Unit},
+    value::{BorderRadius, BorderStyle, BoxBorder, Color, Unit},
 };
 use elvis_core_support::Setter;
 
@@ -27,6 +27,11 @@ pub struct Border {
     top_right_radius: Unit,
     bottom_right_radius: Unit,
     bottom_left_radius: Unit,
+
+    second_top_left_radius: Unit,
+    second_top_right_radius: Unit,
+    second_bottom_right_radius: Unit,
+    second_bottom_left_radius: Unit,
 }
 
 impl Default for Border {
@@ -48,10 +53,15 @@ impl Default for Border {
             left_style: BorderStyle::default(),
             left_width: Unit::Px(1.0),
 
-            top_left_radius: Unit::Percent(1.0),
-            top_right_radius: Unit::Percent(1.0),
-            bottom_right_radius: Unit::Percent(1.0),
-            bottom_left_radius: Unit::Percent(1.0),
+            top_left_radius: Unit::None(0.0),
+            top_right_radius: Unit::None(0.0),
+            bottom_right_radius: Unit::None(0.0),
+            bottom_left_radius: Unit::None(0.0),
+
+            second_top_left_radius: Unit::None(0.0),
+            second_top_right_radius: Unit::None(0.0),
+            second_bottom_right_radius: Unit::None(0.0),
+            second_bottom_left_radius: Unit::None(0.0),
         }
     }
 }
@@ -96,23 +106,52 @@ impl Border {
 
 impl Into<Vec<Style>> for Border {
     fn into(self) -> Vec<Style> {
-        vec![
-            Style::BorderTopWidth(self.top_width),
-            Style::BorderTopStyle(self.top_style),
-            Style::BorderTopColor(self.top_color),
-            Style::BorderRightWidth(self.right_width),
-            Style::BorderRightStyle(self.right_style),
-            Style::BorderRightColor(self.right_color),
-            Style::BorderBottomWidth(self.bottom_width),
-            Style::BorderBottomStyle(self.bottom_style),
-            Style::BorderBottomColor(self.bottom_color),
-            Style::BorderLeftWidth(self.left_width),
-            Style::BorderLeftStyle(self.left_style),
-            Style::BorderLeftColor(self.left_color),
-            Style::BorderTopLeftRadius(self.top_left_radius),
-            Style::BorderTopRightRadius(self.top_right_radius),
-            Style::BorderBottomRightRadius(self.bottom_right_radius),
-            Style::BorderBottomLeftRadius(self.bottom_right_radius),
-        ]
+        let top_border = BoxBorder {
+            width: self.top_width,
+            style: self.top_style,
+            color: self.top_color,
+        };
+        let right_border = BoxBorder {
+            width: self.right_width,
+            style: self.right_style,
+            color: self.right_color,
+        };
+        let bottom_border = BoxBorder {
+            width: self.bottom_width,
+            style: self.bottom_style,
+            color: self.bottom_color,
+        };
+        let left_border = BoxBorder {
+            width: self.left_width,
+            style: self.left_style,
+            color: self.left_color,
+        };
+
+        let mut styles = vec![Style::BorderRadius(BorderRadius {
+            top_left: self.top_left_radius,
+            top_right: self.top_right_radius,
+            bottom_right: self.bottom_right_radius,
+            bottom_left: self.bottom_left_radius,
+            second_top_left: self.second_top_left_radius,
+            second_top_right: self.second_top_right_radius,
+            second_bottom_right: self.second_bottom_left_radius,
+            second_bottom_left: self.second_bottom_right_radius,
+        })];
+
+        if top_border == right_border
+            && right_border == bottom_border
+            && bottom_border == left_border
+        {
+            styles.append(&mut vec![
+                Style::BorderTop(top_border),
+                Style::BorderRight(right_border),
+                Style::BorderBottom(bottom_border),
+                Style::BorderLeft(left_border),
+            ]);
+        } else {
+            styles.append(&mut vec![Style::Border(top_border)]);
+        }
+
+        styles
     }
 }

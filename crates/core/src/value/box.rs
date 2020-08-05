@@ -1,4 +1,5 @@
 use super::{Color, Unit};
+use elvis_core_support::EnumStyle;
 use std::cmp::Ordering;
 
 /// Box Shadow
@@ -63,5 +64,20 @@ impl ToString for BoxShadow {
                 .collect::<Vec<String>>()
                 .join(", "),
         }
+    }
+}
+
+/// Box Position
+#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, EnumStyle)]
+pub enum Position {
+    /// Absolute position
+    Absolute,
+    /// Relative position
+    Relative,
+}
+
+impl Default for Position {
+    fn default() -> Position {
+        Position::Relative
     }
 }
