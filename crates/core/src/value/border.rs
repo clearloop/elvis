@@ -110,11 +110,13 @@ impl ToString for BorderRadius {
             self.bottom_right.to_string(),
         );
 
-        if !(self.second_top_left == self.second_top_right
+        if self.second_top_left == self.second_top_right
             && self.second_bottom_right == self.second_bottom_left
             && self.second_top_left == self.second_bottom_right
-            && self.second_bottom_right == Unit::None(0.0))
+            && self.second_bottom_right == Unit::None(0.0)
         {
+            radius
+        } else {
             format!(
                 "{} / {} {} {} {}",
                 radius,
@@ -123,8 +125,6 @@ impl ToString for BorderRadius {
                 self.second_bottom_left.to_string(),
                 self.second_bottom_right.to_string(),
             )
-        } else {
-            radius
         }
     }
 }

@@ -106,37 +106,52 @@ impl Border {
 
 impl Into<Vec<Style>> for Border {
     fn into(self) -> Vec<Style> {
-        vec![
-            Style::BorderTop(BoxBorder {
-                width: self.top_width,
-                style: self.top_style,
-                color: self.top_color,
-            }),
-            Style::BorderRight(BoxBorder {
-                width: self.right_width,
-                style: self.right_style,
-                color: self.right_color,
-            }),
-            Style::BorderBottom(BoxBorder {
-                width: self.bottom_width,
-                style: self.bottom_style,
-                color: self.bottom_color,
-            }),
-            Style::BorderLeft(BoxBorder {
-                width: self.left_width,
-                style: self.left_style,
-                color: self.left_color,
-            }),
-            Style::BorderRadius(BorderRadius {
-                top_left: self.top_left_radius,
-                top_right: self.top_right_radius,
-                bottom_right: self.bottom_right_radius,
-                bottom_left: self.bottom_left_radius,
-                second_top_left: self.second_top_left_radius,
-                second_top_right: self.second_top_right_radius,
-                second_bottom_right: self.second_bottom_left_radius,
-                second_bottom_left: self.second_bottom_right_radius,
-            }),
-        ]
+        let top_border = BoxBorder {
+            width: self.top_width,
+            style: self.top_style,
+            color: self.top_color,
+        };
+        let right_border = BoxBorder {
+            width: self.right_width,
+            style: self.right_style,
+            color: self.right_color,
+        };
+        let bottom_border = BoxBorder {
+            width: self.bottom_width,
+            style: self.bottom_style,
+            color: self.bottom_color,
+        };
+        let left_border = BoxBorder {
+            width: self.left_width,
+            style: self.left_style,
+            color: self.left_color,
+        };
+
+        let mut styles = vec![Style::BorderRadius(BorderRadius {
+            top_left: self.top_left_radius,
+            top_right: self.top_right_radius,
+            bottom_right: self.bottom_right_radius,
+            bottom_left: self.bottom_left_radius,
+            second_top_left: self.second_top_left_radius,
+            second_top_right: self.second_top_right_radius,
+            second_bottom_right: self.second_bottom_left_radius,
+            second_bottom_left: self.second_bottom_right_radius,
+        })];
+
+        if top_border == right_border
+            && right_border == bottom_border
+            && bottom_border == left_border
+        {
+            styles.append(&mut vec![
+                Style::BorderTop(top_border),
+                Style::BorderRight(right_border),
+                Style::BorderBottom(bottom_border),
+                Style::BorderLeft(left_border),
+            ]);
+        } else {
+            styles.append(&mut vec![Style::Border(top_border)]);
+        }
+
+        styles
     }
 }

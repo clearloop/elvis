@@ -83,12 +83,12 @@ construct_style! {[
     (Bottom, Unit, "Box Bottom"),
     (Left, Unit, "Box Left"),
 
-
     // Border
     (BorderTop, BoxBorder, "Border Top"),
     (BorderRight, BoxBorder, "Border Right"),
     (BorderBottom, BoxBorder, "Border Bottom"),
     (BorderLeft, BoxBorder, "Border Left"),
+    (Border, BoxBorder, "Border Border"),
 
     // Typo
     (FontWeight, Unit, "Font Weight Style"),
