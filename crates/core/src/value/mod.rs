@@ -17,7 +17,7 @@ pub mod layouts {
 }
 
 pub use {
-    border::BorderStyle,
+    border::{BorderRadius, BorderStyle, BoxBorder},
     color::Color,
     font::{FontFamily, FontStyle},
     r#box::{BoxShadow, Position},
