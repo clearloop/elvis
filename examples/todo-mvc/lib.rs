@@ -67,8 +67,8 @@ fn todoapp(children: Vec<Node>) -> Positioned {
         .margin(vec![
             Unit::Px(130.0),
             Unit::Px(0.0),
-            Unit::Px(0.0),
             Unit::Px(40.0),
+            Unit::Px(0.0),
         ])
 }
 

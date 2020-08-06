@@ -42,7 +42,7 @@ impl Default for Positioned {
 
 impl Into<Node> for Positioned {
     fn into(self) -> Node {
-        Node::default().children(vec![self.child]).style(vec![
+        Into::<Node>::into(self.child).append_style(vec![
             Style::Position(self.pos),
             Style::Top(self.top),
             Style::Right(self.right),
