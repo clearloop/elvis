@@ -10,4 +10,4 @@ macro_rules! doc_comment {
     };
 }
 
-pub use elvis_core_support::Setter;
+pub use elvis_core_support::{Setter, Wrapper};

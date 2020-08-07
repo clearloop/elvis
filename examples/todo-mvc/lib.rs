@@ -19,6 +19,7 @@ fn header() -> Node {
                     .color(Color::ORGB(0.15, 175, 47, 47))
                     .size(Unit::Px(100.0))
                     .weight(Unit::None(100.0))
+                    .height(Unit::Em(1.4))
                     .family(FontFamily::Derive(vec![
                         FontFamily::Mix(
                             Box::new(FontFamily::Helvetica),
