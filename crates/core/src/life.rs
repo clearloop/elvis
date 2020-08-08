@@ -2,10 +2,7 @@
 use crate::Node;
 
 /// Life cycle trait
-pub trait LifeCycle<T>
-where
-    T: Into<Node>,
-{
+pub trait LifeCycle {
     /// Create widget
-    fn create(&self) -> T;
+    fn create(&self) -> Node;
 }

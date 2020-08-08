@@ -1,8 +1,7 @@
-use crate::widgets::StyleWrapper;
 use elvis_core::{
     derive::{Setter, Wrapper},
     style::ContainerStyle,
-    Class, Node,
+    Class, Node, StyleWrapper,
 };
 use elvis_support::IntoNode;
 

@@ -1,11 +1,11 @@
 use elvis_core::{
-    derive::Setter,
+    derive::{Setter, Wrapper},
     value::{Position, Unit, VecUnit},
-    Node, Style,
+    Node, Style, StyleWrapper,
 };
 
 /// Positioned Widget
-#[derive(Setter)]
+#[derive(Setter, Wrapper)]
 pub struct Positioned {
     /// box child
     pub child: Node,
@@ -42,15 +42,17 @@ impl Default for Positioned {
 
 impl Into<Node> for Positioned {
     fn into(self) -> Node {
-        Into::<Node>::into(self.child).append_style(vec![
-            Style::Position(self.pos),
-            Style::Top(self.top),
-            Style::Right(self.right),
-            Style::Bottom(self.bottom),
-            Style::Left(self.left),
-            Style::Width(Unit::Percent(100.0)),
-            Style::Margin(self.margin),
-            Style::Padding(self.padding),
-        ])
+        Node::default()
+            .children(vec![self.child])
+            .append_style(vec![
+                Style::Position(self.pos),
+                Style::Top(self.top),
+                Style::Right(self.right),
+                Style::Bottom(self.bottom),
+                Style::Left(self.left),
+                Style::Width(Unit::Percent(100.0)),
+                Style::Margin(self.margin),
+                Style::Padding(self.padding),
+            ])
     }
 }

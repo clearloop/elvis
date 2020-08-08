@@ -10,6 +10,7 @@ mod life;
 mod node;
 mod router;
 mod state;
+mod wrapper;
 
 // Export module
 pub mod derive;
@@ -28,4 +29,5 @@ pub use self::{
     router::Router,
     state::{State, StateKV},
     style::Style,
+    wrapper::StyleWrapper,
 };

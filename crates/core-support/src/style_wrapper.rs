@@ -10,7 +10,9 @@ pub fn parse(input: TokenStream) -> TokenStream {
     TokenStream::from(quote! {
         impl StyleWrapper for #ident {
             fn wrap(self) -> Node {
-                Into::<Node>::into(self.child).append_style(self.style)
+                let node = Into::<Node>::into(self);
+                let mut child = node.children[0].borrow().clone();
+                child.append_style(node.style)
             }
         }
     })

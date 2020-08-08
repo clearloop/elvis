@@ -1,6 +1,7 @@
 use elvis::{
     prelude::*,
     style::{ContainerStyle, TextStyle},
+    traits::StyleWrapper,
     value::{BoxShadow, Color, FontFamily, Position, TextAlign, Unit},
     widgets::{
         layouts::{Container, List, Positioned},
@@ -62,7 +63,7 @@ fn body() -> TextField {
         )
 }
 
-fn todoapp(children: Vec<Node>) -> Positioned {
+fn todoapp(children: Vec<Node>) -> Node {
     Positioned::new()
         .child(List::new().children(children))
         .margin(vec![
@@ -71,10 +72,11 @@ fn todoapp(children: Vec<Node>) -> Positioned {
             Unit::Px(40.0),
             Unit::Px(0.0),
         ])
+        .wrap()
 }
 
-impl LifeCycle<Positioned> for Index {
-    fn create(&self) -> Positioned {
+impl LifeCycle for Index {
+    fn create(&self) -> Node {
         todoapp(vec![
             header(),
             Container::new()
