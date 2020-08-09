@@ -4,6 +4,7 @@ extern crate proc_macro;
 
 use proc_macro::TokenStream;
 mod enum_style;
+mod helper;
 mod setter;
 mod style_wrapper;
 

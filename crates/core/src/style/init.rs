@@ -7,7 +7,7 @@ use crate::value::{
     TextAlign, Unit, VecUnit,
 };
 
-fn camel_snake(camel: &str) -> String {
+pub fn camel_snake(camel: &str) -> String {
     let mut res = "".to_string();
     camel.trim().chars().enumerate().for_each(|(n, c)| {
         if n > 0 && c.is_ascii_uppercase() {

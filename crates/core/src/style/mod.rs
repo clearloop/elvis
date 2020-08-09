@@ -1,4 +1,16 @@
 //! Evlis styles
+
+macro_rules! option_to_style {
+    ($styles:expr, $name:ident, $field:expr) => {{
+        if let Some(v) = $field {
+            $styles.push(Style::$name(v));
+        }
+    }};
+    ($styles:expr, [$(($name:ident, $field:expr),)*]) => {{
+        $(option_to_style!($styles, $name, $field);)*
+    }};
+}
+
 mod border;
 mod r#box;
 mod bridge;
