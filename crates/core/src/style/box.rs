@@ -44,15 +44,10 @@ impl Into<Vec<Style>> for ContainerStyle {
                 (Margin, self.margin),
                 (BackgroundColor, self.background_color),
                 (BoxShadow, self.shadow),
-            ]
-        }
-
-        if let Some(v) = self.align {
-            styles.append(&mut v.into());
-        }
-
-        if let Some(v) = self.border {
-            styles.append(&mut v.into());
+            ],[
+                self.align,
+                self.border,
+            ],
         }
 
         styles

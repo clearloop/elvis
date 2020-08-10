@@ -12,31 +12,35 @@ use elvis_core_support::Setter;
 #[derive(Default, Clone, Setter)]
 pub struct GridStyle {
     /// Grid column
-    pub col: GridAuto,
+    pub col: Option<GridAuto>,
     /// Grid column gap
-    pub col_gap: Unit,
+    pub col_gap: Option<Unit>,
     /// Grid flow
-    pub flow: GridFlow,
+    pub flow: Option<GridFlow>,
     /// Grid row
-    pub row: GridAuto,
+    pub row: Option<GridAuto>,
     /// Grid row gap
-    pub row_gap: Unit,
+    pub row_gap: Option<Unit>,
     /// Grid template_column
-    pub template_col: GridTemplate,
+    pub template_col: Option<GridTemplate>,
     /// Grid template_row
-    pub template_row: GridTemplate,
+    pub template_row: Option<GridTemplate>,
 }
 
 impl Into<Vec<Style>> for GridStyle {
     fn into(self) -> Vec<Style> {
-        vec![
-            Style::GridAutoColumns(self.col),
-            Style::GridAutoRows(self.row),
-            Style::GridAutoFlow(self.flow),
-            Style::GridColumnGap(self.col_gap),
-            Style::GridRowGap(self.row_gap),
-            Style::GridTemplateColumns(self.template_col),
-            Style::GridTemplateRows(self.template_row),
-        ]
+        let mut styles: Vec<Style> = vec![];
+        option_to_style! {
+            styles, [
+                (GridAutoColumns, self.col),
+                (GridAutoRows, self.row),
+                (GridAutoFlow, self.flow),
+                (GridColumnGap, self.col_gap),
+                (GridRowGap, self.row_gap),
+                (GridTemplateColumns, self.template_col),
+                (GridTemplateRows, self.template_row),
+            ],
+        }
+        styles
     }
 }
