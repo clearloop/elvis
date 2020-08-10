@@ -1,6 +1,3 @@
-+ Preparing to merge `elvis.js` and `elvis-web` into this one repo.
-+ Trying to Rewrite the web client of [rust.cc][rust.cc]...
-
 # Calling Elvis 🦀 🕸  🎸 📡 🚀 🪐 🛰
 
 ![Rust](https://github.com/clearloop/leetcode-cli/workflows/Rust/badge.svg)
@@ -48,21 +45,17 @@ $ cd my-awesome-app && epm dev
 //! src/lib.rs
 use elvis::{
     prelude::*,
-    layouts::Center,
-    widgets::{Text, TextStyle},
+    widgets::{layouts::Center, Text},
 };
 
-#[elvis(page)]
+#[page]
 struct Index;
 
-impl LifeCycle<Center> for Index {
-    fn new() -> Center {
-        Center {
-            child: Text {
-                text: "Pink is the Pig!!!".into(),
-                style: TextStyle::default(),
-            }.into()
-        }
+impl LifeCycle for Index {
+    fn create(&self) -> Node {
+        Center::new()
+            .child(Text::new().text("Pink is the Pig!!!"))
+            .into()
     }
 }
 ```
@@ -86,7 +79,7 @@ Heartbreak Hotel.
 [2]: https://github.com/elvisjs/calling-elvis
 [3]: https://docs.rs/elvis
 [rust.cc]: https://rustcc.cn
-[community]: https://elvisjs.github.io/the-elvis-book/community
+[community]: https://elvisjs.github.io/book/community
 [hello-world-example]: https://github.com/elvisjs/elvis/tree/master/examples/hello-world
 [click-example]: https://github.com/elvisjs/elvis/tree/master/examples/click
 [router-example]: https://github.com/elvisjs/elvis/tree/master/examples/router
