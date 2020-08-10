@@ -227,28 +227,17 @@ checksum = "134951f4028bdadb9b84baf4232681efbf277da25144b9b0ad65df75946c422b"
 name = "elvis"
 version = "0.2.6"
 dependencies = [
- "elvis-core 0.1.0",
- "elvis-derive 0.1.2",
+ "elvis-core",
+ "elvis-derive",
  "elvis-support",
- "elvis-web 0.1.6",
-]
-
-[[package]]
-name = "elvis"
-version = "0.2.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b886267525a17e28b0d8fdc40375581f14d36530b20a55f287113e1c0dd6aaf4"
-dependencies = [
- "elvis-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "elvis-derive 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "elvis-web 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "elvis-web",
 ]
 
 [[package]]
 name = "elvis-app"
 version = "0.1.0"
 dependencies = [
- "elvis 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "elvis",
 ]
 
 [[package]]
@@ -275,7 +264,7 @@ dependencies = [
 name = "elvis-click-example"
 version = "0.1.0"
 dependencies = [
- "elvis 0.2.6",
+ "elvis",
 ]
 
 [[package]]
@@ -284,12 +273,6 @@ version = "0.1.0"
 dependencies = [
  "elvis-core-support",
 ]
-
-[[package]]
-name = "elvis-core"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c4b6734140b17823641950455ae91872a137985ebe32cc28bca5826f5bdef98b"
 
 [[package]]
 name = "elvis-core-support"
@@ -310,21 +293,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "elvis-derive"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "839075047b0928203d7d5e972e32b1d68810ea3a99f6455d0f0e860b08eb6f96"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "elvis-router-example"
 version = "0.1.0"
 dependencies = [
- "elvis 0.2.6",
+ "elvis",
 ]
 
 [[package]]
@@ -339,28 +311,14 @@ dependencies = [
 name = "elvis-todo-mvc"
 version = "0.1.0"
 dependencies = [
- "elvis 0.2.6",
+ "elvis",
 ]
 
 [[package]]
 name = "elvis-web"
 version = "0.1.6"
 dependencies = [
- "elvis-core 0.1.0",
- "futures",
- "js-sys",
- "thread_local",
- "wasm-bindgen",
- "web-sys",
-]
-
-[[package]]
-name = "elvis-web"
-version = "0.1.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "61e71e448cdff487d58a7d48e536c44707a89835a9a581589aa4cb2ff5dbd10b"
-dependencies = [
- "elvis-core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "elvis-core",
  "futures",
  "js-sys",
  "thread_local",
