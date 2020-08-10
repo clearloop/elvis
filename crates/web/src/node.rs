@@ -28,14 +28,12 @@ pub fn to_element(node: &Rc<RefCell<Node>>, dom: &Document) -> Result<Element, J
         this.set_class_name(&class);
     }
 
-    if node.borrow().attr.tag == "plain" {
-        let p = dom.create_element("p")?;
-        p.set_inner_html(&node.borrow().attr.text);
-        return Ok(p);
-    }
-
     for child in node.borrow().children.iter() {
-        this.append_child(&to_element(child, dom)?.into())?;
+        if child.borrow().attr.tag == "plain" {
+            this.set_inner_html(&child.borrow().attr.text);
+        } else {
+            this.append_child(&to_element(child, dom)?.into())?;
+        }
     }
 
     Ok(this)

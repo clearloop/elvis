@@ -6,63 +6,51 @@ use crate::{
 use elvis_core_support::Setter;
 
 /// style of `Text`
-#[derive(Clone, Debug, Eq, PartialEq, Setter)]
+#[derive(Clone, Default, Debug, Eq, PartialEq, Setter)]
 pub struct TextStyle {
     /// Bold text
     pub bold: bool,
     /// The color of the text
-    pub color: Color,
+    pub color: Option<Color>,
     /// Italic text
     pub italic: bool,
     /// Text size
-    pub size: Unit,
+    pub size: Option<Unit>,
     /// Text weight
-    pub weight: Unit,
+    pub weight: Option<Unit>,
     /// Text height
-    pub height: Unit,
+    pub height: Option<Unit>,
     /// Text stretch
-    pub stretch: Unit,
+    pub stretch: Option<Unit>,
     /// Font Family
-    pub family: FontFamily,
+    pub family: Option<FontFamily>,
     /// Text Align
-    pub align: TextAlign,
-}
-
-impl Default for TextStyle {
-    fn default() -> TextStyle {
-        TextStyle {
-            bold: false,
-            color: Color::Black,
-            italic: false,
-            size: Unit::Rem(1.0),
-            weight: Unit::None(400.0),
-            height: Unit::Rem(1.0),
-            stretch: Unit::Percent(100.0),
-            family: FontFamily::Helvetica,
-            align: TextAlign::Center,
-        }
-    }
+    pub align: Option<TextAlign>,
 }
 
 impl Into<Vec<Style>> for TextStyle {
-    fn into(self) -> Vec<Style> {
-        vec![
-            Style::Color(self.color),
-            if self.bold {
-                Style::FontWeight(Unit::None(700.0))
-            } else {
-                Style::FontWeight(self.weight)
-            },
-            if self.italic {
-                Style::FontStyle(FontStyle::Italic)
-            } else {
-                Style::FontStyle(FontStyle::Normal)
-            },
-            Style::FontSize(self.size),
-            Style::FontStretch(self.stretch),
-            Style::LineHeight(self.height),
-            Style::FontFamily(self.family),
-            Style::TextAlign(self.align),
-        ]
+    fn into(mut self) -> Vec<Style> {
+        let mut styles: Vec<Style> = vec![];
+        if self.italic {
+            styles.push(Style::FontStyle(FontStyle::Normal));
+        }
+
+        if self.bold {
+            self.weight = Some(Unit::None(700.0));
+        }
+
+        option_to_style! {
+            styles, [
+                (Color, self.color),
+                (FontWeight, self.weight),
+                (FontSize, self.size),
+                (FontStretch, self.stretch),
+                (LineHeight, self.height),
+                (FontFamily, self.family),
+                (TextAlign, self.align),
+            ],
+        }
+
+        styles
     }
 }

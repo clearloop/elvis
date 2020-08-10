@@ -178,8 +178,14 @@ impl ToString for Unit {
 }
 
 /// Vec Unit
-#[derive(Clone, Default, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(Clone, Eq, PartialEq, Ord, PartialOrd)]
 pub struct VecUnit(pub Vec<Unit>);
+
+impl Default for VecUnit {
+    fn default() -> VecUnit {
+        VecUnit(vec![Unit::None(0.0)])
+    }
+}
 
 impl ToString for VecUnit {
     fn to_string(&self) -> String {

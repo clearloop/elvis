@@ -9,22 +9,27 @@ use elvis_core_support::Setter;
 #[derive(Clone, Copy, Default, Setter)]
 pub struct MultiColumnStyle {
     /// Column color
-    pub color: Color,
+    pub color: Option<Color>,
     /// Column counts
-    pub count: Unit,
+    pub count: Option<Unit>,
     /// Column gap
-    pub gap: Unit,
+    pub gap: Option<Unit>,
     /// Column line style
-    pub style: MultiColumnLineStyle,
+    pub style: Option<MultiColumnLineStyle>,
 }
 
 impl Into<Vec<Style>> for MultiColumnStyle {
     fn into(self) -> Vec<Style> {
-        vec![
-            Style::ColumnCount(self.count),
-            Style::ColumnGap(self.gap),
-            Style::ColumnRuleColor(self.color),
-            Style::ColumnRuleStyle(self.style),
-        ]
+        let mut styles: Vec<Style> = vec![];
+        option_to_style! {
+            styles, [
+                (ColumnCount, self.count),
+                (ColumnGap, self.gap),
+                (ColumnRuleColor, self.color),
+                (ColumnRuleStyle, self.style),
+            ],
+        }
+
+        styles
     }
 }

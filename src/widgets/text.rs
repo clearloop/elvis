@@ -1,10 +1,9 @@
-use crate::{
-    value::Unit,
-    widgets::{layouts::Container, ListTile},
-};
+use crate::widgets::{layouts::Container, ListTile};
 use elvis_core::{
     derive::Setter,
-    style::{Border, ContainerStyle, TextStyle},
+    option_to_style,
+    style::{Border, ContainerStyle},
+    value::{Color, FontFamily, FontStyle, TextAlign, Unit},
     Attribute, Node, Style,
 };
 
@@ -15,8 +14,24 @@ pub struct Text {
     /// Plain text
     #[skip]
     pub text: String,
-    /// Text style
-    pub style: TextStyle,
+    /// Bold text
+    pub bold: bool,
+    /// The color of the text
+    pub color: Option<Color>,
+    /// Italic text
+    pub italic: bool,
+    /// Text size
+    pub size: Option<Unit>,
+    /// Text weight
+    pub weight: Option<Unit>,
+    /// Text height
+    pub height: Option<Unit>,
+    /// Text stretch
+    pub stretch: Option<Unit>,
+    /// Font Family
+    pub family: Option<FontFamily>,
+    /// Text Align
+    pub align: Option<TextAlign>,
 }
 
 impl Text {
@@ -28,14 +43,33 @@ impl Text {
 }
 
 impl Into<Node> for Text {
-    fn into(self) -> Node {
+    fn into(mut self) -> Node {
         let mut child = Node::default();
         child.attr.tag = "plain".into();
         child.attr.text = self.text.to_string();
 
-        let mut node = Node::default()
-            .children(vec![child])
-            .style(self.style.clone());
+        let mut styles: Vec<Style> = vec![];
+        if self.italic {
+            styles.push(Style::FontStyle(FontStyle::Normal));
+        }
+
+        if self.bold {
+            self.weight = Some(Unit::None(700.0));
+        }
+
+        option_to_style! {
+            styles, [
+                (Color, self.color),
+                (FontWeight, self.weight),
+                (FontSize, self.size),
+                (FontStretch, self.stretch),
+                (LineHeight, self.height),
+                (FontFamily, self.family),
+                (TextAlign, self.align),
+            ],
+        }
+
+        let mut node = Node::default().children(vec![child]).style(styles);
 
         // Set Tag
         node.attr.tag = "p".into();

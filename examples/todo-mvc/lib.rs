@@ -1,6 +1,7 @@
 use elvis::{
     prelude::*,
-    style::{ContainerStyle, TextStyle},
+    style::ContainerStyle,
+    traits::StyleWrapper,
     value::{BoxShadow, Color, FontFamily, Position, TextAlign, Unit},
     widgets::{
         layouts::{Container, List, Positioned},
@@ -14,22 +15,19 @@ struct Index;
 fn header() -> Node {
     Positioned::new()
         .child(
-            Text::new().text("todos").style(
-                TextStyle::new()
-                    .color(Color::ORGB(0.15, 175, 47, 47))
-                    .size(Unit::Px(100.0))
-                    .weight(Unit::None(100.0))
-                    .family(FontFamily::Derive(vec![
-                        FontFamily::Mix(
-                            Box::new(FontFamily::Helvetica),
-                            Box::new(FontFamily::Neue),
-                        ),
-                        FontFamily::Helvetica,
-                        FontFamily::Neue,
-                        FontFamily::Arial,
-                    ]))
-                    .align(TextAlign::Center),
-            ),
+            Text::new()
+                .text("todos")
+                .color(Color::ORGB(0.15, 175, 47, 47))
+                .size(Unit::Px(100.0))
+                .weight(Unit::None(100.0))
+                .height(Unit::Em(1.4))
+                .family(FontFamily::Derive(vec![
+                    FontFamily::Mix(Box::new(FontFamily::Helvetica), Box::new(FontFamily::Neue)),
+                    FontFamily::Helvetica,
+                    FontFamily::Neue,
+                    FontFamily::Arial,
+                ]))
+                .align(TextAlign::Center),
         )
         .pos(Position::Absolute)
         .top(Unit::Px(-155.0))
@@ -41,7 +39,8 @@ fn body() -> TextField {
         .text(
             Text::new()
                 .text("hello")
-                .style(TextStyle::new().height(Unit::Em(1.4)).size(Unit::Px(24.0))),
+                .height(Unit::Em(1.4))
+                .size(Unit::Px(24.0)),
         )
         .style(
             ContainerStyle::new()
@@ -61,19 +60,14 @@ fn body() -> TextField {
         )
 }
 
-fn todoapp(children: Vec<Node>) -> Positioned {
+fn todoapp(children: Vec<Node>) -> Node {
     Positioned::new()
         .child(List::new().children(children))
-        .margin(vec![
-            Unit::Px(130.0),
-            Unit::Px(0.0),
-            Unit::Px(0.0),
-            Unit::Px(40.0),
-        ])
+        .wrap()
 }
 
-impl LifeCycle<Positioned> for Index {
-    fn create(&self) -> Positioned {
+impl LifeCycle for Index {
+    fn create(&self) -> Node {
         todoapp(vec![
             header(),
             Container::new()
