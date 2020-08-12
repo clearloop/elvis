@@ -1,8 +1,8 @@
-use crate::widgets::{layouts::Container, ListTile};
+use crate::widgets::ListTile;
 use elvis_core::{
     derive::Setter,
     option_to_style,
-    style::{Border, ContainerStyle},
+    style::Border,
     value::{Color, FontFamily, FontStyle, TextAlign, Unit},
     Attribute, Node, Style,
 };
@@ -88,8 +88,6 @@ pub struct TextField {
     pub trailing: Node,
     /// Plain text
     pub text: Text,
-    /// Text style
-    pub style: ContainerStyle,
 }
 
 impl TextField {
@@ -114,18 +112,14 @@ impl Into<Node> for TextField {
             Style::OutlineWidth(Unit::None(0.0)),
         ]);
 
-        Container::new()
-            .style(self.style)
-            .child(
-                ListTile::new()
-                    .leading(self.leading)
-                    .text(
-                        Into::<Node>::into(self.text)
-                            .attr(Attribute::new().tag("input"))
-                            .append_style(style),
-                    )
-                    .trailing(self.trailing),
+        ListTile::new()
+            .leading(self.leading)
+            .text(
+                Into::<Node>::into(self.text)
+                    .attr(Attribute::new().tag("input"))
+                    .append_style(style),
             )
+            .trailing(self.trailing)
             .into()
     }
 }

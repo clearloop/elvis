@@ -1,4 +1,5 @@
-use crate::{Attribute, Class, GestureKV, StateKV, Style};
+use crate::{Attribute, Class, GestureKV, StateKV, Style, StyleWrapper};
+use elvis_core_support::Wrapper;
 use std::{
     cell::RefCell,
     collections::hash_map::DefaultHasher,
@@ -16,7 +17,7 @@ fn hash(s: &[u8]) -> String {
 }
 
 /// Virtual UI Node
-#[derive(Clone, Default)]
+#[derive(Clone, Default, Wrapper)]
 pub struct Node {
     /// Node attribute
     pub attr: Attribute,

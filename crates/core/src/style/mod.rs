@@ -35,6 +35,7 @@ mod column;
 mod flex;
 mod grid;
 mod init;
+pub mod traits;
 mod typo;
 
 pub use self::{
