@@ -18,6 +18,5 @@ impl Into<Node> for ListTile {
                 self.trailing,
             ])
             .class(vec![Class::Flex, Class::Row])
-            .style(vec![Style::Width(Unit::Percent(100.0))])
     }
 }

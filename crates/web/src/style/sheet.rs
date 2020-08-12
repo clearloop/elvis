@@ -165,13 +165,7 @@ impl<'s> StyleSheet {
             ]
             .join("\n"),
             "col" => vec!["  flex-direction: column;"].join("\n"),
-            "flex" => vec![
-                "  display: flex;",
-                "  height: 100%;",
-                "  flex: 1;",
-                "  width: 100%;",
-            ]
-            .join("\n"),
+            "flex" => vec!["  display: flex;", "  flex: 1;"].join("\n"),
             "image" => vec![
                 "  background-position: center;",
                 "  background-repeat: no-repeat;",

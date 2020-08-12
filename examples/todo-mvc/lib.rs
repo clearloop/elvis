@@ -4,7 +4,7 @@ use elvis::{
     traits::StyleWrapper,
     value::{BoxShadow, Color, FontFamily, TextAlign, Unit, VecUnit},
     widgets::{
-        layouts::{Container, List, Positioned},
+        layouts::{Container, List},
         Text, TextField,
     },
 };
@@ -46,8 +46,6 @@ fn body() -> Node {
         Unit::Px(60.0),
     ])
     .height(Unit::Auto)
-    .margin(VecUnit(vec![Unit::Auto]))
-    .max_width(Unit::Px(550.0))
     .shadow(BoxShadow::Derive(vec![
         BoxShadow::Customize(vec![
             BoxShadow::Unit(Unit::None(0.0)),
@@ -56,20 +54,13 @@ fn body() -> Node {
             BoxShadow::Unit(Unit::Px(0.0)),
             BoxShadow::Color(Color::ORGB(0.2, 0, 0, 0)),
         ]),
-        BoxShadow::Customize(vec![
-            BoxShadow::Unit(Unit::None(0.0)),
-            BoxShadow::Unit(Unit::Px(25.0)),
-            BoxShadow::Unit(Unit::Px(50.0)),
-            BoxShadow::Unit(Unit::Px(0.0)),
-            BoxShadow::Color(Color::ORGB(0.1, 0, 0, 0)),
-        ]),
-        BoxShadow::Customize(vec![
-            BoxShadow::Inset,
-            BoxShadow::Unit(Unit::None(0.0)),
-            BoxShadow::Unit(Unit::Px(-2.0)),
-            BoxShadow::Unit(Unit::Px(1.0)),
-            BoxShadow::Color(Color::ORGB(0.03, 0, 0, 0)),
-        ]),
+        // BoxShadow::Customize(vec![
+        //     BoxShadow::Unit(Unit::None(0.0)),
+        //     BoxShadow::Unit(Unit::Px(25.0)),
+        //     BoxShadow::Unit(Unit::Px(50.0)),
+        //     BoxShadow::Unit(Unit::Px(0.0)),
+        //     BoxShadow::Color(Color::ORGB(0.1, 0, 0, 0)),
+        // ]),
         BoxShadow::Customize(vec![
             BoxShadow::Inset,
             BoxShadow::Unit(Unit::None(0.0)),
@@ -82,13 +73,14 @@ fn body() -> Node {
 }
 
 fn todoapp(children: Vec<Node>) -> Node {
-    Positioned::new()
-        .child(List::new().children(children))
+    Container::with(List::new().children(children))
+        .max_width(Unit::Px(550.0))
+        .margin(VecUnit(vec![Unit::Auto]))
         .wrap()
 }
 
 impl LifeCycle for Index {
     fn create(&self) -> Node {
-        todoapp(vec![header(), body().into()])
+        todoapp(vec![header(), body(), body()])
     }
 }

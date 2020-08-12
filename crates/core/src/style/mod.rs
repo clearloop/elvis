@@ -35,7 +35,6 @@ mod flex;
 mod grid;
 mod init;
 pub mod traits;
-mod typo;
 
 pub use self::{
     border::Border, column::MultiColumnStyle, flex::FlexStyle, grid::GridStyle, init::Style,
