@@ -35,6 +35,11 @@ pub struct Text {
 }
 
 impl Text {
+    /// Shortcut of `Text::new().text(&str)`
+    pub fn with(s: &str) -> Self {
+        Text::new().text(s)
+    }
+
     /// Set Text
     pub fn text(mut self, s: &str) -> Self {
         self.text = s.into();
@@ -81,26 +86,17 @@ impl Into<Node> for Text {
 #[derive(Default, Setter)]
 pub struct TextField {
     /// Leading widget
-    #[skip]
     pub leading: Node,
     /// Trailing widget
-    #[skip]
     pub trailing: Node,
     /// Plain text
     pub text: Text,
 }
 
 impl TextField {
-    /// Set leading
-    pub fn leading(mut self, l: impl Into<Node>) -> Self {
-        self.leading = l.into();
-        self
-    }
-
-    /// Set trailing
-    pub fn trailing(mut self, t: impl Into<Node>) -> Self {
-        self.trailing = t.into();
-        self
+    /// Shortcut of `Text::new().text(&str)`
+    pub fn with(t: Text) -> Self {
+        TextField::new().text(t)
     }
 }
 
