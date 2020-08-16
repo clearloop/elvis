@@ -34,8 +34,11 @@ mod column;
 mod flex;
 mod grid;
 mod init;
-pub mod traits;
 
 pub use self::{
-    border::Border, column::MultiColumnStyle, flex::FlexStyle, grid::GridStyle, init::Style,
+    border::Border,
+    column::MultiColumnStyle,
+    flex::FlexStyle,
+    grid::GridStyle,
+    init::{traits, Style},
 };

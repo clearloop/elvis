@@ -54,13 +54,6 @@ fn body() -> Node {
             BoxShadow::Unit(Unit::Px(0.0)),
             BoxShadow::Color(Color::ORGB(0.2, 0, 0, 0)),
         ]),
-        // BoxShadow::Customize(vec![
-        //     BoxShadow::Unit(Unit::None(0.0)),
-        //     BoxShadow::Unit(Unit::Px(25.0)),
-        //     BoxShadow::Unit(Unit::Px(50.0)),
-        //     BoxShadow::Unit(Unit::Px(0.0)),
-        //     BoxShadow::Color(Color::ORGB(0.1, 0, 0, 0)),
-        // ]),
         BoxShadow::Customize(vec![
             BoxShadow::Inset,
             BoxShadow::Unit(Unit::None(0.0)),

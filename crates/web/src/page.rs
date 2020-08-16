@@ -42,7 +42,6 @@ impl Page {
             &node::to_element(&Rc::new(RefCell::new(self.tree.clone())), &dom)?.into(),
         )?;
 
-        // gesture::bind(&self.tree);
         Ok(())
     }
 

@@ -1,6 +1,7 @@
 //! Evlis common widgets
 mod image;
 pub mod layouts;
+mod scaffold;
 mod text;
 mod tile;
 
