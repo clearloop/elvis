@@ -1,4 +1,4 @@
-# Calling Elvis 🦀 🕸  🎸 📡 🚀 🪐 🛰
+# Calling Elvis
 
 ![Rust](https://github.com/clearloop/leetcode-cli/workflows/Rust/badge.svg)
 [![crate](https://img.shields.io/crates/v/elvis.svg)](https://crates.io/crates/elvis)
@@ -9,19 +9,10 @@
 
 Is anybody home?
 
-As we know, `Elvis` is a famous rock star, both a famous rock song named `Calling Elvis` wrote by `Dire Straits` which inspired a unknown rock star writing down these chords.
-
-For now, Elvis, the rock star will rise once again, **beyond** the internet —— truely your wasm web library, 🦀 + 🕸  => 💖
-
 [The Evlis Book][1] mainly talks about the usage of [elvis][2], come and [join][community] us !~
 
 
-## Goals 🎯
-
-Writing web pages in **pure rust** using wasm bindings, **without** `jsx` or `any other` complex syntax, of course, **not** writing `html` nor `css` either.
-
-
-## 21st Century Schizoid Magic 🍩
+## Getting Start
 
 ```
 # Install elvis package manager
@@ -36,12 +27,7 @@ $ cd my-awesome-app && epm dev
 ```
 
 
-## Roll up for the Magical Mystery Tour! 🌈
-
-🧙‍♂️ 🤹‍♂️ Here we go! Roll up, roll up for the mystery tour, the magical mystery tour is waiting to take you away! Hoping to take you away! Coming to take you away! Dying to take you away, take you today! 🛸
-
-🎻 Let me take you down, cause I'm going to, **Strawberry Fields** 🧑‍🚀
-
+## Hello, World!
 
 ```rust
 //! src/lib.rs
@@ -56,7 +42,7 @@ struct Index;
 impl LifeCycle for Index {
     fn create(&self) -> Node {
         Center::new()
-            .child(Text::new().text("Pink is the Pig!!!"))
+            .child(Text::new().text("Hello, World!"))
             .into()
     }
 }
@@ -71,13 +57,13 @@ impl LifeCycle for Index {
 + [todo-mvc][todo-mvc]
 
 
+
 ## LICENSE
 
 Heartbreak Hotel.
 
 [1]: https://elvisjs.github.io/book
 [2]: https://docs.rs/elvis
-[rust.cc]: https://rustcc.cn
 [community]: https://elvisjs.github.io/book/community
 [hello-world-example]: https://github.com/elvisjs/elvis/tree/master/examples/hello-world
 [click-example]: https://github.com/elvisjs/elvis/tree/master/examples/click
