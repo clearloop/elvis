@@ -12,7 +12,7 @@
 //! [The Evlis Book][1] mainly talks about the usage of [elvis][2], here is our [roadmap][roadmap], come and [join][community] us !~
 //!
 //!
-//! ## Getting Start
+//! ## Getting Started
 //!
 //! ```text
 //! # Install elvis package manager
