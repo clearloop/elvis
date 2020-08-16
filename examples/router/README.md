@@ -11,7 +11,7 @@ Find the most recent version of this guide at [here][2]. And check out [elvis][3
 
 ## Available Scripts
 
-### epm dev
+### `epm dev`
 
 Runs the app in the development mode.
 Open http://localhost:3000 to view it in the browser.
@@ -19,7 +19,7 @@ Open http://localhost:3000 to view it in the browser.
 The page will reload if you make edits.
 You will also see any errors in the console.
 
-### epm build
+### `epm build`
 
 It correctly bundles Elvis in production mode and optimizes the build for the best performance.
 

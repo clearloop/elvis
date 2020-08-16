@@ -7,18 +7,19 @@
 [![Discord Chat](https://img.shields.io/discord/729613877184299019.svg?logo=discord&style=flat-square)](https://discord.gg/dxpefwy)
 [![LICENSE](https://img.shields.io/crates/l/elvis.svg)](https://choosealicense.com/licenses/mit/)
 
-
 Is anybody home?
 
 As we know, `Elvis` is a famous rock star, both a famous rock song named `Calling Elvis` wrote by `Dire Straits` which inspired a unknown rock star writing down these chords.
 
 For now, Elvis, the rock star will rise once again, **beyond** the internet —— truely your wasm web library, 🦀 + 🕸  => 💖
 
-[The Evlis Book][1] mainly talks about the usage of [calling-elvis][2], if you want to use `low-level` api rusting the web, plz check out [elvis' rust doc][3].
+[The Evlis Book][1] mainly talks about the usage of [elvis][2], come and [join][community] us !~
+
 
 ## Goals 🎯
 
-Writing web pages in **pure rust or javascript** using wasm bindings, **without** `jsx` or `any other` complex syntax, of course, **not** writing `html` nor `css` either.
+Writing web pages in **pure rust** using wasm bindings, **without** `jsx` or `any other` complex syntax, of course, **not** writing `html` nor `css` either.
+
 
 ## 21st Century Schizoid Magic 🍩
 
@@ -33,6 +34,7 @@ $ epm new my-awesome-app
 $ cd my-awesome-app && epm dev
 [INFO  warp::server] listening on http://0.0.0.0:3000
 ```
+
 
 ## Roll up for the Magical Mystery Tour! 🌈
 
@@ -60,15 +62,13 @@ impl LifeCycle for Index {
 }
 ```
 
+
 ## Examples
 
 + [hello-world][hello-world-example]
 + [click][click-example]
 + [router][router-example]
-
-## Community
-
-Welcome to join us! Check our community channels [here][community].
++ [todo-mvc][todo-mvc]
 
 
 ## LICENSE
@@ -76,10 +76,10 @@ Welcome to join us! Check our community channels [here][community].
 Heartbreak Hotel.
 
 [1]: https://elvisjs.github.io/book
-[2]: https://github.com/elvisjs/calling-elvis
-[3]: https://docs.rs/elvis
+[2]: https://docs.rs/elvis
 [rust.cc]: https://rustcc.cn
 [community]: https://elvisjs.github.io/book/community
 [hello-world-example]: https://github.com/elvisjs/elvis/tree/master/examples/hello-world
 [click-example]: https://github.com/elvisjs/elvis/tree/master/examples/click
 [router-example]: https://github.com/elvisjs/elvis/tree/master/examples/router
+[todo-mvc]: https://github.com/elvisjs/elvis/tree/master/examples/todo-mvc
