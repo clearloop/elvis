@@ -14,7 +14,7 @@
 //!
 //! ## Getting Start
 //!
-//! ```
+//! ```text
 //! # Install elvis package manager
 //! $ cargo install epm
 //!

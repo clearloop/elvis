@@ -27,7 +27,7 @@ members = [
 ]
 
 [dependencies]
-elvis-web = { path = "crates/web", version = "0.1.6", optional = true }
+elvis-web = { path = "crates/web", version = "0.1.7", optional = true }
 elvis-core = { path = "crates/core", version = "0.1.0"  }
 elvis-derive = { path = "crates/derive", version = "0.1.3" }
 
