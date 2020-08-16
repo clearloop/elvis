@@ -22,6 +22,13 @@ pub struct Positioned {
     pub left: Option<Unit>,
 }
 
+impl Positioned {
+    /// Shortcut of `Position::new().child(impl Into<Node>)`
+    pub fn with(child: impl Into<Node>) -> Positioned {
+        Positioned::new().child(child)
+    }
+}
+
 impl Into<Node> for Positioned {
     fn into(self) -> Node {
         let mut styles: Vec<Style> = vec![];

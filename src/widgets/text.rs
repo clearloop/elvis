@@ -1,8 +1,8 @@
-use crate::widgets::{layouts::Container, ListTile};
+use crate::widgets::ListTile;
 use elvis_core::{
     derive::Setter,
     option_to_style,
-    style::{Border, ContainerStyle},
+    style::Border,
     value::{Color, FontFamily, FontStyle, TextAlign, Unit},
     Attribute, Node, Style,
 };
@@ -35,6 +35,11 @@ pub struct Text {
 }
 
 impl Text {
+    /// Shortcut of `Text::new().text(&str)`
+    pub fn with(s: &str) -> Self {
+        Text::new().text(s)
+    }
+
     /// Set Text
     pub fn text(mut self, s: &str) -> Self {
         self.text = s.into();
@@ -81,28 +86,17 @@ impl Into<Node> for Text {
 #[derive(Default, Setter)]
 pub struct TextField {
     /// Leading widget
-    #[skip]
     pub leading: Node,
     /// Trailing widget
-    #[skip]
     pub trailing: Node,
     /// Plain text
     pub text: Text,
-    /// Text style
-    pub style: ContainerStyle,
 }
 
 impl TextField {
-    /// Set leading
-    pub fn leading(mut self, l: impl Into<Node>) -> Self {
-        self.leading = l.into();
-        self
-    }
-
-    /// Set trailing
-    pub fn trailing(mut self, t: impl Into<Node>) -> Self {
-        self.trailing = t.into();
-        self
+    /// Shortcut of `Text::new().text(&str)`
+    pub fn with(t: Text) -> Self {
+        TextField::new().text(t)
     }
 }
 
@@ -114,18 +108,14 @@ impl Into<Node> for TextField {
             Style::OutlineWidth(Unit::None(0.0)),
         ]);
 
-        Container::new()
-            .style(self.style)
-            .child(
-                ListTile::new()
-                    .leading(self.leading)
-                    .text(
-                        Into::<Node>::into(self.text)
-                            .attr(Attribute::new().tag("input"))
-                            .append_style(style),
-                    )
-                    .trailing(self.trailing),
+        ListTile::new()
+            .leading(self.leading)
+            .text(
+                Into::<Node>::into(self.text)
+                    .attr(Attribute::new().tag("input"))
+                    .append_style(style),
             )
+            .trailing(self.trailing)
             .into()
     }
 }

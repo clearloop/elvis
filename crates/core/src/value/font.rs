@@ -48,11 +48,17 @@ impl ToString for FontFamily {
             FontFamily::Helvetica => "Helvetica".to_string(),
             FontFamily::Neue => "Neue".to_string(),
             FontFamily::Arial => "Arial".to_string(),
-            FontFamily::Derive(v) => v
-                .iter()
-                .map(|f| f.to_string())
-                .collect::<Vec<String>>()
-                .join(" "),
+            FontFamily::Derive(v) => {
+                if v.len() == 1 && v[0].to_string().ends_with(',') {
+                    let s = v[0].to_string();
+                    s[..s.len() - 1].to_string()
+                } else {
+                    v.iter()
+                        .map(|f| f.to_string())
+                        .collect::<Vec<String>>()
+                        .join(" ")
+                }
+            }
         }
     }
 }
