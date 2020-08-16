@@ -193,3 +193,5 @@ impl PartialEq for Node {
         res
     }
 }
+
+impl Eq for Node {}

@@ -7,6 +7,7 @@ mod tile;
 
 pub use {
     image::Image,
+    scaffold::Scaffold,
     text::{Text, TextField},
     tile::ListTile,
 };

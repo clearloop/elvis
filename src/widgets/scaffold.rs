@@ -1,4 +1,4 @@
-use elvis_core::{derive::Setter, Node};
+use elvis_core::{derive::Setter, value::Unit, Node, Style};
 
 /// App Scaffold
 #[derive(Default, Setter)]
@@ -13,10 +13,17 @@ pub struct Scaffold {
 
 impl Into<Node> for Scaffold {
     fn into(self) -> Node {
-        let [mut header, mut body, mut footer] = [self.header, self.body, self.footer];
-        header.attr.tag = "body".to_string();
-        body.attr.tag = "section".to_string();
-        footer.attr.tag = "footer".to_string();
-        Node::default().children(vec![header, body, footer])
+        let mut nodes = vec![];
+        for n in [self.header, self.body, self.footer].iter() {
+            if !n.children.is_empty() {
+                let mut node = n.clone();
+                node.attr.tag = "section".to_string();
+                nodes.push(node);
+            }
+        }
+        Node::default().children(nodes).style(vec![
+            Style::Height(Unit::Percent(100.0)),
+            Style::Width(Unit::Percent(100.0)),
+        ])
     }
 }

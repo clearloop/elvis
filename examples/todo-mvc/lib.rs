@@ -1,11 +1,11 @@
 use elvis::{
     prelude::*,
-    style::traits::Margin,
+    style::traits::{BackgroundColor, MarginBottom, PaddingTop},
     traits::StyleWrapper,
     value::{BoxShadow, Color, FontFamily, TextAlign, Unit, VecUnit},
     widgets::{
         layouts::{Container, List},
-        Text, TextField,
+        Scaffold, Text, TextField,
     },
 };
 
@@ -26,7 +26,8 @@ fn header() -> Node {
         .weight(Unit::None(100.0))
         .family(font())
         .align(TextAlign::Center)
-        .margin(VecUnit(vec![Unit::None(30.0), Unit::None(0.0)]));
+        .padding_top(Unit::None(30.0))
+        .margin_bottom(Unit::None(30.0));
 
     bg.into()
 }
@@ -74,6 +75,8 @@ fn todoapp(children: Vec<Node>) -> Node {
 
 impl LifeCycle for Index {
     fn create(&self) -> Node {
-        todoapp(vec![header(), body(), body()])
+        Scaffold::new()
+            .body(todoapp(vec![header(), body(), body()]))
+            .background_color(Color::ORGB(1.0, 245, 245, 245))
     }
 }
