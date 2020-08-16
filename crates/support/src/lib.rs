@@ -3,10 +3,25 @@
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
-mod node;
+mod enum_style;
+mod helper;
+mod setter;
+mod style_wrapper;
 
-/// `Into<Node>`
-#[proc_macro_derive(IntoNode)]
-pub fn node(input: TokenStream) -> TokenStream {
-    node::parse(input)
+/// Basic elvis attr macro
+#[proc_macro_derive(Setter, attributes(skip))]
+pub fn setter(input: TokenStream) -> TokenStream {
+    setter::parse(input)
+}
+
+/// Basic elvis enum style
+#[proc_macro_derive(EnumStyle)]
+pub fn enum_style(input: TokenStream) -> TokenStream {
+    enum_style::parse(input)
+}
+
+/// Basic elvis enum style
+#[proc_macro_derive(Wrapper)]
+pub fn style_wrapper(input: TokenStream) -> TokenStream {
+    style_wrapper::parse(input)
 }

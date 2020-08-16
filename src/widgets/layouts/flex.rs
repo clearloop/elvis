@@ -1,6 +1,6 @@
 //! Flex Layout
 use elvis_core::{derive::Setter, style::FlexStyle, value::layouts::Alignment, Class, Node};
-use elvis_support::IntoNode;
+use elvis_derive::IntoNode;
 
 /// `Align` inherits the core usage of Alignment, it's quite simple, just one property.
 #[derive(Default, Setter)]

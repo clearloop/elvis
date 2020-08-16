@@ -1,6 +1,6 @@
 [package]
 name = "elvis-backend"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "Evlis backend library"

@@ -3,7 +3,7 @@
 The Package manager for [elvis][elvis]
 
 ```
-epm 0.1.5
+epm 0.1.7
 
 USAGE:
     epm <SUBCOMMAND>

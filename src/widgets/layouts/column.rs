@@ -1,6 +1,6 @@
 //! Elvis column layout
 use elvis_core::{derive::Setter, style::MultiColumnStyle, Class, Node};
-use elvis_support::IntoNode;
+use elvis_derive::IntoNode;
 
 /// **Homework**: code a New York Times.
 #[derive(Default, IntoNode, Setter)]
