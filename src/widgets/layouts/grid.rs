@@ -1,6 +1,6 @@
 //! Elvis grid layout
 use elvis_core::{derive::Setter, style::GridStyle, Class, Node};
-use elvis_support::IntoNode;
+use elvis_derive::IntoNode;
 
 /// `Grid` is quite complex in some way, usually, we just `Grid` our contains.
 #[derive(Default, IntoNode, Setter)]

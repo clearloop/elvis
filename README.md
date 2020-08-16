@@ -7,9 +7,7 @@
 [![Discord Chat](https://img.shields.io/discord/729613877184299019.svg?logo=discord&style=flat-square)](https://discord.gg/dxpefwy)
 [![LICENSE](https://img.shields.io/crates/l/elvis.svg)](https://choosealicense.com/licenses/mit/)
 
-Is anybody home?
-
-[The Evlis Book][1] mainly talks about the usage of [elvis][2], come and [join][community] us !~
+Is anybody home? [The Evlis Book][1] mainly talks about the usage of [elvis][2], here is our [roadmap][roadmap], come and [join][community] us !~
 
 
 ## Getting Start
@@ -69,3 +67,4 @@ Heartbreak Hotel.
 [click-example]: https://github.com/elvisjs/elvis/tree/master/examples/click
 [router-example]: https://github.com/elvisjs/elvis/tree/master/examples/router
 [todo-mvc]: https://github.com/elvisjs/elvis/tree/master/examples/todo-mvc
+[roadmap]: https://github.com/elvisjs/elvis/milestones

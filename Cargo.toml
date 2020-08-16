@@ -1,6 +1,6 @@
 [package]
 name = "elvis"
-version = "0.2.6"
+version = "0.3.0"
 authors = ["clearloop <udtrokia@gmail.com>"]
 edition = "2018"
 description = "Calling Elvis, is anybody home?"
@@ -15,7 +15,6 @@ readme = './README.md'
 [workspace]
 members = [
   "crates/web",
-  "crates/support",
   "crates/backend",
   "crates/derive",
   "crates/epm",
@@ -30,8 +29,7 @@ members = [
 [dependencies]
 elvis-web = { path = "crates/web", version = "0.1.6", optional = true }
 elvis-core = { path = "crates/core", version = "0.1.0"  }
-elvis-derive = { path = "crates/derive", version = "0.1.2" }
-elvis-support = { path = "crates/support", version = "0.1.0"  }
+elvis-derive = { path = "crates/derive", version = "0.1.3" }
 
 [features]
 web = [ "elvis-web", "elvis-core/web" ]
