@@ -1,5 +1,5 @@
 use crate::value::{Color, Unit};
-use elvis_core_support::EnumStyle;
+use elvis_core_support::{EnumStyle, Setter};
 
 /// Border Style
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Debug, EnumStyle)]
@@ -33,7 +33,7 @@ impl Default for BorderStyle {
 }
 
 /// Border Style
-#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Debug)]
+#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Debug, Setter)]
 pub struct BoxBorder {
     /// border width
     pub width: Unit,
@@ -41,6 +41,13 @@ pub struct BoxBorder {
     pub style: BorderStyle,
     /// border color
     pub color: Color,
+}
+
+impl BoxBorder {
+    /// The shortcut of `BoxBorder::new()`
+    pub fn with(width: Unit) -> BoxBorder {
+        BoxBorder::new().width(width)
+    }
 }
 
 impl Default for BoxBorder {
@@ -65,7 +72,7 @@ impl ToString for BoxBorder {
 }
 
 /// Border Radius
-#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Debug)]
+#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Debug, Setter)]
 pub struct BorderRadius {
     /// top left radius
     pub top_left: Unit,
@@ -83,6 +90,16 @@ pub struct BorderRadius {
     pub second_bottom_left: Unit,
     /// second bottom right radius
     pub second_bottom_right: Unit,
+}
+
+impl BorderRadius {
+    /// Set all radius
+    pub fn all(self, radius: Unit) -> BorderRadius {
+        self.top_left(radius)
+            .top_right(radius)
+            .bottom_left(radius)
+            .bottom_right(radius)
+    }
 }
 
 impl Default for BorderRadius {

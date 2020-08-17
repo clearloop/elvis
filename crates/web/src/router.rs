@@ -8,16 +8,6 @@ use web_sys::window;
 pub struct Router;
 
 impl RouterTrait for Router {
-    // /// Back to last page
-    // fn back() -> Result<(), CoreError> {
-    //     let window = window().unwrap();
-    //     let history = window.history();
-    //     CoreError::check::<_, Error, JsValue>(&history)?;
-    //     CoreError::check::<_, Error, JsValue>(&history.unwrap().back())?;
-    //     CoreError::check::<_, Error, JsValue>(&window.location().reload())?;
-    //     Ok(())
-    // }
-
     /// Push new pathl
     fn push(path: &str) -> Result<(), CoreError> {
         let history = window().unwrap().history();

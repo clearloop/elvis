@@ -344,7 +344,7 @@ dependencies = [
 name = "elvis-todo-mvc"
 version = "0.1.0"
 dependencies = [
- "elvis 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "elvis 0.3.1",
 ]
 
 [[package]]
