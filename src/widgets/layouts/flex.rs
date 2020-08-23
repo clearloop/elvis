@@ -21,15 +21,15 @@ impl Into<Node> for Align {
 #[derive(Default, Setter)]
 pub struct Center {
     /// Center child
-    #[skip]
     pub child: Node,
 }
 
 impl Center {
-    /// Set Child
-    pub fn child(mut self, n: impl Into<Node>) -> Self {
-        self.child = n.into();
-        self
+    /// New Center With Child
+    pub fn with(n: impl Into<Node>) -> Self {
+        let mut c = Center::new();
+        c.child = n.into();
+        c
     }
 }
 
@@ -46,6 +46,17 @@ impl Into<Node> for Center {
 pub struct Col {
     /// Column children
     pub children: Vec<Node>,
+}
+
+impl Col {
+    /// New Col with children
+    pub fn with(children: Vec<impl Into<Node>>) -> Col {
+        let mut col = Col::new();
+        for n in children {
+            col.children.push(n.into());
+        }
+        col
+    }
 }
 
 impl Into<Node> for Col {
@@ -70,6 +81,17 @@ pub struct Flex {
 pub struct Row {
     /// Row children
     pub children: Vec<Node>,
+}
+
+impl Row {
+    /// New Row with children
+    pub fn with(children: Vec<impl Into<Node>>) -> Row {
+        let mut row = Row::new();
+        for n in children {
+            row.children.push(n.into());
+        }
+        row
+    }
 }
 
 impl Into<Node> for Row {

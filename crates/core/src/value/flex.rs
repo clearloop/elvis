@@ -9,6 +9,10 @@ pub enum FlexPosition {
     End,
     /// Flex start
     Start,
+    /// Space around
+    SpaceAround,
+    /// Between
+    Between,
 }
 
 impl ToString for FlexPosition {
@@ -17,6 +21,8 @@ impl ToString for FlexPosition {
             FlexPosition::Center => "center",
             FlexPosition::End => "flex-end",
             FlexPosition::Start => "flex-start",
+            FlexPosition::SpaceAround => "space-around",
+            FlexPosition::Between => "between",
         }
         .into()
     }

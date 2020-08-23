@@ -341,6 +341,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "elvis-site"
+version = "0.1.0"
+dependencies = [
+ "elvis 0.3.1",
+]
+
+[[package]]
 name = "elvis-todo-mvc"
 version = "0.1.0"
 dependencies = [
