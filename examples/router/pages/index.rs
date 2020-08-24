@@ -11,13 +11,12 @@ struct Index;
 
 impl LifeCycle for Index {
     fn create(&self) -> Node {
-        Center::new()
-            .child(
-                GestureDetector::<Text>::new(
-                    Text::new().text("Let's roll up for the magical mystery tour!!!"),
-                )
-                .register(Gesture::Tap, |_| Router::push("back").unwrap()),
+        Center::with(
+            GestureDetector::<Text>::new(
+                Text::new().text("Let's roll up for the magical mystery tour!!!"),
             )
-            .into()
+            .register(Gesture::Tap, |_| Router::push("back").unwrap()),
+        )
+        .into()
     }
 }
