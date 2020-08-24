@@ -24,6 +24,7 @@ members = [
   "examples/click",
   "examples/router",
   "examples/todo-mvc",
+  "examples/website",
 ]
 
 [dependencies]

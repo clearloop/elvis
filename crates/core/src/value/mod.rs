@@ -3,6 +3,7 @@ mod border;
 mod r#box;
 mod color;
 mod column;
+mod display;
 mod flex;
 mod font;
 mod grid;
@@ -19,6 +20,7 @@ pub mod layouts {
 pub use {
     border::{BorderRadius, BorderStyle, BoxBorder},
     color::Color,
+    display::Display,
     font::{FontFamily, FontStyle},
     r#box::{BoxShadow, Position},
     typo::TextAlign,

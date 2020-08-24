@@ -10,6 +10,13 @@
 Is anybody home? [The Evlis Book][1] mainly talks about the usage of [elvis][2], here is our [roadmap][roadmap], come and [join][community] us !~
 
 
+## Help Wanted
+ 
++ [ ] A static http/websocket development server [#16][#16]
++ [ ] Documentation of ElvisJS [#65][#65]
++ [ ] A Markdown parser using ElvisJS [#66][#66]
++ [ ] Optimize the State machine [#67][#67]
+
 ## Getting Started
 
 ```
@@ -39,13 +46,10 @@ struct Index;
 
 impl LifeCycle for Index {
     fn create(&self) -> Node {
-        Center::new()
-            .child(Text::new().text("Hello, World!"))
-            .into()
+        Center::with(Text::new().text("Hello, World!")).into()
     }
 }
 ```
-
 
 ## Examples
 
@@ -53,6 +57,7 @@ impl LifeCycle for Index {
 + [click][click-example]
 + [router][router-example]
 + [todo-mvc][todo-mvc]
++ [website][website]
 
 
 
@@ -60,6 +65,10 @@ impl LifeCycle for Index {
 
 Heartbreak Hotel.
 
+[#16]: https://github.com/elvisjs/elvis/issues/16
+[#65]: https://github.com/elvisjs/elvis/issues/65
+[#66]: https://github.com/elvisjs/elvis/issues/66
+[#67]: https://github.com/elvisjs/elvis/issues/67
 [1]: https://elvisjs.github.io/book
 [2]: https://docs.rs/elvis
 [community]: https://elvisjs.github.io/book/community
@@ -67,4 +76,5 @@ Heartbreak Hotel.
 [click-example]: https://github.com/elvisjs/elvis/tree/master/examples/click
 [router-example]: https://github.com/elvisjs/elvis/tree/master/examples/router
 [todo-mvc]: https://github.com/elvisjs/elvis/tree/master/examples/todo-mvc
+[website]: https://github.com/elvisjs/elvis/tree/master/examples/website
 [roadmap]: https://github.com/elvisjs/elvis/milestones

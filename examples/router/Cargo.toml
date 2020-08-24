@@ -11,4 +11,4 @@ path = "./lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-elvis = "^0"
+elvis = { version = "^0", path = "../.." }

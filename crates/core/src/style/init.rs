@@ -3,8 +3,8 @@ use crate::value::{
         FlexBasis, FlexDirection, FlexPosition, FlexWrap, GridAuto, GridFlow, GridTemplate,
         MultiColumnLineStyle,
     },
-    BorderRadius, BorderStyle, BoxBorder, BoxShadow, Color, FontFamily, FontStyle, Position,
-    TextAlign, Unit, VecUnit,
+    BorderRadius, BorderStyle, BoxBorder, BoxShadow, Color, Display, FontFamily, FontStyle,
+    Position, TextAlign, Unit, VecUnit,
 };
 
 pub fn camel_snake(camel: &str) -> String {
@@ -91,6 +91,25 @@ macro_rules! construct_style {
                     }
                 }
             )*
+
+            $(
+                #[doc=$sdoc]
+                pub trait $ss {
+                    #[doc=$sdoc]
+                    fn $sf(self, value: super::$ss) -> Node;
+                }
+
+                impl<T> $ss for T
+                where
+                    T: Into<Node>,
+                {
+                    fn $sf(self, value: super::$ss) -> Node {
+                        let mut node: Node = self.into();
+                        node.style.push(Style::$ss(value));
+                        node
+                    }
+                }
+             )*
         }
     };
 }
@@ -179,5 +198,6 @@ construct_style! {[
     (Position, position, "Box Position"),
 
     // border radius
-    (BorderRadius, box_radius, "Border Radius"),
+    (BorderRadius, border_radius, "Border Radius"),
+    (Display, display, "display"),
 ]}

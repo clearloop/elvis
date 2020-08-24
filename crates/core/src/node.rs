@@ -142,11 +142,6 @@ impl Node {
         path
     }
 
-    // /// Generate a `Rc<RefCell<Node>>`
-    // pub fn new() -> Rc<RefCell<Node>> {
-    //     Rc::new(RefCell::new(Node::default()))
-    // }
-
     /// Add second tree to the first one.
     pub fn push(r: Rc<RefCell<Node>>, c: Rc<RefCell<Node>>) {
         let pre = Rc::downgrade(&r);

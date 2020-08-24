@@ -6,5 +6,5 @@ pub trait Router {
     // /// Back to last page
     // fn back() -> Result<(), Error>;
     /// Push new path
-    fn push(path: &str) -> Result<(), Error>;
+    fn push(path: impl Into<String>) -> Result<(), Error>;
 }

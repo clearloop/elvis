@@ -6,17 +6,24 @@ use std::collections::HashMap;
 pub type StateKV = HashMap<Vec<u8>, Vec<u8>>;
 
 /// state for tree
-pub struct State<W> {
+pub struct State {
     /// Elvis Node
-    pub child: W,
+    child: Node,
     /// State Machine
-    pub state: StateKV,
+    state: StateKV,
 }
 
-impl<W> State<W>
-where
-    W: Into<Node>,
-{
+impl State {
+    /// New State
+    pub fn new(node: impl Into<Node>) -> State {
+        State {
+            child: node.into(),
+            state: HashMap::new(),
+        }
+    }
+}
+
+impl State {
     /// Get state
     pub fn get(&self, k: &[u8]) -> Vec<u8> {
         self.state.get(k).unwrap_or(&vec![]).to_vec()
@@ -28,12 +35,9 @@ where
     }
 }
 
-impl<W> Into<Node> for State<W>
-where
-    W: Into<Node>,
-{
+impl Into<Node> for State {
     fn into(self) -> Node {
-        let mut n = self.child.into();
+        let mut n: Node = self.child.into();
         n.state = Some(self.state);
         n
     }

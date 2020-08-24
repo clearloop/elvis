@@ -41,9 +41,7 @@
 //!
 //! impl LifeCycle for Index {
 //!     fn create(&self) -> Node {
-//!         Center::new()
-//!             .child(Text::new().text("Hello, World!"))
-//!             .into()
+//!         Center::with(Text::new().text("Hello, World!")).into()
 //!     }
 //! }
 //! ```
