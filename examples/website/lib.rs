@@ -30,7 +30,7 @@ impl LifeCycle for Index {
                 Link::with(Text::with("Contribute"))
                     .href("https://github.com/elvisjs/elvis#help-wanted"),
                 Link::with(Text::with("The Book")).href("https://elvisjs.github.io/book/"),
-                Link::with(Text::with("Github")).href("https://github.com/elvisjs/elvis"),
+                Link::with(Text::with("Discord")).href("https://discord.gg/dxpefwy"),
             ])
             .justify_content(FlexPosition::SpaceAround)
             .margin(VecUnit(vec![Unit::Rem(2.0), Unit::Rem(10.0)])),

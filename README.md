@@ -12,10 +12,10 @@ Is anybody home? [The Evlis Book][1] mainly talks about the usage of [elvis][2],
 
 ## Help Wanted
  
-+ [ ] A static http/websocket development server #16
-+ [ ] Documentation of ElvisJS #65
-+ [ ] A Markdown parser using ElvisJS #66
-+ [ ] Optimize the State machine #67
++ [ ] A static http/websocket development server [#16][#16]
++ [ ] Documentation of ElvisJS [#65][#65]
++ [ ] A Markdown parser using ElvisJS [#66][#66]
++ [ ] Optimize the State machine [#67][#67]
 
 ## Getting Started
 
@@ -65,6 +65,10 @@ impl LifeCycle for Index {
 
 Heartbreak Hotel.
 
+[#16]: https://github.com/elvisjs/elvis/issues/16
+[#65]: https://github.com/elvisjs/elvis/issues/65
+[#66]: https://github.com/elvisjs/elvis/issues/66
+[#67]: https://github.com/elvisjs/elvis/issues/67
 [1]: https://elvisjs.github.io/book
 [2]: https://docs.rs/elvis
 [community]: https://elvisjs.github.io/book/community
@@ -72,5 +76,5 @@ Heartbreak Hotel.
 [click-example]: https://github.com/elvisjs/elvis/tree/master/examples/click
 [router-example]: https://github.com/elvisjs/elvis/tree/master/examples/router
 [todo-mvc]: https://github.com/elvisjs/elvis/tree/master/examples/todo-mvc
-[todo-mvc]: https://github.com/elvisjs/elvis/tree/master/examples/website
+[website]: https://github.com/elvisjs/elvis/tree/master/examples/website
 [roadmap]: https://github.com/elvisjs/elvis/milestones
