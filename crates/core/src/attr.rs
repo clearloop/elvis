@@ -9,6 +9,8 @@ pub struct Attribute {
     pub tag: String,
     /// Source
     pub src: String,
+    /// Href
+    pub href: String,
     /// Text
     pub text: String,
     /// Type

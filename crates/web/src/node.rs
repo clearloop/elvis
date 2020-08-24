@@ -28,6 +28,14 @@ pub fn to_element(node: &Rc<RefCell<Node>>, dom: &Document) -> Result<Element, J
         this.set_class_name(&class);
     }
 
+    if !node.borrow().attr.src.is_empty() {
+        this.set_attribute("src", &node.borrow().attr.src)?;
+    }
+
+    if !node.borrow().attr.href.is_empty() {
+        this.set_attribute("href", &node.borrow().attr.href)?;
+    }
+
     for child in node.borrow().children.iter() {
         if child.borrow().attr.tag == "plain" {
             this.set_inner_html(&child.borrow().attr.text);
