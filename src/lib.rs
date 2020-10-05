@@ -79,7 +79,7 @@ pub mod traits;
 pub mod widgets;
 
 // re-exports
-pub use elvis_core::{style, value};
+pub use elvis_core::{style, value, State};
 
 // self exports
 pub use crate::err::Error;

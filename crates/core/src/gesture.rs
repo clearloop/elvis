@@ -83,7 +83,7 @@ where
     fn into(self) -> Node {
         let mut n = self.child.into();
         n.gesture = Some(self.gesture);
-        n.state = Some(HashMap::new());
+        // n.state = Some(HashMap::new());
         n
     }
 }
