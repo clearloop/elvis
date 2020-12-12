@@ -1,0 +1,14 @@
+[book]
+authors = ["clearloop"]
+language = "en"
+multilingual = false
+src = "book"
+title = "The Elvis Book"
+
+[build]
+build-dir = "gh-pages"
+
+[output.html]
+default-theme = "dark"
+preferred-dark-theme = "ayu"
+git-repository-url = "https://github.com/elvisjs/elvis"
