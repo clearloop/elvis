@@ -3,7 +3,7 @@ use std::{env, path::PathBuf};
 
 fn main() {
     let mut example = env::current_dir().unwrap();
-    example.push("../../examples/hello-world");
+    example.push("../examples/hello-world");
     assert!(example.exists());
 
     // Remove pkg directory
