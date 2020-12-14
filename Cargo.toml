@@ -14,12 +14,12 @@ readme = './README.md'
 
 [workspace]
 members = [
-  "crates/web",
-  "crates/backend",
-  "crates/derive",
-  "crates/epm",
-  "crates/core",
-  "crates/support",
+  "web",
+  "backend",
+  "derive",
+  "epm",
+  "core",
+  "support",
   "examples/hello-world",
   "examples/click",
   "examples/router",
@@ -28,9 +28,9 @@ members = [
 ]
 
 [dependencies]
-elvis-web = { path = "crates/web", version = "^0.1", optional = true }
-elvis-core = { path = "crates/core", version = "^0.1"  }
-elvis-derive = { path = "crates/derive", version = "^0.1" }
+elvis-web = { path = "web", version = "^0.1", optional = true }
+elvis-core = { path = "core", version = "^0.1"  }
+elvis-derive = { path = "derive", version = "^0.1" }
 
 [features]
 web = [ "elvis-web", "elvis-core/web" ]
